@@ -1,6 +1,20 @@
 <h1>Title</h1>
-<form action="" [formGroup]="form">
-    <div *ngFor="let i of myFormTask">
-        <app-dynamic-controls [options]="i"></app-dynamic-controls>
+<div class="form">
+
+  <div>
+    <p>form 1</p>
+    <app-form [controls]='controls1'></app-form>
+  </div>
+  <div>
+    <p>form 2</p>
+    <app-form [controls]='controls2'></app-form>
+  </div>
+</div>
+
+
+<!-- <form action="" [formGroup]="form">
+    <div *ngFor="let i of formTask">
+        <label for="">{{i.label}}: </label>
+        <app-dynamic-controls [control]="i" [form]="form"></app-dynamic-controls>
     </div>   
-</form>
+</form> -->

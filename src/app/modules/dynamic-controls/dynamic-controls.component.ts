@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnChanges, Injectable } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { InputComponent } from './components/input/input.component'
 import { BehaviorSubject } from 'rxjs';
 import { ControlsLocalService } from './services/controls-local.service';
 import { ControlOptions } from './models/control-options.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-controls',
@@ -11,7 +12,8 @@ import { ControlOptions } from './models/control-options.model';
   providers: [ControlsLocalService]
 })
 export class DynamicControlsComponent implements OnChanges {
-  @Input() options: ControlOptions;
+  @Input() control: ControlOptions;
+  @Input() form: FormGroup;
   component = InputComponent;
 
   private dataSourse = new BehaviorSubject<any>(null);
@@ -22,7 +24,7 @@ export class DynamicControlsComponent implements OnChanges {
   ) { }
 
   ngOnChanges() {
-    this.clService.setData(this.options);
+    this.clService.setData({control: this.control, form: this.form});
     // console.log(this.options);
   }
 

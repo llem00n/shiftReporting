@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,28 +7,29 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  form: FormGroup = new FormGroup({});
 
-  form = new FormGroup({
-    first: new FormControl('first'),
-    second: new FormControl('second')
-  })
+  constructor(
+    private fb: FormBuilder,
+  ) { }
 
-  myFormTask = [
-    {
-      control: { key: 'first', value: 'first' },
-      form: this.form
-    },
-    {
-      control: { key: 'second', value: 'second' },
-      form: this.form
-    }
+  controls1 = [
+    { key: 'key_First', value: 'val_First', placeholder: 'pl_First', label: 'Label First' },
+    { key: 'key_Second', value: 'val_Second', placeholder: 'pl_Second', label: 'Label Second' },
+    { key: 'key_Third', value: 'val_Third', placeholder: 'pl_Third', label: 'Label Third' },
+    { key: 'key_Fourth', value: 'val_Fourth', placeholder: 'pl_Fourth', label: 'Label Fourth' },
   ]
+  controls2 = [
+    { key: 'key_First', value: 'val_First', placeholder: 'pl_First', label: 'Label First' },
+    { key: 'key_Second', value: 'val_Second', placeholder: 'pl_Second', label: 'Label Second' },
+    { key: 'key_Third', value: 'val_Third', placeholder: 'pl_Third', label: 'Label Third' },
+    { key: 'key_Fourth', value: 'val_Fourth', placeholder: 'pl_Fourth', label: 'Label Fourth' },
+  ]
+
+
 
   title = 'shiftReporting';
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.form.valueChanges.subscribe(console.log)
   }
 }
