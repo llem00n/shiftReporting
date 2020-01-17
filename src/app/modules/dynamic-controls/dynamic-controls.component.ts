@@ -1,9 +1,21 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { InputComponent } from './components/input/input.component'
+import { InputComponent } from './components/input/input.component';
+import { SelectComponent } from './components/select/select.component';
 import { BehaviorSubject } from 'rxjs';
 import { ControlsLocalService } from './services/controls-local.service';
 import { ControlOptions } from './models/control-options.model';
 import { FormGroup } from '@angular/forms';
+import { DynControl } from './models/';
+
+// enum Controls {
+//   InputComponent = 'input',
+//   SelectComponent = 'select'
+// }
+
+const controls = {
+  input: InputComponent,
+  select: SelectComponent
+}
 
 @Component({
   selector: 'app-dynamic-controls',
@@ -12,20 +24,20 @@ import { FormGroup } from '@angular/forms';
   providers: [ControlsLocalService]
 })
 export class DynamicControlsComponent implements OnChanges {
-  @Input() control: ControlOptions;
+  @Input() control: DynControl;
   @Input() form: FormGroup;
-  component = InputComponent;
 
+  private component;
   private dataSourse = new BehaviorSubject<any>(null);
-  data = this.dataSourse.asObservable();
+  private data = this.dataSourse.asObservable();
 
   constructor(
     private clService: ControlsLocalService,
   ) { }
 
   ngOnChanges() {
-    this.clService.setData({control: this.control, form: this.form});
-    // console.log(this.options);
+    this.clService.setData({ control: this.control, form: this.form });
+    this.component = controls[this.control.type];
   }
 
 }

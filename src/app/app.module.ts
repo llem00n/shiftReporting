@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DynamicControlsModule } from './modules/dynamic-controls/dynamic-controls.module';
 import { FormModule } from './modules/form/form.module';
+import { ConfigurationModule } from './modules/configuration/configuration.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormModule } from './modules/form/form.module';
     DynamicControlsModule,
     ReactiveFormsModule,
     FormsModule,
-    FormModule
+    FormModule,
+    ConfigurationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

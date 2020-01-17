@@ -1,0 +1,24 @@
+<p>configuration works!</p>
+
+
+
+
+<!-- <app-form [controls]="formConfiguration"></app-form> -->
+
+<form action="">
+
+  <div>
+    <select name="" id="">
+      <option value="1">1</option>
+    </select>
+    <button>Add plant</button>
+  </div>
+</form>
+
+<div *ngFor="let i of formConfiguration">
+  <label for="">{{i.label}}: </label>
+  <div style="display: flex;">
+    <app-dynamic-controls style="flex: 1;" [control]="i" [form]="form"></app-dynamic-controls>
+    <button>Add</button>
+  </div>
+</div>
