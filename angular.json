@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "shiftReporting"
+    }
+  },
+  "defaultProject": "shiftReporting",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
