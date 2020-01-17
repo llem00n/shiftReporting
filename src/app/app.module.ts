@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { DynamicControlsModule } from './modules/dynamic-controls/dynamic-controls.module';
 import { FormModule } from './modules/form/form.module';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
+import { AppStoreModule } from './app-store/app-store.module';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { ConfigurationModule } from './modules/configuration/configuration.modul
     ReactiveFormsModule,
     FormsModule,
     FormModule,
-    ConfigurationModule
+    ConfigurationModule,
+    AppStoreModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
