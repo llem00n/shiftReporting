@@ -14,16 +14,16 @@ export interface HttpRequest {
 })
 export class HttpService {
 
-  baseUrl: string = environment.baseUrl
+  baseUrl: string = `${environment.baseUrl}/api`
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  post(options: HttpRequest): Observable<any> {
+  post<T>(options: HttpRequest): Observable<T> {
     const url = `${this.baseUrl}/${options.url}`
     const payload = options.payload || {}
-    return this.http.post(url, payload)
+    return this.http.post<T>(url, payload)
   }
   get(options: HttpRequest): Observable<any> {
     const url = `${this.baseUrl}/${options.url}`

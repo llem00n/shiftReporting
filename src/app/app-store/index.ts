@@ -20,3 +20,9 @@ export const reducers: ActionReducerMap<State> = {
 
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+
+
+// ========= selectors ========
+// plants
+export const plantState = createFeatureSelector<fromPlant.State>('plants');
+export const allPlants = createSelector(plantState, fromPlant.selectAll);

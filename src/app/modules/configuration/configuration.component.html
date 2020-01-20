@@ -1,24 +1,10 @@
-<p>configuration works!</p>
-
-
-
-
-<!-- <app-form [controls]="formConfiguration"></app-form> -->
-
-<form action="">
-
-  <div>
-    <select name="" id="">
-      <option value="1">1</option>
-    </select>
-    <button>Add plant</button>
-  </div>
-</form>
-
-<div *ngFor="let i of formConfiguration">
-  <label for="">{{i.label}}: </label>
+<div *ngFor="let i of formConfiguration | keyvalue" class="setup-block">
+  <label *ngIf="i.value.label" for="">{{i.value.label}}: </label>
   <div style="display: flex;">
-    <app-dynamic-controls style="flex: 1;" [control]="i" [form]="form"></app-dynamic-controls>
-    <button>Add</button>
+    <app-dynamic-controls style="flex: 1;" [control]="i.value" [form]="form"></app-dynamic-controls>
+    <button (click)='showAddForm(i.key)'>Add</button>
+  </div>
+  <div *ngIf='showedAddForm === i.key'>
+    <app-form [controls]="configControls[i.key]"></app-form>
   </div>
 </div>

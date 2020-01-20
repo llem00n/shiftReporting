@@ -13,7 +13,6 @@ export class FormComponent implements OnInit {
   form: FormGroup = new FormGroup({});
 
   ngOnInit() {
-    console.log('formInput => ', this.controls);
     this.form = this.createForm(this.controls);
   }
   createForm(controls): FormGroup {

@@ -1,3 +1,6 @@
 export interface Plant {
-  id: string;
+  plantId: string;
+  name: string;
+  code: string;
+  address: string;
 }

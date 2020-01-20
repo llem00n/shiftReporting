@@ -9,7 +9,9 @@ export interface State extends EntityState<Plant> {
   // additional entities state properties
 }
 
-export const adapter: EntityAdapter<Plant> = createEntityAdapter<Plant>();
+export const adapter: EntityAdapter<Plant> = createEntityAdapter<Plant>({
+  selectId: (model: Plant) => model.plantId
+});
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
@@ -41,7 +43,7 @@ const plantReducer = createReducer(
   on(PlantActions.deletePlants,
     (state, action) => adapter.removeMany(action.ids, state)
   ),
-  on(PlantActions.loadPlants,
+  on(PlantActions.loadPlantsSuccess,
     (state, action) => adapter.addAll(action.plants, state)
   ),
   on(PlantActions.clearPlants,

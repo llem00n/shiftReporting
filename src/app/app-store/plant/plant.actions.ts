@@ -3,8 +3,14 @@ import { Update } from '@ngrx/entity';
 
 import { Plant } from './plant.model';
 
+
+
 export const loadPlants = createAction(
   '[Plant/API] Load Plants', 
+  // props<{ plants: Plant[] }>()
+);
+export const loadPlantsSuccess = createAction(
+  '[Plant/API] Load Plants Success', 
   props<{ plants: Plant[] }>()
 );
 

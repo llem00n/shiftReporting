@@ -17,7 +17,18 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@models/*": [
+        "src/app/models/index.ts"
+      ],
+      "@actions/*": [
+        "src/app/app-store/actions.ts"
+      ],
+      "@selectors/*": [
+        "src/app/app-store/selectors.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
