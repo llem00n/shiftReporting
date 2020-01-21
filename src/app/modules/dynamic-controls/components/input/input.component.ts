@@ -13,7 +13,7 @@ export class InputComponent implements OnInit {
     private clService: ControlsLocalService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {   
     this.clService.getData().subscribe(options => this.options = options)
   }
 }

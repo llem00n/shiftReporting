@@ -1,4 +1,7 @@
 <span [formGroup]="options.form">
-  <input type="text" [formControlName]="options.control.key">
-  <span class="error-message"></span>
+  <!-- <input type="text" [formControlName]="options.control.key"> -->
+  <mat-form-field>
+    <mat-label>{{options.control.label}}</mat-label>
+    <input matInput [formControlName]="options.control.key" autocomplete="off">
+  </mat-form-field>
 </span>
