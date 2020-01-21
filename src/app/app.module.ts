@@ -9,6 +9,7 @@ import { FormModule } from './modules/form/form.module';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
 import { AppStoreModule } from './app-store/app-store.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -24,7 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormModule,
     ConfigurationModule,
     AppStoreModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
