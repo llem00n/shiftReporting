@@ -18,6 +18,10 @@ export const addPlant = createAction(
   '[Plant/API] Add Plant',
   props<{ plant: Plant }>()
 );
+export const addPlantSuccess = createAction(
+  '[Plant/API] Add Plant Success',
+  props<{ plant: Plant }>()
+);
 
 export const upsertPlant = createAction(
   '[Plant/API] Upsert Plant',

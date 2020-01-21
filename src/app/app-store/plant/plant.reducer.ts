@@ -19,7 +19,7 @@ export const initialState: State = adapter.getInitialState({
 
 const plantReducer = createReducer(
   initialState,
-  on(PlantActions.addPlant,
+  on(PlantActions.addPlantSuccess,
     (state, action) => adapter.addOne(action.plant, state)
   ),
   on(PlantActions.upsertPlant,

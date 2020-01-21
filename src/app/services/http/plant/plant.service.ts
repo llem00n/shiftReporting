@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Plant } from 'src/app/app-store/plant/plant.model';
 
 @Injectable({
@@ -20,7 +20,15 @@ export class PlantService {
 
   getPlant() { }
 
-  addPlant() { }
+  addPlant(plant: Plant): Observable<Plant> {
+    const options = {
+      url: this.baseUrl + 'addPlant',
+      payload: {plant}
+    }
+    console.log(options);
+    // return of(plant);
+    return this.httpService.post<Plant>(options);
+  }
 
   updatePlant() { }
 

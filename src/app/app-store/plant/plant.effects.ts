@@ -11,9 +11,19 @@ export class PlantEffects {
 
   loadPlants$ = createEffect(() => this.actions$.pipe(
     ofType(PlantActions.loadPlants),
-    mergeMap(_ => this.plantService.getPlants()),
-    map(plants => PlantActions.loadPlantsSuccess({ plants }))
+    mergeMap(_ => this.plantService.getPlants().pipe(
+      map(plants => PlantActions.loadPlantsSuccess({ plants }))
+    )),
   ));
+
+  addPlant$ = createEffect(() => this.actions$.pipe(
+    ofType(PlantActions.addPlant),
+    mergeMap(action => this.plantService.addPlant(action.plant).pipe(
+    )),
+    map(plant => PlantActions.addPlantSuccess({ plant }))
+  ));
+
+
 
   constructor(
     private actions$: Actions,
