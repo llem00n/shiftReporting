@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PlantActions } from '../actions';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { map, mergeMap, tap, filter } from 'rxjs/operators';
 import { PlantService } from 'src/app/services/http/plant/plant.service';
 
 
@@ -12,6 +12,8 @@ export class PlantEffects {
   loadPlants$ = createEffect(() => this.actions$.pipe(
     ofType(PlantActions.loadPlants),
     mergeMap(_ => this.plantService.getPlants().pipe(
+      tap(console.log),
+      filter(v => !!v),
       map(plants => PlantActions.loadPlantsSuccess({ plants }))
     )),
   ));
