@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DynControl } from '../dynamic-controls/models';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -9,17 +9,19 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
   @Input() controls: DynControl[];
+  @Output() form = new EventEmitter<FormGroup>()
 
-  form: FormGroup = new FormGroup({});
+  customForm: FormGroup = new FormGroup({});
 
   ngOnInit() {
-    this.form = this.createForm(this.controls);
+    this.customForm = this.createForm(this.controls);
   }
   createForm(controls): FormGroup {
     const group = new FormGroup({});
     controls.map(i => {
-      group.addControl(i.key, new FormControl(i.value));
+      group.addControl(i.key, new FormControl(i.value,[Validators.required] ));
     });
+    this.form.emit(group);
     return group;
   }
 }

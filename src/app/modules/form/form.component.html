@@ -1,4 +1,4 @@
   <div *ngFor="let i of controls">
-      <label *ngIf="i.label" for="">{{i.label}}: </label>
-      <app-dynamic-controls [control]="i" [form]="form"></app-dynamic-controls>
+      <!-- <label *ngIf="i.label" for="">{{i.label}}: </label> -->
+      <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>
   </div>   
