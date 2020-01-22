@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { State, allPlants, plantState } from 'src/app/app-store/';
 import { PlantActions } from 'src/app/app-store/actions';
 import { map, tap } from 'rxjs/operators';
-import { addPlant } from 'src/app/app-store/plant/plant.actions';
+import { Plant } from 'src/app/app-store/plant/plant.model';
 
 @Component({
   selector: 'app-configuration',
@@ -16,7 +16,7 @@ import { addPlant } from 'src/app/app-store/plant/plant.actions';
 export class ConfigurationComponent implements OnInit {
 
   showedAddForm: string = null;
-
+  plants: Plant[];
   formConfiguration = [
     { key: 'Plant', type: 'select', label: 'Plant', options: [], placeholder: 'Select plant' },
     { key: 'Department', type: 'input', label: 'Department' }
@@ -45,13 +45,16 @@ export class ConfigurationComponent implements OnInit {
   ngOnInit() {
     this.store.pipe(
       select(allPlants),
-      map(plants => this.formConfiguration[0].options = plants
-        .map(i => {
-          return {
-            value: i.plantId,
-            valueView: `${i.name} (${i.code}, ${i.address})`
-          }
-        })
+      tap(plants => { if (plants.length > 0) this.formConfiguration[0]['enableShowList'] = true }),
+      tap(plants => this.formConfiguration[0]['list'] = plants),
+
+      map(plants => this.formConfiguration[0].options = plants.map(i => {
+        this.showedAddForm = null
+        return {
+          value: i.plantId,
+          valueView: `${i.name} (${i.code}, ${i.address})`
+        }
+      })
       )
     ).subscribe();
     this.store.dispatch(PlantActions.loadPlants());
@@ -68,17 +71,19 @@ export class ConfigurationComponent implements OnInit {
   childFormCreated(form) {
     this.childForm = form;
   }
-  
+
   addItem(key) {
     const payload = this.childForm.value;
-    console.log(key);
-    console.log(payload);
     switch (key) {
-      case 'Plant':        
-        this.store.dispatch(PlantActions.addPlant({plant: payload}))
-        break;    
+      case 'Plant':
+        this.store.dispatch(PlantActions.addPlant({ plant: payload }))
+        break;
       default:
         break;
-    } 
+    }
+  }
+
+  deletePlant(id){
+    this.store.dispatch(PlantActions.deletePlant({ id }))
   }
 }

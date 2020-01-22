@@ -50,12 +50,16 @@ export const updatePlants = createAction(
 
 export const deletePlant = createAction(
   '[Plant/API] Delete Plant',
-  props<{ id: string }>()
+  props<{ id: number }>()
+);
+export const deletePlantSuccess = createAction(
+  '[Plant/API] Delete Plant Success',
+  props<{ id: number }>()
 );
 
 export const deletePlants = createAction(
   '[Plant/API] Delete Plants',
-  props<{ ids: string[] }>()
+  props<{ ids: number[] }>()
 );
 
 export const clearPlants = createAction(

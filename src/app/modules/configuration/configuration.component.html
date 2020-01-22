@@ -1,5 +1,14 @@
 <mat-card *ngFor="let i of formConfiguration" class="setup-block">
-  <mat-card-title>{{i.label}}</mat-card-title>
+  <mat-card-title>{{i.label}}<a mat-button [disabled]='!i.enableShowList' (click)="i.isShowList = !i.isShowList" >show list...</a></mat-card-title>
+  <div *ngIf="i.isShowList">
+    <div *ngFor="let plant of i.list" >   
+      <div class="list">
+        <span>{{plant.name}}</span> 
+        <button mat-stroked-button (click)='deletePlant(plant.plantId)'>delete</button>
+      </div>   
+      <hr>
+    </div>
+  </div>
   <mat-form-field>
     <mat-label>{{i.placeholder}}</mat-label>
     <mat-select placeholder="Placeholder" name="item" [disabled]="showedAddForm === i.key">

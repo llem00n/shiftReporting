@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http.service';
+import { HttpService, AppHttpRequest, AppHttpResponse } from '../http.service';
 import { Observable, of } from 'rxjs';
 import { Plant } from 'src/app/app-store/plant/plant.model';
 
@@ -14,25 +14,39 @@ export class PlantService {
     private httpService: HttpService
   ) { }
 
-  getPlants(): Observable<Plant[]> {
-    return this.httpService.post<Plant[]>({ url: this.baseUrl + 'getPlants' })
+  getPlants(): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getPlants',
+      loadingMsg: 'Loading plants ...'
+    }
+    return this.httpService.post<AppHttpResponse>(options)
   }
 
   getPlant() { }
 
-  addPlant(plant: Plant): Observable<Plant> {
-    const options = {
+  addPlant(plant: Plant): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
       url: this.baseUrl + 'addPlant',
-      payload: {plant}
+      payload: { plant },
+      loadingMsg: 'Adding new plant ...',
+      successMsg: `New plant '${plant.name}' has been created`
     }
-    console.log(options);
-    // return of(plant);
-    return this.httpService.post<Plant>(options);
+    return this.httpService.post<AppHttpResponse>(options);
   }
 
   updatePlant() { }
 
-  deletePlant() { }
+  deletePlant(plantId): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'deletePlant',
+      payload: { plantId },
+      loadingMsg: 'Deleting the plant ...',
+      successMsg: `Plant has been deleted`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+
+    // return of(null)
+  }
 
 
 }

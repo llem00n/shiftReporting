@@ -12,9 +12,8 @@ export class PlantEffects {
   loadPlants$ = createEffect(() => this.actions$.pipe(
     ofType(PlantActions.loadPlants),
     mergeMap(_ => this.plantService.getPlants().pipe(
-      tap(console.log),
-      filter(v => !!v),
-      map(plants => PlantActions.loadPlantsSuccess({ plants }))
+      filter(resp => !!resp),
+      map(resp => PlantActions.loadPlantsSuccess({ plants: resp.body }))
     )),
   ));
 
@@ -22,8 +21,16 @@ export class PlantEffects {
     ofType(PlantActions.addPlant),
     mergeMap(action => this.plantService.addPlant(action.plant).pipe(
     )),
-    map(plant => PlantActions.addPlantSuccess({ plant }))
+    map(resp => PlantActions.addPlantSuccess({ plant: resp.body }))
   ));
+
+  deletePlant$ = createEffect(() => this.actions$.pipe(
+    ofType(PlantActions.deletePlant),
+    mergeMap(action => this.plantService.deletePlant(action.id).pipe(
+      filter(resp => resp.status === 200),
+      map(val => PlantActions.deletePlantSuccess({ id: action.id }))
+    )),
+  ))
 
 
 
