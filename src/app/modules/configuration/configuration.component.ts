@@ -86,4 +86,9 @@ export class ConfigurationComponent implements OnInit {
   deletePlant(id){
     this.store.dispatch(PlantActions.deletePlant({ id }))
   }
+
+  editPlant(id) {
+    console.log(id);
+    
+  }
 }

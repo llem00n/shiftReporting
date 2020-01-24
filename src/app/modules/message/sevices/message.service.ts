@@ -16,4 +16,10 @@ export class MessageService {
   closeSnackBar() {
     this.snackBar.dismiss()
   }
-}
+  alertMessage(msg: string) {
+    this.snackBar.open(msg, 'x', {
+      duration: 5000,
+      verticalPosition: 'top',
+    })
+  }
+} 

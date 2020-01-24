@@ -44,9 +44,5 @@ export class PlantService {
       successMsg: `Plant has been deleted`
     }
     return this.httpService.post<AppHttpResponse>(options);
-
-    // return of(null)
   }
-
-
 }

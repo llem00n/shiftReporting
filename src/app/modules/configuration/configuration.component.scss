@@ -1,17 +1,21 @@
-.setup-block {
-  margin: 16px;
-  border: 2px solid grey;
-  border-radius: 8px;
-  padding: 16px;
-  max-width: 500px;
-}
+// .setup-block {
+//   margin: 16px;
+//   border: 2px solid grey;
+//   border-radius: 8px;
+//   padding: 16px;
+//   max-width: 500px;
+// }
 
-mat-form-field {
-  width: 100%;
-}
+// mat-form-field {
+//   width: 100%;
+// }
 
-.list{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+// .list{
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+
+.disabled {
+  opacity: 50%;
 }

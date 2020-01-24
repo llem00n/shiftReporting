@@ -1,11 +1,58 @@
-<mat-card *ngFor="let i of formConfiguration" class="setup-block">
-  <mat-card-title>{{i.label}}<a mat-button [disabled]='!i.enableShowList' (click)="i.isShowList = !i.isShowList" >show list...</a></mat-card-title>
+<p>===Configuration===</p>
+<div *ngFor="let i of formConfiguration"
+  class="max-w-xs mb-5 border-solid border-2 border-gray-600 p-4 rounded-lg  shadow-lg">
+  <div class="my-4">
+    <span class="mr-4 font-bold text-xl">{{i.label}}</span>
+    <button class="ml-2" [class.disabled]='!i.enableShowList' [disabled]='!i.enableShowList'
+      (click)="i.isShowList = !i.isShowList">show list...</button>
+  </div>
+  <div class="my-4" *ngIf="i.isShowList">
+    <div *ngFor="let plant of i.list">
+      <div class="flex justify-between items-center p-1">
+        <span>{{plant.name}}</span>
+        <div>
+          
+        </div>
+        <button class="btn p-1" (click)='editPlant(plant.plantId)'>Edit</button>
+        <button class="btn p-1" (click)='deletePlant(plant.plantId)'>delete</button>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <div class="my-4">
+    <select class="p-2 w-full " name="" id="">
+      <option value="" class="bg-red">--Select {{i.label}}--</option>
+      <option *ngFor="let option of i.options" [value]="option.value">{{option.valueView}}</option>
+    </select>
+  </div>
+  <div class="my-4" *ngIf='showedAddForm === i.key'>
+    <app-form [controls]="configControls[i.key]" (form)="childFormCreated($event)"></app-form>
+  </div>
+  <div class="my-4" align="end" *ngIf='showedAddForm === i.key'>
+    <button class="btn mx-2" (click)='showedAddForm = null'>Cancel</button>
+    <button class="btn mx-2" (click)='addItem(i.key)' [disabled]="childForm.invalid"
+      [class.disabled]='childForm.invalid'>Add</button>
+  </div>
+  <div class="my-4" align="end" *ngIf='showedAddForm !== i.key'>
+    <button class="btn mx-2" (click)='showedAddForm = i.key'>Add</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <mat-card *ngFor="let i of formConfiguration" class="setup-block">
+  <mat-card-title>{{i.label}}<a mat-button [disabled]='!i.enableShowList' (click)="i.isShowList = !i.isShowList">show
+      list...</a></mat-card-title>
   <div *ngIf="i.isShowList">
-    <div *ngFor="let plant of i.list" >   
+    <div *ngFor="let plant of i.list">
       <div class="list">
-        <span>{{plant.name}}</span> 
+        <span>{{plant.name}}</span>
         <button mat-stroked-button (click)='deletePlant(plant.plantId)'>delete</button>
-      </div>   
+      </div>
       <hr>
     </div>
   </div>
@@ -26,4 +73,4 @@
   <mat-card-actions align="end" *ngIf='showedAddForm !== i.key'>
     <button mat-stroked-button (click)='showedAddForm = i.key'>Add</button>
   </mat-card-actions>
-</mat-card>
+</mat-card> -->

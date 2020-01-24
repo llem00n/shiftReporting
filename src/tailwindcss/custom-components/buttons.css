@@ -1,0 +1,11 @@
+.btn {
+  @apply bg-white;
+  @apply text-gray-800;
+  @apply font-semibold;
+  @apply py-2;
+  @apply px-4;
+  @apply border;
+  @apply border-gray-400;
+  @apply rounded;
+  @apply shadow;
+}
