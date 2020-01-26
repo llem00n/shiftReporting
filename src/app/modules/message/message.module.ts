@@ -4,19 +4,18 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessageComponent } from './message.component';
+import { ErrorComponent } from './components/error/error.component';
 
 
 
 @NgModule({
-  declarations: [LoadingComponent],
+  declarations: [LoadingComponent, MessageComponent, ErrorComponent],
   imports: [
     CommonModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    // BrowserAnimationsModule
   ],
   exports: [
-    LoadingComponent,
+    MessageComponent
   ]
 })
 export class MessageModule { }

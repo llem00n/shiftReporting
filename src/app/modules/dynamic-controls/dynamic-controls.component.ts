@@ -39,5 +39,4 @@ export class DynamicControlsComponent implements OnChanges {
     this.clService.setData({ control: this.control, form: this.form });
     this.component = controls[this.control.type];
   }
-
 }

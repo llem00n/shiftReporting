@@ -6,8 +6,4 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss']
 })
-export class LoadingComponent {
-  constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: any
-    ) { }
-}
+export class LoadingComponent {}
