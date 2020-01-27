@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PlantActions } from '../actions';
 import { map, mergeMap, tap, filter } from 'rxjs/operators';
-import { PlantService } from 'src/app/services/http/plant/plant.service';
+import { PlantService } from './plant-http.service';
 
 
 

@@ -1,4 +1,4 @@
-<div class="absolute top-0 mt-2  justify-center flex w-full">
+<div *ngIf="isShow" class="absolute top-0 mt-2 justify-center flex w-full">
   <div class="w-full max-w-sm">
     <ng-container *ngComponentOutlet="component; content: content"></ng-container>
   </div>

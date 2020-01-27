@@ -34,7 +34,7 @@ export class HttpService {
     const url = `${this.baseUrl}/${options.url}`
     const payload = options.payload || {}
     return this.http.post<T>(url, payload, { observe: 'response' }).pipe(
-      tap(_ => this.message.closeSnackBar()),
+      tap(_ => this.message.alertMessage(options.successMsg)),
       map(resp => { return <AppHttpResponse>{ status: resp.status, body: resp.body } }),
       catchError(error => {
         console.log('showSnackBar Error');

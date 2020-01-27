@@ -17,7 +17,8 @@ export class PlantService {
   getPlants(): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getPlants',
-      loadingMsg: 'Loading plants ...'
+      loadingMsg: 'Loading plants ...',
+      successMsg: 'All is fine'
     }
     return this.httpService.post<AppHttpResponse>(options)
   }

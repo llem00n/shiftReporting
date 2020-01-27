@@ -6,11 +6,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageComponent } from './message.component';
 import { ErrorComponent } from './components/error/error.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 
 @NgModule({
-  declarations: [LoadingComponent, MessageComponent, ErrorComponent],
+  declarations: [LoadingComponent, MessageComponent, ErrorComponent, AlertComponent],
   imports: [
     CommonModule,
   ],

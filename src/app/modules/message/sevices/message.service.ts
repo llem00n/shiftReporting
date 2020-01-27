@@ -17,36 +17,51 @@ export class MessageService {
   private messageSourse = new BehaviorSubject<AppMessage>(null);
   private message = this.messageSourse.asObservable();
 
+  private isShowMessageSourse = new BehaviorSubject<boolean>(null);
+  private isShowMessage = this.isShowMessageSourse.asObservable();
+
   getMessage(): Observable<AppMessage> {
     return this.message;
   }
-  showMessage(message: AppMessage): void {
+  setMessage(message: AppMessage): void {
     this.messageSourse.next(message);
+    this.isShowMessageSourse.next(true)
   }
+
+
+  getIsShowMessage(): Observable<boolean> {
+    return this.isShowMessage;
+  }
+
+  private setIsShowMessage(isShow: boolean): void {
+    this.isShowMessageSourse.next(isShow);
+  }
+
+
   loadingMessage(message: string) {
-    this.showMessage({
+    this.setMessage({
       message,
       type: 'loading'
     })
   }
 
   errorMessage(message: string) {
-    this.showMessage({
+    this.setMessage({
       message,
       type: 'error'
     })
   }
-
-
-  closeSnackBar() {
-    console.log('closeSnackBar');
-
-    // this.snackBar.dismiss()
+  alertMessage(message: string) {
+    this.close();
+    if (!message) return;
+    this.setMessage({
+      message,
+      type: 'alert'
+    })
   }
-  alertMessage(msg: string) {
-    // this.snackBar.open(msg, 'x', {
-    //   duration: 5000,
-    //   verticalPosition: 'top',
-    // })
+
+  close() {
+    this.setMessage(null);
+    this.setIsShowMessage(false)
   }
 } 

@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../../sevices/message.service';
+
 @Component({
-  selector: 'app-error',
-  templateUrl: './error.component.html',
-  styleUrls: ['./error.component.scss']
+  selector: 'app-alert',
+  templateUrl: './alert.component.html',
+  styleUrls: ['./alert.component.scss']
 })
-export class ErrorComponent {
+export class AlertComponent implements OnInit {
   constructor(
     private messageService: MessageService
   ) { }
+  ngOnInit() {
+    setTimeout(_ => { this.messageService.close() }, 3000)
+  }
   close() {
     this.messageService.close()
   }
