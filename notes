@@ -1,8 +1,11 @@
 generate Entity Plant:
 ng g en app-store/plant/Plant -m ../app-store -r ../index.ts -c
+ng g en app-store/department/Department -m ../app-store -r ../index.ts -c
 
 generate Effects for Plant
 ng generate effect app-store/plant/Plant -m app-store --root -c -a
+ng generate effect app-store/department/Department -m app-store --root -c -a
 
 generate service
-
+ng g s app-store/plant/PlantHttp
+ng g s app-store/department/DepartmentHttp

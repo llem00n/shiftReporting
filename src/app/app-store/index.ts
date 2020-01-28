@@ -7,15 +7,18 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import * as fromPlant from './plant/plant.reducer';
+import * as fromDepartment from './department/department.reducer';
 
 export interface State {
 
   [fromPlant.plantsFeatureKey]: fromPlant.State;
+  [fromDepartment.departmentsFeatureKey]: fromDepartment.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
 
   [fromPlant.plantsFeatureKey]: fromPlant.reducer,
+  [fromDepartment.departmentsFeatureKey]: fromDepartment.reducer,
 };
 
 

@@ -7,6 +7,8 @@ import { environment } from '../../environments/environment';
 import * as fromPlant from './plant/plant.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { PlantEffects } from './plant/plant.effects';
+import * as fromDepartment from './department/department.reducer';
+import { DepartmentEffects } from './department/department.effects';
 
 
 
@@ -23,7 +25,8 @@ import { PlantEffects } from './plant/plant.effects';
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreModule.forFeature(fromPlant.plantsFeatureKey, fromPlant.reducer),
-    EffectsModule.forRoot([PlantEffects])
+    EffectsModule.forRoot([PlantEffects, DepartmentEffects]),
+    StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer)
   ]
 })
 export class AppStoreModule { }
