@@ -1,4 +1,5 @@
 <p>===Configuration===</p>
+<app-list [data]='data'></app-list>
 <div *ngFor="let i of formConfiguration"
   class="max-w-xs mb-5 border-solid border-2 border-gray-600 p-4 rounded-lg  shadow-lg">
   <div class="my-4">
@@ -12,7 +13,7 @@
         <span>{{plant.name}}</span>
         <div>          
         </div>
-        <button class="btn p-1" (click)='editPlant(plant.plantId)'>Edit</button>
+        <button class="btn p-1 " (click)='editPlant(plant.plantId)'>Edit</button>
         <button class="btn p-1" (click)='deletePlant(plant.plantId)'>delete</button>
       </div>
       <hr>

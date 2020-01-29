@@ -22,6 +22,10 @@ export class ConfigurationComponent implements OnInit {
     { key: 'Department', type: 'input', label: 'Department' }
   ]
 
+  data = [
+    { id: 1, name: '2', type: '3' },
+    { id: 2, name: '3', type: '4' }
+  ]
 
   form: FormGroup;
   childForm: FormGroup = new FormGroup({});
@@ -83,12 +87,12 @@ export class ConfigurationComponent implements OnInit {
     }
   }
 
-  deletePlant(id){
+  deletePlant(id) {
     this.store.dispatch(PlantActions.deletePlant({ id }))
   }
 
   editPlant(id) {
     console.log(id);
-    
+
   }
 }

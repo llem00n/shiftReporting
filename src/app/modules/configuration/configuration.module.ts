@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ConfigurationComponent } from './configuration.component';
 import { FormModule } from '../form/form.module';
 import { DynamicControlsModule } from '../dynamic-controls/dynamic-controls.module';
+import { ListComponent } from './components/list/list.component';
 // import { MatCardModule } from '@angular/material/card';
 // import {MatSelectModule} from '@angular/material/select';
 // import {MatFormFieldModule} from '@angular/material/form-field';
@@ -19,7 +20,7 @@ import { DynamicControlsModule } from '../dynamic-controls/dynamic-controls.modu
 // ]
 
 @NgModule({
-  declarations: [ConfigurationComponent],
+  declarations: [ConfigurationComponent, ListComponent],
   imports: [
     CommonModule,
     FormModule,
