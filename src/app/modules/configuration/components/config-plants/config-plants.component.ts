@@ -28,12 +28,24 @@ export class ConfigPlantsComponent implements OnInit {
   isShowEditPanel = false;
   showedAddForm = false;
 
+
+
   configPlant = [
     <Input>{ key: 'name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Name' },
     <Input>{ key: 'code', type: 'input', label: 'Code', validators: ['required'] },
     <Input>{ key: 'address', type: 'input', label: 'Address', validators: ['required'] },
   ];
 
+  editOptions = {
+    properties: this.configPlant,
+    actType: 'edit',
+    objectType: 'plant'
+  }
+  addNewOptions = {
+    properties: this.configPlant,
+    actType: 'new',
+    objectType: 'plant'
+  }
 
   ngOnInit() {
     this.getData()
@@ -51,35 +63,23 @@ export class ConfigPlantsComponent implements OnInit {
       this.plantList = this.confService.createList(plants);
     })
   }
-  
-  addPlantForm(form: FormGroup) {
-    this.formAddPlant = form
-  }
-  addPlant() {
+
+  addPlant(e) {
     this.showedAddForm = false;
-    this.store.dispatch(PlantActions.addPlant({ plant: this.formAddPlant.value }))
+    this.store.dispatch(PlantActions.addPlant({ plant: e }))
   }
-  updatePlant() {
+  updatePlant(e) {
     const plant: Plant = { ...this.editingPlant }
-    Object.assign(plant, this.formEditPlant.value)
+    Object.assign(plant, e)
     this.store.dispatch(PlantActions.updatePlant({ plant }))
     this.isShowEditPanel = false;
   }
-
-  disableUpdateButton(): boolean {
-    let res = this.configPlant.filter(i => this.editingPlant[i.key] !== this.formEditPlant.value[i.key])
-    return this.formEditPlant.invalid || res.length === 0
-  }
-
   clickListsButton(e) {
-    console.log(e);
     switch (e.action) {
       case 'edit':
         this.editingPlant = e.item;
-        this.isShowEditPanel = true
+        this.isShowEditPanel = true;
+        break;
     }
-  }
-  editPlantForm(form) {
-    this.formEditPlant = form;
   }
 }

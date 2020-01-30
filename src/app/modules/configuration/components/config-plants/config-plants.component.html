@@ -1,30 +1,11 @@
 <!-- <div class="border-2 border-gray-600 border-solid mb-5 p-4 rounded-lg shadow-lg max-w-4xl"> -->
-  <div *ngIf="plantList">
-    <app-list [data]='plantList' (clickActionButton)='clickListsButton($event)'></app-list>
-  </div>
-
-  <div class="mt-8 border border-gray-600 pt-6 px-6 relative" *ngIf='isShowEditPanel'>
-    <p class="absolute font-bold bg-white " style="top: -12px">Edit plant id: {{editingPlant.plantId}}, name: {{editingPlant.name}}</p>
-    <app-form [controls]="configPlant" [values]='editingPlant' (form)="editPlantForm($event)"></app-form>
-    <div class="my-4" align="end">
-      <button class="btn mx-2" (click)='isShowEditPanel = null'>Cancel</button>
-      <button class="btn mx-2" (click)='updatePlant()' [disabled]="disableUpdateButton()"
-        [class.disabled]='disableUpdateButton()'>Update</button>
-    </div>  
-  </div>
-  
-  <div class="mt-8 border border-gray-600 pt-6 px-6 relative" *ngIf='showedAddForm'>
-    <p class="absolute font-bold bg-white " style="top: -12px">Add new plant</p>
-    <app-form [controls]="configPlant" (form)="addPlantForm($event)"></app-form>
-    <div class="my-4" align="end">
-      <button class="btn mx-2" (click)='showedAddForm = null'>Cancel</button>
-      <button class="btn mx-2" (click)='addPlant()' [disabled]="formAddPlant.invalid"
-        [class.disabled]='formAddPlant.invalid'>Add</button>
-    </div>  
-  </div>
-
-
-  <div class="my-4" align="end" >
-    <button class="btn mx-2" *ngIf='!(showedAddForm || isShowEditPanel)'  (click)='showedAddForm = true'>Add</button>
-  </div>
-<!-- </div> -->
+<div *ngIf="plantList">
+  <app-list [data]='plantList' (clickActionButton)='clickListsButton($event)'></app-list>
+</div>
+<app-editing-panel *ngIf='isShowEditPanel' [options]='editOptions' [object]="editingPlant"
+  (clickOk)="updatePlant($event)" (clickCancel)="isShowEditPanel = null"></app-editing-panel>
+<app-editing-panel *ngIf='showedAddForm' [options]='addNewOptions' (clickOk)="addPlant($event)"
+  (clickCancel)="showedAddForm = null"></app-editing-panel>
+<div class="my-4" align="end">
+  <button class="btn mx-2" *ngIf='!(showedAddForm || isShowEditPanel)' (click)='showedAddForm = true'>Add</button>
+</div>

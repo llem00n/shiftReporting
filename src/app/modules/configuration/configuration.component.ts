@@ -21,7 +21,8 @@ export class ConfigurationComponent implements OnInit {
   addForm: FormGroup;
 
   isShow: { [key: string]: boolean } = {
-    configDepartments: true
+    configPlants: true,
+    configDepartments: false
   };
 
   configControls = {
