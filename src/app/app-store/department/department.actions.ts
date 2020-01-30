@@ -4,7 +4,11 @@ import { Update } from '@ngrx/entity';
 import { Department } from './department.model';
 
 export const loadDepartments = createAction(
-  '[Department/API] Load Departments', 
+  '[Department/API] Load Departments',
+  props<{ plantId: number }>()
+);
+export const loadDepartmentsSuccess = createAction(
+  '[Department/API] Load Departments Success',
   props<{ departments: Department[] }>()
 );
 

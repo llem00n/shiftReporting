@@ -29,3 +29,6 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 // plants
 export const plantState = createFeatureSelector<fromPlant.State>('plants');
 export const allPlants = createSelector(plantState, fromPlant.selectAll);
+//departments
+export const departmentsState = createFeatureSelector<fromDepartment.State>('departments');
+export const allDepartments = createSelector(departmentsState, fromDepartment.selectAll);

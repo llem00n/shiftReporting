@@ -6,7 +6,7 @@ import { HttpService, AppHttpResponse, AppHttpRequest } from '../services/http.s
 @Injectable({
   providedIn: 'root'
 })
-export class PlantService {
+export class PlantHttpService {
 
   baseUrl = 'plants/'
 

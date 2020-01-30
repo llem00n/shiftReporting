@@ -20,7 +20,9 @@ export class ConfigurationComponent implements OnInit {
   childForm: FormGroup = new FormGroup({});
   addForm: FormGroup;
 
-  isShow: { [key: string]: boolean } = {};
+  isShow: { [key: string]: boolean } = {
+    configDepartments: true
+  };
 
   configControls = {
     Plant: [

@@ -1,7 +1,11 @@
 <p>===Configuration===</p>
 <div class="border-2 border-gray-600 border-solid mb-5 p-4 rounded-lg shadow-lg max-w-4xl">
-  <p class="font-bold mr-4 text-xl cursor-default" (click)="isShow.configPlant = !isShow.configPlant">Plants configuration</p>
-  <app-config-plants *ngIf="isShow.configPlant"></app-config-plants>
+  <p class="font-bold mr-4 text-xl cursor-default" (click)="isShow.configPlants = !isShow.configPlants">Plants configuration</p>
+  <app-config-plants *ngIf="isShow.configPlants"></app-config-plants>
+</div>
+<div class="border-2 border-gray-600 border-solid mb-5 p-4 rounded-lg shadow-lg max-w-4xl">
+  <p class="font-bold mr-4 text-xl cursor-default" (click)="isShow.configDepartments = !isShow.configDepartments">Departments configuration</p>
+  <app-config-departments *ngIf="isShow.configDepartments"></app-config-departments>
 </div>
 
 

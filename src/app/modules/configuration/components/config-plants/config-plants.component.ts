@@ -7,6 +7,7 @@ import { Plant } from 'src/app/app-store/plant/plant.model';
 import { Input } from 'src/app/modules/dynamic-controls/components/input/input.model';
 import { FormGroup } from '@angular/forms';
 import { PlantActions } from '@actions/*';
+import { ConfigurationService } from '../../services/configuration.service';
 
 @Component({
   selector: 'app-config-plants',
@@ -16,7 +17,8 @@ import { PlantActions } from '@actions/*';
 export class ConfigPlantsComponent implements OnInit {
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    private confService: ConfigurationService
   ) { }
 
   plantList: ListData = null;
@@ -46,25 +48,10 @@ export class ConfigPlantsComponent implements OnInit {
         this.store.dispatch(PlantActions.loadPlants());
         return
       };
-      this.plantList = this.createList(plants);
+      this.plantList = this.confService.createList(plants);
     })
   }
-
-  createList(plants: Plant[]): ListData {
-    const list = <ListData>{};
-    list.tableData = plants;
-    list.head = Object.keys(plants[0]).map(i => {
-      return {
-        key: i, title: i
-      }
-    })
-    list.actionButtons = [
-      { key: 'edit', title: 'Edit' },
-      { key: 'dlt', title: 'DLT' }
-    ]
-    return list;
-  }
-
+  
   addPlantForm(form: FormGroup) {
     this.formAddPlant = form
   }

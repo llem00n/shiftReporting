@@ -1,0 +1,4 @@
+<app-form [controls]="preConfig" (form)="getPreConfigForm($event)"></app-form>
+<div *ngIf="list">
+  <app-list [data]='list' (clickActionButton)='clickListsButton($event)'></app-list>
+</div>

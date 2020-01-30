@@ -38,7 +38,7 @@ export class HttpService {
       tap(_ => this.message.alertMessage(options.successMsg)),
       map(resp => { return <AppHttpResponse>{ status: resp.status, body: resp.body } }),
       catchError((error: HttpErrorResponse) => {
-        this.message.errorMessage(`${error.statusText}. ${error.error}`);
+        this.message.errorMessage(`${error.statusText}... ${error.error}... ${error.message}`);
         // console.log(error);
         return of(null)
       })

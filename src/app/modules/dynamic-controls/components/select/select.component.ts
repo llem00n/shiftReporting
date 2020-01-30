@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ControlOptions } from '../../models/control-options.model';
+import { ControlsLocalService } from '../../services/controls-local.service';
 
 @Component({
   selector: 'app-select',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./select.component.scss']
 })
 export class SelectComponent implements OnInit {
-
-  constructor() { }
+  options: ControlOptions;
+  constructor(
+    private clService: ControlsLocalService,
+  ) { }
 
   ngOnInit() {
+    this.clService.getData().subscribe(options => {
+      console.log(options);
+      
+      this.options = options
+    })
   }
-
 }

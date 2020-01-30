@@ -5,6 +5,7 @@ import { FormModule } from '../form/form.module';
 import { DynamicControlsModule } from '../dynamic-controls/dynamic-controls.module';
 import { ListComponent } from './components/list/list.component';
 import { ConfigPlantsComponent } from './components/config-plants/config-plants.component';
+import { ConfigDepartmentsComponent } from './components/config-departments/config-departments.component';
 // import { MatCardModule } from '@angular/material/card';
 // import {MatSelectModule} from '@angular/material/select';
 // import {MatFormFieldModule} from '@angular/material/form-field';
@@ -21,7 +22,7 @@ import { ConfigPlantsComponent } from './components/config-plants/config-plants.
 // ]
 
 @NgModule({
-  declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent],
+  declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent],
   imports: [
     CommonModule,
     FormModule,

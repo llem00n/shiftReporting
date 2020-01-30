@@ -1,5 +1,7 @@
-<select name="" id="">
-  <option value="value 1">value 1</option>
-  <option value="value 1">value 2</option>
-  <option value="value 1">value 3</option>
-</select>
+<span [formGroup]="options.form">
+  <select name="" id="" [formControlName]="options.control.key"
+    class="block  w-full bg-gray-200 border border-gray-200 text-gray-800 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+    <option disabled [value]="null">{{options.control.placeholder || ''}}</option>    
+    <option *ngFor="let option of options.control.options " [value]="option.value">{{option.viewValue}}</option>
+  </select>
+</span>

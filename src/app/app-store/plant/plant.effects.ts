@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PlantActions } from '../actions';
 import { map, mergeMap, tap, filter } from 'rxjs/operators';
-import { PlantService } from './plant-http.service';
+import { PlantHttpService } from './plant-http.service';
 
 
 
@@ -51,7 +51,7 @@ export class PlantEffects {
 
   constructor(
     private actions$: Actions,
-    private plantService: PlantService
+    private plantService: PlantHttpService
   ) { }
 
 }
