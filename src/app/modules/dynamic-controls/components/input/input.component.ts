@@ -8,12 +8,14 @@ import { ControlOptions } from '../../models/control-options.model';
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit {
-  options: ControlOptions; 
+  options: ControlOptions;
   constructor(
     private clService: ControlsLocalService,
   ) { }
 
-  ngOnInit() {   
-    this.clService.getData().subscribe(options => this.options = options)
+  ngOnInit() {
+    this.clService.getData().subscribe(options => {
+      this.options = options
+    })
   }
 }

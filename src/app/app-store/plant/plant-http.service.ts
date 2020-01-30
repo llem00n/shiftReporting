@@ -34,7 +34,15 @@ export class PlantService {
     return this.httpService.post<AppHttpResponse>(options);
   }
 
-  updatePlant() { }
+  updatePlant(plant: Plant): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'updatePlant',
+      payload: { plant },
+      loadingMsg: 'Updating the plant ...',
+      successMsg: `Plant has been updated`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
 
   deletePlant(plantId): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {

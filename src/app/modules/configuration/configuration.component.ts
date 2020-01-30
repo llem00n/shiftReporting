@@ -15,24 +15,16 @@ import { Plant } from 'src/app/app-store/plant/plant.model';
 })
 export class ConfigurationComponent implements OnInit {
 
-  showedAddForm: string = null;
-  plants: Plant[];
-  formConfiguration = [
-    { key: 'Plant', type: 'select', label: 'Plant', options: [], placeholder: 'Select plant' },
-    { key: 'Department', type: 'input', label: 'Department' }
-  ]
-
-  data = [
-    { id: 1, name: '2', type: '3' },
-    { id: 2, name: '3', type: '4' }
-  ]
 
   form: FormGroup;
   childForm: FormGroup = new FormGroup({});
   addForm: FormGroup;
+
+  isShow: { [key: string]: boolean } = {};
+
   configControls = {
     Plant: [
-      <Input>{ key: 'Name', type: 'input', label: 'Name', validators: ['required'] },
+      <Input>{ key: 'Name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Something' },
       <Input>{ key: 'Code', type: 'input', label: 'Code', validators: ['required'] },
       <Input>{ key: 'Address', type: 'input', label: 'Address', validators: ['required'] },
     ],
@@ -47,52 +39,5 @@ export class ConfigurationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.pipe(
-      select(allPlants),
-      tap(plants => { if (plants.length > 0) this.formConfiguration[0]['enableShowList'] = true }),
-      tap(plants => this.formConfiguration[0]['list'] = plants),
-
-      map(plants => this.formConfiguration[0].options = plants.map(i => {
-        this.showedAddForm = null
-        return {
-          value: i.plantId,
-          valueView: `${i.name} (${i.code}, ${i.address})`
-        }
-      })
-      )
-    ).subscribe();
-    this.store.dispatch(PlantActions.loadPlants());
-    this.form = this.createForm(this.formConfiguration)
-  }
-  createForm(config: DynControl[]): FormGroup {
-    const group = new FormGroup({})
-    config.map(i => {
-      group.addControl(i.key, new FormControl(''))
-    })
-    return group;
-  }
-
-  childFormCreated(form) {
-    this.childForm = form;
-  }
-
-  addItem(key) {
-    const payload = this.childForm.value;
-    switch (key) {
-      case 'Plant':
-        this.store.dispatch(PlantActions.addPlant({ plant: payload }))
-        break;
-      default:
-        break;
-    }
-  }
-
-  deletePlant(id) {
-    this.store.dispatch(PlantActions.deletePlant({ id }))
-  }
-
-  editPlant(id) {
-    console.log(id);
-
   }
 }

@@ -1,24 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+export interface ListData {
+  actionButtons?: { key: string, title: string }[];
+  head: { key: string, title: string }[];
+  tableData: Object[]
+}
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
-  @Input() data: Array<{}>;
+export class ListComponent {
+  @Input() data: ListData;
+  @Output() clickActionButton: EventEmitter<{ action: string, item: {} }> = new EventEmitter();
 
-  head: string[];
-
-
-  constructor() { }
-
-  ngOnInit() {
-    // this.data && Object.keys(this.data[0]).map(i)
-    console.log(this.data);
-    this.head = Object.keys(this.data[0])
-    console.log(this.head);
-    
+  clickActButton(action, item) {
+    this.clickActionButton.emit({
+      action, item
+    })
   }
-
 }

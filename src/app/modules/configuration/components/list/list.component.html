@@ -1,43 +1,17 @@
-<p>list works!</p>
-<div *ngFor="let plant of data">
-  <div class="flex justify-between items-center p-1">
-    <span>{{plant.name}}</span>
-    <div>
-    </div>
-    <button class="btn p-1" (click)='editPlant(plant.plantId)'>Edit</button>
-    <button class="btn p-1" (click)='deletePlant(plant.plantId)'>delete</button>
-  </div>
-  <hr>
-</div>
-
 <table class="table-auto">
   <thead>
     <tr>
-      <th *ngFor='let title of head' class="px-4 py-2">{{title}}</th>
-      <th class="px-4 py-2">actions</th>
+      <th *ngFor='let i of data.head' class="border px-4 py-2">{{i.title}}</th>
+      <th *ngIf="data.actionButtons" class="border px-4 py-2">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor='let item of data'>
-      <td * class="border px-4 py-2"></td>
-
-    </tr>
-
-    <tr>
-      <td class="border px-4 py-2">Intro to CSS</td>
-      <td class="border px-4 py-2">Adam</td>
-      <td class="border px-4 py-2">858</td>
-    </tr>
-    <tr class="bg-gray-100">
-      <td class="border px-4 py-2">A Long and Winding Tour of the History of UI Frameworks and Tools and the Impact on
-        Design</td>
-      <td class="border px-4 py-2">Adam</td>
-      <td class="border px-4 py-2">112</td>
-    </tr>
-    <tr>
-      <td class="border px-4 py-2">Into to JavaScript</td>
-      <td class="border px-4 py-2">Chris</td>
-      <td class="border px-4 py-2">1,280</td>
+    <tr *ngFor='let row of data.tableData'>
+      <td *ngFor='let i of data.head' class="border px-4 py-2">{{row[i.key]}}</td>
+      <td *ngIf="data.actionButtons" class="border px-4 py-2">
+        <button *ngFor='let button of data.actionButtons' (click)="clickActButton(button.key, row)"
+          class="btn p-1 mx-1">{{button.title}}</button>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -1,5 +1,11 @@
 <p>===Configuration===</p>
-<app-list [data]='data'></app-list>
+<div class="border-2 border-gray-600 border-solid mb-5 p-4 rounded-lg shadow-lg max-w-4xl">
+  <p class="font-bold mr-4 text-xl cursor-default" (click)="isShow.configPlant = !isShow.configPlant">Plants configuration</p>
+  <app-config-plants *ngIf="isShow.configPlant"></app-config-plants>
+</div>
+
+
+<!-- <app-list [data]='data' (clickActionButton)='clickList($event)'></app-list>
 <div *ngFor="let i of formConfiguration"
   class="max-w-xs mb-5 border-solid border-2 border-gray-600 p-4 rounded-lg  shadow-lg">
   <div class="my-4">
@@ -36,6 +42,4 @@
   <div class="my-4" align="end" *ngIf='showedAddForm !== i.key'>
     <button class="btn mx-2" (click)='showedAddForm = i.key'>Add</button>
   </div>
-</div>
-
-
+</div> -->

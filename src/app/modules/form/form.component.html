@@ -1,4 +1,6 @@
   <div *ngFor="let i of controls">
-      <!-- <label *ngIf="i.label" for="">{{i.label}}: </label> -->
-      <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>
+      <label *ngIf="i.label"class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">{{i.label}}: </label>
+      <div class="mb-6">
+        <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>
+      </div>
   </div>   

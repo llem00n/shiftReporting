@@ -20,8 +20,9 @@ export class PlantEffects {
   addPlant$ = createEffect(() => this.actions$.pipe(
     ofType(PlantActions.addPlant),
     mergeMap(action => this.plantService.addPlant(action.plant).pipe(
+      filter(resp => !!resp),
+      map(resp => PlantActions.addPlantSuccess({ plant: resp.body }))
     )),
-    map(resp => PlantActions.addPlantSuccess({ plant: resp.body }))
   ));
 
   deletePlant$ = createEffect(() => this.actions$.pipe(
@@ -31,6 +32,20 @@ export class PlantEffects {
       map(val => PlantActions.deletePlantSuccess({ id: action.id }))
     )),
   ))
+
+  updatePlant$ = createEffect(() => this.actions$.pipe(
+    ofType(PlantActions.updatePlant),
+    mergeMap(action => this.plantService.updatePlant(action.plant).pipe(
+      filter(resp => !!resp),
+      map(resp => PlantActions.updatePlantSucces({
+        plant: {
+          id: resp.body.plantId,
+          changes: resp.body
+        }
+      }))
+    )),
+  ));
+
 
 
 
