@@ -1,5 +1,5 @@
 export interface Department {
-  departmentID: number;
+  departmentId: number;
   name: string;
   description: string;
   plantID: number;

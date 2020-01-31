@@ -8,6 +8,7 @@ import { PlantActions, DepartmentActions } from '@actions/*';
 import { ListData } from '../list/list.component';
 import { Department } from 'src/app/app-store/department/department.model';
 import { ConfigurationService } from '../../services/configuration.service';
+import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
 
 @Component({
   selector: 'app-config-departments',
@@ -15,13 +16,39 @@ import { ConfigurationService } from '../../services/configuration.service';
   styleUrls: ['./config-departments.component.scss']
 })
 export class ConfigDepartmentsComponent implements OnInit {
+  isShowPanels: { [key: string]: boolean } = {};
+
 
   list: ListData;
   plantsList = []
   preConfigForm: FormGroup;
   preConfig = [
-    <Select>{ key: 'plantId', type: 'select', label: 'Plant', validators: ['required'], options: [], placeholder: 'Select plant' },
+    <Select>{
+      key: 'plantId',
+      type: 'select',
+      label: 'Plant',
+      validators: { required: true },
+      options: [],
+      placeholder: 'Select plant'
+    },
   ]
+  editingObj: Department;
+
+  configDepartment = [
+    <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: { required: true } },
+    <DynInput>{ key: 'description', type: 'input', label: 'Description' },
+  ]
+
+  editOptions = {
+    properties: this.configDepartment,
+    actType: 'edit',
+    objectType: 'plant'
+  }
+  addNewOptions = {
+    properties: this.configDepartment,
+    actType: 'new',
+    objectType: 'plant'
+  }
 
 
   constructor(
@@ -56,22 +83,43 @@ export class ConfigDepartmentsComponent implements OnInit {
     this.store.pipe(
       select(allDepartments),
     ).subscribe((departments: Department[]) => {
-      if (!departments.length) return;
+      // if (!departments.length) return;
       this.list = this.confService.createList(departments);
     })
-
   }
 
-
   getPreConfigForm(e: FormGroup) {
+    this.preConfigForm = e;
     e.valueChanges.subscribe(
       value => {
         const plantId = +value.plantId;
-        console.log(plantId);        
         this.store.dispatch(DepartmentActions.loadDepartments({ plantId }))
       }
     )
-    console.log(e);
   }
 
+  clickListsButton(e) {
+    switch (e.action) {
+      case 'edit':
+        this.editingObj = e.item;
+        this.isShowPanels.edit = true;
+        break;
+      case 'dlt':
+        this.store.dispatch(DepartmentActions.deleteDepartment({ id: e.item.departmentId }))
+        break
+    }
+  }
+  updateObj(e) {
+    let department = { ...this.editingObj }
+    this.isShowPanels.edit = false;
+    Object.assign(department, e);
+    this.store.dispatch(DepartmentActions.updateDepartment({ department }))
+  }
+
+  addObj(e) {
+    let department = <Department>{};
+    this.isShowPanels.add = false;
+    Object.assign(department, this.preConfigForm.value, e);
+    this.store.dispatch(DepartmentActions.addDepartment({ department }))
+  }
 }

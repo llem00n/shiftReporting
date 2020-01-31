@@ -51,8 +51,8 @@ export class EditingPanelComponent implements OnInit, OnChanges {
   getForm(e: FormGroup) {
     this.form = e;
   }
-  disableOkButton(): boolean {	
-    let res = this.properties.filter(i => this.object[i.key] !== this.form.value[i.key])	
-    return this.form.invalid || res.length === 0	
+  disableOkButton(): boolean {
+    let res = this.actType === 'edit' ? this.properties.filter(i => this.object[i.key] !== this.form.value[i.key]) : [1];
+    return this.form.invalid || res.length === 0
   }
 }

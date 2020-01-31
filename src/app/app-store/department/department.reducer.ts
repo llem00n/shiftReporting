@@ -10,7 +10,7 @@ export interface State extends EntityState<Department> {
 }
 
 export const adapter: EntityAdapter<Department> = createEntityAdapter<Department>({
-  selectId: (model: Department) => model.departmentID
+  selectId: (model: Department) => model.departmentId
 });
 
 export const initialState: State = adapter.getInitialState({
@@ -19,30 +19,30 @@ export const initialState: State = adapter.getInitialState({
 
 const departmentReducer = createReducer(
   initialState,
-  on(DepartmentActions.addDepartment,
+  on(DepartmentActions.addDepartmentSucces,
     (state, action) => adapter.addOne(action.department, state)
   ),
-  on(DepartmentActions.upsertDepartment,
-    (state, action) => adapter.upsertOne(action.department, state)
-  ),
-  on(DepartmentActions.addDepartments,
-    (state, action) => adapter.addMany(action.departments, state)
-  ),
-  on(DepartmentActions.upsertDepartments,
-    (state, action) => adapter.upsertMany(action.departments, state)
-  ),
-  on(DepartmentActions.updateDepartment,
+  // on(DepartmentActions.upsertDepartment,
+  //   (state, action) => adapter.upsertOne(action.department, state)
+  // ),
+  // on(DepartmentActions.addDepartments,
+  //   (state, action) => adapter.addMany(action.departments, state)
+  // ),
+  // on(DepartmentActions.upsertDepartments,
+  //   (state, action) => adapter.upsertMany(action.departments, state)
+  // ),
+  on(DepartmentActions.updateDepartmentSuccess,
     (state, action) => adapter.updateOne(action.department, state)
   ),
-  on(DepartmentActions.updateDepartments,
-    (state, action) => adapter.updateMany(action.departments, state)
-  ),
-  on(DepartmentActions.deleteDepartment,
+  // on(DepartmentActions.updateDepartments,
+  //   (state, action) => adapter.updateMany(action.departments, state)
+  // ),
+  on(DepartmentActions.deleteDepartmentSucces,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  on(DepartmentActions.deleteDepartments,
-    (state, action) => adapter.removeMany(action.ids, state)
-  ),
+  // on(DepartmentActions.deleteDepartments,
+  //   (state, action) => adapter.removeMany(action.ids, state)
+  // ),
   on(DepartmentActions.loadDepartmentsSuccess,
     (state, action) => adapter.addAll(action.departments, state)
   ),
