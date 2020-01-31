@@ -35,7 +35,6 @@ export class EditingPanelComponent implements OnInit, OnChanges {
     this.title = this.getTitle()
     this.actType = this.options.actType || 'new';
     this.properties = this.options.properties;
-
   }
 
   getTitle() {
@@ -46,14 +45,14 @@ export class EditingPanelComponent implements OnInit, OnChanges {
         break;
       case 'edit':
         title = `Edit ${this.options.objectType || ''} (name: ${this.object.name})`;
-
     }
-
     return title
   }
-
   getForm(e: FormGroup) {
     this.form = e;
-    this.form.valueChanges.subscribe(console.log)
+  }
+  disableOkButton(): boolean {	
+    let res = this.properties.filter(i => this.object[i.key] !== this.form.value[i.key])	
+    return this.form.invalid || res.length === 0	
   }
 }

@@ -5,6 +5,6 @@
   <div class="my-4" align="end">
     <button class="btn mx-2" (click)='clickCancel.emit()'>Cancel</button>
     <button class="btn mx-2" (click)='clickOk.emit(form.value)' [disabled]="form.invalid"
-      [class.disabled]='form.invalid'>Ok</button>
+      [class.disabled]='disableOkButton()'>Ok</button>
   </div>  
 </div>
