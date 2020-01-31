@@ -15,18 +15,15 @@ export class FormComponent implements OnChanges {
   customForm: FormGroup = new FormGroup({});
 
   ngOnChanges() {
-    // console.log(this.values);
     this.customForm = this.createForm(this.controls);
   }
   createForm(controls): FormGroup {
-    // console.log(this.values);
 
     const group = new FormGroup({});
     controls.map(i => {
       group.addControl(i.key, new FormControl(this.values && this.values[i.key] || null, [Validators.required]));
     });
     this.form.emit(group);
-    // console.log(group.value);
     return group;
   }
 }

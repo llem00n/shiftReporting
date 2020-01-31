@@ -39,7 +39,7 @@ export class HttpService {
       map(resp => { return <AppHttpResponse>{ status: resp.status, body: resp.body } }),
       catchError((error: HttpErrorResponse) => {
         this.message.errorMessage(`${error.statusText}... ${error.error}... ${error.message}`);
-        // console.log(error);
+        // deleteDepartmentSucces(error);
         return of(null)
       })
     )

@@ -28,7 +28,7 @@ export class PlantEffects {
   deletePlant$ = createEffect(() => this.actions$.pipe(
     ofType(PlantActions.deletePlant),
     mergeMap(action => this.plantService.deletePlant(action.id).pipe(
-      filter(resp => resp.status === 200),
+      filter(resp => resp && resp.status === 200),
       map(val => PlantActions.deletePlantSuccess({ id: action.id }))
     )),
   ))

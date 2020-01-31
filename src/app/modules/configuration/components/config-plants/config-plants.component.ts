@@ -4,7 +4,7 @@ import { State } from 'src/app/app-store/plant/plant.reducer';
 import { allPlants } from 'src/app/app-store';
 import { ListData } from '../list/list.component';
 import { Plant } from 'src/app/app-store/plant/plant.model';
-import { Input } from 'src/app/modules/dynamic-controls/components/input/input.model';
+import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
 import { FormGroup } from '@angular/forms';
 import { PlantActions } from '@actions/*';
 import { ConfigurationService } from '../../services/configuration.service';
@@ -28,12 +28,10 @@ export class ConfigPlantsComponent implements OnInit {
   isShowEditPanel = false;
   showedAddForm = false;
 
-
-
   configPlant = [
-    <Input>{ key: 'name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Name' },
-    <Input>{ key: 'code', type: 'input', label: 'Code', validators: ['required'] },
-    <Input>{ key: 'address', type: 'input', label: 'Address', validators: ['required'] },
+    <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Name' },
+    <DynInput>{ key: 'code', type: 'input', label: 'Code', validators: ['required'] },
+    <DynInput>{ key: 'address', type: 'input', label: 'Address', validators: ['required'] },
   ];
 
   editOptions = {
@@ -48,9 +46,9 @@ export class ConfigPlantsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getData()
+    this.getPlants()
   }
-  getData() {
+  getPlants() {
     let respCount = 0;
     this.store.pipe(
       select(allPlants),
@@ -80,6 +78,9 @@ export class ConfigPlantsComponent implements OnInit {
         this.editingPlant = e.item;
         this.isShowEditPanel = true;
         break;
+      case 'dlt':
+        this.store.dispatch(PlantActions.deletePlant({ id: e.item.plantId }))
+        break
     }
   }
 }

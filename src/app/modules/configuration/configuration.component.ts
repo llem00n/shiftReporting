@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Input } from '../dynamic-controls/components/input/input.model';
+import { DynInput } from '../dynamic-controls/components/input/input.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
@@ -21,19 +21,19 @@ export class ConfigurationComponent implements OnInit {
   addForm: FormGroup;
 
   isShow: { [key: string]: boolean } = {
-    configPlants: true,
-    configDepartments: false
+    // configPlants: true,
+    configDepartments: true
   };
 
   configControls = {
     Plant: [
-      <Input>{ key: 'Name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Something' },
-      <Input>{ key: 'Code', type: 'input', label: 'Code', validators: ['required'] },
-      <Input>{ key: 'Address', type: 'input', label: 'Address', validators: ['required'] },
+      <DynInput>{ key: 'Name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Something' },
+      <DynInput>{ key: 'Code', type: 'input', label: 'Code', validators: ['required'] },
+      <DynInput>{ key: 'Address', type: 'input', label: 'Address', validators: ['required'] },
     ],
     Department: [
-      <Input>{ key: 'Name', type: 'input', label: 'Name' },
-      <Input>{ key: 'Description', type: 'input', label: 'Description' },
+      <DynInput>{ key: 'Name', type: 'input', label: 'Name' },
+      <DynInput>{ key: 'Description', type: 'input', label: 'Description' },
     ]
   }
 
