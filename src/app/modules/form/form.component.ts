@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { DynControl } from '../dynamic-controls/models';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -21,7 +21,13 @@ export class FormComponent implements OnChanges {
 
     const group = new FormGroup({});
     controls.map(i => {
-      group.addControl(i.key, new FormControl(this.values && this.values[i.key] || null, [Validators.required]));
+      const validators: ValidatorFn[] = [];
+      i.validators && Object.keys(i.validators).map(key => {
+        if (typeof (i.validators[key]) === 'boolean') validators.push(Validators[key])
+        else validators.push(Validators[key](i.validators[key]));
+
+      });
+      group.addControl(i.key, new FormControl(this.values && this.values[i.key] || null, validators));
     });
     this.form.emit(group);
     return group;

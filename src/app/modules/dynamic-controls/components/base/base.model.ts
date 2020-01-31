@@ -3,8 +3,8 @@ export interface BaseControl {
   type: string;
   value?: boolean | string | number | null;
   valueType?: string;
-  validators?: string[];
-  label?: string;  
+  validators?: { [key: string]: boolean | number | string };
+  label?: string;
 }
 
 

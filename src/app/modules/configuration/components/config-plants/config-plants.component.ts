@@ -29,9 +29,9 @@ export class ConfigPlantsComponent implements OnInit {
   showedAddForm = false;
 
   configPlant = [
-    <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Name' },
-    <DynInput>{ key: 'code', type: 'input', label: 'Code', validators: ['required'] },
-    <DynInput>{ key: 'address', type: 'input', label: 'Address', validators: ['required'] },
+    <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: { required: true }, placeholder: 'Name' },
+    <DynInput>{ key: 'code', type: 'input', label: 'Code', validators: { required: true } },
+    <DynInput>{ key: 'address', type: 'input', label: 'Address', validators: { required: true } },
   ];
 
   editOptions = {
