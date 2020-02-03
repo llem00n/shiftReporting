@@ -9,6 +9,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { PlantEffects } from './plant/plant.effects';
 import * as fromDepartment from './department/department.reducer';
 import { DepartmentEffects } from './department/department.effects';
+import * as fromShift from './shift/shift.reducer';
+import { ShiftEffects } from './shift/shift.effects';
 
 
 
@@ -25,8 +27,9 @@ import { DepartmentEffects } from './department/department.effects';
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreModule.forFeature(fromPlant.plantsFeatureKey, fromPlant.reducer),
-    EffectsModule.forRoot([PlantEffects, DepartmentEffects]),
-    StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer)
+    EffectsModule.forRoot([PlantEffects, DepartmentEffects, ShiftEffects]),
+    StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer),
+    StoreModule.forFeature(fromShift.shiftsFeatureKey, fromShift.reducer)
   ]
 })
 export class AppStoreModule { }

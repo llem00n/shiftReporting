@@ -8,17 +8,20 @@ import {
 import { environment } from '../../environments/environment';
 import * as fromPlant from './plant/plant.reducer';
 import * as fromDepartment from './department/department.reducer';
+import * as fromShift from './shift/shift.reducer';
 
 export interface State {
 
   [fromPlant.plantsFeatureKey]: fromPlant.State;
   [fromDepartment.departmentsFeatureKey]: fromDepartment.State;
+  [fromShift.shiftsFeatureKey]: fromShift.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
 
   [fromPlant.plantsFeatureKey]: fromPlant.reducer,
   [fromDepartment.departmentsFeatureKey]: fromDepartment.reducer,
+  [fromShift.shiftsFeatureKey]: fromShift.reducer,
 };
 
 
