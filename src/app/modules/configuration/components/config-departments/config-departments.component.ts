@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Select } from 'src/app/modules/dynamic-controls/components/select/select.model';
 import { Store, select } from '@ngrx/store';
@@ -15,7 +15,7 @@ import { DynInput } from 'src/app/modules/dynamic-controls/components/input/inpu
   templateUrl: './config-departments.component.html',
   styleUrls: ['./config-departments.component.scss']
 })
-export class ConfigDepartmentsComponent implements OnInit {
+export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
   isShowPanels: { [key: string]: boolean } = {};
 
 
@@ -42,12 +42,12 @@ export class ConfigDepartmentsComponent implements OnInit {
   editOptions = {
     properties: this.configDepartment,
     actType: 'edit',
-    objectType: 'plant'
+    objectType: 'department'
   }
   addNewOptions = {
     properties: this.configDepartment,
     actType: 'new',
-    objectType: 'plant'
+    objectType: 'department'
   }
 
 
@@ -59,6 +59,9 @@ export class ConfigDepartmentsComponent implements OnInit {
   ngOnInit() {
     this.getPlants();
     this.getDepartments()
+  }
+  ngOnDestroy() {
+    this.store.dispatch(DepartmentActions.clearDepartments())
   }
   getPlants() {
     let respCount = 0;

@@ -6,6 +6,7 @@ import { ControlsLocalService } from './services/controls-local.service';
 import { ControlOptions } from './models/control-options.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from './models/';
+import { DynInput } from './components/input/input.model';
 
 // enum Controls {
 //   InputComponent = 'input',
@@ -27,7 +28,7 @@ export class DynamicControlsComponent implements OnChanges {
   @Input() control: DynControl;
   @Input() form: FormGroup;
 
-  private component;
+  component;
   private dataSourse = new BehaviorSubject<any>(null);
   private data = this.dataSourse.asObservable();
 
@@ -36,7 +37,7 @@ export class DynamicControlsComponent implements OnChanges {
   ) { }
 
   ngOnChanges() {
-    this.clService.setData({ control: this.control, form: this.form });
+    this.clService.setData({ control: <DynInput>this.control, form: this.form });
     this.component = controls[this.control.type];
   }
 }

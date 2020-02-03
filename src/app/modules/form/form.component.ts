@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms'
 })
 export class FormComponent implements OnChanges {
   @Input() controls: DynControl[];
-  @Input() values: { [key: string]: string | number }
+  @Input() values;
   @Output() form = new EventEmitter<FormGroup>()
 
   customForm: FormGroup = new FormGroup({});

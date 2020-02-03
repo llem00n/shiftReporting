@@ -25,17 +25,17 @@ export class ConfigurationComponent implements OnInit {
     configDepartments: true
   };
 
-  configControls = {
-    Plant: [
-      <DynInput>{ key: 'Name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Something' },
-      <DynInput>{ key: 'Code', type: 'input', label: 'Code', validators: ['required'] },
-      <DynInput>{ key: 'Address', type: 'input', label: 'Address', validators: ['required'] },
-    ],
-    Department: [
-      <DynInput>{ key: 'Name', type: 'input', label: 'Name' },
-      <DynInput>{ key: 'Description', type: 'input', label: 'Description' },
-    ]
-  }
+  // configControls = {
+  //   Plant: [
+  //     <DynInput>{ key: 'Name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Something' },
+  //     <DynInput>{ key: 'Code', type: 'input', label: 'Code', validators: ['required'] },
+  //     <DynInput>{ key: 'Address', type: 'input', label: 'Address', validators: ['required'] },
+  //   ],
+  //   Department: [
+  //     <DynInput>{ key: 'Name', type: 'input', label: 'Name' },
+  //     <DynInput>{ key: 'Description', type: 'input', label: 'Description' },
+  //   ]
+  // }
 
   constructor(
     private store: Store<State>

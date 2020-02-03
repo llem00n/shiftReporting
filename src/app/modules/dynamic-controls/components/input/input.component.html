@@ -1,8 +1,6 @@
 <span [formGroup]="options.form">
-  <input type="text" [formControlName]="options.control.key" 
-  [placeholder]="options.control.placeholder || ''"
-  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight
-   focus:outline-none focus:bg-white focus:border-gray-500">
+  <input type="text" [formControlName]="options.control.key" [placeholder]="options.control.placeholder || ''"
+    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight   focus:outline-none focus:bg-white focus:border-gray-500">
   <!-- <mat-form-field>
     <mat-label>{{options.control.label}}</mat-label>
     <input matInput [formControlName]="options.control.key" autocomplete="off">
