@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigPlantsComponent } from './components/config-plants/config-plants.component';
 import { ConfigDepartmentsComponent } from './components/config-departments/config-departments.component';
 import { ConfigShiftComponent } from './components/config-shift/config-shift.component';
+import { ConfigScheduleComponent } from './components/config-schedule/config-schedule.component';
 
 @Component({
   selector: 'app-configuration',
@@ -14,7 +15,8 @@ export class ConfigurationComponent implements OnInit {
   config = [
     { key: 'plant', component: ConfigPlantsComponent, title: 'Plants configuration', isShow: false },
     { key: 'department', component: ConfigDepartmentsComponent, title: 'Departments configuration', isShow: false },
-    { key: 'shift', component: ConfigShiftComponent, title: 'Shifts configuration', isShow: true },
+    { key: 'shift', component: ConfigShiftComponent, title: 'Shifts configuration', isShow: false },
+    { key: 'schedule', component: ConfigScheduleComponent, title: 'Schedule configuration', isShow: true },
   ]
   constructor(
   ) { }

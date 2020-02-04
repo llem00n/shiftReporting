@@ -11,6 +11,8 @@ import * as fromDepartment from './department/department.reducer';
 import { DepartmentEffects } from './department/department.effects';
 import * as fromShift from './shift/shift.reducer';
 import { ShiftEffects } from './shift/shift.effects';
+import * as fromSchedule from './schedules/schedule.reducer';
+import { ScheduleEffects } from './schedules/schedule.effects';
 
 
 
@@ -26,10 +28,11 @@ import { ShiftEffects } from './shift/shift.effects';
       }
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    StoreModule.forFeature(fromPlant.plantsFeatureKey, fromPlant.reducer),
-    EffectsModule.forRoot([PlantEffects, DepartmentEffects, ShiftEffects]),
-    StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer),
-    StoreModule.forFeature(fromShift.shiftsFeatureKey, fromShift.reducer)
+    EffectsModule.forRoot([PlantEffects, DepartmentEffects, ShiftEffects, ScheduleEffects]),
+    // StoreModule.forFeature(fromPlant.plantsFeatureKey, fromPlant.reducer),
+    // StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer),
+    // StoreModule.forFeature(fromShift.shiftsFeatureKey, fromShift.reducer),
+    // StoreModule.forFeature(fromSchedule.schedulesFeatureKey, fromSchedule.reducer)
   ]
 })
 export class AppStoreModule { }

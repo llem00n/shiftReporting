@@ -8,6 +8,7 @@ import { ConfigPlantsComponent } from './components/config-plants/config-plants.
 import { ConfigDepartmentsComponent } from './components/config-departments/config-departments.component';
 import { EditingPanelComponent } from './components/editing-panel/editing-panel.component';
 import { ConfigShiftComponent } from './components/config-shift/config-shift.component';
+import { ConfigScheduleComponent } from './components/config-schedule/config-schedule.component';
 // import { MatCardModule } from '@angular/material/card';
 // import {MatSelectModule} from '@angular/material/select';
 // import {MatFormFieldModule} from '@angular/material/form-field';
@@ -24,7 +25,7 @@ import { ConfigShiftComponent } from './components/config-shift/config-shift.com
 // ]
 
 @NgModule({
-  declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent],
+  declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent],
   imports: [
     CommonModule,
     FormModule,
