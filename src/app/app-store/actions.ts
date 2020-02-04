@@ -1,5 +1,6 @@
 import * as PlantActions from './plant/plant.actions';
 import * as DepartmentActions from './department/department.actions';
+import * as ShiftActions from './shift/shift.actions';
 
 // import * as DboardBuildActions from './dboard-build/dboard-build.actions';
 // import * as GeneralActions from './general/general.actions';
@@ -9,7 +10,8 @@ import * as DepartmentActions from './department/department.actions';
 
 export {
   PlantActions,
-  DepartmentActions
+  DepartmentActions,
+  ShiftActions
   // DboardBuildActions,
   // GeneralActions,
   // FillDataActions,

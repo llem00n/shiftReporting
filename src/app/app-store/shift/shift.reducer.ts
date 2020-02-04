@@ -43,9 +43,9 @@ const shiftReducer = createReducer(
   // on(ShiftActions.deleteShifts,
   //   (state, action) => adapter.removeMany(action.ids, state)
   // ),
-  // on(ShiftActions.loadShifts,
-  //   (state, action) => adapter.addAll(action.shifts, state)
-  // ),
+  on(ShiftActions.getShiftsSuccess,
+    (state, action) => adapter.addAll(action.shifts, state)
+  ),
   on(ShiftActions.clearShifts,
     state => adapter.removeAll(state)
   ),

@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DynInput } from '../dynamic-controls/components/input/input.model';
-import { FormGroup, FormControl } from '@angular/forms';
-import { DynControl } from '../dynamic-controls/models';
-import { Store, select } from '@ngrx/store';
-import { State, allPlants, plantState } from 'src/app/app-store/';
-import { PlantActions } from 'src/app/app-store/actions';
-import { map, tap } from 'rxjs/operators';
-import { Plant } from 'src/app/app-store/plant/plant.model';
+import { ConfigPlantsComponent } from './components/config-plants/config-plants.component';
+import { ConfigDepartmentsComponent } from './components/config-departments/config-departments.component';
+import { ConfigShiftComponent } from './components/config-shift/config-shift.component';
 
 @Component({
   selector: 'app-configuration',
@@ -14,31 +9,14 @@ import { Plant } from 'src/app/app-store/plant/plant.model';
   styleUrls: ['./configuration.component.scss']
 })
 export class ConfigurationComponent implements OnInit {
+  isShow: { [key: string]: boolean } = {};
 
-
-  form: FormGroup;
-  childForm: FormGroup = new FormGroup({});
-  addForm: FormGroup;
-
-  isShow: { [key: string]: boolean } = {
-    // configPlants: true,
-    configDepartments: true
-  };
-
-  // configControls = {
-  //   Plant: [
-  //     <DynInput>{ key: 'Name', type: 'input', label: 'Name', validators: ['required'], placeholder: 'Something' },
-  //     <DynInput>{ key: 'Code', type: 'input', label: 'Code', validators: ['required'] },
-  //     <DynInput>{ key: 'Address', type: 'input', label: 'Address', validators: ['required'] },
-  //   ],
-  //   Department: [
-  //     <DynInput>{ key: 'Name', type: 'input', label: 'Name' },
-  //     <DynInput>{ key: 'Description', type: 'input', label: 'Description' },
-  //   ]
-  // }
-
+  config = [
+    { key: 'plant', component: ConfigPlantsComponent, title: 'Plants configuration', isShow: false },
+    { key: 'department', component: ConfigDepartmentsComponent, title: 'Departments configuration', isShow: false },
+    { key: 'shift', component: ConfigShiftComponent, title: 'Shifts configuration', isShow: true },
+  ]
   constructor(
-    private store: Store<State>
   ) { }
 
   ngOnInit() {

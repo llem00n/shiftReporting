@@ -5,7 +5,7 @@ import { Shift } from './shift.model';
 
 export const getShifts = createAction(
   '[Shift/API] Get Shifts',
-  props<{ departmintId: number }>()
+  props<{ departmentId: number }>()
 );
 export const getShiftsSuccess = createAction(
   '[Shift/API] Get Shifts Success',

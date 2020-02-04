@@ -17,8 +17,6 @@ import { DynInput } from 'src/app/modules/dynamic-controls/components/input/inpu
 })
 export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
   isShowPanels: { [key: string]: boolean } = {};
-
-
   list: ListData;
   plantsList = []
   preConfigForm: FormGroup;

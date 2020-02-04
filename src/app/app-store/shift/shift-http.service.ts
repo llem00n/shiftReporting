@@ -1,31 +1,53 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AppHttpResponse } from '../services/http.service';
+import { AppHttpResponse, HttpService, AppHttpRequest } from '../services/http.service';
+import { Shift } from './shift.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShiftHttpService {
 
-  constructor() { }
+  baseUrl = 'shifts/'
 
-  AddShift(): Observable<AppHttpResponse> {
-    console.log('AddShift');
-    return of(null)
+  constructor(private httpService: HttpService) { }
+
+  addShift(shift: Shift): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'addShift',
+      payload: { shift },
+      loadingMsg: 'Adding the shift ...',
+      successMsg: `Shift has been added`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
   }
 
-  UpdateShift(): Observable<AppHttpResponse> {
-    console.log('UpdateShift');
-    return of(null)
+  updateShift(shift: Shift): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'updateShift',
+      payload: { shift },
+      loadingMsg: 'Updating the shift ...',
+      successMsg: `Shift has been updated`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
   }
 
-  DeleteShift(): Observable<AppHttpResponse> {
-    console.log('DeleteShift');
-    return of(null)
+  deleteShift(shiftId: number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'deleteShift',
+      payload: { shiftId },
+      loadingMsg: 'Deleteing the shift ...',
+      successMsg: `Shift has been delited`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
   }
 
-  GetShifts(): Observable<AppHttpResponse> {
-    console.log('GetShifts');
-    return of(null)
+  getShifts(departmentId: number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getShifts',
+      payload: { departmentId },
+      loadingMsg: 'Loading the shifts ...',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
   }
 }

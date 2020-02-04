@@ -35,3 +35,6 @@ export const allPlants = createSelector(plantState, fromPlant.selectAll);
 //departments
 export const departmentsState = createFeatureSelector<fromDepartment.State>('departments');
 export const allDepartments = createSelector(departmentsState, fromDepartment.selectAll);
+//departments
+export const shiftsState = createFeatureSelector<fromShift.State>('shifts');
+export const allShifts = createSelector(shiftsState, fromShift.selectAll);
