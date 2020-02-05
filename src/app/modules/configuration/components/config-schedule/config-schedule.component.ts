@@ -8,6 +8,7 @@ import { Select } from 'src/app/modules/dynamic-controls/components/select/selec
 import { FormGroup } from '@angular/forms';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
 import { DynDatetime } from 'src/app/modules/dynamic-controls/components/dyn-datetime/dyn-datetime.model';
+import { BaseControl } from 'src/app/modules/dynamic-controls/components/base/base.model';
 
 @Component({
   selector: 'app-config-schedule',
@@ -27,14 +28,6 @@ export class ConfigScheduleComponent implements OnInit {
       options: [],
       placeholder: 'Select plant'
     },
-    // <Select>{
-    //   key: 'test',
-    //   type: 'datetime',
-    //   label: 'Plant',
-    //   validators: { required: true },
-    //   options: [],
-    //   placeholder: 'Select plant'
-    // },
     <Select>{
       key: 'departmentId',
       type: 'select',
@@ -51,12 +44,19 @@ export class ConfigScheduleComponent implements OnInit {
       options: [],
       placeholder: 'Select shift'
     },
+    // {
+    //   key: 'test',
+    //   type: 'checkbox',
+    //   label: 'Plant',
+    //   validators: { required: true },
+    // },
   ]
   // editingObj: Shift;
 
   configSchedule = [
     <DynDatetime>{ key: 'StartTime', type: 'datetime', label: 'Start Time', validators: { required: true } },
     <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
+    <BaseControl>{ key: 'checkbox', type: 'checkbox', label: 'checkbox', validators: { required: true } },
   ]
 
   // editOptions = {

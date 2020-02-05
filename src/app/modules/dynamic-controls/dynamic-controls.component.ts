@@ -8,16 +8,13 @@ import { FormGroup } from '@angular/forms';
 import { DynControl } from './models/';
 import { DynInput } from './components/input/input.model';
 import { DynDatetimeComponent } from './components/dyn-datetime/dyn-datetime.component';
-
-// enum Controls {
-//   InputComponent = 'input',
-//   SelectComponent = 'select'
-// }
+import { DynCheckboxComponent } from './components/dyn-checkbox/dyn-checkbox.component';
 
 const controls = {
   input: InputComponent,
   select: SelectComponent,
-  datetime: DynDatetimeComponent
+  datetime: DynDatetimeComponent,
+  checkbox: DynCheckboxComponent,
 }
 
 @Component({

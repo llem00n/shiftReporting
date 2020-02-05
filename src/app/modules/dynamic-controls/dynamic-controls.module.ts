@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { DynDatetimeComponent } from './components/dyn-datetime/dyn-datetime.component';
+import { DynCheckboxComponent } from './components/dyn-checkbox/dyn-checkbox.component';
 
 const MaterialModules = [
   // MatCardModule,
@@ -21,7 +22,7 @@ const MaterialModules = [
 
 
 @NgModule({
-  declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent],
+  declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

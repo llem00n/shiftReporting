@@ -21,3 +21,4 @@ ng g c modules/configuration/components/ConfigSchedule
 
 dynamic component
 ng g c modules/dynamic-controls/components/DynDatetime
+ng g c modules/dynamic-controls/components/DynCheckbox
