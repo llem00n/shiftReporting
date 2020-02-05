@@ -9,12 +9,14 @@ import { DynControl } from './models/';
 import { DynInput } from './components/input/input.model';
 import { DynDatetimeComponent } from './components/dyn-datetime/dyn-datetime.component';
 import { DynCheckboxComponent } from './components/dyn-checkbox/dyn-checkbox.component';
+import { DynNumberComponent } from './components/dyn-number/dyn-number.component';
 
 const controls = {
   input: InputComponent,
   select: SelectComponent,
   datetime: DynDatetimeComponent,
   checkbox: DynCheckboxComponent,
+  number: DynNumberComponent,
 }
 
 @Component({
