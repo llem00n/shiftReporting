@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 import * as fromPlant from './plant/plant.reducer';
 import * as fromDepartment from './department/department.reducer';
 import * as fromShift from './shift/shift.reducer';
-import * as fromSchedule from './schedules/schedule.reducer';
+import * as fromSchedule from './schedule/schedule.reducer';
 
 export interface State {
 

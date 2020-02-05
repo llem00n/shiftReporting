@@ -11,8 +11,8 @@ import * as fromDepartment from './department/department.reducer';
 import { DepartmentEffects } from './department/department.effects';
 import * as fromShift from './shift/shift.reducer';
 import { ShiftEffects } from './shift/shift.effects';
-import * as fromSchedule from './schedules/schedule.reducer';
-import { ScheduleEffects } from './schedules/schedule.effects';
+import * as fromSchedule from './schedule/schedule.reducer';
+import { ScheduleEffects } from './schedule/schedule.effects';
 
 
 
