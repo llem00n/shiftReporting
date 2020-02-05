@@ -7,6 +7,7 @@ import { PlantActions, DepartmentActions, ShiftActions } from '@actions/*';
 import { Select } from 'src/app/modules/dynamic-controls/components/select/select.model';
 import { FormGroup } from '@angular/forms';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
+import { DynDatetime } from 'src/app/modules/dynamic-controls/components/dyn-datetime/dyn-datetime.model';
 
 @Component({
   selector: 'app-config-schedule',
@@ -26,6 +27,14 @@ export class ConfigScheduleComponent implements OnInit {
       options: [],
       placeholder: 'Select plant'
     },
+    // <Select>{
+    //   key: 'test',
+    //   type: 'datetime',
+    //   label: 'Plant',
+    //   validators: { required: true },
+    //   options: [],
+    //   placeholder: 'Select plant'
+    // },
     <Select>{
       key: 'departmentId',
       type: 'select',
@@ -46,8 +55,8 @@ export class ConfigScheduleComponent implements OnInit {
   // editingObj: Shift;
 
   configSchedule = [
-    <DynInput>{ key: 'StartTime', type: 'input', label: 'Start Time', validators: { required: true } },
-    <DynInput>{ key: 'EndTime', type: 'input', label: 'End Time', validators: { required: true } },
+    <DynDatetime>{ key: 'StartTime', type: 'datetime', label: 'Start Time', validators: { required: true } },
+    <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
   ]
 
   // editOptions = {

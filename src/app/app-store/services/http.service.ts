@@ -44,6 +44,7 @@ export class HttpService {
       })
     )
   }
+  
   get(options: AppHttpRequest): Observable<any> {
     const url = `${this.baseUrl}/${options.url}`
     return this.http.get(url)

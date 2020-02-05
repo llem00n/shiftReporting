@@ -7,6 +7,7 @@ import { ControlOptions } from './models/control-options.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from './models/';
 import { DynInput } from './components/input/input.model';
+import { DynDatetimeComponent } from './components/dyn-datetime/dyn-datetime.component';
 
 // enum Controls {
 //   InputComponent = 'input',
@@ -15,7 +16,8 @@ import { DynInput } from './components/input/input.model';
 
 const controls = {
   input: InputComponent,
-  select: SelectComponent
+  select: SelectComponent,
+  datetime: DynDatetimeComponent
 }
 
 @Component({

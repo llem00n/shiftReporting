@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { DynDatetimeComponent } from './components/dyn-datetime/dyn-datetime.component';
 
 const MaterialModules = [
   // MatCardModule,
@@ -20,7 +21,7 @@ const MaterialModules = [
 
 
 @NgModule({
-  declarations: [DynamicControlsComponent, InputComponent, SelectComponent],
+  declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
