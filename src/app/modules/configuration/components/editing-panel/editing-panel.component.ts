@@ -3,6 +3,7 @@ import { Plant } from 'src/app/app-store/plant/plant.model';
 import { Department } from 'src/app/app-store/department/department.model';
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
 import { FormGroup } from '@angular/forms';
+import { Shift } from 'src/app/app-store/models';
 
 @Component({
   selector: 'app-editing-panel',
@@ -15,7 +16,7 @@ export class EditingPanelComponent implements OnInit, OnChanges {
     properties: DynControl[],
     objectType?: string
   }
-  @Input() object: Plant | Department
+  @Input() object: Plant | Department | Shift
 
   @Output() clickOk: EventEmitter<any> = new EventEmitter()
   @Output() clickCancel: EventEmitter<any> = new EventEmitter()

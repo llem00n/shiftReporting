@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { State, allPlants, allDepartments, allShifts, allSchedules } from 'src/app/app-store';
 import { ConfigurationService } from '../../services/configuration.service';
-import { Plant } from 'src/app/app-store/models';
+import { Plant, Schedule } from 'src/app/app-store/models';
 import { PlantActions, DepartmentActions, ShiftActions } from '@actions/*';
 import { Select } from 'src/app/modules/dynamic-controls/components/select/select.model';
 import { FormGroup } from '@angular/forms';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
 import { DynDatetime } from 'src/app/modules/dynamic-controls/components/dyn-datetime/dyn-datetime.model';
 import { BaseControl } from 'src/app/modules/dynamic-controls/components/base/base.model';
+import { DynNumber } from 'src/app/modules/dynamic-controls/components/dyn-number/dyn-number.model';
+import { DynControl } from 'src/app/modules/dynamic-controls/models';
 
 @Component({
   selector: 'app-config-schedule',
@@ -52,11 +54,25 @@ export class ConfigScheduleComponent implements OnInit {
     // },
   ]
   // editingObj: Shift;
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
 
   configSchedule = [
     <DynDatetime>{ key: 'StartTime', type: 'datetime', label: 'Start Time', validators: { required: true } },
-    <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
-    <BaseControl>{ key: 'checkbox', type: 'checkbox', label: 'checkbox', validators: { required: true } },
+    // <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
+    <DynNumber>{ key: 'RecurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } },
+    <BaseControl>{ key: 'Monday', type: 'checkbox', label: 'Monday' },
+    <BaseControl>{ key: 'Tuesday', type: 'checkbox', label: 'Tuesday' },
+    <BaseControl>{ key: 'Wednesday', type: 'checkbox', label: 'Wednesday' },
+    <BaseControl>{ key: 'Thursday', type: 'checkbox', label: 'Thursday' },
+    <BaseControl>{ key: 'Friday', type: 'checkbox', label: 'Friday' },
+    <BaseControl>{ key: 'Saturday', type: 'checkbox', label: 'Saturday' },
+    <BaseControl>{ key: 'Sunday', type: 'checkbox', label: 'Sunday' },
   ]
 
   // editOptions = {
@@ -161,17 +177,6 @@ export class ConfigScheduleComponent implements OnInit {
         e.get('shiftId').setValue(null)
       }
     })
-
-    // e.get('departmentId').valueChanges.subscribe(value => {
-    //   const departmentId = +value;
-    //   value && e.get('shiftId').enable();
-    //   !value && e.get('shiftId').disable();
-    //   e.get('shiftId').setValue(null)
-    //   this.store.dispatch(ShiftActions.getShifts({ departmentId }));
-    // })
-
-
-
     e.get('shiftId').valueChanges.subscribe(value => {
       if (value) {
         const departmentId = +value;
@@ -201,10 +206,35 @@ export class ConfigScheduleComponent implements OnInit {
   //   this.store.dispatch(ShiftActions.updateShift({ shift }))
   // }
 
-  // addObj(e) {
-  //   let shift = <Shift>{};
-  //   this.isShowPanels.add = false;
-  //   Object.assign(shift, this.preConfigForm.value, e);
-  //   this.store.dispatch(ShiftActions.addShift({ shift }))
-  // }
+  addObj(e) {
+    let schedule = <Schedule>{};
+    schedule.DepartmentId = +this.preConfigForm.value.departmentId;
+    schedule.ShiftId = +this.preConfigForm.value.shiftId;
+    this.isShowPanels.add = false;
+
+    Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
+    console.log(schedule);
+
+    // this.store.dispatch(ShiftActions.addShift({ shift }))
+  }
+  fixFormValue(configArr: DynControl[], formValue: {}) {
+    let value = {};
+    configArr.map(i => {
+      switch (i.type) {
+        case 'checkbox':
+          value[i.key] = !!formValue[i.key];
+          break;
+        case 'number':
+          value[i.key] = +formValue[i.key];
+          break;
+        case 'datetime':
+          value[i.key] = new Date(formValue[i.key]).toJSON();
+          break;
+        default:
+          value[i.key] = formValue[i.key];
+          break;
+      }
+    })
+    return value;
+  }
 }
