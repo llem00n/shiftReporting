@@ -42,10 +42,10 @@ export class ShiftHttpService {
     return this.httpService.post<AppHttpResponse>(options);
   }
 
-  getShifts(departmentId: number): Observable<AppHttpResponse> {
+  getShifts(): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getShifts',
-      payload: { departmentId },
+      // payload: { departmentId },
       loadingMsg: 'Loading the shifts ...',
     }
     return this.httpService.post<AppHttpResponse>(options);

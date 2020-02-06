@@ -12,7 +12,7 @@ export class ShiftEffects {
 
   getShifts$ = createEffect(() => this.actions$.pipe(
     ofType(ShiftActions.getShifts),
-    mergeMap(action => this.shiftHttpService.getShifts(action.departmentId).pipe(
+    mergeMap(action => this.shiftHttpService.getShifts().pipe(
       filter(resp => !!resp),
       map(resp => ShiftActions.getShiftsSuccess({ shifts: resp.body }))
     )),
