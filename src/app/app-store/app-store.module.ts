@@ -13,6 +13,8 @@ import * as fromShift from './shift/shift.reducer';
 import { ShiftEffects } from './shift/shift.effects';
 import * as fromSchedule from './schedule/schedule.reducer';
 import { ScheduleEffects } from './schedule/schedule.effects';
+import * as fromTemplate from './template/template.reducer';
+import { TemplateEffects } from './template/template.effects';
 
 
 
@@ -28,7 +30,8 @@ import { ScheduleEffects } from './schedule/schedule.effects';
       }
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([PlantEffects, DepartmentEffects, ShiftEffects, ScheduleEffects]),
+    EffectsModule.forRoot([PlantEffects, DepartmentEffects, ShiftEffects, ScheduleEffects, TemplateEffects]),
+    StoreModule.forFeature(fromTemplate.templatesFeatureKey, fromTemplate.reducer),
     // StoreModule.forFeature(fromPlant.plantsFeatureKey, fromPlant.reducer),
     // StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer),
     // StoreModule.forFeature(fromShift.shiftsFeatureKey, fromShift.reducer),
