@@ -19,31 +19,31 @@ export const initialState: State = adapter.getInitialState({
 
 const scheduleReducer = createReducer(
   initialState,
-  on(ScheduleActions.addSchedule,
+  on(ScheduleActions.addScheduleSuccess,
     (state, action) => adapter.addOne(action.schedule, state)
   ),
-  on(ScheduleActions.upsertSchedule,
-    (state, action) => adapter.upsertOne(action.schedule, state)
-  ),
-  on(ScheduleActions.addSchedules,
-    (state, action) => adapter.addMany(action.schedules, state)
-  ),
-  on(ScheduleActions.upsertSchedules,
-    (state, action) => adapter.upsertMany(action.schedules, state)
-  ),
-  on(ScheduleActions.updateSchedule,
+  // on(ScheduleActions.upsertSchedule,
+  //   (state, action) => adapter.upsertOne(action.schedule, state)
+  // ),
+  // on(ScheduleActions.addSchedules,
+  //   (state, action) => adapter.addMany(action.schedules, state)
+  // ),
+  // on(ScheduleActions.upsertSchedules,
+  //   (state, action) => adapter.upsertMany(action.schedules, state)
+  // ),
+  on(ScheduleActions.updateScheduleSuccess,
     (state, action) => adapter.updateOne(action.schedule, state)
   ),
-  on(ScheduleActions.updateSchedules,
-    (state, action) => adapter.updateMany(action.schedules, state)
-  ),
-  on(ScheduleActions.deleteSchedule,
+  // on(ScheduleActions.updateSchedules,
+  //   (state, action) => adapter.updateMany(action.schedules, state)
+  // ),
+  on(ScheduleActions.deleteScheduleSuccess,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  on(ScheduleActions.deleteSchedules,
-    (state, action) => adapter.removeMany(action.ids, state)
-  ),
-  on(ScheduleActions.loadSchedules,
+  // on(ScheduleActions.deleteSchedules,
+  //   (state, action) => adapter.removeMany(action.ids, state)
+  // ),
+  on(ScheduleActions.getSchedulesSuccess,
     (state, action) => adapter.addAll(action.schedules, state)
   ),
   on(ScheduleActions.clearSchedules,

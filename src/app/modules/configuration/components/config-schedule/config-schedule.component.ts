@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { State, allPlants, allDepartments, allShifts, allSchedules } from 'src/app/app-store';
 import { ConfigurationService } from '../../services/configuration.service';
 import { Plant, Schedule } from 'src/app/app-store/models';
-import { PlantActions, DepartmentActions, ShiftActions } from '@actions/*';
+import { PlantActions, DepartmentActions, ShiftActions, ScheduleActions } from '@actions/*';
 import { Select } from 'src/app/modules/dynamic-controls/components/select/select.model';
 import { FormGroup } from '@angular/forms';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
@@ -11,6 +11,8 @@ import { DynDatetime } from 'src/app/modules/dynamic-controls/components/dyn-dat
 import { BaseControl } from 'src/app/modules/dynamic-controls/components/base/base.model';
 import { DynNumber } from 'src/app/modules/dynamic-controls/components/dyn-number/dyn-number.model';
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
+import { filter } from 'rxjs/operators';
+import { ListData } from '../list/list.component';
 
 @Component({
   selector: 'app-config-schedule',
@@ -19,7 +21,7 @@ import { DynControl } from 'src/app/modules/dynamic-controls/models';
 })
 export class ConfigScheduleComponent implements OnInit {
   isShowPanels: { [key: string]: boolean } = {};
-  // list: ListData;
+  list: ListData;
   preConfigForm: FormGroup;
   preConfig = [
     <Select>{
@@ -64,7 +66,7 @@ export class ConfigScheduleComponent implements OnInit {
 
   configSchedule = [
     <DynDatetime>{ key: 'StartTime', type: 'datetime', label: 'Start Time', validators: { required: true } },
-    // <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
+    <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
     <DynNumber>{ key: 'RecurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } },
     <BaseControl>{ key: 'Monday', type: 'checkbox', label: 'Monday' },
     <BaseControl>{ key: 'Tuesday', type: 'checkbox', label: 'Tuesday' },
@@ -133,6 +135,7 @@ export class ConfigScheduleComponent implements OnInit {
     })
   }
   getShifts() {
+    this.store.dispatch(ShiftActions.getShifts());
     this.store.pipe(
       select(allShifts)
     ).subscribe(shifts => {
@@ -147,7 +150,7 @@ export class ConfigScheduleComponent implements OnInit {
   getSchedules() {
     this.store.pipe(
       select(allSchedules)
-    ).subscribe(console.log)
+    ).subscribe((schedules: Schedule[]) => this.list = this.confService.createList(schedules))
   }
 
   // getShifts() {
@@ -157,34 +160,41 @@ export class ConfigScheduleComponent implements OnInit {
   // }
   getPreConfigForm(e: FormGroup) {
     this.preConfigForm = e;
+    // e.statusChanges.pipe(
+    //   filter(val => val === 'VALID')
+    // ).subscribe(val => {
+    //   this.store.dispatch(ScheduleActions.getSchedules({ departmentId }))
+    //   console.log('statusChanges', val);
+    // })
     e.get('departmentId').disable();
-    e.get('shiftId').disable();
+    // e.get('shiftId').disable();
     e.get('plantId').valueChanges.subscribe(value => {
       if (value) {
         e.get('departmentId').enable();
         this.store.dispatch(DepartmentActions.loadDepartments({ plantId: +value }));
+        e.get('departmentId').setValue(null)
       } else {
         e.get('departmentId').disable();
-        e.get('departmentId').setValue(null)
       }
     })
     e.get('departmentId').valueChanges.subscribe(value => {
+
       if (value) {
-        e.get('shiftId').enable();
-        this.store.dispatch(ShiftActions.getShifts({ departmentId: +value }));
+        this.store.dispatch(ScheduleActions.getSchedules({ departmentId: +value }));
       } else {
-        e.get('shiftId').disable();
-        e.get('shiftId').setValue(null)
+        console.log('ffffffffffff');
+        
+        this.store.dispatch(ScheduleActions.clearSchedules())
       }
     })
-    e.get('shiftId').valueChanges.subscribe(value => {
-      if (value) {
-        const departmentId = +value;
-        // this.store.dispatch(ShiftActions.getShedules({ departmentId }))
-      } else {
-        this.store.dispatch(ShiftActions.clearShifts())
-      }
-    })
+    // e.get('shiftId').valueChanges.subscribe(value => {
+    //   if (value) {
+    //     const departmentId = +value;
+    //     // this.store.dispatch(ShiftActions.getShedules({ departmentId }))
+    //   } else {
+    //     this.store.dispatch(ShiftActions.clearShifts())
+    //   }
+    // })
   }
 
   // clickListsButton(e) {

@@ -14,11 +14,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MessageModule } from './modules/message/message.module';
 import { SnackBarModule } from './modules/snack-bar/snack-bar.module';
+import { HeaderComponent } from './components/header/header.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

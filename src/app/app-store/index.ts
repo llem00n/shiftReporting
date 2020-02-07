@@ -45,5 +45,5 @@ export const allDepartments = createSelector(departmentsState, fromDepartment.se
 export const shiftsState = createFeatureSelector<fromShift.State>('shifts');
 export const allShifts = createSelector(shiftsState, fromShift.selectAll);
 //shifts
-export const scheduleState = createFeatureSelector<fromSchedule.State>('shifts');
+export const scheduleState = createFeatureSelector<fromSchedule.State>('schedules');
 export const allSchedules = createSelector(scheduleState, fromSchedule.selectAll);

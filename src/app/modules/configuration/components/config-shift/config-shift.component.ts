@@ -18,25 +18,25 @@ import { DynInput } from 'src/app/modules/dynamic-controls/components/input/inpu
 export class ConfigShiftComponent implements OnInit {
   isShowPanels: { [key: string]: boolean } = {};
   list: ListData;
-  preConfigForm: FormGroup;
-  preConfig = [
-    // <Select>{
-    //   key: 'plantId',
-    //   type: 'select',
-    //   label: 'Plant',
-    //   validators: { required: true },
-    //   options: [],
-    //   placeholder: 'Select plant'
-    // },
-    // <Select>{
-    //   key: 'departmentId',
-    //   type: 'select',
-    //   label: 'Department',
-    //   validators: { required: true },
-    //   options: [],
-    //   placeholder: 'Select department'
-    // },
-  ]
+  // preConfigForm: FormGroup;
+  // preConfig = [
+  // <Select>{
+  //   key: 'plantId',
+  //   type: 'select',
+  //   label: 'Plant',
+  //   validators: { required: true },
+  //   options: [],
+  //   placeholder: 'Select plant'
+  // },
+  // <Select>{
+  //   key: 'departmentId',
+  //   type: 'select',
+  //   label: 'Department',
+  //   validators: { required: true },
+  //   options: [],
+  //   placeholder: 'Select department'
+  // },
+  // ]
   editingObj: Shift;
 
   configShift = [
@@ -147,7 +147,7 @@ export class ConfigShiftComponent implements OnInit {
   addObj(e) {
     let shift = <Shift>{};
     this.isShowPanels.add = false;
-    Object.assign(shift, this.preConfigForm.value, e);
+    Object.assign(shift, e);
     this.store.dispatch(ShiftActions.addShift({ shift }))
   }
 }
