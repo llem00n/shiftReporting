@@ -55,14 +55,14 @@ export class ConfigScheduleComponent implements OnInit {
     //   validators: { required: true },
     // },
   ]
-  // editingObj: Shift;
-  Monday
-  Tuesday
-  Wednesday
-  Thursday
-  Friday
-  Saturday
-  Sunday
+  editingObj: Schedule;
+  // Monday
+  // Tuesday
+  // Wednesday
+  // Thursday
+  // Friday
+  // Saturday
+  // Sunday
 
   configSchedule = [
     <DynDatetime>{ key: 'StartTime', type: 'datetime', label: 'Start Time', validators: { required: true } },
@@ -197,18 +197,19 @@ export class ConfigScheduleComponent implements OnInit {
     // })
   }
 
-  // clickListsButton(e) {
-  //   console.log(e);
-  //   switch (e.action) {
-  //     case 'edit':
-  //       this.editingObj = e.item;
-  //       this.isShowPanels.edit = true;
-  //       break;
-  //     case 'dlt':
-  //       this.store.dispatch(ShiftActions.deleteShift({ id: e.item.shiftId }))
-  //       break
-  //   }
-  // }
+  clickListsButton(e) {
+    console.log(e);
+    switch (e.action) {
+      case 'edit':
+        this.editingObj = e.item;
+        this.isShowPanels.edit = true;
+        break;
+      case 'dlt':
+        this.store.dispatch(ShiftActions.deleteShift({ id: e.item.shiftId }))
+        break
+    }
+  }
+
   // updateObj(e) {
   //   let shift = { ...this.editingObj }
   //   this.isShowPanels.edit = false;
