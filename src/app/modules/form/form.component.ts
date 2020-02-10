@@ -18,18 +18,27 @@ export class FormComponent implements OnChanges {
     this.customForm = this.createForm(this.controls);
   }
   createForm(controls): FormGroup {
-
     const group = new FormGroup({});
     controls.map(i => {
       const validators: ValidatorFn[] = [];
       i.validators && Object.keys(i.validators).map(key => {
         if (typeof (i.validators[key]) === 'boolean') validators.push(Validators[key])
         else validators.push(Validators[key](i.validators[key]));
-
       });
-      group.addControl(i.key, new FormControl(this.values && this.values[i.key] || null, validators));
+      group.addControl(i.key, new FormControl(this.setValue(i, this.values), validators));
     });
     this.form.emit(group);
     return group;
   }
+  setValue(control: DynControl, values): string | boolean | number {
+    if (!values || !values[control.key]) return null;
+    switch (control.type) {
+      case 'datetime':
+        const a = new Date(values[control.key])
+        return new Date(a.valueOf() - a.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, 16);
+      default:
+        return values[control.key]
+    }
+  }
+
 }

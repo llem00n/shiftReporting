@@ -1,7 +1,7 @@
 export interface Schedule {
-  ScheduleId: number;
-  DepartmentId: number;
-  ShiftId: number;
+  ScheduleID: number;
+  DepartmentID: number;
+  ShiftID: number;
   StartTime: string;
   EndTime: string;
   RecurEveryWeeks: number;

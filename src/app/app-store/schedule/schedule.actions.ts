@@ -4,11 +4,11 @@ import { Update } from '@ngrx/entity';
 import { Schedule } from './schedule.model';
 
 export const getSchedules = createAction(
-  '[Schedule/API] Load Schedules',
+  '[Schedule/API] Get Schedules',
   props<{ departmentId: number }>()
 );
 export const getSchedulesSuccess = createAction(
-  '[Schedule/API] Load Schedules Success',
+  '[Schedule/API] Get Schedules Success',
   props<{ schedules: Schedule[] }>()
 );
 
@@ -17,7 +17,7 @@ export const addSchedule = createAction(
   props<{ schedule: Schedule }>()
 );
 export const addScheduleSuccess = createAction(
-  '[Schedule/API] Add Schedule',
+  '[Schedule/API] Add Schedule Success',
   props<{ schedule: Schedule }>()
 );
 
@@ -41,7 +41,7 @@ export const updateSchedule = createAction(
   props<{ schedule: Schedule }>()
 );
 export const updateScheduleSuccess = createAction(
-  '[Schedule/API] Update Schedule',
+  '[Schedule/API] Update Schedule Success',
   props<{ schedule: Update<Schedule> }>()
 );
 
@@ -52,11 +52,11 @@ export const updateScheduleSuccess = createAction(
 
 export const deleteSchedule = createAction(
   '[Schedule/API] Delete Schedule',
-  props<{ id: string }>()
+  props<{ id: number }>()
 );
 export const deleteScheduleSuccess = createAction(
-  '[Schedule/API] Delete Schedule',
-  props<{ id: string }>()
+  '[Schedule/API] Delete Schedule Success',
+  props<{ id: number }>()
 );
 
 // export const deleteSchedules = createAction(

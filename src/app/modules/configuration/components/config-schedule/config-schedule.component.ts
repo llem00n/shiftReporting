@@ -47,23 +47,9 @@ export class ConfigScheduleComponent implements OnInit {
       validators: { required: true },
       options: [],
       placeholder: 'Select shift'
-    },
-    // {
-    //   key: 'test',
-    //   type: 'checkbox',
-    //   label: 'Plant',
-    //   validators: { required: true },
-    // },
+    }
   ]
   editingObj: Schedule;
-  // Monday
-  // Tuesday
-  // Wednesday
-  // Thursday
-  // Friday
-  // Saturday
-  // Sunday
-
   configSchedule = [
     <DynDatetime>{ key: 'StartTime', type: 'datetime', label: 'Start Time', validators: { required: true } },
     <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
@@ -77,11 +63,11 @@ export class ConfigScheduleComponent implements OnInit {
     <BaseControl>{ key: 'Sunday', type: 'checkbox', label: 'Sunday' },
   ]
 
-  // editOptions = {
-  //   properties: this.configSchedule,
-  //   actType: 'edit',
-  //   objectType: 'shift'
-  // }
+  editOptions = {
+    properties: this.configSchedule,
+    actType: 'edit',
+    objectType: 'schedule'
+  }
   addNewOptions = {
     properties: this.configSchedule,
     actType: 'new',
@@ -160,14 +146,7 @@ export class ConfigScheduleComponent implements OnInit {
   // }
   getPreConfigForm(e: FormGroup) {
     this.preConfigForm = e;
-    // e.statusChanges.pipe(
-    //   filter(val => val === 'VALID')
-    // ).subscribe(val => {
-    //   this.store.dispatch(ScheduleActions.getSchedules({ departmentId }))
-    //   console.log('statusChanges', val);
-    // })
     e.get('departmentId').disable();
-    // e.get('shiftId').disable();
     e.get('plantId').valueChanges.subscribe(value => {
       if (value) {
         e.get('departmentId').enable();
@@ -178,55 +157,42 @@ export class ConfigScheduleComponent implements OnInit {
       }
     })
     e.get('departmentId').valueChanges.subscribe(value => {
-
       if (value) {
         this.store.dispatch(ScheduleActions.getSchedules({ departmentId: +value }));
       } else {
-        console.log('ffffffffffff');
-        
         this.store.dispatch(ScheduleActions.clearSchedules())
       }
     })
-    // e.get('shiftId').valueChanges.subscribe(value => {
-    //   if (value) {
-    //     const departmentId = +value;
-    //     // this.store.dispatch(ShiftActions.getShedules({ departmentId }))
-    //   } else {
-    //     this.store.dispatch(ShiftActions.clearShifts())
-    //   }
-    // })
   }
 
   clickListsButton(e) {
-    console.log(e);
     switch (e.action) {
       case 'edit':
         this.editingObj = e.item;
         this.isShowPanels.edit = true;
         break;
-      case 'dlt':
-        this.store.dispatch(ShiftActions.deleteShift({ id: e.item.shiftId }))
+      case 'dlt':        
+        this.store.dispatch(ScheduleActions.deleteSchedule({ id: e.item.ScheduleID }))
         break
     }
   }
 
-  // updateObj(e) {
-  //   let shift = { ...this.editingObj }
-  //   this.isShowPanels.edit = false;
-  //   Object.assign(shift, e);
-  //   this.store.dispatch(ShiftActions.updateShift({ shift }))
-  // }
+  updateObj(e) {
+    let schedule = <Schedule>{};
+    schedule.DepartmentID = +this.preConfigForm.value.departmentId;
+    schedule.ShiftID = +this.preConfigForm.value.shiftId;
+    this.isShowPanels.edit = false;
+    Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
+    this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
+  }
 
   addObj(e) {
     let schedule = <Schedule>{};
-    schedule.DepartmentId = +this.preConfigForm.value.departmentId;
-    schedule.ShiftId = +this.preConfigForm.value.shiftId;
+    schedule.DepartmentID = +this.preConfigForm.value.departmentId;
+    schedule.ShiftID = +this.preConfigForm.value.shiftId;
     this.isShowPanels.add = false;
-
     Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
-    console.log(schedule);
-
-    // this.store.dispatch(ShiftActions.addShift({ shift }))
+    this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
   }
   fixFormValue(configArr: DynControl[], formValue: {}) {
     let value = {};
@@ -239,7 +205,7 @@ export class ConfigScheduleComponent implements OnInit {
           value[i.key] = +formValue[i.key];
           break;
         case 'datetime':
-          value[i.key] = new Date(formValue[i.key]).toJSON();
+          value[i.key] = new Date(formValue[i.key]).toJSON().slice(0, 19) + "Z";
           break;
         default:
           value[i.key] = formValue[i.key];

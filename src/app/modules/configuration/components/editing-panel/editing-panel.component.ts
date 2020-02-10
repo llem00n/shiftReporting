@@ -37,7 +37,6 @@ export class EditingPanelComponent implements OnInit, OnChanges {
     this.actType = this.options.actType || 'new';
     this.properties = this.options.properties;
   }
-
   getTitle() {
     let title: string;
     switch (this.actType) {
