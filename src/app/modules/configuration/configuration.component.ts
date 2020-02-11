@@ -16,10 +16,10 @@ export class ConfigurationComponent implements OnInit {
     { key: 'plant', component: ConfigPlantsComponent, title: 'Plants configuration', isShow: false },
     { key: 'department', component: ConfigDepartmentsComponent, title: 'Departments configuration', isShow: false },
     { key: 'shift', component: ConfigShiftComponent, title: 'Shifts configuration', isShow: false },
-    { key: 'schedule', component: ConfigScheduleComponent, title: 'Schedule configuration', isShow: true },
-  ]
-  constructor(
-  ) { }
+    { key: 'schedule', component: ConfigScheduleComponent, title: 'Schedule configuration', isShow: false },
+  ];
+
+  constructor() { }
 
   ngOnInit() {
   }

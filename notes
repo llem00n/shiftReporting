@@ -1,3 +1,7 @@
+generate Feature
+ng g f app-store/interface/Interface -m ../app-store -r ../index.ts -c
+
+
 generate Entity:
 ng g en app-store/plant/Plant -m ../app-store -r ../index.ts -c
 ng g en app-store/department/Department -m ../app-store -r ../index.ts -c
@@ -18,6 +22,7 @@ ng g s app-store/department/DepartmentHttp
 ng g s app-store/shift/ShiftHttp
 ng g s app-store/schedule/ScheduleHttp
 ng g s app-store/template/TemplateHttp
+ng g s app-store/interface/InterfaceHttp
 
 configuration component
 ng g c modules/configuration/components/ConfigSchedule

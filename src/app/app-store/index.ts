@@ -11,6 +11,7 @@ import * as fromDepartment from './department/department.reducer';
 import * as fromShift from './shift/shift.reducer';
 import * as fromSchedule from './schedule/schedule.reducer';
 import * as fromTemplate from './template/template.reducer';
+import * as fromInterface from './interface/interface.reducer';
 
 export interface State {
 
@@ -19,6 +20,7 @@ export interface State {
   [fromShift.shiftsFeatureKey]: fromShift.State;
   [fromSchedule.schedulesFeatureKey]: fromSchedule.State;
   [fromTemplate.templatesFeatureKey]: fromTemplate.State;
+  [fromInterface.interfaceFeatureKey]: fromInterface.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -28,6 +30,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromShift.shiftsFeatureKey]: fromShift.reducer,
   [fromSchedule.schedulesFeatureKey]: fromSchedule.reducer,
   [fromTemplate.templatesFeatureKey]: fromTemplate.reducer,
+  [fromInterface.interfaceFeatureKey]: fromInterface.reducer,
 };
 
 
