@@ -10,8 +10,6 @@ import { ConfigurationModule } from './modules/configuration/configuration.modul
 import { AppStoreModule } from './app-store/app-store.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import {MatSnackBarModule} from '@angular/material/snack-bar';
-// import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MessageModule } from './modules/message/message.module';
 import { SnackBarModule } from './modules/snack-bar/snack-bar.module';
 import { HeaderComponent } from './components/header/header.component';
