@@ -31,11 +31,11 @@ export const getTemplatesSuccess = createAction(
   props<{ templates: Template[] }>()
 );
 export const getTemplateTypes = createAction(
-  '[Template/API] Get Templates',
+  '[Template/API] Get TemplateTypes',
   // props<{ departmentID: number }>()
 );
 export const getTemplateTypesSuccess = createAction(
-  '[Template/API] Get Templates Success',
+  '[Template/API] Get TemplateTypes Success',
   props<{ templateTypes: TemplateType[] }>()
 );
 
