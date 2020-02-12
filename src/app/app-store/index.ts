@@ -50,3 +50,8 @@ export const allShifts = createSelector(shiftsState, fromShift.selectAll);
 //shifts
 export const scheduleState = createFeatureSelector<fromSchedule.State>('schedules');
 export const allSchedules = createSelector(scheduleState, fromSchedule.selectAll);
+//templates
+export const templateState = createFeatureSelector<fromTemplate.State>('templates');
+export const allTemplates = createSelector(templateState, fromTemplate.selectAll);
+export const templateTypes = createSelector(templateState, (state) => state.templateTypes);
+
