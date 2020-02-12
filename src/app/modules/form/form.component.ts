@@ -8,7 +8,20 @@ import { FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms'
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnChanges {
-  @Input() controls: DynControl[];
+  _controls: DynControl[];
+  @Input()
+  set controls(controls: DynControl[] | Map<string, DynControl>) {
+    if (controls['__proto__'].constructor.name === 'Array') this._controls = <DynControl[]>controls;
+    else {
+      const result: DynControl[] = [];
+      controls.forEach((i, key) => {
+        result.push({ ...i, key })
+      })
+      this._controls = result
+    }
+  }
+  get controls() { return this._controls }
+
   @Input() values;
   @Output() form = new EventEmitter<FormGroup>()
 
