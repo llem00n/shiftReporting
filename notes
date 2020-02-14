@@ -1,5 +1,6 @@
 generate Feature
 ng g f app-store/interface/Interface -m ../app-store -r ../index.ts -c
+ng g f app-store/data-entry/DataEntry -m ../app-store -r ../index.ts -c
 
 
 generate Entity:
@@ -32,3 +33,4 @@ dynamic component
 ng g c modules/dynamic-controls/components/DynDatetime
 ng g c modules/dynamic-controls/components/DynCheckbox
 ng g c modules/dynamic-controls/components/DynNumber
+ng g c modules/dynamic-controls/components/DynTime
