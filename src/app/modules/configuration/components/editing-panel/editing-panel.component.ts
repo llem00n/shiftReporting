@@ -13,7 +13,7 @@ import { Shift } from 'src/app/app-store/models';
 export class EditingPanelComponent implements OnInit, OnChanges {
   @Input() options: {
     actType?: string,
-    properties: DynControl[],
+    properties: DynControl[] | Map<string, DynControl>,
     objectType?: string
   }
   @Input() object: Plant | Department | Shift
@@ -35,7 +35,15 @@ export class EditingPanelComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.title = this.getTitle()
     this.actType = this.options.actType || 'new';
-    this.properties = this.options.properties;
+    if (this.options.properties['__proto__'].constructor.name === 'Array') this.properties = <DynControl[]>this.options.properties;
+    else {
+      const result: DynControl[] = [];
+      this.options.properties.forEach((i, key) => {
+        result.push({ ...i, key })
+      })
+      this.properties = result
+    }
+
   }
   getTitle() {
     let title: string;
@@ -52,7 +60,14 @@ export class EditingPanelComponent implements OnInit, OnChanges {
     this.form = e;
   }
   disableOkButton(): boolean {
-    let res = this.actType === 'edit' ? this.properties.filter(i => this.object[i.key] !== this.form.value[i.key]) : [1];
+
+    let res = this.actType === 'edit' ? this.properties.filter(i => this.object[i.key] != this.form.value[i.key]) : [1];
+    // console.log(this.object);
+    // console.log(this.form.value);
+    // console.log(res);
+    
+    
+
     return this.form.invalid || res.length === 0
   }
 }
