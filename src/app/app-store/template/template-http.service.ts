@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Template } from './template.model';
 import { Observable, of } from 'rxjs';
 import { AppHttpResponse, AppHttpRequest, HttpService } from '../services/http.service';
+import { TemplateType } from './template-type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,11 @@ export class TemplateHttpService {
 
   constructor(private httpService: HttpService) { }
 
-  addTemplate(opt: { departmentID: number, template: Template }): Observable<AppHttpResponse> {
-    const { departmentID, template } = opt;
+  addTemplate(opt: { departmentId: number, template: Template }): Observable<AppHttpResponse> {
+    const { departmentId, template } = opt;
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addTemplate',
-      payload: { departmentID, template },
+      payload: { departmentId, template },
       loadingMsg: 'Adding the template ...',
       successMsg: `Template has been added`
     }
@@ -38,6 +39,32 @@ export class TemplateHttpService {
       payload: { departmentID },
       loadingMsg: 'Loading the templates...',
     }
+    // const resp: AppHttpResponse = {
+    //   status: 200,
+    //   body: <Template[]>[
+    //     {
+    //       Body: null,
+    //       Description: 'Description 1',
+    //       LastUpdated: '1234-01-01T01:01:01Z',
+    //       Name: 'Name 1',
+    //       TemplateID: 1,
+    //       TemplateTypeID: 1,
+    //       TemplateTypeName: 'test1'
+    //     },
+    //     {
+    //       Body: null,
+    //       Description: 'Description 2',
+    //       LastUpdated: '1234-01-01T01:01:01Z',
+    //       Name: 'Name 2',
+    //       TemplateID: 2,
+    //       TemplateTypeID: 2,
+    //       TemplateTypeName: 'Test 2'
+    //     },
+
+    //   ]
+    // }
+    // return of(resp)
+
     return this.httpService.post<AppHttpResponse>(options);
   }
 
@@ -46,6 +73,15 @@ export class TemplateHttpService {
       url: this.baseUrl + 'getTemplateTypes',
       loadingMsg: 'Loading the template types...',
     }
+    // const resp: AppHttpResponse = {
+    //   status: 200,
+    //   body: <TemplateType[]>[
+    //     { TemplateTypeName: 'Type 0', TemplateTypeID: 0 },
+    //     { TemplateTypeName: 'Type 1', TemplateTypeID: 1 },
+    //     { TemplateTypeName: 'Type 2', TemplateTypeID: 2 }
+    //   ]
+    // }
+    // return of(resp)
     return this.httpService.post<AppHttpResponse>(options);
   }
 }

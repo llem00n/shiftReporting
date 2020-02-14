@@ -12,7 +12,7 @@ export interface State extends EntityState<Template> {
 }
 
 export const adapter: EntityAdapter<Template> = createEntityAdapter<Template>({
-  selectId: (model: Template) => model.TemplateID
+  selectId: (model: Template) => model.templateId
 });
 
 export const initialState: State = adapter.getInitialState({

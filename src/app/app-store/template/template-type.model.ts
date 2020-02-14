@@ -1,5 +1,5 @@
 export interface TemplateType {
-  TemplateTypeID: number;
-  TemplateTypeName: string
-
+  templateTypeId: number;
+  name: string;
+  description: string;
 }

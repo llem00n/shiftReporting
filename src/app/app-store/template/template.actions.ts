@@ -6,7 +6,7 @@ import { TemplateType } from './template-type.model';
 
 export const addTemplate = createAction(
   '[Template/API] Add Template',
-  props<{ departmentID: number, template: Template }>()
+  props<{ departmentId: number, template: Template }>()
 );
 export const addTemplateSuccess = createAction(
   '[Template/API] Add Template Success',
@@ -14,7 +14,7 @@ export const addTemplateSuccess = createAction(
 );
 
 export const updateTemplate = createAction(
-  '[Template/API] Add Template',
+  '[Template/API] Update Template',
   props<{ template: Template }>()
 );
 export const updateTemplateSuccess = createAction(
@@ -24,7 +24,7 @@ export const updateTemplateSuccess = createAction(
 
 export const getTemplates = createAction(
   '[Template/API] Get Templates',
-  props<{ departmentID: number }>()
+  props<{ departmentId: number }>()
 );
 export const getTemplatesSuccess = createAction(
   '[Template/API] Get Templates Success',

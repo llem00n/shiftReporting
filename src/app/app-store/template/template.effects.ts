@@ -12,7 +12,7 @@ export class TemplateEffects {
 
   addTemplate$ = createEffect(() => this.actions$.pipe(
     ofType(TemplateActions.addTemplate),
-    mergeMap(({ departmentID, template }) => this.templateHttpService.addTemplate({ departmentID, template }).pipe(
+    mergeMap(({ departmentId, template }) => this.templateHttpService.addTemplate({ departmentId, template }).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => TemplateActions.addTemplateSuccess({ template: resp.body }))
     )),
@@ -24,7 +24,7 @@ export class TemplateEffects {
       filter(resp => resp && resp.status === 200),
       map(resp => TemplateActions.updateTemplateSuccess({
         template: {
-          id: resp.body.TemplateID,
+          id: resp.body.templateId,
           changes: resp.body
         }
       }))
@@ -33,7 +33,7 @@ export class TemplateEffects {
 
   getTemplates$ = createEffect(() => this.actions$.pipe(
     ofType(TemplateActions.getTemplates),
-    mergeMap(({ departmentID }) => this.templateHttpService.getTemplates(departmentID).pipe(
+    mergeMap(({ departmentId }) => this.templateHttpService.getTemplates(departmentId).pipe(
       filter(resp => resp && resp.status === 200),
       map(({ body }) => TemplateActions.getTemplatesSuccess({ templates: body }))
     )),
