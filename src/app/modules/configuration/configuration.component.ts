@@ -11,12 +11,18 @@ import { ConfigTemplateComponent } from './components/config-template/config-tem
   styleUrls: ['./configuration.component.scss']
 })
 export class ConfigurationComponent {
-  isShow: { [key: string]: boolean } = {};
+  isShow: string = null;
   config = [
     { key: 'plant', component: ConfigPlantsComponent, title: 'Plants configuration', isShow: false },
     { key: 'department', component: ConfigDepartmentsComponent, title: 'Departments configuration', isShow: false },
     { key: 'shift', component: ConfigShiftComponent, title: 'Shifts configuration', isShow: false },
     { key: 'schedule', component: ConfigScheduleComponent, title: 'Schedule configuration', isShow: false },
-    { key: 'template', component: ConfigTemplateComponent, title: 'Template configuration', isShow: true },
+    { key: 'template', component: ConfigTemplateComponent, title: 'Template configuration', isShow: false },
   ];
+
+  showItemPanel(key) {
+    this.isShow = this.isShow === key ? null : key;
+  }
+  
 }
+

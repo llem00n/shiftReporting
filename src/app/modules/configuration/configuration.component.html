@@ -1,8 +1,8 @@
-<div class="container mx-auto ">
+<div class=" ">
   <div *ngFor="let item of config"
-    class="border-2 border-gray-600 border-solid mb-5 p-4 rounded-lg shadow-lg max-w-4xl">
-    <p class="font-bold mr-4 text-xl cursor-default" (click)="item.isShow = !item.isShow">{{item.title}}</p>
-    <div *ngIf="item.isShow">
+    class="border-2 border-gray-600 border-solid mb-5 p-4 rounded-lg shadow-lg">
+    <p class="font-bold mr-4 text-xl cursor-default" (click)="showItemPanel(item.key)">{{item.title}}</p>
+    <div *ngIf="isShow === item.key">
       <ng-container *ngComponentOutlet="item.component"></ng-container>
     </div>
   </div>
