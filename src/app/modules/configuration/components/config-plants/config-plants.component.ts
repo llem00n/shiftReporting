@@ -29,9 +29,9 @@ export class ConfigPlantsComponent implements OnInit {
   showedAddForm = false;
 
   configPlant = [
-    <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: { required: true }, placeholder: 'Name' },
-    <DynInput>{ key: 'code', type: 'input', label: 'Code', validators: { required: true } },
-    <DynInput>{ key: 'address', type: 'input', label: 'Address', validators: { required: true } },
+    <DynInput>{ key: 'Name', type: 'input', label: 'Name', validators: { required: true }, placeholder: 'Name' },
+    <DynInput>{ key: 'Code', type: 'input', label: 'Code', validators: { required: true } },
+    <DynInput>{ key: 'Address', type: 'input', label: 'Address', validators: { required: true } },
   ];
 
   editOptions = {
@@ -63,6 +63,7 @@ export class ConfigPlantsComponent implements OnInit {
   }
 
   addPlant(e) {
+    console.log(e);    
     this.showedAddForm = false;
     this.store.dispatch(PlantActions.addPlant({ plant: e }))
   }

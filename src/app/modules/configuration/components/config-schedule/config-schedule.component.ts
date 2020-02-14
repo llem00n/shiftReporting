@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { State, allPlants, allDepartments, allShifts, allSchedules } from 'src/app/app-store';
 import { ConfigurationService } from '../../services/configuration.service';
-import { Plant, Schedule } from 'src/app/app-store/models';
+import { Plant, Schedule, Shift } from 'src/app/app-store/models';
 import { PlantActions, DepartmentActions, ShiftActions, ScheduleActions } from '@actions/*';
 import { Select } from 'src/app/modules/dynamic-controls/components/select/select.model';
 import { FormGroup } from '@angular/forms';
@@ -23,6 +23,7 @@ export class ConfigScheduleComponent implements OnInit {
   isShowPanels: { [key: string]: boolean } = {};
   list: ListData;
   preConfigForm: FormGroup;
+  shifts: Shift[];
   preConfig = [
     <Select>{
       key: 'plantId',
@@ -51,16 +52,16 @@ export class ConfigScheduleComponent implements OnInit {
   ]
   editingObj: Schedule;
   configSchedule = [
-    <DynDatetime>{ key: 'StartTime', type: 'datetime', label: 'Start Time', validators: { required: true } },
-    <DynDatetime>{ key: 'EndTime', type: 'datetime', label: 'End Time', validators: { required: true } },
-    <DynNumber>{ key: 'RecurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } },
-    <BaseControl>{ key: 'Monday', type: 'checkbox', label: 'Monday' },
-    <BaseControl>{ key: 'Tuesday', type: 'checkbox', label: 'Tuesday' },
-    <BaseControl>{ key: 'Wednesday', type: 'checkbox', label: 'Wednesday' },
-    <BaseControl>{ key: 'Thursday', type: 'checkbox', label: 'Thursday' },
-    <BaseControl>{ key: 'Friday', type: 'checkbox', label: 'Friday' },
-    <BaseControl>{ key: 'Saturday', type: 'checkbox', label: 'Saturday' },
-    <BaseControl>{ key: 'Sunday', type: 'checkbox', label: 'Sunday' },
+    <BaseControl>{ key: 'startTime', type: 'time', label: 'Start Time', validators: { required: true } },
+    <BaseControl>{ key: 'endTime', type: 'time', label: 'End Time', validators: { required: true } },
+    <DynNumber>{ key: 'recurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } },
+    <BaseControl>{ key: 'monday', type: 'checkbox', label: 'Monday' },
+    <BaseControl>{ key: 'tuesday', type: 'checkbox', label: 'Tuesday' },
+    <BaseControl>{ key: 'wednesday', type: 'checkbox', label: 'Wednesday' },
+    <BaseControl>{ key: 'thursday', type: 'checkbox', label: 'Thursday' },
+    <BaseControl>{ key: 'friday', type: 'checkbox', label: 'Friday' },
+    <BaseControl>{ key: 'saturday', type: 'checkbox', label: 'Saturday' },
+    <BaseControl>{ key: 'sunday', type: 'checkbox', label: 'Sunday' },
   ]
 
   editOptions = {
@@ -125,6 +126,7 @@ export class ConfigScheduleComponent implements OnInit {
     this.store.pipe(
       select(allShifts)
     ).subscribe(shifts => {
+      this.shifts = shifts;
       this.preConfig[2].options = shifts.map(i => {
         return {
           value: '' + i.shiftId,
@@ -166,34 +168,41 @@ export class ConfigScheduleComponent implements OnInit {
   }
 
   clickListsButton(e) {
+    console.log(e);
+
     switch (e.action) {
       case 'edit':
         this.editingObj = e.item;
         this.isShowPanels.edit = true;
         break;
-      case 'dlt':        
-        this.store.dispatch(ScheduleActions.deleteSchedule({ id: e.item.ScheduleID }))
+      case 'dlt':
+        this.store.dispatch(ScheduleActions.deleteSchedule({ id: e.item.scheduleId }))
         break
     }
   }
 
   updateObj(e) {
-    let schedule = <Schedule>{};
-    schedule.DepartmentID = +this.preConfigForm.value.departmentId;
-    schedule.ShiftID = +this.preConfigForm.value.shiftId;
+    console.log(this.editingObj);
     this.isShowPanels.edit = false;
+    let schedule = <Schedule>{ ...this.editingObj };
     Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
     this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
   }
 
+
   addObj(e) {
-    let schedule = <Schedule>{};
-    schedule.DepartmentID = +this.preConfigForm.value.departmentId;
-    schedule.ShiftID = +this.preConfigForm.value.shiftId;
     this.isShowPanels.add = false;
+    const shiftId = +this.preConfigForm.value.shiftId;
+    const shift = this.shifts.find(i => i.shiftId === shiftId)
+    let schedule = <Schedule>{};
+    schedule.shiftDescription = shift.description;
+    schedule.shiftName = shift.name;
+    schedule.departmentId = +this.preConfigForm.value.departmentId;
+    schedule.shiftId = shiftId;
     Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
     this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
   }
+
   fixFormValue(configArr: DynControl[], formValue: {}) {
     let value = {};
     configArr.map(i => {
@@ -204,9 +213,9 @@ export class ConfigScheduleComponent implements OnInit {
         case 'number':
           value[i.key] = +formValue[i.key];
           break;
-        case 'datetime':
-          value[i.key] = new Date(formValue[i.key]).toJSON().slice(0, 19) + "Z";
-          break;
+        // case 'datetime':
+        //   value[i.key] = new Date(formValue[i.key]).toJSON().slice(0, 19) + "Z";
+        //   break;
         default:
           value[i.key] = formValue[i.key];
           break;
