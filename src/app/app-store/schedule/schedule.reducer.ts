@@ -10,7 +10,7 @@ export interface State extends EntityState<Schedule> {
 }
 
 export const adapter: EntityAdapter<Schedule> = createEntityAdapter<Schedule>({
-  selectId: (model: Schedule) => model.ScheduleID
+  selectId: (model: Schedule) => model.scheduleId
 });
 
 export const initialState: State = adapter.getInitialState({

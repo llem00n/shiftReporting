@@ -1,15 +1,19 @@
 export interface Schedule {
-  ScheduleID: number;
-  DepartmentID: number;
-  ShiftID: number;
-  StartTime: string;
-  EndTime: string;
-  RecurEveryWeeks: number;
-  Monday: boolean;
-  Tuesday: boolean;
-  Wednesday: boolean;
-  Thursday: boolean;
-  Friday: boolean;
-  Saturday: boolean;
-  Sunday: boolean;
+
+  scheduleId: number;
+  departmentId: number;
+  shiftId: number;
+  startTime: string;
+  endTime: string;
+  recurEveryWeeks: number;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  sunday: boolean;
+  shiftName: string;
+  shiftDescription: string;
+
 }
