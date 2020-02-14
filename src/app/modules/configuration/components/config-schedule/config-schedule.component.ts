@@ -87,10 +87,11 @@ export class ConfigScheduleComponent implements OnInit {
     this.getShifts();
     this.getSchedules();
   }
-  // ngOnDestroy() {
-  //   this.store.dispatch(DepartmentActions.clearDepartments());
-  //   this.store.dispatch(ShiftActions.clearShifts())
-  // }
+  ngOnDestroy() {
+    this.store.dispatch(DepartmentActions.clearDepartments());
+    this.store.dispatch(ShiftActions.clearShifts())
+    this.store.dispatch(ScheduleActions.clearSchedules())
+  }
   getPlants() {
     let respCount = 0;
     this.store.pipe(
@@ -168,8 +169,6 @@ export class ConfigScheduleComponent implements OnInit {
   }
 
   clickListsButton(e) {
-    console.log(e);
-
     switch (e.action) {
       case 'edit':
         this.editingObj = e.item;
