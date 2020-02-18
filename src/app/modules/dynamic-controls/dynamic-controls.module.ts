@@ -9,8 +9,9 @@ import { DynCheckboxComponent } from './components/dyn-checkbox/dyn-checkbox.com
 import { DynNumberComponent } from './components/dyn-number/dyn-number.component';
 import { DynTimeComponent } from './components/dyn-time/dyn-time.component';
 import { DynTextComponent } from './components/dyn-text/dyn-text.component';
+import { DynSelectComponent } from './components/dyn-select/dyn-select.component';
 @NgModule({
-  declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent, DynNumberComponent, DynTimeComponent, DynTextComponent],
+  declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent, DynNumberComponent, DynTimeComponent, DynTextComponent, DynSelectComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

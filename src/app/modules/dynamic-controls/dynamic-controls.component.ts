@@ -12,10 +12,11 @@ import { DynCheckboxComponent } from './components/dyn-checkbox/dyn-checkbox.com
 import { DynNumberComponent } from './components/dyn-number/dyn-number.component';
 import { DynTimeComponent } from './components/dyn-time/dyn-time.component';
 import { DynTextComponent } from './components/dyn-text/dyn-text.component';
+import { DynSelectComponent } from './components/dyn-select/dyn-select.component';
 
 const controls = {
   input: InputComponent,
-  select: SelectComponent,
+  select: DynSelectComponent,
   datetime: DynDatetimeComponent,
   checkbox: DynCheckboxComponent,
   number: DynNumberComponent,
