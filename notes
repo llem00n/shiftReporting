@@ -25,6 +25,16 @@ ng g s app-store/schedule/ScheduleHttp
 ng g s app-store/template/TemplateHttp
 ng g s app-store/interface/InterfaceHttp
 
+module grid
+ng g m modules/Grid -m app
+ng g c modules/grid/Grid -m grid --flat
+
+modulse template
+ng g m modules/Template -m app
+ng g c modules/template/Template -m template --flat
+ng g c modules/template/components/GeneralConfig
+
+
 configuration component
 ng g c modules/configuration/components/ConfigSchedule
 ng g c modules/configuration/components/ConfigTemplate
@@ -34,3 +44,4 @@ ng g c modules/dynamic-controls/components/DynDatetime
 ng g c modules/dynamic-controls/components/DynCheckbox
 ng g c modules/dynamic-controls/components/DynNumber
 ng g c modules/dynamic-controls/components/DynTime
+

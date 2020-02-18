@@ -10,8 +10,8 @@
 
 
 <div class="my-4" align="end">
-  <button class="btn mx-2" *ngIf='preConfigForm.valid && !(isShowPanels.edit || isShowPanels.add)'
-    (click)='isShowPanels.add = true'>
+  <button class="btn mx-2" *ngIf='preConfigForm.valid && !(isShowPanels.edit || isShowPanels.add)' [routerLink]="[ '/template' ]"
+    >
     Add Template
   </button>
 </div>

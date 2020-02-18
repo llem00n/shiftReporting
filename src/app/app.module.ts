@@ -13,6 +13,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageModule } from './modules/message/message.module';
 import { SnackBarModule } from './modules/snack-bar/snack-bar.module';
 import { HeaderComponent } from './components/header/header.component';
+import { GridsterModule } from 'angular-gridster2';
+import { GridModule } from './modules/grid/grid.module';
+import { TemplateModule } from './modules/template/template.module';
 
 
 @NgModule({
@@ -24,15 +27,18 @@ import { HeaderComponent } from './components/header/header.component';
     BrowserModule,
     AppRoutingModule,
     DynamicControlsModule,
-    ReactiveFormsModule,
+    // ReactiveFormsModule,
     FormsModule,
-    FormModule,
+    // FormModule,
     ConfigurationModule,
     AppStoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MessageModule,
-    SnackBarModule
+    // SnackBarModule,
+    // GridsterModule,
+    GridModule,
+    TemplateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

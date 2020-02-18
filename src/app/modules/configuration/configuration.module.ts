@@ -10,6 +10,7 @@ import { EditingPanelComponent } from './components/editing-panel/editing-panel.
 import { ConfigShiftComponent } from './components/config-shift/config-shift.component';
 import { ConfigScheduleComponent } from './components/config-schedule/config-schedule.component';
 import { ConfigTemplateComponent } from './components/config-template/config-template.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 // import { MatCardModule } from '@angular/material/card';
 // import {MatSelectModule} from '@angular/material/select';
 // import {MatFormFieldModule} from '@angular/material/form-field';
@@ -28,6 +29,7 @@ import { ConfigTemplateComponent } from './components/config-template/config-tem
 @NgModule({
   declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent, ConfigTemplateComponent],
   imports: [
+    AppRoutingModule,
     CommonModule,
     FormModule,
     DynamicControlsModule,
