@@ -1,0 +1,52 @@
+import { GridsterConfig, GridsterItem } from 'angular-gridster2';
+import { DynControl } from './modules/dynamic-controls/models';
+
+
+interface template {
+  templateId: number;
+  name: string;
+  description: string;
+  body: TemplateBody;
+  lastUpdated: string;
+  templateTypeId: number;
+  templateTypeName: string;
+}
+interface Dashboard {
+  key: string;
+  item: GridsterItem;
+  control: DynControl;
+}
+
+
+interface TemplateBody {
+  TemplateData: { [key: string]: ValueType };
+  PIAFTemplate: PIAFTemplate;
+  PIAFAttributes: PIAFAttributes;
+  XML: string[];
+  Excel: string[];
+  DatabaseTable: string[];
+  Datasource: { [key: string]: ValueType };
+  dashboard: Array<Dashboard>;
+  gridsterOptions: GridsterConfig;
+};
+
+type ValueType = number | string | boolean;
+
+interface PIAFTemplate {
+  TemplateName: string;
+  StartTime: string;
+  EndTime: string;
+  EventName: string;
+  Attributes: Attributes;
+};
+
+interface PIAFAttributes {
+  Timestemp: string;
+  Attributes: Attributes;
+};
+
+interface Attributes {
+
+};
+
+
