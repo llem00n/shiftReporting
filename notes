@@ -44,4 +44,5 @@ ng g c modules/dynamic-controls/components/DynDatetime
 ng g c modules/dynamic-controls/components/DynCheckbox
 ng g c modules/dynamic-controls/components/DynNumber
 ng g c modules/dynamic-controls/components/DynTime
+ng g c modules/dynamic-controls/components/DynText
 

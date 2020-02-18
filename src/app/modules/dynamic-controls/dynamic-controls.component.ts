@@ -11,6 +11,7 @@ import { DynDatetimeComponent } from './components/dyn-datetime/dyn-datetime.com
 import { DynCheckboxComponent } from './components/dyn-checkbox/dyn-checkbox.component';
 import { DynNumberComponent } from './components/dyn-number/dyn-number.component';
 import { DynTimeComponent } from './components/dyn-time/dyn-time.component';
+import { DynTextComponent } from './components/dyn-text/dyn-text.component';
 
 const controls = {
   input: InputComponent,
@@ -19,6 +20,8 @@ const controls = {
   checkbox: DynCheckboxComponent,
   number: DynNumberComponent,
   time: DynTimeComponent,
+  text: DynTextComponent,
+
 }
 
 @Component({
