@@ -9,6 +9,8 @@ import { DynTextarea } from 'src/app/modules/dynamic-controls/components/dyn-tex
 })
 export class GeneralConfigComponent implements OnInit {
 
+  show = false;
+
   generalConfig: Map<string, DynControl> = new Map([
     ['name', <DynControl>{ key: 'name', type:'text', placeholder: "Name", label: 'Name'}],
     ['type', <DynControl>{ key: 'type', type:'select', placeholder: "Select type", label: "Type"}],    

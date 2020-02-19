@@ -8,6 +8,7 @@ import { DynNumber } from 'src/app/modules/dynamic-controls/components/dyn-numbe
   styleUrls: ['./gridster-config.component.scss']
 })
 export class GridsterConfigComponent implements OnInit {
+  show = false;
   gridsterConfig: Map<string, DynControl> = new Map([
     ['cols', <DynNumber>{ key: 'columns', type:'number', label: 'Columns'}],
     ['rows', <DynNumber>{ key: 'rows', type:'number', label: 'Rows'}],
