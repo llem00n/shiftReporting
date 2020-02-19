@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TemplateComponent } from './template.component';
+import { GeneralConfigComponent } from './components/general-config/general-config.component';
+import { FormModule } from '../form/form.module';
 
 
 
 @NgModule({
-  declarations: [TemplateComponent],
+  declarations: [TemplateComponent, GeneralConfigComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    FormModule
   ]
 })
 export class TemplateModule { }
