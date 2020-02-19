@@ -1,4 +1,6 @@
 <section class="w-screen h-screen fixed top-0 left-0 flex flex-col bg-white">
+
+  <!-- Header -->
   <header class="bg-blue-600 px-4 py-2">
     <svg (click)="goBack()" class="inline mr-2 fill-current w-6 h-6 mr-6" viewBox="0 0 24 24">
       <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
@@ -7,12 +9,19 @@
   </header>
 
   <div class="flex flex-1 overflow-auto">
-    <div class="w-100 ma p-2 overflow-auto">
-        <app-general-config class="mb-2"></app-general-config>
-        <app-general-config></app-general-config>
-    </div>
-    <div class="bg-orange-900 flex-1 h-full overflow-auto">
 
+    <!-- Sidebar -->
+
+    <div class="w-100 ma p-2 overflow-auto">
+      <app-general-config class="mb-2"></app-general-config>
+      <app-gridster-config></app-gridster-config>
     </div>
+
+
+    <!-- Main window -->
+    <div class="bg-orange-900 flex-1 h-full overflow-auto">
+    </div>
+
+
   </div>
 </section>
