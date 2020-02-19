@@ -6,6 +6,7 @@ import { DynNumberComponent } from './dyn-number/dyn-number.component';
 import { DynTimeComponent } from './dyn-time/dyn-time.component';
 import { DynTextComponent } from './dyn-text/dyn-text.component';
 import { DynTextareaComponent } from './dyn-textarea/dyn-textarea.component';
+import { DynColorComponent } from './dyn-color/dyn-color.component';
 
 export const dynComponents = {
   get: function (type) { return this[type] },
@@ -17,5 +18,6 @@ export const dynComponents = {
   time: DynTimeComponent,
   text: DynTextComponent,
   textarea: DynTextareaComponent,
+  color: DynColorComponent,
 }
 

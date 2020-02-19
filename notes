@@ -33,6 +33,7 @@ modulse template
 ng g m modules/Template -m app
 ng g c modules/template/Template -m template --flat
 ng g c modules/template/components/GeneralConfig
+ng g c modules/template/components/GridsterConfig
 
 
 configuration component
@@ -46,4 +47,6 @@ ng g c modules/dynamic-controls/components/DynNumber
 ng g c modules/dynamic-controls/components/DynTime
 ng g c modules/dynamic-controls/components/DynText
 ng g c modules/dynamic-controls/components/DynSelect
+ng g c modules/dynamic-controls/components/DynTextarea
+ng g c modules/dynamic-controls/components/DynColor
 

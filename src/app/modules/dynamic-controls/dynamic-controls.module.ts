@@ -11,8 +11,9 @@ import { DynTimeComponent } from './components/dyn-time/dyn-time.component';
 import { DynTextComponent } from './components/dyn-text/dyn-text.component';
 import { DynSelectComponent } from './components/dyn-select/dyn-select.component';
 import { DynTextareaComponent } from './components/dyn-textarea/dyn-textarea.component';
+import { DynColorComponent } from './components/dyn-color/dyn-color.component';
 @NgModule({
-  declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent, DynNumberComponent, DynTimeComponent, DynTextComponent, DynSelectComponent, DynTextareaComponent],
+  declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent, DynNumberComponent, DynTimeComponent, DynTextComponent, DynSelectComponent, DynTextareaComponent, DynColorComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
