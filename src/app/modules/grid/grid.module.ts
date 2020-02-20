@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GridComponent } from './grid.component';
 import { GridsterModule } from 'angular-gridster2';
+import { DynamicControlsModule } from '../dynamic-controls/dynamic-controls.module';
 
 
 
@@ -9,7 +10,11 @@ import { GridsterModule } from 'angular-gridster2';
   declarations: [GridComponent],
   imports: [
     CommonModule,
-    GridsterModule
+    GridsterModule,
+    DynamicControlsModule
+  ],
+  exports: [
+    GridComponent,
   ]
 })
 export class GridModule { }

@@ -1,1 +1,11 @@
-<p>grid works!</p>
+<div class="h-full w-full overflow-auto ">
+  <div [ngStyle]="gridSize" class="mx-auto">
+    <gridster [options]="optionsResult" [style.background-color]="optionsResult.bgColor">
+      <gridster-item class="gridster__item" [class.isCurrent]='item.id === selectedItemId'
+        *ngFor="let item of dashboard" [item]="item.gridsterItem" (click)="itemClick($event, item.key)"
+        [style.background-color]="getBackground(item)">
+        <app-dynamic-controls [control]="item.control" [form]="form"></app-dynamic-controls>
+      </gridster-item>
+    </gridster>
+  </div>
+</div>
