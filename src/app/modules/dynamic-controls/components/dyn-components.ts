@@ -9,15 +9,15 @@ import { DynTextareaComponent } from './dyn-textarea/dyn-textarea.component';
 import { DynColorComponent } from './dyn-color/dyn-color.component';
 
 export const dynComponents = {
-  get: function (type) { return this[type] },
-  input: InputComponent,
-  select: DynSelectComponent,
-  datetime: DynDatetimeComponent,
-  checkbox: DynCheckboxComponent,
-  number: DynNumberComponent,
-  time: DynTimeComponent,
-  text: DynTextComponent,
-  textarea: DynTextareaComponent,
-  color: DynColorComponent,
+  get: function (type) { return this[type].component },
+  input: { component: InputComponent, name: 'Input' },
+  select: { component: DynSelectComponent, name: 'Select' },
+  datetime: { component: DynDatetimeComponent, name: 'Datetime' },
+  checkbox: { component: DynCheckboxComponent, name: 'Checkbox' },
+  number: { component: DynNumberComponent, name: 'Number' },
+  time: { component: DynTimeComponent, name: 'Time' },
+  text: { component: DynTextComponent, name: 'Text' },
+  textarea: { component: DynTextareaComponent, name: 'Textarea' },
+  color: { component: DynColorComponent, name: 'Color' },
 }
 
