@@ -12,16 +12,18 @@
 
     <!-- Sidebar -->
 
-    <div class="w-100 ma p-2 overflow-auto">
-      <app-general-config class="mb-2"></app-general-config>
+    <div class="w-64 p-2 overflow-y-auto">
+      <app-general-config></app-general-config>
       <app-gridster-config></app-gridster-config>
+      <app-interfaces-config></app-interfaces-config>
+      <p class="inline-block p-2 whitespace-no-wrap" draggable="true" (dragstart)="dragStartHandler($event, 'Drag')">
+        Drag me</p>
     </div>
-
 
     <!-- Main window -->
-    <div class="bg-orange-900 flex-1 h-full overflow-auto">
+    <div class=" p-2 flex-1 overflow-auto">
+      <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
+        (dashboardChange)="dashboardChange($event)" [dashboard]="dashboard" [appointment]="appointment"> </app-grid>
     </div>
-
-
   </div>
 </section>
