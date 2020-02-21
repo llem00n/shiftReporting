@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { DboardItem } from '../grid/grid.component';
 import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
 import { Template } from 'src/app/app-store/template/template.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-template',
@@ -28,9 +29,14 @@ export class TemplateComponent implements OnInit {
     private location: Location,
   ) { }
 
+  getFormGeneral(e: FormGroup) {
+    e.valueChanges.subscribe(value =>
+      Object.assign(this.template, value)
+    )
+  }
+
   ngOnInit(): void {
     console.log(this.template);
-
   }
 
   dragStartHandler(e, str) {

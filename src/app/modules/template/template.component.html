@@ -13,11 +13,12 @@
     <!-- Sidebar -->
 
     <div class="w-64 p-2 overflow-y-auto">
-      <app-general-config></app-general-config>
+      <app-general-config (form)="getFormGeneral($event)" [template]='template' ></app-general-config>
       <app-gridster-config></app-gridster-config>
       <app-interfaces-config></app-interfaces-config>
       <p class="inline-block p-2 whitespace-no-wrap" draggable="true" (dragstart)="dragStartHandler($event, 'Drag')">
         Drag me</p>
+        <pre class="bg-gray-800 text-white text-xs">{{template | json}}</pre>
     </div>
 
     <!-- Main window -->
