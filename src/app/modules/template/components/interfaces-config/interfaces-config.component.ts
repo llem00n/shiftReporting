@@ -9,9 +9,11 @@ import { DynControl } from 'src/app/modules/dynamic-controls/models';
 export class InterfacesConfigComponent implements OnInit {
   show = false;
   interfacesConfig: Map<string, DynControl> = new Map([
-    ['cols', <DynControl>{ key: 'columns', type:'checkbox', label: 'Columns'}],
-    ['rows', <DynControl>{ key: 'rows', type:'checkbox', label: 'Rows'}],
-    ['bgColor', <DynControl>{ key: 'bgColor', type:'checkbox', label: "Background color"}],    
+    ['PIAFTemplate', <DynControl>{ key: 'PIAFTemplate', type:'checkbox', label: 'PIAF Template'}],
+    ['PIAFAttributes', <DynControl>{ key: 'PIAFAttributes', type:'checkbox', label: 'PIAF Attributes'}],
+    ['XML', <DynControl>{ key: 'XML', type:'checkbox', label: "XML"}],    
+    ['Excel', <DynControl>{ key: 'Excel', type:'checkbox', label: "Excel"}],    
+    ['DatabaseTable', <DynControl>{ key: 'DatabaseTable', type:'checkbox', label: "Database Table"}],    
   ]);
   constructor() { }
 
