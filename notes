@@ -35,6 +35,7 @@ ng g c modules/template/Template -m template --flat
 ng g c modules/template/components/GeneralConfig
 ng g c modules/template/components/GridsterConfig
 ng g c modules/template/components/InterfacesConfig
+ng g c modules/template/components/ControlsList
 
 configuration component
 ng g c modules/configuration/components/ConfigSchedule

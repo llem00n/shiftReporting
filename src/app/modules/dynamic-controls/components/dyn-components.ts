@@ -10,14 +10,17 @@ import { DynColorComponent } from './dyn-color/dyn-color.component';
 
 export const dynComponents = {
   get: function (type) { return this[type].component },
-  input: { component: InputComponent, name: 'Input' },
-  select: { component: DynSelectComponent, name: 'Select' },
-  datetime: { component: DynDatetimeComponent, name: 'Datetime' },
-  checkbox: { component: DynCheckboxComponent, name: 'Checkbox' },
-  number: { component: DynNumberComponent, name: 'Number' },
-  time: { component: DynTimeComponent, name: 'Time' },
-  text: { component: DynTextComponent, name: 'Text' },
-  textarea: { component: DynTextareaComponent, name: 'Textarea' },
-  color: { component: DynColorComponent, name: 'Color' },
+  getList: function () {
+    return Object.keys(this).filter(i => this[i].title).map(i => this[i].title)
+  },
+  // input: { component: InputComponent, title: 'Input' },
+  select: { component: DynSelectComponent, title: 'Select' },
+  datetime: { component: DynDatetimeComponent, title: 'Datetime' },
+  checkbox: { component: DynCheckboxComponent, title: 'Checkbox' },
+  number: { component: DynNumberComponent, title: 'Number' },
+  time: { component: DynTimeComponent, title: 'Time' },
+  text: { component: DynTextComponent, title: 'Text' },
+  textarea: { component: DynTextareaComponent, title: 'Textarea' },
+  color: { component: DynColorComponent, title: 'Color' },
 }
 

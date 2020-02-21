@@ -41,8 +41,8 @@ export class ConfigTemplateComponent implements OnInit {
   isShowPanels: { [key: string]: boolean } = {};
 
   configTemplate: Map<string, DynControl> = new Map([
-    ['name', <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: { required: true } },],
-    ['description', <DynInput>{ key: 'description', type: 'input', label: 'Description', validators: { required: true } },],
+    ['name', <DynInput>{ key: 'name', type: 'text', label: 'Name', validators: { required: true } },],
+    ['description', <DynInput>{ key: 'description', type: 'text', label: 'Description', validators: { required: true } },],
     ['templateTypeId', <Select>{ key: 'templateTypeId', type: 'select', label: 'Template Type', options: [], validators: { required: true }, placeholder: 'Select type' },],
   ]);
 

@@ -18,8 +18,8 @@ export class ConfigShiftComponent implements OnInit {
   editingObj: Shift;
 
   configShift = [
-    <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: { required: true } },
-    <DynInput>{ key: 'description', type: 'input', label: 'Description' },
+    <DynInput>{ key: 'name', type: 'text', label: 'Name', validators: { required: true } },
+    <DynInput>{ key: 'description', type: 'text', label: 'Description' },
   ]
 
   editOptions = {
