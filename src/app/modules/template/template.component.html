@@ -14,17 +14,17 @@
 
     <div class="w-64 p-2 overflow-y-auto">
       <app-general-config (form)="getFormGeneral($event)" [template]='template' ></app-general-config>
-      <app-gridster-config></app-gridster-config>
+      <app-gridster-config [options]='template.body.gridsterOptions' (form)="getFormGridsterOptions($event)" ></app-gridster-config>
       <app-interfaces-config></app-interfaces-config>
       <p class="inline-block p-2 whitespace-no-wrap" draggable="true" (dragstart)="dragStartHandler($event, 'Drag')">
         Drag me</p>
-        <pre class="bg-gray-800 text-white text-xs">{{template | json}}</pre>
+        <!-- <pre class="bg-gray-800 text-white text-xs">{{template.body | json}}</pre> -->
     </div>
 
     <!-- Main window -->
     <div class=" p-2 flex-1 overflow-auto">
       <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
-        (dashboardChange)="dashboardChange($event)" [dashboard]="dashboard" [appointment]="appointment"> </app-grid>
+        (dashboardChange)="dashboardChange($event)" [options]="template.body.gridsterOptions" [dashboard]="dashboard" [appointment]="appointment"> </app-grid>
     </div>
   </div>
 </section>

@@ -17,6 +17,7 @@ export class TemplateComponent implements OnInit {
   get template() { return this._template };
 
   appointment = 'build';
+  options = this.template.body.gridsterOptions;
   dashboard: DboardItem[] = [1, 2, 3, 4, 5].map(num => {
     return {
       key: `item${num}`,
@@ -32,6 +33,12 @@ export class TemplateComponent implements OnInit {
   getFormGeneral(e: FormGroup) {
     e.valueChanges.subscribe(value =>
       Object.assign(this.template, value)
+    )
+  }
+  getFormGridsterOptions(e: FormGroup) {
+    e.valueChanges.subscribe((values) =>
+      this.template.body.gridsterOptions = new Object(values)
+      // Object.assign(this.template.body.gridsterOptions, values)
     )
   }
 
