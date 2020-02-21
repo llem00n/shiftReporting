@@ -1,5 +1,5 @@
 <div *ngFor="let i of controls">
-  <label *ngIf="i.label" [for]="i.key"
+  <label *ngIf="i.label && i.type !=='checkbox'" [for]="i.key"
     class="block  tracking-widest text-gray-700 text-xs font-bold leading-none">{{i.label}}</label>
   <div class="mb-4">
     <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>

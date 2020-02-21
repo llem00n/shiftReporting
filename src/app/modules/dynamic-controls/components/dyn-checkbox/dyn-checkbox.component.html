@@ -1,3 +1,5 @@
-<span [formGroup]="options.form">
+<span [formGroup]="options.form" class="flex items-center">
   <input [id]="options.control.key" type="checkbox" [formControlName]="options.control.key">
+  <!-- <div class="flex-1 order-2"></div> -->
+  <label [for]="options.control.key" class="pl-2">{{options.control.label}}</label>
 </span>
