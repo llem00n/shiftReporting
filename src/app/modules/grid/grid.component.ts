@@ -11,16 +11,16 @@ export interface DboardItem {
 export interface GridsterOptions extends GridsterConfig {
   bgColor?: string;
 }
-const optionsBase: GridsterOptions = {
-  // bgColor: '#cab5ff',
+export const optionsBase: GridsterOptions = {
+  bgColor: '#888888',
   gridType: 'fit',
   // setGridSize: true,
   // disableWindowResize: true,
   // keepFixedHeightInMobile: true,
   minCols: 10,
   minRows: 10,
-  // maxCols: 10,
-  // maxRows: 10,
+  // maxCols: 50,
+  // maxRows: 50,
   fixedColWidth: 40,
   fixedRowHeight: 40,
   margin: 0,
@@ -48,7 +48,7 @@ export class GridComponent implements OnChanges {
   @Input() appointment: string;
   @Input() selectedItemId: string;
   @Input() dashboard: DboardItem[];
-  @Input() options: GridsterConfig = {};
+  @Input() options: GridsterOptions = {};
   @Input() form: FormGroup;
   @Input() showInvalid: boolean;
   @Input() controlsErrors //: TemplateDataItem[];
@@ -79,6 +79,8 @@ export class GridComponent implements OnChanges {
   elementErrors//: ElementError[];
 
   ngOnChanges(): void {
+    console.log(this.options);
+    
     this.processingOptions(this.appointment);
   }
   processingOptions(appointment: string) {

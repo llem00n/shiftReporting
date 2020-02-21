@@ -5,7 +5,7 @@ export class Template {
   templateId: number;
   name: string;
   description: string;
-  body: any; //Jobject
+  body: TemplateBody; //Jobject
   lastUpdated: string;
   templateTypeId: number;
   templateTypeName: string;
@@ -29,7 +29,7 @@ class TemplateBody {
   DatabaseTable: string[];
   Datasource: { [key: string]: ValueType };
   dashboard: Array<DboardItem>;
-  gridsterOptions: GridsterConfig;
+  gridsterOptions: {};
   constructor(options: { [key: string]: any } = {}) {
     this.TemplateData = options['TemplateData'] || {};
     this.PIAFTemplate = options['PIAFTemplate'] || {};
