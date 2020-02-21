@@ -44,7 +44,7 @@ export class FormComponent implements OnChanges {
     return group;
   }
   setValue(control: DynControl, values): string | boolean | number {
-    if (control.type === 'checkbox') return values[control.key];
+    if (control.type === 'checkbox') return values ? values[control.key] : false;
     if (!values || !values[control.key]) return null;
     switch (control.type) {
       case 'datetime':
