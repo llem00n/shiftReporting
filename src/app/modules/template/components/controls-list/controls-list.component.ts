@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { dynComponents } from '../../../dynamic-controls/';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-controls-list',
@@ -8,16 +7,15 @@ import { from } from 'rxjs';
   styleUrls: ['./controls-list.component.scss']
 })
 export class ControlsListComponent implements OnInit {
+  @Output() draggableControl: EventEmitter<string> = new EventEmitter<string>()
   show = false;
-  list: Array<string> = [];
-  constructor() { }
-
+  list = [];
+  
   ngOnInit(): void {
     this.list = dynComponents.getList();
   }
 
-  dragStartHandler(e, r) {
-    console.log(e, r);
-
+  dragStartHandler(e, key) {
+    this.draggableControl.emit(key);
   }
 }

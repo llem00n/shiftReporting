@@ -32,10 +32,15 @@ ng g c modules/grid/Grid -m grid --flat
 modulse template
 ng g m modules/Template -m app
 ng g c modules/template/Template -m template --flat
+
 ng g c modules/template/components/GeneralConfig
 ng g c modules/template/components/GridsterConfig
 ng g c modules/template/components/InterfacesConfig
 ng g c modules/template/components/ControlsList
+ng g s modules/template/services/Template
+
+
+
 
 configuration component
 ng g c modules/configuration/components/ConfigSchedule

@@ -17,11 +17,11 @@
       <app-gridster-config [options]='template.body.gridsterOptions' (form)="getFormGridsterOptions($event)">
       </app-gridster-config>
       <app-interfaces-config></app-interfaces-config>
-      <app-controls-list></app-controls-list>
+      <app-controls-list (draggableControl)="setTypeNewControl($event)"></app-controls-list>
 
 
-      <p class="inline-block p-2 whitespace-no-wrap" draggable="true" (dragstart)="dragStartHandler($event, 'Drag')">
-        Drag me</p>
+      <!-- <p class="inline-block p-2 whitespace-no-wrap" draggable="true" (dragstart)="dragStartHandler($event, 'Drag')">
+        Drag me</p> -->
       <!-- <pre class="bg-gray-800 text-white text-xs">{{template.body | json}}</pre> -->
     </div>
 
