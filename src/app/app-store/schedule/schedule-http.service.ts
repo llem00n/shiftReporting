@@ -31,8 +31,6 @@ export class ScheduleHttpService {
     return this.httpService.post<AppHttpResponse>(options);
   }
   deleteSchedule(scheduleId) {
-    console.log(scheduleId);
-    
     const options: AppHttpRequest = {
       url: this.baseUrl + 'deleteSchedule',
       payload: { scheduleId },

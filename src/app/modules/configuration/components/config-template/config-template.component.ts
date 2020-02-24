@@ -161,9 +161,6 @@ export class ConfigTemplateComponent implements OnInit {
   }
 
   updateObj(e) {
-    console.log(this.editingObj);
-    console.log(e);
-
     this.isShowPanels.edit = false;
     let template = <Template>{ ...this.editingObj };
     template.name = e.name;

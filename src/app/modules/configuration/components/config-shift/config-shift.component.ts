@@ -53,7 +53,6 @@ export class ConfigShiftComponent implements OnInit {
   }
 
   clickListsButton(e) {
-    console.log(e);
     switch (e.action) {
       case 'edit':
         this.editingObj = e.item;

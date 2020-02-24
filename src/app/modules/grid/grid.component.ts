@@ -79,8 +79,6 @@ export class GridComponent implements OnChanges {
   elementErrors//: ElementError[];
 
   ngOnChanges(): void {
-    console.log(this.options);
-    
     this.processingOptions(this.appointment);
   }
   processingOptions(appointment: string) {
@@ -131,7 +129,6 @@ export class GridComponent implements OnChanges {
   }
 
   emptyCellDrop(event: MouseEvent, item: GridsterItem) {
-    console.log(item);
     this.dropNewItem.emit(item);
   }
 
@@ -148,9 +145,7 @@ export class GridComponent implements OnChanges {
     // const data = this.controlsErrors && this.controlsErrors.find(i => i.ControlID === dboardItem.id);
     // return (data && data.HasError) ? data.ErrorMessage : '';
   }
-  getContent(item) {
-    console.log(`[slot="${item.key}"]`);
-    
-    return `[slot="${item.key}"]`
-  }
+  // getContent(item) {
+    // return `[slot="${item.key}"]`
+  // }
 }

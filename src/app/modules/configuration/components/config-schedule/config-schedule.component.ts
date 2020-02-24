@@ -181,7 +181,6 @@ export class ConfigScheduleComponent implements OnInit {
   }
 
   updateObj(e) {
-    console.log(this.editingObj);
     this.isShowPanels.edit = false;
     let schedule = <Schedule>{ ...this.editingObj };
     Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
