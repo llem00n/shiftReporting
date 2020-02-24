@@ -8,6 +8,7 @@ import { DynInput } from 'src/app/modules/dynamic-controls/components/input/inpu
 import { FormGroup } from '@angular/forms';
 import { PlantActions } from '@actions/*';
 import { ConfigurationService } from '../../services/configuration.service';
+import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
 
 @Component({
   selector: 'app-config-plants',
@@ -29,9 +30,9 @@ export class ConfigPlantsComponent implements OnInit {
   showedAddForm = false;
 
   configPlant = [
-    <DynInput>{ key: 'name', type: 'text', label: 'Name', validators: { required: true } },
-    <DynInput>{ key: 'code', type: 'text', label: 'Code', validators: { required: true } },
-    <DynInput>{ key: 'address', type: 'text', label: 'Address', validators: { required: true } },
+    new DynText({ key: 'name', type: 'text', label: 'Name', validators: { required: true } }),
+    new DynText({ key: 'code', type: 'text', label: 'Code', validators: { required: true } }),
+    new DynText({ key: 'address', type: 'text', label: 'Address', validators: { required: true } }),
   ];
 
   editOptions = {

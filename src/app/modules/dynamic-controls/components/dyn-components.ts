@@ -7,20 +7,29 @@ import { DynTimeComponent } from './dyn-time/dyn-time.component';
 import { DynTextComponent } from './dyn-text/dyn-text.component';
 import { DynTextareaComponent } from './dyn-textarea/dyn-textarea.component';
 import { DynColorComponent } from './dyn-color/dyn-color.component';
+import { DynText } from './dyn-text/dyn-text.model';
+import { DynCheckbox } from './dyn-checkbox/dyn-checkbox.model';
+import { DynDatetime } from './dyn-datetime/dyn-datetime.model';
+import { DynColor } from './dyn-color/dyn-color.model';
+import { DynNumber } from './dyn-number/dyn-number.model';
+import { DynSelect } from './dyn-select/dyn-select.model';
+import { DynTime } from './dyn-time/dyn-time.model';
+import { DynTextarea } from './dyn-textarea/dyn-textarea.model';
 
 export const dynComponents = {
   get: function (type) { return this[type].component },
   getList: function () {
-    return Object.keys(this).filter(i => this[i].title).map(i => this[i].title)
+    return Object.keys(this).filter(i => this[i].title).map(i => { return { title: this[i].title, key: i } })
   },
+  getModel: function (type) { return this[type].model || null },
   // input: { component: InputComponent, title: 'Input' },
-  select: { component: DynSelectComponent, title: 'Select' },
-  datetime: { component: DynDatetimeComponent, title: 'Datetime' },
-  checkbox: { component: DynCheckboxComponent, title: 'Checkbox' },
-  number: { component: DynNumberComponent, title: 'Number' },
-  time: { component: DynTimeComponent, title: 'Time' },
-  text: { component: DynTextComponent, title: 'Text' },
-  textarea: { component: DynTextareaComponent, title: 'Textarea' },
-  color: { component: DynColorComponent, title: 'Color' },
+  select: { component: DynSelectComponent, title: 'Select', model: DynSelect },
+  datetime: { component: DynDatetimeComponent, title: 'Datetime', model: DynDatetime },
+  checkbox: { component: DynCheckboxComponent, title: 'Checkbox', model: DynCheckbox },
+  number: { component: DynNumberComponent, title: 'Number', model: DynNumber },
+  time: { component: DynTimeComponent, title: 'Time', model: DynTime },
+  text: { component: DynTextComponent, title: 'Text', model: DynText },
+  textarea: { component: DynTextareaComponent, title: 'Textarea', model: DynTextarea },
+  color: { component: DynColorComponent, title: 'Color', model: DynColor },
 }
 
