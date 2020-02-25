@@ -20,10 +20,10 @@ export class GeneralConfigComponent implements OnInit {
 
   show = false;
 
-  generalConfig: Map<string, DynControl> = new Map([
-    ['name', <DynText>{ key: 'name', type: 'text', placeholder: "Name", label: 'Name', validators: { required: true } }],
-    ['templateTypeId', <DynSelect>{ key: 'templateTypeId', type: 'select', placeholder: "Select type", label: "Type", options: [], validators: { required: true } }],
-    ['description', <DynTextarea>{ key: 'type', type: 'textarea', placeholder: "Description", label: "Description" }],
+  generalConfig = new Map([
+    ['name', { key: 'name', type: 'text', placeholder: "Name", label: 'Name', validators: { required: true } }],
+    ['templateTypeId', { key: 'templateTypeId', type: 'select', placeholder: "Select type", label: "Type", options: [], validators: { required: true } }],
+    ['description', { key: 'type', type: 'textarea', placeholder: "Description", label: "Description" }],
   ]);
   constructor(
     private store: Store<State>

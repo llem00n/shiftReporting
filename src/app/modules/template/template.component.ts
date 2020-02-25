@@ -32,7 +32,7 @@ export class TemplateComponent implements OnInit {
   // });
 
   modelNewControl = null;
-
+  isShowTemplateInfo = true
   constructor(
     private location: Location,
   ) { }
