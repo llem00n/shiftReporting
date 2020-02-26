@@ -12,7 +12,7 @@ export class DepartmentEffects {
   loadDepartments$ = createEffect(() => this.actions$.pipe(
     ofType(DepartmentActions.loadDepartments),
     mergeMap(action => this.departmentHttpService.getDepartments(action.plantId).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => DepartmentActions.loadDepartmentsSuccess({ departments: resp.body }))
     )),
   ));
@@ -20,7 +20,7 @@ export class DepartmentEffects {
   addDepartment$ = createEffect(() => this.actions$.pipe(
     ofType(DepartmentActions.addDepartment),
     mergeMap(action => this.departmentHttpService.addDepartment(action.department).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => DepartmentActions.addDepartmentSucces({ department: resp.body }))
     )),
   ));
@@ -36,7 +36,7 @@ export class DepartmentEffects {
   updateDepartment$ = createEffect(() => this.actions$.pipe(
     ofType(DepartmentActions.updateDepartment),
     mergeMap(action => this.departmentHttpService.updateDepartment(action.department).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => DepartmentActions.updateDepartmentSuccess({
         department: {
           id: resp.body.departmentId,

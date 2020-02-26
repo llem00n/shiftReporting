@@ -30,7 +30,7 @@
       <div class="absolute z-50 right-0 flex flex-col h-full overflow-auto">
         <p class=" cursor-pointer btn" (click)="isShowTemplateInfo = !isShowTemplateInfo">Template info</p>
         <div *ngIf="isShowTemplateInfo" class="bg-gray-200 p-3 overflow-auto">
-          <pre class="">
+          <pre class="text-xs">
             {{template | json}}
           </pre>
         </div>
