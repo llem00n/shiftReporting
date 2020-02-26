@@ -1,11 +1,14 @@
 <section class="w-screen h-screen fixed top-0 left-0 flex flex-col bg-white">
 
   <!-- Header -->
-  <header class="bg-blue-600 px-4 py-2">
-    <svg (click)="goBack()" class="inline mr-2 fill-current w-6 h-6 mr-6" viewBox="0 0 24 24">
-      <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
-    </svg>
-    <span>Create template</span>
+  <header class="text-gray-300 bg-blue-600 px-4 py-2 flex justify-between">
+    <div class="flex items-center">
+      <svg (click)="goBack()" class="inline mr-2 fill-current w-6 h-6 mr-6" viewBox="0 0 24 24">
+        <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+      </svg>
+      <span>Create template</span>
+    </div>
+    <button class="font-bold text-xs px-2" (click)="save()">Save</button>
   </header>
 
   <div class="flex flex-1 overflow-auto">
@@ -18,11 +21,6 @@
       </app-gridster-config>
       <app-interfaces-config></app-interfaces-config>
       <app-controls-list (draggableControl)="setTypeNewControl($event)"></app-controls-list>
-
-
-      <!-- <p class="inline-block p-2 whitespace-no-wrap" draggable="true" (dragstart)="dragStartHandler($event, 'Drag')">
-        Drag me</p> -->
-      <!-- <pre class="bg-gray-800 text-white text-xs">{{template.body | json}}</pre> -->
     </div>
 
     <!-- Main window -->

@@ -1,5 +1,4 @@
-import { DboardItem } from 'src/app/modules/grid/grid.component';
-import { GridsterConfig } from 'angular-gridster2';
+import { DynControl } from 'src/app/modules/dynamic-controls/models';
 
 export class Template {
   templateId: number;
@@ -9,14 +8,15 @@ export class Template {
   lastUpdated: string;
   templateTypeId: number;
   templateTypeName: string;
-  constructor(options: { [key: string]: any } = {}) {
-    this.templateId = options['templateId'] || null;
-    this.name = options['name'] || '';
-    this.templateTypeId = options['templateTypeId'] || null;
-    this.templateTypeName = options['templateTypeName'] || '';
-    this.description = options['description'] || '';
-    this.lastUpdated = options['lastUpdated'] || '';
-    this.body = new TemplateBody(options['body'] || {});
+  constructor(opt: { [key: string]: any } = {}) {
+    if (opt['templateId']) { this.templateId = opt['templateId'] }
+    // this.templateId = opt['templateId'] || null;
+    this.name = opt['name'] || '';
+    this.templateTypeId = opt['templateTypeId'] || null;
+    this.templateTypeName = opt['templateTypeName'] || '';
+    this.description = opt['description'] || '';
+    this.lastUpdated = opt['lastUpdated'] || '';
+    this.body = new TemplateBody(opt['body'] || {});
   }
 }
 
@@ -28,18 +28,18 @@ class TemplateBody {
   Excel: string[];
   DatabaseTable: string[];
   Datasource: { [key: string]: ValueType };
-  dashboard: Array<DboardItem>;
+  dashboard: Array<DynControl>;
   gridsterOptions: {};
-  constructor(options: { [key: string]: any } = {}) {
-    this.TemplateData = options['TemplateData'] || {};
-    this.PIAFTemplate = options['PIAFTemplate'] || {};
-    this.PIAFAttributes = options['PIAFAttributes'] || {};
-    this.XML = options['XML'] || [];
-    this.Excel = options['Excel'] || [];
-    this.DatabaseTable = options['DatabaseTable'] || [];
-    this.Datasource = options['Datasource'] || {};
-    this.dashboard = options['dashboard'] || [];
-    this.gridsterOptions = options['gridsterOptions'] || {};
+  constructor(opt: { [key: string]: any } = {}) {
+    this.TemplateData = opt['TemplateData'] || {};
+    this.PIAFTemplate = opt['PIAFTemplate'] || {};
+    this.PIAFAttributes = opt['PIAFAttributes'] || {};
+    this.XML = opt['XML'] || [];
+    this.Excel = opt['Excel'] || [];
+    this.DatabaseTable = opt['DatabaseTable'] || [];
+    this.Datasource = opt['Datasource'] || {};
+    this.dashboard = opt['dashboard'] || [];
+    this.gridsterOptions = opt['gridsterOptions'] || {};
 
   }
 };

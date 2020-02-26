@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { DboardItem } from '../grid/grid.component';
+// import { DboardItem } from '../grid/grid.component';
 import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
 import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { dynComponents } from '../dynamic-controls';
 import { GridsterItem } from 'angular-gridster2';
+import { DynControl } from '../dynamic-controls/models';
 
 @Component({
   selector: 'app-template',
@@ -20,15 +21,11 @@ export class TemplateComponent implements OnInit {
   dashboard = []
   appointment = 'build';
   options = this.template.body.gridsterOptions;
-  // dashboard: DboardItem[] = [1, 2, 3, 4, 5].map(num => {
-  //   const control = new DynText({ key: `text${num}`, placeholder: `Item ${num}` });
-  //   const gridsterItem = { x: 1, rows: 1, cols: 5, y: num };
-  //   Object.assign(gridsterItem, control.gridItemOptions);
-  //   return {
-  //     key: control.key,
-  //     gridsterItem,
-  //     control,
-  //   }
+  // dashboard1: DynControl[] = [1,
+  //   //  2, 3, 4, 5
+  // ].map(num => {
+  //   const gridItem = { x: 1, rows: 1, cols: 5, y: num };
+  //   return new DynText({ gridItem, controlId: `text${num}`, placeholder: `Item ${num}` });
   // });
 
   modelNewControl = null;
@@ -50,6 +47,7 @@ export class TemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.template.body.dashboard = this.dashboard1
     this.dashboard = this.template.body.dashboard
     console.log(this.template);
   }
@@ -60,21 +58,14 @@ export class TemplateComponent implements OnInit {
     this.dashboard.push(this.createNewControl(itemOptions, this.dashboard));
   }
 
-  createNewControl(itemOptions, dashboard): DboardItem {
-    const control = new this.modelNewControl();
-    const gridsterItem = { ...itemOptions };
-    const maxLength: number = this.getMaxColsS(itemOptions, dashboard, control);
-    Object.assign(gridsterItem, control.gridItemOptions, { cols: maxLength });
-    return <DboardItem>{
-      key: control.key,
-      gridsterItem,
-      control
-    }
+  createNewControl(gridItem, dashboard): DynControl {
+    gridItem.cols = this.getMaxColsS(gridItem, dashboard)
+    return new this.modelNewControl({ gridItem });
   }
 
-  getMaxColsS(newItem: GridsterItem, dboard: DboardItem[], control): number {
-    const dboardGridster = dboard.map(i => i.gridsterItem);
-    let maxLength = control.gridItemOptions.cols; /* maxLength - length of new element */
+  getMaxColsS(newItem: GridsterItem, dboard: DynControl[]): number {
+    const dboardGridster = dboard.map(i => i.gridItem);
+    let maxLength = 5; /* maxLength - length of new element */
     for (let i = 1; i <= maxLength; i++) {
       dboardGridster.map(item => {
         if (item.x === newItem.x + i
@@ -96,5 +87,16 @@ export class TemplateComponent implements OnInit {
   }
   setTypeNewControl(key) {
     this.modelNewControl = dynComponents.getModel(key);
+  }
+
+  removeExcessProps(obj: {}, props: string[]) {
+    props.map(prop => delete obj[prop])
+  }
+  save() {
+    this.template.body.dashboard.map(i => {
+      this.removeExcessProps(i, ['diffGridItem']);
+      this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
+    })
+    console.log(this.template);
   }
 }

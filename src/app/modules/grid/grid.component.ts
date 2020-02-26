@@ -3,11 +3,11 @@ import { GridsterItem, GridsterConfig } from 'angular-gridster2';
 import { DynControl } from '../dynamic-controls/models';
 import { FormGroup } from '@angular/forms';
 
-export interface DboardItem {
-  key: string;
-  gridsterItem: GridsterItem;
-  control: DynControl;
-}
+// export interface DboardItem {
+//   key: string;
+//   gridsterItem: GridsterItem;
+//   control: DynControl;
+// }
 export interface GridsterOptions extends GridsterConfig {
   bgColor?: string;
 }
@@ -47,7 +47,7 @@ export const optionsBase: GridsterOptions = {
 export class GridComponent implements OnChanges {
   @Input() appointment: string;
   @Input() selectedItemId: string;
-  @Input() dashboard: DboardItem[];
+  @Input() dashboard: DynControl[];
   @Input() options: GridsterOptions = {};
   @Input() form: FormGroup;
   @Input() showInvalid: boolean;
@@ -55,7 +55,7 @@ export class GridComponent implements OnChanges {
 
   @Output() clickItem: EventEmitter<string> = new EventEmitter<string>();
   @Output() dropNewItem: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
-  @Output() dashboardChange: EventEmitter<DboardItem[]> = new EventEmitter<DboardItem[]>();
+  @Output() dashboardChange: EventEmitter<DynControl[]> = new EventEmitter<DynControl[]>();
 
   private _optionsBuild: GridsterConfig = {
     itemChangeCallback: (e, i) => this.gridsterItemChange(e, i),
@@ -88,7 +88,7 @@ export class GridComponent implements OnChanges {
     this.gridSize = this.calcWidthHeight(this.optionsResult, this.dashboard);
     this.changedOptions();
   }
-  calcWidthHeight(opt, dashboard: DboardItem[]): { [key: string]: string } {
+  calcWidthHeight(opt, dashboard: DynControl[]): { [key: string]: string } {
     const {
       fixedColWidth,
       outerMarginLeft,
@@ -99,9 +99,9 @@ export class GridComponent implements OnChanges {
     const result = {}
     let maxX = opt.minCols;
     let maxY = opt.minRows;
-    dashboard.map(({ gridsterItem }) => {
-      const x = gridsterItem.x + gridsterItem.cols;
-      const y = gridsterItem.y + gridsterItem.rows;
+    dashboard.map(({ gridItem }) => {
+      const x = gridItem.x + gridItem.cols;
+      const y = gridItem.y + gridItem.rows;
       if (x > maxX) maxX = x;
       if (y > maxY) maxY = y;
     });
@@ -132,7 +132,7 @@ export class GridComponent implements OnChanges {
     this.dropNewItem.emit(item);
   }
 
-  getBackground(dboardItem: DboardItem): string {
+  getBackground(dboardItem: DynControl): string {
     return 'white';
     // const data = this.controlsErrors && this.controlsErrors.find(i => i.ControlID === dboardItem.id);
     // return (data && data.HasError)
@@ -140,12 +140,12 @@ export class GridComponent implements OnChanges {
     //   || dboardItem.element.backgroundColor
     //   || 'white';
   }
-  getMessageError(dboardItem: DboardItem): string {
+  getMessageError(dboardItem: DynControl): string {
     return '';
     // const data = this.controlsErrors && this.controlsErrors.find(i => i.ControlID === dboardItem.id);
     // return (data && data.HasError) ? data.ErrorMessage : '';
   }
   // getContent(item) {
-    // return `[slot="${item.key}"]`
+  // return `[slot="${item.key}"]`
   // }
 }
