@@ -3,14 +3,15 @@ import { BaseControl } from '../base/base.model';
 export class DynCheckbox extends BaseControl {
   type = 'checkbox';
   valueType = 'boolean';
-  gridItemOptions = {
-    cols:1,
+  diffGridItem = {
+    cols: 1,
+    maxItemCols: 1,
     resizeEnabled: false,
 
   }
-  constructor(options: {} = {}) {
-    super(options);
+  constructor(opt: {} = {}) {
+    super(opt);
     this.controlId = this.controlId || this.createControlId(this.type);
-
+    this.gridItem && Object.assign(this.gridItem, this.diffGridItem)
   }
 } 
