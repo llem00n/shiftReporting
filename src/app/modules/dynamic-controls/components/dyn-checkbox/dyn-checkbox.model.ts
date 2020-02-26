@@ -10,7 +10,7 @@ export class DynCheckbox extends BaseControl {
   }
   constructor(options: {} = {}) {
     super(options);
-    this.key = this.key || this.createKey(this.type);
+    this.controlId = this.controlId || this.createControlId(this.type);
 
   }
 } 

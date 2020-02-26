@@ -5,7 +5,7 @@ export class DynTime extends BaseControl {
   valueType = 'time'
   constructor(opt: {} = {}) {
     super(opt);
-    this.key = this.key || this.createKey(this.type);
+    this.controlId = this.controlId || this.createControlId(this.type);
 
   }
 } 

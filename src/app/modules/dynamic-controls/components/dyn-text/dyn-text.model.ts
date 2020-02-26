@@ -4,10 +4,10 @@ export class DynText extends BaseControl {
   type = 'text';
   valueType = 'string';
   placeholder?: string;
-  constructor(options: {} = {}) {
-    super(options);
-    this.key = this.key || this.createKey(this.type);
-    this.placeholder = options['placeholder'] || '';
+  constructor(opt: {} = {}) {
+    super(opt);
+    this.controlId = this.controlId || this.createControlId(this.type);
+    this.placeholder = opt['placeholder'] || '';
 
   }
 } 

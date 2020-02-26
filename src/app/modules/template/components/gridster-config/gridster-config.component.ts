@@ -3,6 +3,7 @@ import { DynControl } from 'src/app/modules/dynamic-controls/models';
 import { DynNumber } from 'src/app/modules/dynamic-controls/components/dyn-number/dyn-number.model';
 import { optionsBase } from '../../../grid'
 import { FormGroup } from '@angular/forms';
+import { DynColor } from 'src/app/modules/dynamic-controls/components/dyn-color/dyn-color.model';
 
 const {
   minCols,
@@ -24,11 +25,11 @@ export class GridsterConfigComponent implements OnInit {
   values;
 
   show = false;
-  gridsterConfig: Map<string, DynControl> = new Map([
-    ['minCols', <DynNumber>{ key: 'minCols', type: 'number', label: 'Columns', min: 1, max: 50, step: 1 }],
-    ['minRows', <DynNumber>{ key: 'minRows', type: 'number', label: 'Rows', min: 1, max: 50, step: 1 }],
-    ['bgColor', <DynControl>{ key: 'bgColor', type: 'color', label: "Background color" }],
-  ]);
+  gridsterConfig: DynControl[] = [
+    new DynNumber({ controlId: 'minCols', type: 'number', label: 'Columns', min: 1, max: 50, step: 1 }),
+    new DynNumber({ controlId: 'minRows', type: 'number', label: 'Rows', min: 1, max: 50, step: 1 }),
+    new DynColor({ controlId: 'bgColor', type: 'color', label: "Background color" }),
+  ];
 
   constructor() { }
 

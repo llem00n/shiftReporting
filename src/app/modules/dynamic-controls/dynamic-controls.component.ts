@@ -24,7 +24,7 @@ export class DynamicControlsComponent implements OnChanges {
     private clService: ControlsLocalService,
   ) { }
   ngOnChanges() {
-    this.clService.setData({ control: <DynInput>this.control, form: this.form });
+    this.clService.setData({ control: this.control, form: this.form });
     this.component = dynComponents.get(this.control.type);    
   }
 }

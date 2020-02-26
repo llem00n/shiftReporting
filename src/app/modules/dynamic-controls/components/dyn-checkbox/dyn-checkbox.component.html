@@ -1,5 +1,5 @@
 <span [formGroup]="options.form" class="flex h-full items-center justify-center">
-  <input [id]="options.control.key" type="checkbox" [formControlName]="options.control.key">
+  <input [id]="options.control.controlId" type="checkbox" [formControlName]="options.control.controlId">
   <!-- <div class="flex-1 order-2"></div> -->
-  <label *ngIf="options.control.label" [for]="options.control.key" class="pl-2">{{options.control.label}}</label>
+  <label *ngIf="options.control.label" [for]="options.control.controlId" class="pl-2">{{options.control.label}}</label>
 </span>

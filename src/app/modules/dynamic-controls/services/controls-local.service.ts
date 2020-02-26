@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ControlOptions } from '../models/control-options.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DynControl } from '../models';
+import { optionsBase } from '../../grid';
 
 @Injectable()
 export class ControlsLocalService {
@@ -19,9 +21,9 @@ export class ControlsLocalService {
   getData(): Observable<any> {
     return this.data;
   }
-  createFakeForm(control): FormGroup {
+  createFakeForm(control: DynControl): FormGroup {    
     const group: FormGroup = new FormGroup({});
-    group.addControl(control.key, new FormControl(control.value))
+    group.addControl(control.controlId, new FormControl(control.value))
     return group;
   }
   //   constructor(

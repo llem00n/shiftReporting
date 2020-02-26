@@ -13,6 +13,9 @@ import { DynNumber } from 'src/app/modules/dynamic-controls/components/dyn-numbe
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
 import { filter } from 'rxjs/operators';
 import { ListData } from '../list/list.component';
+import { DynTime } from 'src/app/modules/dynamic-controls/components/dyn-time/dyn-time.model';
+import { DynSelect } from 'src/app/modules/dynamic-controls/components/dyn-select/dyn-select.model';
+import { DynCheckbox } from 'src/app/modules/dynamic-controls/components/dyn-checkbox/dyn-checkbox.model';
 
 @Component({
   selector: 'app-config-schedule',
@@ -25,43 +28,43 @@ export class ConfigScheduleComponent implements OnInit {
   preConfigForm: FormGroup;
   shifts: Shift[];
   preConfig = [
-    <Select>{
-      key: 'plantId',
+    new DynSelect({
+      controlId: 'plantId',
       type: 'select',
       label: 'Plant',
       validators: { required: true },
       options: [],
       placeholder: 'Select plant'
-    },
-    <Select>{
-      key: 'departmentId',
+    }),
+    new DynSelect({
+      controlId: 'departmentId',
       type: 'select',
       label: 'Department',
       validators: { required: true },
       options: [],
       placeholder: 'Select department'
-    },
-    <Select>{
-      key: 'shiftId',
+    }),
+    new DynSelect({
+      controlId: 'shiftId',
       type: 'select',
       label: 'Shift',
       validators: { required: true },
       options: [],
       placeholder: 'Select shift'
-    }
+    })
   ]
   editingObj: Schedule;
   configSchedule = [
-    <BaseControl>{ key: 'startTime', type: 'time', label: 'Start Time', validators: { required: true } },
-    <BaseControl>{ key: 'endTime', type: 'time', label: 'End Time', validators: { required: true } },
-    <DynNumber>{ key: 'recurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } },
-    <BaseControl>{ key: 'monday', type: 'checkbox', label: 'Monday' },
-    <BaseControl>{ key: 'tuesday', type: 'checkbox', label: 'Tuesday' },
-    <BaseControl>{ key: 'wednesday', type: 'checkbox', label: 'Wednesday' },
-    <BaseControl>{ key: 'thursday', type: 'checkbox', label: 'Thursday' },
-    <BaseControl>{ key: 'friday', type: 'checkbox', label: 'Friday' },
-    <BaseControl>{ key: 'saturday', type: 'checkbox', label: 'Saturday' },
-    <BaseControl>{ key: 'sunday', type: 'checkbox', label: 'Sunday' },
+    new DynTime({ controlId: 'startTime', type: 'time', label: 'Start Time', validators: { required: true } }),
+    new DynTime({ controlId: 'endTime', type: 'time', label: 'End Time', validators: { required: true } }),
+    new DynNumber({ controlId: 'recurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } }),
+    new DynCheckbox({ controlId: 'monday', type: 'checkbox', label: 'Monday' }),
+    new DynCheckbox({ controlId: 'tuesday', type: 'checkbox', label: 'Tuesday' }),
+    new DynCheckbox({ controlId: 'wednesday', type: 'checkbox', label: 'Wednesday' }),
+    new DynCheckbox({ controlId: 'thursday', type: 'checkbox', label: 'Thursday' }),
+    new DynCheckbox({ controlId: 'friday', type: 'checkbox', label: 'Friday' }),
+    new DynCheckbox({ controlId: 'saturday', type: 'checkbox', label: 'Saturday' }),
+    new DynCheckbox({ controlId: 'sunday', type: 'checkbox', label: 'Sunday' }),
   ]
 
   editOptions = {
@@ -102,24 +105,28 @@ export class ConfigScheduleComponent implements OnInit {
         this.store.dispatch(PlantActions.loadPlants());
         return;
       };
-      this.preConfig[0].options = plants.map(plant => {
-        return {
-          value: plant.plantId,
-          viewValue: `${plant.name} (${plant.code}, ${plant.address})`
-        }
-      })
+      this.preConfig
+        .find(i => i.controlId === 'plantId')
+        .options = plants.map(plant => {
+          return {
+            value: plant.plantId,
+            viewValue: `${plant.name} (${plant.code}, ${plant.address})`
+          }
+        })
     })
   }
   getDepartments() {
     this.store.pipe(
       select(allDepartments)
     ).subscribe(departments => {
-      this.preConfig[1].options = departments.map(i => {
-        return {
-          value: '' + i.departmentId,
-          viewValue: `${i.name}`
-        }
-      })
+      this.preConfig
+        .find(i => i.controlId === 'departmentId')
+        .options = departments.map(i => {
+          return {
+            value: '' + i.departmentId,
+            viewValue: `${i.name}`
+          }
+        })
     })
   }
   getShifts() {
@@ -128,12 +135,14 @@ export class ConfigScheduleComponent implements OnInit {
       select(allShifts)
     ).subscribe(shifts => {
       this.shifts = shifts;
-      this.preConfig[2].options = shifts.map(i => {
-        return {
-          value: '' + i.shiftId,
-          viewValue: `${i.name}`
-        }
-      })
+      this.preConfig
+        .find(i => i.controlId === 'shiftId')
+        .options = shifts.map(i => {
+          return {
+            value: '' + i.shiftId,
+            viewValue: `${i.name}`
+          }
+        })
     })
   }
   getSchedules() {
@@ -206,16 +215,16 @@ export class ConfigScheduleComponent implements OnInit {
     configArr.map(i => {
       switch (i.type) {
         case 'checkbox':
-          value[i.key] = !!formValue[i.key];
+          value[i.controlId] = !!formValue[i.controlId];
           break;
         case 'number':
-          value[i.key] = +formValue[i.key];
+          value[i.controlId] = +formValue[i.controlId];
           break;
         // case 'datetime':
-        //   value[i.key] = new Date(formValue[i.key]).toJSON().slice(0, 19) + "Z";
+        //   value[i.controlId] = new Date(formValue[i.controlId]).toJSON().slice(0, 19) + "Z";
         //   break;
         default:
-          value[i.key] = formValue[i.key];
+          value[i.controlId] = formValue[i.controlId];
           break;
       }
     })

@@ -6,6 +6,7 @@ export class DynSelect extends BaseControl {
   placeholder?: string;
   constructor(opt: {} = {}) {
     super(opt);
+    this.controlId = this.controlId || this.createControlId(this.type);
     this.placeholder = opt['placeholder'] || '';
     this.options = opt['options'] || [];
   }

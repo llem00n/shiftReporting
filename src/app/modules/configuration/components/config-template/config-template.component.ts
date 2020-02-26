@@ -10,6 +10,8 @@ import { DynControl } from 'src/app/modules/dynamic-controls/models';
 import { ListData } from '../list/list.component';
 import { Template } from 'src/app/app-store/template/template.model';
 import { ConfigurationService } from '../../services/configuration.service';
+import { DynSelect } from 'src/app/modules/dynamic-controls/components/dyn-select/dyn-select.model';
+import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
 
 @Component({
   selector: 'app-config-template',
@@ -17,34 +19,34 @@ import { ConfigurationService } from '../../services/configuration.service';
   styleUrls: ['./config-template.component.scss']
 })
 export class ConfigTemplateComponent implements OnInit {
+  isShowPanels: { [key: string]: boolean } = {};
   preConfig = [
-    <Select>{
-      key: 'plantId',
+    new DynSelect({
+      controlId: 'plantId',
       type: 'select',
       label: 'Plant',
       validators: { required: true },
       options: [],
       placeholder: 'Select plant'
-    },
-    <Select>{
-      key: 'departmentId',
+    }),
+    new DynSelect({
+      controlId: 'departmentId',
       type: 'select',
       label: 'Department',
       validators: { required: true },
       options: [],
       placeholder: 'Select department'
-    },
+    }),
   ];
   list: ListData;
   editingObj: Template;
   preConfigForm: FormGroup;
-  isShowPanels: { [key: string]: boolean } = {};
 
-  configTemplate: Map<string, DynControl> = new Map([
-    ['name', <DynInput>{ key: 'name', type: 'text', label: 'Name', validators: { required: true } },],
-    ['description', <DynInput>{ key: 'description', type: 'text', label: 'Description', validators: { required: true } },],
-    ['templateTypeId', <Select>{ key: 'templateTypeId', type: 'select', label: 'Template Type', options: [], validators: { required: true }, placeholder: 'Select type' },],
-  ]);
+  configTemplate = [
+    new DynText({ controlId: 'name', type: 'text', label: 'Name', validators: { required: true } }),
+    new DynText({ controlId: 'description', type: 'text', label: 'Description', validators: { required: true } }),
+    new DynSelect({ controlId: 'templateTypeId', type: 'select', label: 'Template Type', options: [], validators: { required: true }, placeholder: 'Select type' }),
+  ];
 
   editOptions = {
     properties: this.configTemplate,
@@ -84,7 +86,7 @@ export class ConfigTemplateComponent implements OnInit {
       const options = types.map(i => {
         return { value: i.templateTypeId, viewValue: i.name, }
       });
-      this.configTemplate.get('templateTypeId')['options'] = options
+      this.configTemplate.find(i => i.controlId === 'templateTypeId')['options'] = options
     })
   }
   getPlants() {
@@ -143,7 +145,7 @@ export class ConfigTemplateComponent implements OnInit {
   }
   getTemplateTypeName(templateTypeId): string {
     return this.configTemplate
-      .get('templateTypeId')['options']
+      .find(i => i.controlId === 'templateTypeId')['options']
       .find(i => i.value == templateTypeId).viewValue
   }
 

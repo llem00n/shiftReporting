@@ -8,7 +8,7 @@ export class DynNumber extends BaseControl {
   step?: number;
   constructor(options: {} = {}) {
     super(options);
-    this.key = this.key || this.createKey(this.type);
+    this.controlId = this.controlId || this.createControlId(this.type);
     this.placeholder = options['placeholder'] || '';
     this.min = options['min'] || null;
     this.max = options['max'] || null;

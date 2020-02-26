@@ -6,6 +6,7 @@ import { State, allShifts } from 'src/app/app-store';
 import { ShiftActions } from '@actions/*';
 import { ConfigurationService } from '../../services/configuration.service';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
+import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
 
 @Component({
   selector: 'app-config-shift',
@@ -18,8 +19,8 @@ export class ConfigShiftComponent implements OnInit {
   editingObj: Shift;
 
   configShift = [
-    <DynInput>{ key: 'name', type: 'text', label: 'Name', validators: { required: true } },
-    <DynInput>{ key: 'description', type: 'text', label: 'Description' },
+    new DynText({ controlId: 'name', type: 'text', label: 'Name', validators: { required: true } }),
+    new DynText({ controlId: 'description', type: 'text', label: 'Description' }),
   ]
 
   editOptions = {

@@ -30,9 +30,9 @@ export class ConfigPlantsComponent implements OnInit {
   showedAddForm = false;
 
   configPlant = [
-    new DynText({ key: 'name', type: 'text', label: 'Name', validators: { required: true } }),
-    new DynText({ key: 'code', type: 'text', label: 'Code', validators: { required: true } }),
-    new DynText({ key: 'address', type: 'text', label: 'Address', validators: { required: true } }),
+    new DynText({ controlId: 'name', type: 'text', label: 'Name', validators: { required: true } }),
+    new DynText({ controlId: 'code', type: 'text', label: 'Code', validators: { required: true } }),
+    new DynText({ controlId: 'address', type: 'text', label: 'Address', validators: { required: true } }),
   ];
 
   editOptions = {

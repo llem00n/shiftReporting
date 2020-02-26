@@ -6,7 +6,7 @@ export class DynTextarea extends BaseControl {
   placeholder?: string;
   constructor(opt: {} = {}) {
     super(opt);
-    this.key = this.key || this.createKey(this.type);
+    this.controlId = this.controlId || this.createControlId(this.type);
     this.placeholder = opt['placeholder'] || '';
   }
 } 
