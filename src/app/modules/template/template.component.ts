@@ -21,6 +21,7 @@ export class TemplateComponent implements OnInit {
   dashboard = []
   appointment = 'build';
   options = this.template.body.gridsterOptions;
+  selectedControl: DynControl;
   // dashboard1: DynControl[] = [1,
   //   //  2, 3, 4, 5
   // ].map(num => {
@@ -79,9 +80,14 @@ export class TemplateComponent implements OnInit {
   }
 
 
-  clickItem(event) {
-    console.log(event);
+
+  clickItem(controlId) {
+    if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
+      this.selectedControl = this.template.body.dashboard
+        .find(i => i.controlId === controlId)
+    }
   }
+
   dashboardChange(event) {
     console.log(event);
   }
@@ -93,10 +99,11 @@ export class TemplateComponent implements OnInit {
     props.map(prop => delete obj[prop])
   }
   save() {
-    this.template.body.dashboard.map(i => {
-      this.removeExcessProps(i, ['diffGridItem']);
+    const savedTemplate: Template = JSON.parse(JSON.stringify(this.template))
+    savedTemplate.body.dashboard.map(i => {
+      this.removeExcessProps(i, ['diffGridItem', 'settings']);
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
-    console.log(this.template);
+    console.log(savedTemplate);
   }
 }

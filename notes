@@ -37,6 +37,7 @@ ng g c modules/template/components/GeneralConfig
 ng g c modules/template/components/GridsterConfig
 ng g c modules/template/components/InterfacesConfig
 ng g c modules/template/components/ControlsList
+ng g c modules/template/components/ControlConfig
 ng g s modules/template/services/Template
 
 

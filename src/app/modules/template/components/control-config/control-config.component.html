@@ -1,0 +1,7 @@
+<div *ngIf="control" class="bg-gray-100 p-2 shadow-xs cursor-default">
+  <p class="font-bold mb-2 select-none" (click)="show = !show">Control settings</p>
+  <div *ngIf="show">
+    <app-form *ngIf="show" [controls]='control.settings' [values]='control' (form)="getForm($event)"></app-form>
+    <pre class="text-xs">{{control.settings | json}}</pre>
+  </div>  
+</div>
