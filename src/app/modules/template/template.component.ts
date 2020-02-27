@@ -7,6 +7,10 @@ import { FormGroup } from '@angular/forms';
 import { dynComponents } from '../dynamic-controls';
 import { GridsterItem } from 'angular-gridster2';
 import { DynControl } from '../dynamic-controls/models';
+import { Store, select } from '@ngrx/store';
+import { State, editingTemplate } from 'src/app/app-store';
+import { filter } from 'rxjs/operators';
+import { TemplateActions } from '@actions/*';
 
 @Component({
   selector: 'app-template',
@@ -14,13 +18,15 @@ import { DynControl } from '../dynamic-controls/models';
   styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit {
-  _template = new Template();
-  @Input()
-  set template(template: Template) { if (template) this._template = new Template(JSON.parse(JSON.stringify(template))); };
-  get template() { return this._template };
-  dashboard = []
+  // _template = new Template();
+  // @Input()
+  // set template(template: Template) { if (template) this._template = new Template(JSON.parse(JSON.stringify(template))); };
+  // get template() { return this._template };
+  template: Template;
+  dashboard = [];
+  options = {};
   appointment = 'build';
-  options = this.template.body.gridsterOptions;
+  // options = this.template?.body.gridsterOptions;
   selectedControl: DynControl;
   // dashboard1: DynControl[] = [1,
   //   //  2, 3, 4, 5
@@ -33,6 +39,8 @@ export class TemplateComponent implements OnInit {
   isShowTemplateInfo = true
   constructor(
     private location: Location,
+    private store: Store<State>
+
   ) { }
 
   getFormGeneral(e: FormGroup) {
@@ -41,16 +49,25 @@ export class TemplateComponent implements OnInit {
     )
   }
   getFormGridsterOptions(e: FormGroup) {
-    e.valueChanges.subscribe((values) =>
-      this.template.body.gridsterOptions = new Object(values)
-      // Object.assign(this.template.body.gridsterOptions, values)
-    )
+    e.valueChanges.subscribe((values) => {
+      this.template.body.gridsterOptions = new Object(values);
+      this.options = this.template.body.gridsterOptions;
+    })
   }
 
   ngOnInit(): void {
+    this.store.pipe(
+      select(editingTemplate),
+      // filter(data => !!data),
+    ).subscribe(template => {
+      const opt = template ? template : {};
+      this.template = new Template(opt);
+      this.dashboard = this.template.body.dashboard;
+      this.options = this.template.body.gridsterOptions;
+    })
     // this.template.body.dashboard = this.dashboard1
-    this.dashboard = this.template.body.dashboard
-    console.log(this.template);
+    // this.dashboard = this.template.body.dashboard
+    // console.log(this.template);
   }
   goBack() {
     this.location.back()
@@ -79,8 +96,6 @@ export class TemplateComponent implements OnInit {
     return maxLength;
   }
 
-
-
   clickItem(controlId) {
     if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
       this.selectedControl = this.template.body.dashboard
@@ -99,11 +114,24 @@ export class TemplateComponent implements OnInit {
     props.map(prop => delete obj[prop])
   }
   save() {
-    const savedTemplate: Template = JSON.parse(JSON.stringify(this.template))
-    savedTemplate.body.dashboard.map(i => {
+    const template: Template = JSON.parse(JSON.stringify(this.template))
+    template.body.dashboard.map(i => {
       this.removeExcessProps(i, ['diffGridItem', 'settings']);
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
-    console.log(savedTemplate);
+    template.lastUpdated = this.getCurternDateLocal();
+    template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }))
+    console.log(JSON.stringify(template));
   }
+  getCurternDateLocal(): string {
+    const curternDateUTC = new Date()
+    return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
+  }
+
+  deleteControl(controlId) {
+    const index = this.dashboard.findIndex(i => i.controlId === controlId)
+    this.dashboard.splice(index, 1);
+  }
+
 }
+// {"templateId":3,"name":"test","templateTypeId":1,"templateTypeName":null,"description":"55qww","lastUpdated":"2020-02-27T16:41:18.791","body":{"TemplateData":{},"PIAFTemplate":{},"PIAFAttributes":{},"XML":[],"Excel":[],"DatabaseTable":[],"Datasource":{},"dashboard":[],"gridsterOptions":{}}}

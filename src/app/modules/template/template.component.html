@@ -17,11 +17,11 @@
 
     <div class="w-64 p-2 overflow-y-auto">
       <app-general-config (form)="getFormGeneral($event)" [template]='template'></app-general-config>
-      <app-gridster-config [options]='template.body.gridsterOptions' (form)="getFormGridsterOptions($event)">
+      <app-gridster-config [options]='options' (form)="getFormGridsterOptions($event)">
       </app-gridster-config>
       <app-interfaces-config></app-interfaces-config>
       <app-controls-list (draggableControl)="setTypeNewControl($event)"></app-controls-list>
-      <app-control-config [control]="selectedControl"></app-control-config>
+      <app-control-config *ngIf="selectedControl" [control]="selectedControl" (deleteControl)='deleteControl($event)'></app-control-config>
     </div>
 
     <!-- Main window -->
@@ -35,7 +35,7 @@
         </div>
       </div>
       <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
-        (dashboardChange)="dashboardChange($event)" [options]="template.body.gridsterOptions" [dashboard]="dashboard"
+        (dashboardChange)="dashboardChange($event)" [options]="options" [dashboard]="dashboard"
         [appointment]="appointment"> </app-grid>
     </div>
   </div>

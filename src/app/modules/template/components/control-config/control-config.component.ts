@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
 import { FormGroup } from '@angular/forms';
 
@@ -9,6 +9,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class ControlConfigComponent implements OnChanges {
   @Input() control: DynControl;
+  // @Output() form = new EventEmitter<FormGroup>()
+  @Output() deleteControl = new EventEmitter<string>()
 
 
   show = false;
@@ -19,7 +21,9 @@ export class ControlConfigComponent implements OnChanges {
     
   }
   getForm(form: FormGroup) {
-    form.valueChanges.subscribe(console.log)
+    form.valueChanges.subscribe(value => {
+      Object.assign(this.control, value)
+    })
   }
     
 }
