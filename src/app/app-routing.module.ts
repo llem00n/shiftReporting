@@ -8,7 +8,7 @@ const routes: Routes = [
 
   { path: 'configuration', component: ConfigurationComponent },
   { path: 'template', component: TemplateComponent },
-  { path: '', redirectTo: 'template', pathMatch: 'full'},
+  { path: '', redirectTo: 'configuration', pathMatch: 'full'},
 ];
 
 @NgModule({

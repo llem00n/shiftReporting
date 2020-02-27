@@ -3,15 +3,15 @@
   <app-list [data]='list' (clickActionButton)='clickListsButton($event)'></app-list>
 </div>
 
-<app-editing-panel *ngIf='isShowPanels.edit' [options]='editOptions' [object]="editingObj" (clickOk)="updateObj($event)"
+<!-- <app-editing-panel *ngIf='isShowPanels.edit' [options]='editOptions' [object]="editingObj" (clickOk)="updateObj($event)"
   (clickCancel)="isShowPanels.edit = null"></app-editing-panel>
 <app-editing-panel *ngIf='isShowPanels.add' [options]='addNewOptions' (clickOk)="addObj($event)"
-  (clickCancel)="isShowPanels.add = null"></app-editing-panel>
+  (clickCancel)="isShowPanels.add = null"></app-editing-panel> -->
 
 
 <div class="my-4" align="end">
-  <button class="btn mx-2" *ngIf='preConfigForm.valid && !(isShowPanels.edit || isShowPanels.add)' [routerLink]="[ '/template' ]"
-    >
+  <button class="btn mx-2" *ngIf='preConfigForm.valid && !(isShowPanels.edit || isShowPanels.add)'
+    [routerLink]="[ '/template' ]">
     Add Template
   </button>
 </div>

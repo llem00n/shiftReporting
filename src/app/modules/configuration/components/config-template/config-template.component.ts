@@ -12,6 +12,7 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { ConfigurationService } from '../../services/configuration.service';
 import { DynSelect } from 'src/app/modules/dynamic-controls/components/dyn-select/dyn-select.model';
 import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-config-template',
@@ -60,7 +61,8 @@ export class ConfigTemplateComponent implements OnInit {
   }
   constructor(
     private store: Store<State>,
-    private confService: ConfigurationService
+    private confService: ConfigurationService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -177,7 +179,9 @@ export class ConfigTemplateComponent implements OnInit {
     switch (e.action) {
       case 'edit':
         this.editingObj = e.item;
-        this.isShowPanels.edit = true;
+        this.store.dispatch(TemplateActions.setEditingTemplate({ template: e.item }));
+        this.router.navigate(['/template']);
+        // this.isShowPanels.edit = true;
         break;
       default: break;
     }

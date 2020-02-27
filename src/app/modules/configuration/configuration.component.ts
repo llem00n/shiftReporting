@@ -13,11 +13,11 @@ import { ConfigTemplateComponent } from './components/config-template/config-tem
 export class ConfigurationComponent {
   isShow: string = null;
   config = [
+    { key: 'template', component: ConfigTemplateComponent, title: 'Template configuration', isShow: false },
     { key: 'plant', component: ConfigPlantsComponent, title: 'Plants configuration', isShow: false },
     { key: 'department', component: ConfigDepartmentsComponent, title: 'Departments configuration', isShow: false },
     { key: 'shift', component: ConfigShiftComponent, title: 'Shifts configuration', isShow: false },
     { key: 'schedule', component: ConfigScheduleComponent, title: 'Schedule configuration', isShow: false },
-    { key: 'template', component: ConfigTemplateComponent, title: 'Template configuration', isShow: false },
   ];
 
   showItemPanel(key) {
