@@ -39,6 +39,10 @@ export const getTemplateTypesSuccess = createAction(
   props<{ templateTypes: TemplateType[] }>()
 );
 
+export const setEditingTemplate = createAction(
+  '[Template/API] Set editingTemplate',
+  props<{ template: Template }>()
+)
 
 
 

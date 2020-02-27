@@ -54,4 +54,6 @@ export const allSchedules = createSelector(scheduleState, fromSchedule.selectAll
 export const templateState = createFeatureSelector<fromTemplate.State>('templates');
 export const allTemplates = createSelector(templateState, fromTemplate.selectAll);
 export const templateTypes = createSelector(templateState, (state) => state.templateTypes);
+export const editingTemplate = createSelector(templateState, (state) => state.editingTemplate);
+
 

@@ -8,7 +8,8 @@ export const templatesFeatureKey = 'templates';
 
 export interface State extends EntityState<Template> {
   // additional entities state properties
-  templateTypes: TemplateType[]
+  templateTypes: TemplateType[];
+  editingTemplate: Template;
 }
 
 export const adapter: EntityAdapter<Template> = createEntityAdapter<Template>({
@@ -18,6 +19,7 @@ export const adapter: EntityAdapter<Template> = createEntityAdapter<Template>({
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   templateTypes: [],
+  editingTemplate: null,
 });
 
 const templateReducer = createReducer(
@@ -36,6 +38,10 @@ const templateReducer = createReducer(
   ),
   on(TemplateActions.getTemplateTypesSuccess,
     (state, { templateTypes }) => ({ ...state, templateTypes })
+  ),
+
+  on(TemplateActions.setEditingTemplate,
+    (state, { template }) => ({...state, editingTemplate: template})
   ),
 
   // on(TemplateActions.upsertTemplate,
