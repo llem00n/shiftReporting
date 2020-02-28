@@ -2,8 +2,8 @@ import { BaseControl } from '../base/base.model';
 
 export class DynSelect extends BaseControl {
   type = 'select';
-  private _options: { value: string, viewValue: string }[] = [];
   placeholder?: string;
+  private _options: { value: string, viewValue: string }[] = [];
   private _settings = [
     { controlId: 'placeholder', label: 'Placeholder', type: 'text' },
     { controlId: 'optionsString', label: 'Options', type: 'textarea' },
