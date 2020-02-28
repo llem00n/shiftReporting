@@ -22,7 +22,7 @@ export class BaseControl {
 
   settings = [
     { controlId: 'name', label: 'Name', type: 'text' },
-    { controlId: 'bgColor', label: 'Background', type: 'color' }
+    // { controlId: 'bgColor', label: 'Background', type: 'color' }
   ]
 
 

@@ -46,7 +46,7 @@ export const optionsBase: GridsterOptions = {
 })
 export class GridComponent implements OnChanges {
   @Input() appointment: string;
-  @Input() selectedItemId: string;
+  @Input() selectedControlId: string;
   @Input() dashboard: DynControl[];
   @Input() options: GridsterOptions = {};
   @Input() form: FormGroup;
@@ -79,6 +79,8 @@ export class GridComponent implements OnChanges {
   elementErrors//: ElementError[];
 
   ngOnChanges(): void {
+    console.log(this.selectedControlId);
+    
     this.processingOptions(this.appointment);
   }
   processingOptions(appointment: string) {

@@ -3,6 +3,6 @@
   <div *ngIf="show">
     <app-form *ngIf="show" [controls]='control.settings' [values]='control' (form)="getForm($event)"></app-form>
     <button class="bg-red-700 text-gray-200 py-2  w-full font-bold text-xs" (click)="deleteControl.emit(control.controlId)">Delete</button>
-    <pre class="text-xs">{{control.settings | json}}</pre>
+    <!-- <pre class="text-xs">{{control.settings | json}}</pre> -->
   </div>
 </div>
