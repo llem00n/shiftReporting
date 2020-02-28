@@ -55,20 +55,29 @@ export class TemplateComponent implements OnInit {
     })
   }
 
+  exampleTemplate = { "templateId": 3, "name": "test1", "templateTypeId": 1, "templateTypeName": "Shift template", "description": "55qww", "lastUpdated": "2020-02-27T22:32:07.191", "body": { "TemplateData": {}, "PIAFTemplate": {}, "PIAFAttributes": {}, "XML": [], "Excel": [], "DatabaseTable": [], "Datasource": {}, "dashboard": [{ "type": "select", "gridItem": { "cols": 5, "rows": 1, "x": 0, "y": 0 }, "controlId": "select1708848250e", "value": null, "label": "", "name": "", "bgColor": "#ffffff", "isRemovable": true, "placeholder": "", "options": [] }], "gridsterOptions": {} } }
+
   ngOnInit(): void {
     this.store.pipe(
       select(editingTemplate),
-      // filter(data => !!data),
     ).subscribe(template => {
-      const opt = template ? template : {};
+      const opt = template ? template : this.exampleTemplate;
       this.template = new Template(opt);
-      this.dashboard = this.template.body.dashboard;
+      this.dashboard = this.createDashboard(this.template.body.dashboard);
+      this.template.body.dashboard = this.dashboard
       this.options = this.template.body.gridsterOptions;
     })
-    // this.template.body.dashboard = this.dashboard1
-    // this.dashboard = this.template.body.dashboard
-    // console.log(this.template);
   }
+
+  createDashboard(dashboard: DynControl[]): DynControl[] {
+    const result: DynControl[] = [];
+    dashboard.map(i => {
+      const model = dynComponents.getModel(i.type);
+      result.push(new model(i));
+    });
+    return result;
+  }
+
   goBack() {
     this.location.back()
   }
@@ -95,6 +104,7 @@ export class TemplateComponent implements OnInit {
     }
     return maxLength;
   }
+
 
   clickItem(controlId) {
     if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
