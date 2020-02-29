@@ -14,9 +14,7 @@ export class DynLabelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.clService.getData().subscribe(options => {
-      console.log(options.control.value);
-      
+    this.clService.getData().subscribe(options => {      
       this.options = options
     })
   }
