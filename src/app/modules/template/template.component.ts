@@ -11,6 +11,7 @@ import { Store, select } from '@ngrx/store';
 import { State, editingTemplate } from 'src/app/app-store';
 import { filter } from 'rxjs/operators';
 import { TemplateActions } from '@actions/*';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-template',
@@ -40,17 +41,23 @@ export class TemplateComponent implements OnInit {
 
   constructor(
     private location: Location,
+    private router: Router,
     private store: Store<State>
   ) { }
 
 
-  exampleTemplate = { "templateId": 3, "name": "test1", "templateTypeId": 1, "templateTypeName": "Shift template", "description": "55qww", "lastUpdated": "2020-02-27T22:32:07.191", "body": { "TemplateData": {}, "PIAFTemplate": {}, "PIAFAttributes": {}, "XML": [], "Excel": [], "DatabaseTable": [], "Datasource": {}, "dashboard": [{ "type": "select", "gridItem": { "cols": 5, "rows": 1, "x": 0, "y": 0 }, "controlId": "select1708848250e", "value": null, "label": "", "name": "", "bgColor": "#ffffff", "isRemovable": true, "placeholder": "", "options": [] }], "gridsterOptions": {} } }
+  // exampleTemplate = { "templateId": 3, "name": "test1", "templateTypeId": 1, "templateTypeName": "Shift template", "description": "55qww", "lastUpdated": "2020-02-27T22:32:07.191", "body": { "TemplateData": {}, "PIAFTemplate": {}, "PIAFAttributes": {}, "XML": [], "Excel": [], "DatabaseTable": [], "Datasource": {}, "dashboard": [{ "type": "select", "gridItem": { "cols": 5, "rows": 1, "x": 0, "y": 0 }, "controlId": "select1708848250e", "value": null, "label": "", "name": "", "bgColor": "#ffffff", "isRemovable": true, "placeholder": "", "options": [] }], "gridsterOptions": {} } }
 
   ngOnInit(): void {
+    // console.log(this.router);
+
     this.store.pipe(
       select(editingTemplate),
-    ).subscribe(template => {
-      const opt = template ? template : this.exampleTemplate;
+
+    ).subscribe(template => {      
+      !template && this.router.navigate(['/configuration']);
+
+      const opt = template ? template : {};
       this.template = new Template(opt);
       this.dashboard = this.createDashboard(this.template.body.dashboard);
       this.template.body.dashboard = this.dashboard
@@ -63,7 +70,7 @@ export class TemplateComponent implements OnInit {
       Object.assign(this.template, value)
     )
   }
-  
+
   getFormGridsterOptions(e: FormGroup) {
     e.valueChanges.subscribe((values) => {
       this.template.body.gridsterOptions = new Object(values);
@@ -116,7 +123,6 @@ export class TemplateComponent implements OnInit {
   }
 
   dashboardChange(event) {
-    console.log(event);
   }
   setTypeNewControl(key) {
     this.modelNewControl = dynComponents.getModel(key);
@@ -133,7 +139,7 @@ export class TemplateComponent implements OnInit {
     })
     template.lastUpdated = this.getCurternDateLocal();
     template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }))
-    console.log(JSON.stringify(template));
+    // console.log(JSON.stringify(template));
   }
   getCurternDateLocal(): string {
     const curternDateUTC = new Date()
