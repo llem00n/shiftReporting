@@ -31,7 +31,6 @@ export class FormComponent implements OnChanges {
     this.customForm = this.createForm(this.controls);
   }
   createForm(controls): FormGroup {
-
     const group = new FormGroup({});
     controls.map(i => {
       const validators: ValidatorFn[] = [];

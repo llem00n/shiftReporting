@@ -16,9 +16,7 @@ export class ControlConfigComponent implements OnChanges {
   show = false;
   constructor() { }
 
-  ngOnChanges(): void {
-    console.log(this.control);
-    
+  ngOnChanges(): void {    
   }
   getForm(form: FormGroup) {
     form.valueChanges.subscribe(value => {
