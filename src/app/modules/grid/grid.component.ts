@@ -78,9 +78,7 @@ export class GridComponent implements OnChanges {
   optionsAppointment: GridsterOptions;
   elementErrors//: ElementError[];
 
-  ngOnChanges(): void {
-    console.log(this.selectedControlId);
-    
+  ngOnChanges(): void {    
     this.processingOptions(this.appointment);
   }
   processingOptions(appointment: string) {
