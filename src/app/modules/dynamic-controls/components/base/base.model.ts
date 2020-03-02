@@ -34,6 +34,7 @@ export class BaseControl {
     this.bgColor = opt['bgColor'] || '#ffffff';
     this.gridItem = this.setGridItem(opt['gridItem']);
     this.isRemovable = opt['isRemovable'] || true;
+    this.validators = opt['validators'] || null;
 
   }
 
