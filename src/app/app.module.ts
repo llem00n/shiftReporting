@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { GridsterModule } from 'angular-gridster2';
 import { GridModule } from './modules/grid/grid.module';
 import { TemplateModule } from './modules/template/template.module';
+import { ScheduleModule } from './modules/schedule/schedule.module';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { TemplateModule } from './modules/template/template.module';
     // SnackBarModule,
     // GridsterModule,
     GridModule,
-    TemplateModule
+    TemplateModule,
+    ScheduleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
