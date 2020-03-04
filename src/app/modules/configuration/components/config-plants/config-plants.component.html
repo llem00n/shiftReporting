@@ -1,11 +1,11 @@
 <!-- <div class="border-2 border-gray-600 border-solid mb-5 p-4 rounded-lg shadow-lg max-w-4xl"> -->
+<div class="my-4" align="end">
+  <button class="btn mx-2" *ngIf='!(showedAddForm || isShowEditPanel)' (click)='showedAddForm = true'>Add</button>
+</div>
 <div *ngIf="plantList">
-  <app-list [data]='plantList' (clickActionButton)='clickListsButton($event)'></app-list>
+  <app-tile [data]='plantList' (clickActionButton)='clickListsButton($event)'></app-tile>
 </div>
 <app-editing-panel *ngIf='isShowEditPanel' [options]='editOptions' [object]="editingPlant"
   (clickOk)="updatePlant($event)" (clickCancel)="isShowEditPanel = null"></app-editing-panel>
 <app-editing-panel *ngIf='showedAddForm' [options]='addNewOptions' (clickOk)="addPlant($event)"
   (clickCancel)="showedAddForm = null"></app-editing-panel>
-<div class="my-4" align="end">
-  <button class="btn mx-2" *ngIf='!(showedAddForm || isShowEditPanel)' (click)='showedAddForm = true'>Add</button>
-</div>
