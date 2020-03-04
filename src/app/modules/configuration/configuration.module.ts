@@ -11,6 +11,7 @@ import { ConfigShiftComponent } from './components/config-shift/config-shift.com
 import { ConfigScheduleComponent } from './components/config-schedule/config-schedule.component';
 import { ConfigTemplateComponent } from './components/config-template/config-template.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { TileComponent } from './components/tile/tile.component';
 // import { MatCardModule } from '@angular/material/card';
 // import {MatSelectModule} from '@angular/material/select';
 // import {MatFormFieldModule} from '@angular/material/form-field';
@@ -27,7 +28,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 // ]
 
 @NgModule({
-  declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent, ConfigTemplateComponent],
+  declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent, ConfigTemplateComponent, TileComponent],
   imports: [
     AppRoutingModule,
     CommonModule,

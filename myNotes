@@ -51,6 +51,8 @@ ng g c modules/schedule/Schedule -m schedule --flat
 configuration component
 ng g c modules/configuration/components/ConfigSchedule
 ng g c modules/configuration/components/ConfigTemplate
+ng g c modules/configuration/components/Tile
+
 
 dynamic component
 ng g c modules/dynamic-controls/components/DynDatetime
