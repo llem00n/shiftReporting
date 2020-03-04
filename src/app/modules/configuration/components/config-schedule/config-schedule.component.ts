@@ -16,6 +16,7 @@ import { ListData } from '../list/list.component';
 import { DynTime } from 'src/app/modules/dynamic-controls/components/dyn-time/dyn-time.model';
 import { DynSelect } from 'src/app/modules/dynamic-controls/components/dyn-select/dyn-select.model';
 import { DynCheckbox } from 'src/app/modules/dynamic-controls/components/dyn-checkbox/dyn-checkbox.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-config-schedule',
@@ -54,34 +55,35 @@ export class ConfigScheduleComponent implements OnInit {
     })
   ]
   editingObj: Schedule;
-  configSchedule = [
-    new DynTime({ controlId: 'startTime', type: 'time', label: 'Start Time', validators: { required: true } }),
-    new DynTime({ controlId: 'endTime', type: 'time', label: 'End Time', validators: { required: true } }),
-    new DynNumber({ controlId: 'recurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } }),
-    new DynCheckbox({ controlId: 'monday', type: 'checkbox', label: 'Monday' }),
-    new DynCheckbox({ controlId: 'tuesday', type: 'checkbox', label: 'Tuesday' }),
-    new DynCheckbox({ controlId: 'wednesday', type: 'checkbox', label: 'Wednesday' }),
-    new DynCheckbox({ controlId: 'thursday', type: 'checkbox', label: 'Thursday' }),
-    new DynCheckbox({ controlId: 'friday', type: 'checkbox', label: 'Friday' }),
-    new DynCheckbox({ controlId: 'saturday', type: 'checkbox', label: 'Saturday' }),
-    new DynCheckbox({ controlId: 'sunday', type: 'checkbox', label: 'Sunday' }),
-  ]
+  // configSchedule = [
+  //   new DynTime({ controlId: 'startTime', type: 'time', label: 'Start Time', validators: { required: true } }),
+  //   new DynTime({ controlId: 'endTime', type: 'time', label: 'End Time', validators: { required: true } }),
+  //   new DynNumber({ controlId: 'recurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } }),
+  //   new DynCheckbox({ controlId: 'monday', type: 'checkbox', label: 'Monday' }),
+  //   new DynCheckbox({ controlId: 'tuesday', type: 'checkbox', label: 'Tuesday' }),
+  //   new DynCheckbox({ controlId: 'wednesday', type: 'checkbox', label: 'Wednesday' }),
+  //   new DynCheckbox({ controlId: 'thursday', type: 'checkbox', label: 'Thursday' }),
+  //   new DynCheckbox({ controlId: 'friday', type: 'checkbox', label: 'Friday' }),
+  //   new DynCheckbox({ controlId: 'saturday', type: 'checkbox', label: 'Saturday' }),
+  //   new DynCheckbox({ controlId: 'sunday', type: 'checkbox', label: 'Sunday' }),
+  // ]
 
-  editOptions = {
-    properties: this.configSchedule,
-    actType: 'edit',
-    objectType: 'schedule'
-  }
-  addNewOptions = {
-    properties: this.configSchedule,
-    actType: 'new',
-    objectType: 'schedule'
-  }
+  // editOptions = {
+  //   properties: this.configSchedule,
+  //   actType: 'edit',
+  //   objectType: 'schedule'
+  // }
+  // addNewOptions = {
+  //   properties: this.configSchedule,
+  //   actType: 'new',
+  //   objectType: 'schedule'
+  // }
 
 
   constructor(
     private store: Store<State>,
-    private confService: ConfigurationService
+    private confService: ConfigurationService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -95,6 +97,7 @@ export class ConfigScheduleComponent implements OnInit {
     this.store.dispatch(ShiftActions.clearShifts())
     this.store.dispatch(ScheduleActions.clearSchedules())
   }
+
   getPlants() {
     let respCount = 0;
     this.store.pipe(
@@ -180,8 +183,9 @@ export class ConfigScheduleComponent implements OnInit {
   clickListsButton(e) {
     switch (e.action) {
       case 'edit':
-        this.editingObj = e.item;
-        this.isShowPanels.edit = true;
+        // this.editingObj = e.item;
+        this.store.dispatch(ScheduleActions.setEditingSchedule({ schedule: e.item }))
+        this.router.navigate(['/schedule']);
         break;
       case 'dlt':
         this.store.dispatch(ScheduleActions.deleteSchedule({ id: e.item.scheduleId }))
@@ -189,26 +193,26 @@ export class ConfigScheduleComponent implements OnInit {
     }
   }
 
-  updateObj(e) {
-    this.isShowPanels.edit = false;
-    let schedule = <Schedule>{ ...this.editingObj };
-    Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
-    this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
-  }
+  // updateObj(e) {
+  //   this.isShowPanels.edit = false;
+  //   let schedule = <Schedule>{ ...this.editingObj };
+  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
+  //   this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
+  // }
 
 
-  addObj(e) {
-    this.isShowPanels.add = false;
-    const shiftId = +this.preConfigForm.value.shiftId;
-    const shift = this.shifts.find(i => i.shiftId === shiftId)
-    let schedule = <Schedule>{};
-    schedule.shiftDescription = shift.description;
-    schedule.shiftName = shift.name;
-    schedule.departmentId = +this.preConfigForm.value.departmentId;
-    schedule.shiftId = shiftId;
-    Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
-    this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
-  }
+  // addObj(e) {
+  //   this.isShowPanels.add = false;
+  //   const shiftId = +this.preConfigForm.value.shiftId;
+  //   const shift = this.shifts.find(i => i.shiftId === shiftId)
+  //   let schedule = <Schedule>{};
+  //   schedule.shiftDescription = shift.description;
+  //   schedule.shiftName = shift.name;
+  //   schedule.departmentId = +this.preConfigForm.value.departmentId;
+  //   schedule.shiftId = shiftId;
+  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
+  //   this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
+  // }
 
   fixFormValue(configArr: DynControl[], formValue: {}) {
     let value = {};

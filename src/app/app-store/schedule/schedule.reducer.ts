@@ -7,6 +7,7 @@ export const schedulesFeatureKey = 'schedules';
 
 export interface State extends EntityState<Schedule> {
   // additional entities state properties
+  editingSchedule: Schedule;
 }
 
 export const adapter: EntityAdapter<Schedule> = createEntityAdapter<Schedule>({
@@ -15,6 +16,7 @@ export const adapter: EntityAdapter<Schedule> = createEntityAdapter<Schedule>({
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
+  editingSchedule: null,
 });
 
 const scheduleReducer = createReducer(
@@ -48,6 +50,9 @@ const scheduleReducer = createReducer(
   ),
   on(ScheduleActions.clearSchedules,
     state => adapter.removeAll(state)
+  ),
+  on(ScheduleActions.setEditingSchedule,
+    (state, { schedule }) => ({ ...state, editingSchedule: schedule })
   ),
 );
 

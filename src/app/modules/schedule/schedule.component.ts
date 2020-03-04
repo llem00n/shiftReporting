@@ -1,4 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { DynTime } from '../dynamic-controls/components/dyn-time/dyn-time.model';
+import { DynNumber } from '../dynamic-controls/components/dyn-number/dyn-number.model';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Schedule, State } from 'src/app/app-store/models';
+import { Location } from '@angular/common';
+import { Store, select } from '@ngrx/store';
+import { editingSchedule } from 'src/app/app-store';
+import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
+import { DynTextarea } from '../dynamic-controls/components/dyn-textarea/dyn-textarea.model';
+
+const daysOfWeek = [
+  { key: 'monday', name: 'Monday', threeLetters: 'Mon', twoLetters: 'MO', oneLetter: 'M' },
+  { key: 'tuesday', name: 'Tuesday', threeLetters: 'Tue', twoLetters: 'TU', oneLetter: 'T' },
+  { key: 'wednesday', name: 'Wednesday', threeLetters: 'Wed', twoLetters: 'WE', oneLetter: 'W' },
+  { key: 'thursday', name: 'Thursday', threeLetters: 'Thu', twoLetters: 'TH', oneLetter: 'U' },
+  { key: 'friday', name: 'Friday', threeLetters: 'Fri', twoLetters: 'FR', oneLetter: 'F' },
+  { key: 'saturday', name: 'Saturday', threeLetters: 'Sat', twoLetters: 'SA', oneLetter: 'S' },
+  { key: 'sunday', name: 'Sunday', threeLetters: 'Sun', twoLetters: 'SU', oneLetter: 'N' },]
 
 @Component({
   selector: 'app-schedule',
@@ -6,10 +26,96 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
+  daysOfWeek = daysOfWeek;
+  schedule: Schedule;
+  title: string = 'Create schedule';
+  saveButton: string = 'Add';
 
-  constructor() { }
+  shiftControls = [
+    new DynText({ controlId: 'shiftName', label: 'Shift name', readonly: true }),
+    new DynTextarea({ controlId: 'shiftDescription', label: 'Shift description', readonly: true }),
 
-  ngOnInit(): void {
+  ]
+  generalConfig = [
+    new DynTime({ controlId: 'startTime', label: 'Start time', validators: { required: true } }),
+    new DynTime({ controlId: 'endTime', label: 'End time', validators: { required: true } }),
+    new DynNumber({ controlId: 'recurEveryWeeks', label: 'Recur Every Weeks', min: 1, max: 15, step: 1, validators: { required: true } }),
+  ];
+  daysFormInit() {
+
+    const group: FormGroup = new FormGroup({});
+    daysOfWeek.map(i => {
+      group.addControl(i.key, new FormControl(false));
+    })
+    return group;
   }
 
+  form: FormGroup;
+
+  constructor(
+    private location: Location,
+    private store: Store<State>,
+    private router: Router,
+  ) { }
+
+  ngOnInit(): void {
+    this.store.pipe(
+      select(editingSchedule),
+      take(1),
+    ).subscribe(schedule => {
+      if (schedule) {
+        this.schedule = new Schedule(schedule);
+        if (schedule.scheduleId) {
+          this.title = 'Edit schedule',
+            this.saveButton = 'Save'
+        };
+      } else {
+        this.schedule = new Schedule()
+        // this.router.navigate(['/configuration']);
+      }
+    })
+  }
+
+
+  goBack() {
+    this.location.back()
+  }
+
+
+  getForm(e) {
+    this.form = e;
+    daysOfWeek.map(i => {
+      this.form.addControl(i.key, new FormControl(this.schedule[i.key]));
+    })
+    this.form.valueChanges.subscribe(value => {
+      Object.assign(this.schedule, value);
+      console.log(this.schedule);
+      
+    })
+  }
+  togleDay(day) {
+    const controlDay = this.form.get(day.key);
+    controlDay.setValue(!this.form.value[day.key]);
+  }
+  save() {
+    console.log(this.schedule);
+  }
+  getDayStyle(day): string {
+    return this.form.value[day.key]
+      ? 'text-gray-100 bg-blue-600'
+      : 'text-gray-500 bg-gray-100'
+  }
 }
+/*
+
+{'text-gray-100 bg-blue-600 ':true,'text-gray-500 bg-gray-100 ': true}
+
+Monday    Mon  MO  M
+Tuesday   Tue  TU  T
+Wednesday Wed  WE  W
+Thursday  Thu  TH  U
+Friday    Fri  FR  F
+Saturday  Sat  SA  S
+Sunday    Sun  SU  N
+
+*/

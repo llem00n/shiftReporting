@@ -67,3 +67,9 @@ export const deleteScheduleSuccess = createAction(
 export const clearSchedules = createAction(
   '[Schedule/API] Clear Schedules'
 );
+
+
+export const setEditingSchedule = createAction(
+  '[Schedule/API] Set EditingSchedule',
+  props<{ schedule: Schedule }>()
+)

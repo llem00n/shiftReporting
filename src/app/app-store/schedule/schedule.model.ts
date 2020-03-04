@@ -1,19 +1,25 @@
-export interface Schedule {
+export class Schedule {
+  scheduleId?: number = null;
+  departmentId: number = null;
+  shiftId: number = null;
+  startTime: string = null;
+  endTime: string = null;
+  recurEveryWeeks: number = null;
+  monday: boolean = false;
+  tuesday: boolean = false;
+  wednesday: boolean = false;
+  thursday: boolean = false;
+  friday: boolean = false;
+  saturday: boolean = false;
+  sunday: boolean = false;
+  shiftName: string = null;
+  shiftDescription: string = null;
 
-  scheduleId: number;
-  departmentId: number;
-  shiftId: number;
-  startTime: string;
-  endTime: string;
-  recurEveryWeeks: number;
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
-  friday: boolean;
-  saturday: boolean;
-  sunday: boolean;
-  shiftName: string;
-  shiftDescription: string;
-
+  constructor(opt: {} = {}) {
+    Object.keys(opt).map(key => {
+      if (Object.keys(this).includes(key)) {
+        this[key] = opt[key]
+      }
+    })
+  }
 }

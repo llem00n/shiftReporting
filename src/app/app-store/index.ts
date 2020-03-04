@@ -47,13 +47,16 @@ export const allDepartments = createSelector(departmentsState, fromDepartment.se
 //shifts
 export const shiftsState = createFeatureSelector<fromShift.State>('shifts');
 export const allShifts = createSelector(shiftsState, fromShift.selectAll);
-//shifts
+//schedule
 export const scheduleState = createFeatureSelector<fromSchedule.State>('schedules');
 export const allSchedules = createSelector(scheduleState, fromSchedule.selectAll);
+export const editingSchedule = createSelector(scheduleState, (state) => state.editingSchedule);
 //templates
 export const templateState = createFeatureSelector<fromTemplate.State>('templates');
 export const allTemplates = createSelector(templateState, fromTemplate.selectAll);
 export const templateTypes = createSelector(templateState, (state) => state.templateTypes);
 export const editingTemplate = createSelector(templateState, (state) => state.editingTemplate);
+
+
 
 
