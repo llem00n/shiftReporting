@@ -26,14 +26,17 @@
 
     <!-- Main window -->
     <div class=" p-2 flex-1 overflow-auto h-full ">
-      <div class="absolute z-50 right-0 flex flex-col h-full overflow-auto">
+      
+      <!-- template info panel-->
+      <!-- <div class="absolute z-50 right-0 flex flex-col h-full overflow-auto">
         <p class=" cursor-pointer btn" (click)="isShowTemplateInfo = !isShowTemplateInfo">Template info</p>
         <div *ngIf="isShowTemplateInfo" class="bg-gray-200 p-3 overflow-auto">
           <pre class="text-xs">
             {{template | json}}
           </pre>
         </div>
-      </div>
+      </div> -->
+
       <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
         (dashboardChange)="dashboardChange($event)" [options]="options" [dashboard]="dashboard"
         [appointment]="appointment" [selectedControlId]='selectedControl?.controlId'></app-grid>
