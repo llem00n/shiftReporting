@@ -1,17 +1,17 @@
 <table class="table-auto">
   <thead>
     <tr>
-      <th *ngFor='let i of data.head' class="border px-4 py-2">{{i.title}}</th>
       <th *ngIf="data.actionButtons" class="border px-4 py-2">Actions</th>
+      <th *ngFor='let i of data.head' class="border px-4 py-2">{{i.title}}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor='let row of data.tableData'>
-      <td *ngFor='let i of data.head' class="border px-4 py-2">{{row[i.key]}}</td>
       <td *ngIf="data.actionButtons" class="border px-4 py-2">
         <button *ngFor='let button of data.actionButtons' (click)="clickActButton(button.key, row)"
           class="btn p-1 mx-1">{{button.title}}</button>
       </td>
+      <td *ngFor='let i of data.head' class="border px-4 py-2">{{row[i.key]}}</td>
     </tr>
   </tbody>
 </table>
