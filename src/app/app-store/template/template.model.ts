@@ -1,13 +1,14 @@
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
 
 export class Template {
-  templateId: number;
+  templateId?: number;
   name: string;
   description: string;
   body: TemplateBody; //Jobject
   lastUpdated: string;
   templateTypeId: number;
   templateTypeName: string;
+  _departmentId?: number;
   constructor(opt: { [key: string]: any } = {}) {
     if (opt['templateId']) { this.templateId = opt['templateId'] }
     // this.templateId = opt['templateId'] || null;
