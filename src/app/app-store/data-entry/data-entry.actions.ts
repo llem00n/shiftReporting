@@ -21,7 +21,7 @@ export const getLatestDataEntrySuccess = createAction(
 
 export const getDataEntriesOnDate = createAction(
   '[DataEntry] Get DataEntries OnDate',
-  props<{ shiftID: number, fromDate: string, toDate: string }>()
+  props<{ shiftId: number, fromDate: string, toDate: string }>()
 );
 export const getDataEntriesOnDateSuccess = createAction(
   '[DataEntry] Get DataEntries OnDate Success',

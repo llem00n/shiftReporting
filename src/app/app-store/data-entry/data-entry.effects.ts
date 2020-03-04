@@ -1,0 +1,65 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+
+import { EMPTY } from 'rxjs';
+
+import * as DataEntryActions from './data-entry.actions';
+import { DataEntryHttpService } from './data-entry-http.service';
+import { mergeMap, filter, map } from 'rxjs/operators';
+
+
+@Injectable()
+export class DataEntryEffects {
+
+  addDataEntry$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.addDataEntry),
+    mergeMap(({ dataEntry, userLogin }) => this.dataEntryHttpService.addDataEntry(dataEntry, userLogin).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.addDataEntrySuccess({ dataEntry: resp.body }))
+    )),
+    // mergeMap(_ => EMPTY)
+  ));
+
+  getLatestDataEntry$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getLatestDataEntry),
+    mergeMap(({ shiftId }) => this.dataEntryHttpService.getLatestDataEntry(shiftId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.getLatestDataEntrySuccess({ dataEntry: resp.body }))
+    )),
+    // mergeMap(_ => EMPTY)
+  ));
+
+  getDataEntriesOnDate$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getDataEntriesOnDate),
+    mergeMap(({ shiftId, fromDate, toDate }) => this.dataEntryHttpService.getDataEntriesOnDate(shiftId, fromDate, toDate).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.getDataEntriesOnDateSuccess({ dataEntries: resp.body }))
+    )),
+    // mergeMap(_ => EMPTY)
+  ));
+
+  updateDataEntry$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.updateDataEntry),
+    mergeMap(({ dataEntry, userLogin }) => this.dataEntryHttpService.updateDataEntry(dataEntry, userLogin ).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.updateDataEntrySuccess({ dataEntry: resp.body }))
+    )),
+    // mergeMap(_ => EMPTY)
+  ));
+
+  submitDataEntry$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.submitDataEntry),
+    mergeMap(({ dataEntry, userLogin }) => this.dataEntryHttpService.submitDataEntry(dataEntry, userLogin ).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.submitDataEntrySuccess({ dataEntry: resp.body }))
+    )),
+    // mergeMap(_ => EMPTY)
+  ));
+
+
+  constructor(
+    private actions$: Actions,
+    private dataEntryHttpService: DataEntryHttpService
+  ) { }
+
+}
