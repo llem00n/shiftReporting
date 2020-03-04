@@ -9,7 +9,8 @@ export class BaseControl {
   label?: string;
   name?: string;
   bgColor?: string;
-  isRemovable?: boolean
+  isRemovable?: boolean;
+  readonly: boolean;
 
 
   gridItem?: Partial<GridsterItem> = {
@@ -35,7 +36,7 @@ export class BaseControl {
     this.gridItem = this.setGridItem(opt['gridItem']);
     this.isRemovable = opt['isRemovable'] || true;
     this.validators = opt['validators'] || null;
-
+    this.readonly = opt['readonly'] || false;
   }
 
   setGridItem(gridItem) {

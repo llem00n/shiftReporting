@@ -1,3 +1,9 @@
 <span [formGroup]="options.form">
-  <input class="min-h-10 h-full w-full px-2 border-gray-200 border-2 focus:outline-none focus:border-gray-500" type="text" [formControlName]="options.control.controlId" [placeholder]="options.control.placeholder || ''">
+  <input
+  [readonly]="options.control.readonly"
+  type="text" 
+  [formControlName]="options.control.controlId" 
+  [placeholder]="options.control.placeholder || ''"
+  class="min-h-10 h-full w-full px-2 border-gray-200 border-2 focus:outline-none focus:border-gray-500" 
+   >
 </span>
