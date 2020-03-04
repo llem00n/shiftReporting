@@ -1,6 +1,6 @@
 generate Feature
 ng g f app-store/interface/Interface -m ../app-store -r ../index.ts -c
-ng g f app-store/data-entry/DataEntry -m ../app-store -r ../index.ts -c
+ng g f app-store/data-entry/DataEntry -m app-store -r ../index.ts -c //should delete selectors files
 
 
 generate Entity:
@@ -24,6 +24,7 @@ ng g s app-store/shift/ShiftHttp
 ng g s app-store/schedule/ScheduleHttp
 ng g s app-store/template/TemplateHttp
 ng g s app-store/interface/InterfaceHttp
+ng g s app-store/data-entry/DataEntryHttp
 
 module grid
 ng g m modules/Grid -m app

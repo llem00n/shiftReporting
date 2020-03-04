@@ -11,6 +11,7 @@ import { ShiftEffects } from './shift/shift.effects';
 import { ScheduleEffects } from './schedule/schedule.effects';
 import { TemplateEffects } from './template/template.effects';
 import { InterfaceEffects } from './interface/interface.effects';
+import { DataEntryEffects } from './data-entry/data-entry.effects';
 
 
 
@@ -32,14 +33,9 @@ import { InterfaceEffects } from './interface/interface.effects';
       ShiftEffects,
       ScheduleEffects,
       TemplateEffects,
-      InterfaceEffects
+      InterfaceEffects,
+      DataEntryEffects
     ]),
-    // EffectsModule.forFeature([InterfaceEffects]),
-    // StoreModule.forFeature(fromTemplate.templatesFeatureKey, fromTemplate.reducer),
-    // StoreModule.forFeature(fromPlant.plantsFeatureKey, fromPlant.reducer),
-    // StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer),
-    // StoreModule.forFeature(fromShift.shiftsFeatureKey, fromShift.reducer),
-    // StoreModule.forFeature(fromSchedule.schedulesFeatureKey, fromSchedule.reducer)
   ]
 })
 export class AppStoreModule { }
