@@ -9,9 +9,8 @@ import { GridsterItem } from 'angular-gridster2';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
 import { State, editingTemplate } from 'src/app/app-store';
-import { filter } from 'rxjs/operators';
-import { TemplateActions } from '@actions/*';
 import { Router } from '@angular/router';
+import { TemplateActions } from '@actions/*';
 
 @Component({
   selector: 'app-template',
@@ -19,45 +18,38 @@ import { Router } from '@angular/router';
   styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit {
-  // _template = new Template();
-  // @Input()
-  // set template(template: Template) { if (template) this._template = new Template(JSON.parse(JSON.stringify(template))); };
-  // get template() { return this._template };
   template: Template;
+  departmentId: number;
   dashboard = [];
   options = {};
   appointment = 'build';
-  // options = this.template?.body.gridsterOptions;
   selectedControl: DynControl;
-  // dashboard1: DynControl[] = [1,
-  //   //  2, 3, 4, 5
-  // ].map(num => {
-  //   const gridItem = { x: 1, rows: 1, cols: 5, y: num };
-  //   return new DynText({ gridItem, controlId: `text${num}`, placeholder: `Item ${num}` });
-  // });
-
   modelNewControl = null;
   isShowTemplateInfo = true
+  title: string = 'Create template';
+  saveButton: string = 'Add';
+
 
   constructor(
     private location: Location,
     private router: Router,
     private store: Store<State>
   ) { }
-
-
-  // exampleTemplate = { "templateId": 3, "name": "test1", "templateTypeId": 1, "templateTypeName": "Shift template", "description": "55qww", "lastUpdated": "2020-02-27T22:32:07.191", "body": { "TemplateData": {}, "PIAFTemplate": {}, "PIAFAttributes": {}, "XML": [], "Excel": [], "DatabaseTable": [], "Datasource": {}, "dashboard": [{ "type": "select", "gridItem": { "cols": 5, "rows": 1, "x": 0, "y": 0 }, "controlId": "select1708848250e", "value": null, "label": "", "name": "", "bgColor": "#ffffff", "isRemovable": true, "placeholder": "", "options": [] }], "gridsterOptions": {} } }
-
   ngOnInit(): void {
-    // console.log(this.router);
-
     this.store.pipe(
       select(editingTemplate),
-
-    ).subscribe(template => {      
-      !template && this.router.navigate(['/configuration']);
-
-      const opt = template ? template : {};
+    ).subscribe(template => {
+      if (!template) {
+        this.goBack();
+        return;
+      }
+      let opt = {};
+      if (!template._departmentId) {
+        this.title = `Edit template ${template.name}`;
+        this.saveButton = 'Save';
+        opt = template;
+      }
+      this.departmentId = template._departmentId;
       this.template = new Template(opt);
       this.dashboard = this.createDashboard(this.template.body.dashboard);
       this.template.body.dashboard = this.dashboard
@@ -98,7 +90,6 @@ export class TemplateComponent implements OnInit {
     gridItem.cols = this.getMaxColsS(gridItem, dashboard)
     return new this.modelNewControl({ gridItem });
   }
-
   getMaxColsS(newItem: GridsterItem, dboard: DynControl[]): number {
     const dboardGridster = dboard.map(i => i.gridItem);
     let maxLength = 5; /* maxLength - length of new element */
@@ -113,8 +104,6 @@ export class TemplateComponent implements OnInit {
     }
     return maxLength;
   }
-
-
   clickItem(controlId) {
     if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
       this.selectedControl = this.template.body.dashboard
@@ -138,8 +127,13 @@ export class TemplateComponent implements OnInit {
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
     template.lastUpdated = this.getCurternDateLocal();
-    template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }))
     // console.log(JSON.stringify(template));
+    if (this.departmentId) {
+      const departmentId = this.departmentId;
+      this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
+    } else {
+      template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
+    }
   }
   getCurternDateLocal(): string {
     const curternDateUTC = new Date()
@@ -150,6 +144,4 @@ export class TemplateComponent implements OnInit {
     const index = this.dashboard.findIndex(i => i.controlId === controlId)
     this.dashboard.splice(index, 1);
   }
-
 }
-// {"templateId":3,"name":"test","templateTypeId":1,"templateTypeName":null,"description":"55qww","lastUpdated":"2020-02-27T16:41:18.791","body":{"TemplateData":{},"PIAFTemplate":{},"PIAFAttributes":{},"XML":[],"Excel":[],"DatabaseTable":[],"Datasource":{},"dashboard":[],"gridsterOptions":{}}}
