@@ -66,3 +66,6 @@ ng g c modules/dynamic-controls/components/DynTextarea
 ng g c modules/dynamic-controls/components/DynColor
 ng g c modules/dynamic-controls/components/DynLabel
 
+modulse DataEntry
+ng g m modules/DataEntry -m app
+ng g c modules/data-entry/DataEntry -m data-entry --flat

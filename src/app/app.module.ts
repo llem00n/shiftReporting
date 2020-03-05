@@ -17,6 +17,7 @@ import { GridsterModule } from 'angular-gridster2';
 import { GridModule } from './modules/grid/grid.module';
 import { TemplateModule } from './modules/template/template.module';
 import { ScheduleModule } from './modules/schedule/schedule.module';
+import { DataEntryModule } from './modules/data-entry/data-entry.module';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ScheduleModule } from './modules/schedule/schedule.module';
     // GridsterModule,
     GridModule,
     TemplateModule,
-    ScheduleModule
+    ScheduleModule,
+    DataEntryModule
   ],
   providers: [],
   bootstrap: [AppComponent]
