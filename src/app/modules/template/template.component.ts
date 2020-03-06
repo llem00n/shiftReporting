@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-// import { DboardItem } from '../grid/grid.component';
-import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
 import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { dynComponents } from '../dynamic-controls';

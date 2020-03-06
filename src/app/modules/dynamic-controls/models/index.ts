@@ -33,3 +33,4 @@ export type DynControl =
   | DynNumber
   | DynColor
   | DynCheckbox
+  | DynText
