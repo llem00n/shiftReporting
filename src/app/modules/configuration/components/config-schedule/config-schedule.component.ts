@@ -4,19 +4,11 @@ import { State, allPlants, allDepartments, allShifts, allSchedules } from 'src/a
 import { ConfigurationService } from '../../services/configuration.service';
 import { Plant, Schedule, Shift } from 'src/app/app-store/models';
 import { PlantActions, DepartmentActions, ShiftActions, ScheduleActions } from '@actions/*';
-import { Select } from 'src/app/modules/dynamic-controls/components/select/select.model';
 import { FormGroup } from '@angular/forms';
-import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
-import { DynDatetime } from 'src/app/modules/dynamic-controls/components/dyn-datetime/dyn-datetime.model';
-import { BaseControl } from 'src/app/modules/dynamic-controls/components/base/base.model';
-import { DynNumber } from 'src/app/modules/dynamic-controls/components/dyn-number/dyn-number.model';
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
-import { filter } from 'rxjs/operators';
 import { ListData } from '../list/list.component';
-import { DynTime } from 'src/app/modules/dynamic-controls/components/dyn-time/dyn-time.model';
-import { DynSelect } from 'src/app/modules/dynamic-controls/components/dyn-select/dyn-select.model';
-import { DynCheckbox } from 'src/app/modules/dynamic-controls/components/dyn-checkbox/dyn-checkbox.model';
 import { Router } from '@angular/router';
+import { DynSelect } from '../../../dynamic-controls/models'
 
 @Component({
   selector: 'app-config-schedule',
@@ -55,30 +47,6 @@ export class ConfigScheduleComponent implements OnInit {
     })
   ]
   editingObj: Schedule;
-  // configSchedule = [
-  //   new DynTime({ controlId: 'startTime', type: 'time', label: 'Start Time', validators: { required: true } }),
-  //   new DynTime({ controlId: 'endTime', type: 'time', label: 'End Time', validators: { required: true } }),
-  //   new DynNumber({ controlId: 'recurEveryWeeks', type: 'number', label: 'Recur Every Weeks', validators: { required: true } }),
-  //   new DynCheckbox({ controlId: 'monday', type: 'checkbox', label: 'Monday' }),
-  //   new DynCheckbox({ controlId: 'tuesday', type: 'checkbox', label: 'Tuesday' }),
-  //   new DynCheckbox({ controlId: 'wednesday', type: 'checkbox', label: 'Wednesday' }),
-  //   new DynCheckbox({ controlId: 'thursday', type: 'checkbox', label: 'Thursday' }),
-  //   new DynCheckbox({ controlId: 'friday', type: 'checkbox', label: 'Friday' }),
-  //   new DynCheckbox({ controlId: 'saturday', type: 'checkbox', label: 'Saturday' }),
-  //   new DynCheckbox({ controlId: 'sunday', type: 'checkbox', label: 'Sunday' }),
-  // ]
-
-  // editOptions = {
-  //   properties: this.configSchedule,
-  //   actType: 'edit',
-  //   objectType: 'schedule'
-  // }
-  // addNewOptions = {
-  //   properties: this.configSchedule,
-  //   actType: 'new',
-  //   objectType: 'schedule'
-  // }
-
 
   constructor(
     private store: Store<State>,
@@ -233,5 +201,16 @@ export class ConfigScheduleComponent implements OnInit {
       }
     })
     return value;
+  }
+  addSchedule() {
+    const shift = this.shifts.find(i => i.shiftId === +this.preConfigForm.value['shiftId'])
+    const schedule = <Schedule>{
+      departmentId: +this.preConfigForm.value['departmentId'],
+      shiftId: shift.shiftId,
+      shiftName: shift.name,
+      shiftDescription: shift.description
+    }    
+    this.store.dispatch(ScheduleActions.setEditingSchedule({ schedule }))
+    this.router.navigate(['/schedule']);
   }
 }

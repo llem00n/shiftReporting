@@ -1,14 +1,14 @@
 <app-form [controls]="preConfig" (form)="getPreConfigForm($event)"></app-form>
 <div class="my-4" align="end">
-  <!-- <button class="btn mx-2" *ngIf='preConfigForm.valid && !(isShowPanels.edit || isShowPanels.add)'
+  <button class="btn mx-2" *ngIf='preConfigForm.valid'
     (click)='addSchedule()'>
     Add Schedule
-  </button> -->
+  </button>
 </div>
 <!-- <app-editing-panel *ngIf='isShowPanels.add' [options]='addNewOptions' (clickOk)="addObj($event)"
   (clickCancel)="isShowPanels.add = null"></app-editing-panel> -->
 <div *ngIf="list">
-  <app-list [data]='list' (clickActionButton)='clickListsButton($event)'></app-list>
+  <app-tile [data]='list' (clickActionButton)='clickListsButton($event)'></app-tile>
 </div>
 <!-- <app-editing-panel *ngIf='isShowPanels.edit' [options]='editOptions' [object]="editingObj" (clickOk)="updateObj($event)"
   (clickCancel)="isShowPanels.edit = null"></app-editing-panel> -->

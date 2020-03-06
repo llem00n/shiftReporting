@@ -10,6 +10,7 @@ import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
 import { DynTextarea } from '../dynamic-controls/components/dyn-textarea/dyn-textarea.model';
+import { ScheduleActions } from '@actions/*';
 
 const daysOfWeek = [
   { key: 'monday', name: 'Monday', threeLetters: 'Mon', twoLetters: 'MO', oneLetter: 'M' },
@@ -63,16 +64,15 @@ export class ScheduleComponent implements OnInit {
       select(editingSchedule),
       take(1),
     ).subscribe(schedule => {
-      if (schedule) {
-        this.schedule = new Schedule(schedule);
-        if (schedule.scheduleId) {
-          this.title = 'Edit schedule',
-            this.saveButton = 'Save'
-        };
-      } else {
-        this.schedule = new Schedule()
-        // this.router.navigate(['/configuration']);
+      if (!schedule) {
+        this.router.navigate(['/configuration']);
+        return;
       }
+      this.schedule = new Schedule(schedule)
+      if (schedule.scheduleId) {
+        this.title = 'Edit schedule';
+        this.saveButton = 'Save'
+      };
     })
   }
 
@@ -89,8 +89,6 @@ export class ScheduleComponent implements OnInit {
     })
     this.form.valueChanges.subscribe(value => {
       Object.assign(this.schedule, value);
-      console.log(this.schedule);
-      
     })
   }
   togleDay(day) {
@@ -98,8 +96,13 @@ export class ScheduleComponent implements OnInit {
     controlDay.setValue(!this.form.value[day.key]);
   }
   save() {
-    console.log(this.schedule);
+    if (this.schedule.scheduleId) {
+      this.store.dispatch(ScheduleActions.updateSchedule({ schedule: this.schedule }))
+    } else {
+      this.store.dispatch(ScheduleActions.addSchedule({ schedule: this.schedule }))
+    }
   }
+
   getDayStyle(day): string {
     return this.form.value[day.key]
       ? 'text-gray-100 bg-blue-600'
