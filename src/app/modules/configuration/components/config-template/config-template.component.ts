@@ -37,8 +37,9 @@ export class ConfigTemplateComponent implements OnInit {
   ];
 
   list: ListData;
-  editingObj: Template;
+  // editingObj: Template;
   preConfigForm: FormGroup;
+  templates: Template[];
 
   constructor(
     private store: Store<State>,
@@ -60,14 +61,19 @@ export class ConfigTemplateComponent implements OnInit {
   getTemplates() {
     this.store.pipe(
       select(allTemplates)
-    ).subscribe((templates: Template[]) => this.list = this.confService.createList(templates, [
-      { key: 'edit', title: 'Edit' }, { key: 'fillIn', title: 'Fill in' },
-    ]))
+    ).subscribe((templates: Template[]) => {
+      this.templates = templates;
+      this.list = this.confService.createList(templates, [
+        { key: 'edit', title: 'Edit' }, { key: 'fillIn', title: 'Fill in' },
+      ])
+    }
+    )
   }
   add() {
     const _departmentId = +this.preConfigForm.value.departmentId;
     this.store.dispatch(TemplateActions.setEditingTemplate({ template: <Template>{ _departmentId } }));
   }
+
   getPlants() {
     let respCount = 0;
     this.store.pipe(
@@ -119,12 +125,14 @@ export class ConfigTemplateComponent implements OnInit {
     })
   }
   clickListsButton(e) {
+    const template = JSON.parse(JSON.stringify(this.templates.find(i => i.templateId === e.item.templateId)));
+    this.store.dispatch(TemplateActions.setEditingTemplate({ template }));
     switch (e.action) {
       case 'edit':
-        this.editingObj = e.item;
-        this.store.dispatch(TemplateActions.setEditingTemplate({ template: e.item }));
         this.router.navigate(['/template']);
-        // this.isShowPanels.edit = true;
+        break;
+      case 'fillIn':
+        this.router.navigate(['/dataentry']);
         break;
       default: break;
     }
