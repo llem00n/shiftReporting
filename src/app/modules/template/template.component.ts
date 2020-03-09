@@ -121,7 +121,7 @@ export class TemplateComponent implements OnInit {
   save() {
     const template: Template = JSON.parse(JSON.stringify(this.template))
     template.body.dashboard.map(i => {
-      this.removeExcessProps(i, ['diffGridItem', 'settings']);
+      this.removeExcessProps(i, ['diffGridItem', 'settings', '_settings']);
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
     template.lastUpdated = this.getCurternDateLocal();

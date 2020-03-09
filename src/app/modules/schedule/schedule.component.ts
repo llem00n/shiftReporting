@@ -99,6 +99,7 @@ export class ScheduleComponent implements OnInit {
     if (this.schedule.scheduleId) {
       this.store.dispatch(ScheduleActions.updateSchedule({ schedule: this.schedule }))
     } else {
+      delete this.schedule.scheduleId;
       this.store.dispatch(ScheduleActions.addSchedule({ schedule: this.schedule }))
     }
   }
@@ -109,16 +110,3 @@ export class ScheduleComponent implements OnInit {
       : 'text-gray-500 bg-gray-100'
   }
 }
-/*
-
-{'text-gray-100 bg-blue-600 ':true,'text-gray-500 bg-gray-100 ': true}
-
-Monday    Mon  MO  M
-Tuesday   Tue  TU  T
-Wednesday Wed  WE  W
-Thursday  Thu  TH  U
-Friday    Fri  FR  F
-Saturday  Sat  SA  S
-Sunday    Sun  SU  N
-
-*/
