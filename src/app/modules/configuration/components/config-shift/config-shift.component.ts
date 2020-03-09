@@ -7,6 +7,9 @@ import { ShiftActions } from '@actions/*';
 import { ConfigurationService } from '../../services/configuration.service';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
 import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
+import { Dialog } from 'src/app/modules/dialog/models/dialog.model';
+import { DialogService } from 'src/app/modules/dialog/dialog.service';
+import { ScheduleComponent } from 'src/app/modules/schedule/schedule.component';
 
 @Component({
   selector: 'app-config-shift',
@@ -37,7 +40,8 @@ export class ConfigShiftComponent implements OnInit {
 
   constructor(
     private store: Store<State>,
-    private confService: ConfigurationService
+    private confService: ConfigurationService,
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
@@ -46,6 +50,11 @@ export class ConfigShiftComponent implements OnInit {
   ngOnDestroy() {
     this.store.dispatch(ShiftActions.clearShifts())
   }
+
+  openDialog() {
+    const dialogRef = this.dialogService.open(ScheduleComponent)
+  }
+
   getShifts() {
     this.store.dispatch(ShiftActions.getShifts())
     this.store.pipe(

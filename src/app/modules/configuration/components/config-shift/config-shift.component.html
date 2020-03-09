@@ -2,6 +2,7 @@
 <div *ngIf="list">
   <app-list [data]='list' (clickActionButton)='clickListsButton($event)'></app-list>
 </div>
+<button (click)="openDialog()" class="bg-red-700 p-4">OPEN DIALOG</button>
 
 <app-editing-panel *ngIf='isShowPanels.edit' [options]='editOptions' [object]="editingObj" (clickOk)="updateObj($event)"
   (clickCancel)="isShowPanels.edit = null"></app-editing-panel>

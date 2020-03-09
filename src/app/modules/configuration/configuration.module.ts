@@ -12,6 +12,7 @@ import { ConfigScheduleComponent } from './components/config-schedule/config-sch
 import { ConfigTemplateComponent } from './components/config-template/config-template.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { TileComponent } from './components/tile/tile.component';
+import { DialogModule } from '../dialog/dialog.module';
 // import { MatCardModule } from '@angular/material/card';
 // import {MatSelectModule} from '@angular/material/select';
 // import {MatFormFieldModule} from '@angular/material/form-field';
@@ -34,6 +35,7 @@ import { TileComponent } from './components/tile/tile.component';
     CommonModule,
     FormModule,
     DynamicControlsModule,
+    DialogModule
     // MaterialModules
   ],
   exports: [ConfigurationComponent]

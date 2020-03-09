@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
 import { DynTextarea } from '../dynamic-controls/components/dyn-textarea/dyn-textarea.model';
 import { ScheduleActions } from '@actions/*';
+import { Dialog } from '../dialog/models/dialog.model';
 
 const daysOfWeek = [
   { key: 'monday', name: 'Monday', threeLetters: 'Mon', twoLetters: 'MO', oneLetter: 'M' },
@@ -26,7 +27,7 @@ const daysOfWeek = [
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent extends Dialog implements OnInit {
   daysOfWeek = daysOfWeek;
   schedule: Schedule;
   title: string = 'Create schedule';
@@ -57,7 +58,9 @@ export class ScheduleComponent implements OnInit {
     private location: Location,
     private store: Store<State>,
     private router: Router,
-  ) { }
+  ) {
+    super()
+  }
 
   ngOnInit(): void {
     this.store.pipe(
@@ -109,4 +112,21 @@ export class ScheduleComponent implements OnInit {
       ? 'text-gray-100 bg-blue-600'
       : 'text-gray-500 bg-gray-100'
   }
+
+  // title: string;
+  message: string;
+
+  onInjectInputs(inputs): void {
+    this.title = inputs.title;
+    this.message = inputs.message;
+  }
+
+  // save(): void {
+  //   this.close('saving');
+  // }
+
+  cancel(): void {
+    this.dismiss('canceling');
+  }
+
 }
