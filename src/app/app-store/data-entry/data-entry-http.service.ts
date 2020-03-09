@@ -1,17 +1,30 @@
 import { Injectable } from '@angular/core';
 import { DataEntry } from '@models/';
 import { Observable, of } from 'rxjs';
-import { AppHttpResponse } from '../services/http.service';
+import { AppHttpResponse, AppHttpRequest, HttpService } from '../services/http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataEntryHttpService {
+  baseUrl = 'dataentries/'
 
-  constructor() { }
+  constructor(private httpService: HttpService) { }
 
-  addDataEntry(dataEntry: DataEntry, userLogin: string): Observable<AppHttpResponse> {
-    return of(null)
+  addDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
+    console.log(dataEntry);
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'addDataEntry',
+      payload: { dataEntry },
+      loadingMsg: 'Adding the dataEntry ...',
+      successMsg: `DataEntry has been added`
+    }
+    // return of({
+    //   status: 200,
+    //   body: Object.assign(dataEntry, {dataEntryId: Math.random()})
+    // })
+    return this.httpService.post<AppHttpResponse>(options);
+
   }
 
   getLatestDataEntry(shiftID: number): Observable<AppHttpResponse> {
@@ -22,11 +35,11 @@ export class DataEntryHttpService {
     return of(null)
   }
 
-  updateDataEntry(dataEntry: DataEntry, userLogin: string): Observable<AppHttpResponse> {
+  updateDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
     return of(null)
   }
 
-  submitDataEntry(dataEntry: DataEntry, userLogin: string): Observable<AppHttpResponse> {
+  submitDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
     return of(null)
   }
 }

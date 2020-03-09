@@ -13,7 +13,7 @@ export class DataEntryEffects {
 
   addDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.addDataEntry),
-    mergeMap(({ dataEntry, userLogin }) => this.dataEntryHttpService.addDataEntry(dataEntry, userLogin).pipe(
+    mergeMap(({ dataEntry }) => this.dataEntryHttpService.addDataEntry(dataEntry).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.addDataEntrySuccess({ dataEntry: resp.body }))
     )),
@@ -40,7 +40,7 @@ export class DataEntryEffects {
 
   updateDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.updateDataEntry),
-    mergeMap(({ dataEntry, userLogin }) => this.dataEntryHttpService.updateDataEntry(dataEntry, userLogin ).pipe(
+    mergeMap(({ dataEntry }) => this.dataEntryHttpService.updateDataEntry(dataEntry).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.updateDataEntrySuccess({ dataEntry: resp.body }))
     )),
@@ -49,7 +49,7 @@ export class DataEntryEffects {
 
   submitDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.submitDataEntry),
-    mergeMap(({ dataEntry, userLogin }) => this.dataEntryHttpService.submitDataEntry(dataEntry, userLogin ).pipe(
+    mergeMap(({ dataEntry }) => this.dataEntryHttpService.submitDataEntry(dataEntry).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.submitDataEntrySuccess({ dataEntry: resp.body }))
     )),

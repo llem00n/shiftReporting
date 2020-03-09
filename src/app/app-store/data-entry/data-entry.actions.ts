@@ -3,7 +3,7 @@ import { DataEntry } from '../models';
 
 export const addDataEntry = createAction(
   '[DataEntry] Add DataEntry',
-  props<{ dataEntry: DataEntry, userLogin: string }>()
+  props<{ dataEntry: DataEntry }>()
 );
 export const addDataEntrySuccess = createAction(
   '[DataEntry] Add DataEntry Success',
@@ -30,7 +30,7 @@ export const getDataEntriesOnDateSuccess = createAction(
 
 export const updateDataEntry = createAction(
   '[DataEntry] Update DataEntry',
-  props<{ dataEntry: DataEntry, userLogin: string }>()
+  props<{ dataEntry: DataEntry }>()
 );
 export const updateDataEntrySuccess = createAction(
   '[DataEntry] Update DataEntry Success',
@@ -39,7 +39,7 @@ export const updateDataEntrySuccess = createAction(
 
 export const submitDataEntry = createAction(
   '[DataEntry] Submit DataEntry',
-  props<{ dataEntry: DataEntry, userLogin: string }>()
+  props<{ dataEntry: DataEntry }>()
 );
 export const submitDataEntrySuccess = createAction(
   '[DataEntry] Submit DataEntry Success',
