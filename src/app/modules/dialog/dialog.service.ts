@@ -21,13 +21,13 @@ export class DialogService {
     
     this.setupDialogDiv();
     const dialogContainerRef = this.appRef.bootstrap(this.dialogContainerFactory, this.dialogContainer);
-    const modalComponentRef = dialogContainerRef.instance.createDialog(component);
+    const dialogComponentRef = dialogContainerRef.instance.createDialog(component);
 
     if (inputs) {
-      modalComponentRef.instance.onInjectInputs(inputs);
+      dialogComponentRef.instance.onInjectInputs(inputs);
     }
 
-    const dialogRef = new DialogRef(dialogContainerRef, modalComponentRef);
+    const dialogRef = new DialogRef(dialogContainerRef, dialogComponentRef);
 
     return dialogRef;
   }

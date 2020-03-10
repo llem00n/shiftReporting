@@ -8,10 +8,10 @@ export class DialogRef {
   private result$ = new Subject<any>();
 
   constructor(
-    private modalContainer: ComponentRef<DialogComponent>,
-    private modal: ComponentRef<Dialog>,
+    private dialogContainer: ComponentRef<DialogComponent>,
+    private dialog: ComponentRef<Dialog>,
   ) {
-    this.modal.instance.modalInstance = this;
+    this.dialog.instance.modalInstance = this;
   }
 
   close(output: any): void {
@@ -29,8 +29,8 @@ export class DialogRef {
   }
 
   private destroy$(): void {
-    this.modal.destroy();
-    this.modalContainer.destroy();
+    this.dialog.destroy();
+    this.dialogContainer.destroy();
     this.result$.complete();
   }
 
