@@ -20,6 +20,7 @@ export class ConfigScheduleComponent implements OnInit {
   list: ListData;
   preConfigForm: FormGroup;
   shifts: Shift[];
+  schedules: Schedule[] = [];
   preConfig = [
     new DynSelect({
       controlId: 'plantId',
@@ -43,7 +44,7 @@ export class ConfigScheduleComponent implements OnInit {
       label: 'Shift',
       validators: { required: true },
       options: [],
-      placeholder: 'Select shift'
+      // placeholder: ''
     })
   ]
   editingObj: Schedule;
@@ -106,30 +107,43 @@ export class ConfigScheduleComponent implements OnInit {
       select(allShifts)
     ).subscribe(shifts => {
       this.shifts = shifts;
+      const options = [{ value: null, viewValue: '--All shifts--' }]
+      shifts.map(i => {
+        options.push({
+          value: '' + i.shiftId,
+          viewValue: `${i.name}`
+        })
+      })
+
+
       this.preConfig
         .find(i => i.controlId === 'shiftId')
-        .options = shifts.map(i => {
-          return {
-            value: '' + i.shiftId,
-            viewValue: `${i.name}`
-          }
-        })
+        .options = options;
     })
   }
   getSchedules() {
     this.store.pipe(
       select(allSchedules)
-    ).subscribe((schedules: Schedule[]) => this.list = this.confService.createList(schedules))
+    ).subscribe(val => {
+      this.schedules = val;
+      this.list = this.createScheduleList(val)
+    })
   }
 
-  // getShifts() {
-  //   this.store.pipe(
-  //     select(allShifts),
-  //   ).subscribe((shifts: Shift[]) => this.list = this.confService.createList(shifts))
-  // }
+  createScheduleList(schedules: Schedule[], shiftId?: number): ListData {
+    console.log(schedules);
+    console.log(shiftId);
+    
+    if (!shiftId) return this.confService.createList(schedules);
+    const list = schedules.filter(i => i.shiftId === shiftId)
+    return this.confService.createList(list)
+
+  }
+
   getPreConfigForm(e: FormGroup) {
     this.preConfigForm = e;
     e.get('departmentId').disable();
+    e.get('shiftId').disable();
     e.get('plantId').valueChanges.subscribe(value => {
       if (value) {
         e.get('departmentId').enable();
@@ -141,10 +155,14 @@ export class ConfigScheduleComponent implements OnInit {
     })
     e.get('departmentId').valueChanges.subscribe(value => {
       if (value) {
+        e.get('shiftId').enable();
         this.store.dispatch(ScheduleActions.getSchedules({ departmentId: +value }));
       } else {
         this.store.dispatch(ScheduleActions.clearSchedules())
       }
+    })
+    e.get('shiftId').valueChanges.subscribe(value => {
+      this.list = this.createScheduleList(this.schedules, +value);
     })
   }
 
@@ -160,27 +178,6 @@ export class ConfigScheduleComponent implements OnInit {
         break
     }
   }
-
-  // updateObj(e) {
-  //   this.isShowPanels.edit = false;
-  //   let schedule = <Schedule>{ ...this.editingObj };
-  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
-  //   this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
-  // }
-
-
-  // addObj(e) {
-  //   this.isShowPanels.add = false;
-  //   const shiftId = +this.preConfigForm.value.shiftId;
-  //   const shift = this.shifts.find(i => i.shiftId === shiftId)
-  //   let schedule = <Schedule>{};
-  //   schedule.shiftDescription = shift.description;
-  //   schedule.shiftName = shift.name;
-  //   schedule.departmentId = +this.preConfigForm.value.departmentId;
-  //   schedule.shiftId = shiftId;
-  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
-  //   this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
-  // }
 
   fixFormValue(configArr: DynControl[], formValue: {}) {
     let value = {};
@@ -209,8 +206,29 @@ export class ConfigScheduleComponent implements OnInit {
       shiftId: shift.shiftId,
       shiftName: shift.name,
       shiftDescription: shift.description
-    }    
+    }
     this.store.dispatch(ScheduleActions.setEditingSchedule({ schedule }))
     this.router.navigate(['/schedule']);
   }
 }
+
+  // updateObj(e) {
+  //   this.isShowPanels.edit = false;
+  //   let schedule = <Schedule>{ ...this.editingObj };
+  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
+  //   this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
+  // }
+
+
+  // addObj(e) {
+  //   this.isShowPanels.add = false;
+  //   const shiftId = +this.preConfigForm.value.shiftId;
+  //   const shift = this.shifts.find(i => i.shiftId === shiftId)
+  //   let schedule = <Schedule>{};
+  //   schedule.shiftDescription = shift.description;
+  //   schedule.shiftName = shift.name;
+  //   schedule.departmentId = +this.preConfigForm.value.departmentId;
+  //   schedule.shiftId = shiftId;
+  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
+  //   this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
+  // }

@@ -55,7 +55,7 @@ export class ScheduleComponent extends Dialog implements OnInit {
   form: FormGroup;
 
   constructor(
-    private location: Location,
+    // private location: Location,
     private store: Store<State>,
     private router: Router,
   ) {
@@ -80,9 +80,9 @@ export class ScheduleComponent extends Dialog implements OnInit {
   }
 
 
-  goBack() {
-    this.location.back()
-  }
+  // goBack() {
+  //   this.location.back()
+  // }
 
 
   getForm(e) {
@@ -117,8 +117,10 @@ export class ScheduleComponent extends Dialog implements OnInit {
   message: string;
 
   onInjectInputs(inputs): void {
-    this.title = inputs.title;
-    this.message = inputs.message;
+    console.log(inputs);
+
+    // this.title = inputs.title;
+    // this.message = inputs.message;
   }
 
   // save(): void {

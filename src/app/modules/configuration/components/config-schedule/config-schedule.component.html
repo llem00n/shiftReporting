@@ -1,6 +1,6 @@
 <app-form [controls]="preConfig" (form)="getPreConfigForm($event)"></app-form>
 <div class="my-4" align="end">
-  <button class="btn mx-2" *ngIf='preConfigForm.valid'
+  <button class="btn mx-2" *ngIf='preConfigForm.valid && !list.tableData.length'
     (click)='addSchedule()'>
     Add Schedule
   </button>
