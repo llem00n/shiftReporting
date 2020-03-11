@@ -15,9 +15,7 @@ export class DynSelect extends BaseControl {
     this.placeholder = opt['placeholder'] || '';
     this.options = opt['options'] || [];
   }
-
-  // get options() { return this._options }
-  // set options(options) { this._options = options }
+  
   get optionsString() { return this.options.map(i => i.value).join('\n') }
   set optionsString(options) {
     this.options = options.split('\n')
