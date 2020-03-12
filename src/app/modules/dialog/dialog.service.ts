@@ -1,43 +1,40 @@
-import { Injectable, ComponentFactory, ComponentFactoryResolver, ApplicationRef, Type } from '@angular/core';
-import { DialogComponent } from './dialog.component';
-import { Dialog } from './models/dialog.model';
-import { DialogRef } from './models/dialog-ref.model';
+import { Injectable, Type } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
-  private dialogContainer: HTMLElement;
-  private dialogContainerFactory: ComponentFactory<DialogComponent>;
 
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private appRef: ApplicationRef
-  ) {
-    this.setupDialogContainerFactory();
+  constructor() { }
+
+  private dialogs = new BehaviorSubject<Array<any>>([]);
+  private afterClosed;
+  getDialogs() {
+    return this.dialogs.asObservable()
   }
-
-  open<T extends Dialog>(component: Type<T>, inputs?: any): DialogRef {
-    
-    this.setupDialogDiv();
-    const dialogContainerRef = this.appRef.bootstrap(this.dialogContainerFactory, this.dialogContainer);
-    const dialogComponentRef = dialogContainerRef.instance.createDialog(component);
-
-    if (inputs) {
-      dialogComponentRef.instance.onInjectInputs(inputs);
+  getData() {
+    const dialogs = this.dialogs.getValue();
+    return dialogs[dialogs.length - 1].data;
+  }
+  open<T>(component: Type<T>, data?: any) {
+    const dialogs = this.dialogs.getValue()
+    dialogs.push({ component, data })
+    this.afterClosed = new Subject()
+    return {
+      afterClosed: () => {
+        return this.afterClosed.asObservable();
+      }
     }
-
-    const dialogRef = new DialogRef(dialogContainerRef, dialogComponentRef);
-
-    return dialogRef;
   }
-
-  private setupDialogDiv(): void {
-    this.dialogContainer = document.createElement('div');
-    document.getElementsByTagName('body')[0].appendChild(this.dialogContainer);
+  close(output?: any) {
+    this.afterClosed.next(output || null);
+    const dialogs = this.dialogs.getValue()
+    dialogs.pop()
   }
-
-  private setupDialogContainerFactory(): void {
-    this.dialogContainerFactory = this.componentFactoryResolver.resolveComponentFactory(DialogComponent);
+  dismiss(output?: any) {
+    this.afterClosed.next(output || null);
+    const dialogs = this.dialogs.getValue()
+    dialogs.pop()
   }
 }

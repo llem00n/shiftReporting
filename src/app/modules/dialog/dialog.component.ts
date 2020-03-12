@@ -1,19 +1,26 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, Type, ComponentRef } from '@angular/core';
-import { Dialog } from './models/dialog.model';
+import { Component, OnInit, Injector, Injectable } from '@angular/core';
+import { DialogService } from './dialog.service';
+
+@Injectable()
+class Data {
+  data: any
+}
 
 @Component({
-  templateUrl: './dialog.component.html'
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit {
 
-  @ViewChild('dialog', { read: ViewContainerRef }) private dialog: ViewContainerRef;
+  dialogs = [];
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver
+    private dialogService: DialogService
   ) { }
-  createDialog<T extends Dialog>(component: Type<T>): ComponentRef<T> {
-    this.dialog.clear();
-    const factory: ComponentFactory<T> = this.componentFactoryResolver.resolveComponentFactory(component);
-    return this.dialog.createComponent(factory, 0);
+
+  ngOnInit(): void {
+    this.dialogService.getDialogs().subscribe(dialogs => this.dialogs = dialogs)
   }
-} 
+
+}

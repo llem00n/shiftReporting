@@ -9,8 +9,8 @@ import { DialogComponent } from './dialog.component';
   imports: [
     CommonModule
   ],
-  // exports:[
-  //   DialogComponent
-  // ]
+  exports: [
+    DialogComponent
+  ]
 })
 export class DialogModule { }

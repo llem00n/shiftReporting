@@ -1,3 +1,6 @@
-<div class="fixed h-screen w-screen bg-black-05 top-0 left-0  flex justify-center items-center">
-  <ng-template #dialog></ng-template>
+<div *ngFor="let i of dialogs">
+  <div class="blind"></div>
+  <div class="dialogContainer">
+    <ng-container *ngComponentOutlet="i.component"></ng-container>
+  </div>
 </div>
