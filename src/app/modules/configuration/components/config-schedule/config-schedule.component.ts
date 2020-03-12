@@ -9,6 +9,8 @@ import { DynControl } from 'src/app/modules/dynamic-controls/models';
 import { ListData } from '../list/list.component';
 import { Router } from '@angular/router';
 import { DynSelect } from '../../../dynamic-controls/models'
+import { DialogService } from 'src/app/modules/dialog/dialog.service';
+import { ScheduleComponent } from 'src/app/modules/schedule/schedule.component';
 
 @Component({
   selector: 'app-config-schedule',
@@ -21,31 +23,10 @@ export class ConfigScheduleComponent implements OnInit {
   preConfigForm: FormGroup;
   shifts: Shift[];
   schedules: Schedule[] = [];
-  preConfig = [
-    new DynSelect({
-      controlId: 'plantId',
-      type: 'select',
-      label: 'Plant',
-      validators: { required: true },
-      options: [],
-      placeholder: 'Select plant'
-    }),
-    new DynSelect({
-      controlId: 'departmentId',
-      type: 'select',
-      label: 'Department',
-      validators: { required: true },
-      options: [],
-      placeholder: 'Select department'
-    }),
-    new DynSelect({
-      controlId: 'shiftId',
-      type: 'select',
-      label: 'Shift',
-      validators: { required: true },
-      options: [],
-      // placeholder: ''
-    })
+  preConfig: DynControl[] = [
+    new DynSelect({ controlId: 'plantId', type: 'select', label: 'Plant', validators: { required: true }, options: [], placeholder: 'Select plant' }),
+    new DynSelect({ controlId: 'departmentId', type: 'select', label: 'Department', validators: { required: true }, options: [], placeholder: 'Select department' }),
+    new DynSelect({ controlId: 'shiftId', type: 'select', label: 'Shift', validators: { required: true }, options: [] }),
   ]
   editingObj: Schedule;
 
@@ -53,6 +34,7 @@ export class ConfigScheduleComponent implements OnInit {
     private store: Store<State>,
     private confService: ConfigurationService,
     private router: Router,
+    private dialogService: DialogService,
   ) { }
 
   ngOnInit() {
@@ -78,8 +60,7 @@ export class ConfigScheduleComponent implements OnInit {
         return;
       };
       this.preConfig
-        .find(i => i.controlId === 'plantId')
-        .options = plants.map(plant => {
+        .find(i => i.controlId === 'plantId')['options'] = plants.map(plant => {
           return {
             value: plant.plantId,
             viewValue: `${plant.name} (${plant.code}, ${plant.address})`
@@ -92,8 +73,7 @@ export class ConfigScheduleComponent implements OnInit {
       select(allDepartments)
     ).subscribe(departments => {
       this.preConfig
-        .find(i => i.controlId === 'departmentId')
-        .options = departments.map(i => {
+        .find(i => i.controlId === 'departmentId')['options'] = departments.map(i => {
           return {
             value: '' + i.departmentId,
             viewValue: `${i.name}`
@@ -101,6 +81,7 @@ export class ConfigScheduleComponent implements OnInit {
         })
     })
   }
+
   getShifts() {
     this.store.dispatch(ShiftActions.getShifts());
     this.store.pipe(
@@ -114,30 +95,25 @@ export class ConfigScheduleComponent implements OnInit {
           viewValue: `${i.name}`
         })
       })
-
-
       this.preConfig
-        .find(i => i.controlId === 'shiftId')
-        .options = options;
+        .find(i => i.controlId === 'shiftId')['options'] = options;
     })
   }
+
   getSchedules() {
     this.store.pipe(
       select(allSchedules)
     ).subscribe(val => {
       this.schedules = val;
-      this.list = this.createScheduleList(val)
+      const shiftId = this.preConfigForm ? +this.preConfigForm.value['shiftId'] : null;
+      this.list = this.createScheduleList(val, shiftId)
     })
   }
 
   createScheduleList(schedules: Schedule[], shiftId?: number): ListData {
-    console.log(schedules);
-    console.log(shiftId);
-    
     if (!shiftId) return this.confService.createList(schedules);
-    const list = schedules.filter(i => i.shiftId === shiftId)
+    const list = schedules.filter(i => i.shiftId == shiftId)
     return this.confService.createList(list)
-
   }
 
   getPreConfigForm(e: FormGroup) {
@@ -145,21 +121,15 @@ export class ConfigScheduleComponent implements OnInit {
     e.get('departmentId').disable();
     e.get('shiftId').disable();
     e.get('plantId').valueChanges.subscribe(value => {
-      if (value) {
-        e.get('departmentId').enable();
-        this.store.dispatch(DepartmentActions.loadDepartments({ plantId: +value }));
-        e.get('departmentId').setValue(null)
-      } else {
-        e.get('departmentId').disable();
-      }
-    })
+      if (!value) return e.get('departmentId').disable();
+      e.get('departmentId').setValue(null)
+      e.get('departmentId').enable();
+      this.store.dispatch(DepartmentActions.loadDepartments({ plantId: +value }));
+    });
     e.get('departmentId').valueChanges.subscribe(value => {
-      if (value) {
-        e.get('shiftId').enable();
-        this.store.dispatch(ScheduleActions.getSchedules({ departmentId: +value }));
-      } else {
-        this.store.dispatch(ScheduleActions.clearSchedules())
-      }
+      if (!value) return this.store.dispatch(ScheduleActions.clearSchedules())
+      this.store.dispatch(ScheduleActions.getSchedules({ departmentId: +value }));
+      e.get('shiftId').enable();
     })
     e.get('shiftId').valueChanges.subscribe(value => {
       this.list = this.createScheduleList(this.schedules, +value);
@@ -169,35 +139,12 @@ export class ConfigScheduleComponent implements OnInit {
   clickListsButton(e) {
     switch (e.action) {
       case 'edit':
-        // this.editingObj = e.item;
-        this.store.dispatch(ScheduleActions.setEditingSchedule({ schedule: e.item }))
-        this.router.navigate(['/schedule']);
+        this.openDialog(e.item)
         break;
       case 'dlt':
         this.store.dispatch(ScheduleActions.deleteSchedule({ id: e.item.scheduleId }))
         break
     }
-  }
-
-  fixFormValue(configArr: DynControl[], formValue: {}) {
-    let value = {};
-    configArr.map(i => {
-      switch (i.type) {
-        case 'checkbox':
-          value[i.controlId] = !!formValue[i.controlId];
-          break;
-        case 'number':
-          value[i.controlId] = +formValue[i.controlId];
-          break;
-        // case 'datetime':
-        //   value[i.controlId] = new Date(formValue[i.controlId]).toJSON().slice(0, 19) + "Z";
-        //   break;
-        default:
-          value[i.controlId] = formValue[i.controlId];
-          break;
-      }
-    })
-    return value;
   }
   addSchedule() {
     const shift = this.shifts.find(i => i.shiftId === +this.preConfigForm.value['shiftId'])
@@ -207,28 +154,18 @@ export class ConfigScheduleComponent implements OnInit {
       shiftName: shift.name,
       shiftDescription: shift.description
     }
-    this.store.dispatch(ScheduleActions.setEditingSchedule({ schedule }))
-    this.router.navigate(['/schedule']);
+    this.openDialog(schedule)
+  }
+
+  openDialog(data) {
+    const dialogRef = this.dialogService.open(ScheduleComponent, data)
+    dialogRef.afterClosed().subscribe(schedule => {
+      if (schedule.scheduleId) {
+        this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
+      } else {
+        delete schedule.scheduleId;
+        this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
+      }
+    });
   }
 }
-
-  // updateObj(e) {
-  //   this.isShowPanels.edit = false;
-  //   let schedule = <Schedule>{ ...this.editingObj };
-  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
-  //   this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
-  // }
-
-
-  // addObj(e) {
-  //   this.isShowPanels.add = false;
-  //   const shiftId = +this.preConfigForm.value.shiftId;
-  //   const shift = this.shifts.find(i => i.shiftId === shiftId)
-  //   let schedule = <Schedule>{};
-  //   schedule.shiftDescription = shift.description;
-  //   schedule.shiftName = shift.name;
-  //   schedule.departmentId = +this.preConfigForm.value.departmentId;
-  //   schedule.shiftId = shiftId;
-  //   Object.assign(schedule, this.fixFormValue(this.configSchedule, e));
-  //   this.store.dispatch(ScheduleActions.addSchedule({ schedule }))
-  // }

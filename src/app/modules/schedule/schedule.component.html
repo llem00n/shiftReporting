@@ -1,10 +1,10 @@
-<section class="w-64 mx-auto shadow">
+<section class="w-64 mx-auto shadow bg-gray-200">
   <!-- Header -->
   <header class="text-gray-300 bg-blue-600 px-4 py-2 flex justify-between">
     <div class="flex items-center">
-      <!-- <svg (click)="goBack()" class="inline mr-2 fill-current w-6 h-6 mr-6" viewBox="0 0 24 24">
+      <svg (click)="close()" class="inline mr-2 fill-current w-6 h-6 mr-6" viewBox="0 0 24 24">
         <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
-      </svg> -->
+      </svg>
       <span>{{title}}</span>
     </div>
     <button class="font-bold text-xs px-2" (click)="save()">{{saveButton}}</button>
@@ -14,10 +14,9 @@
     <div class="">
       <app-form [controls]='shiftControls' [values]="schedule"></app-form>
     </div>
-
     <div class="">
       <app-form [controls]='generalConfig' (form)="getForm($event)" [values]="schedule"></app-form>
-      <label class="block  tracking-widest text-gray-700 text-xs font-bold leading-none">Working days</label>
+      <label class="block  tracking-widest text-gray-700 text-xs font-bold leading-none mb-2">Working days</label>
       <div class="flex justify-between">
         <p *ngFor="let day of daysOfWeek" class="cursor-default p-1 text-xs font-bold rounded-full"
           [ngClass]="getDayStyle(day)" (click)="togleDay(day)">

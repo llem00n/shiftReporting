@@ -7,7 +7,7 @@ import { ShiftActions } from '@actions/*';
 import { ConfigurationService } from '../../services/configuration.service';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
 import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
-import { Dialog } from 'src/app/modules/dialog/models/dialog.model';
+// import { Dialog } from 'src/app/modules/dialog/models/dialog.model';
 import { DialogService } from 'src/app/modules/dialog/dialog.service';
 import { ScheduleComponent } from 'src/app/modules/schedule/schedule.component';
 
