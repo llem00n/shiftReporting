@@ -16,6 +16,7 @@ import { TemplateModule } from './modules/template/template.module';
 import { ScheduleModule } from './modules/schedule/schedule.module';
 import { DataEntryModule } from './modules/data-entry/data-entry.module';
 import { DialogModule } from './modules/dialog/dialog.module';
+import { AuthorizationModule } from './modules/authorization/authorization.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DialogModule } from './modules/dialog/dialog.module';
     TemplateModule,
     ScheduleModule,
     DataEntryModule,
-    DialogModule
+    DialogModule,
+    AuthorizationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
