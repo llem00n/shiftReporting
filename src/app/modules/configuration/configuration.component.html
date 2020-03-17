@@ -1,9 +1,19 @@
-<div class="p-4">
-  <div *ngFor="let item of config"
-    class="border-gray-300 border-solid mb-5 p-4 shadow-md">
+<!-- <div class="p-4"> -->
+<div class="bg-gray-400 px-4 py-1">
+  <nav class="flex ">
+    <a *ngFor="let item of config" routerLinkActive="bg-gray-600 text-gray-100" class="cursor-default p-2"
+      [routerLink]="'./' + item.key">{{item.title}}</a>
+  </nav>
+</div>
+<!-- </div> -->
+<router-outlet></router-outlet>
+
+
+<!-- <div class=" p-4">
+  <div *ngFor="let item of config" class="border-gray-300 border-solid mb-5 p-4 shadow-md">
     <p class="font-bold mr-4 text-xl cursor-default" (click)="showItemPanel(item.key)">{{item.title}}</p>
     <div *ngIf="isShow === item.key">
       <ng-container *ngComponentOutlet="item.component"></ng-container>
     </div>
   </div>
-</div>
+</div> -->

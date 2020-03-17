@@ -1,5 +1,8 @@
-  <ul class="flex items-center bg-gray-600 p-6">
-    <li class="mr-6">
-      <a class="text-gray-100" [routerLink]="[ '/configuration' ]" routerLinkActive="active">Configuration</a>
-    </li>
-  </ul>
+<div class="bg-gray-400 px-4 pt-2">
+  <nav class="flex items-center text-gray-700">
+    <a class="cursor-default p-2" [routerLink]="['/configuration']"
+      routerLinkActive="bg-gray-600 text-gray-100">Configuration</a>
+    <a class="cursor-default p-2" [routerLink]="['/dataentry']"
+      routerLinkActive="bg-gray-600 text-gray-100">Data entry</a>
+  </nav>
+</div>
