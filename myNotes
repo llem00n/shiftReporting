@@ -54,6 +54,10 @@ ng g c modules/configuration/components/ConfigSchedule
 ng g c modules/configuration/components/ConfigTemplate
 ng g c modules/configuration/components/Tile
 
+ng generate module modules/configuration/configuration-routing --flat
+
+
+
 
 dynamic component
 ng g c modules/dynamic-controls/components/DynDatetime
@@ -75,3 +79,8 @@ module dialog
 ng g m modules/Dialog -m app
 ng g c modules/dialog/Dialog -m dialog --flat
 ng g s modules/dialog/Dialog
+
+module authorization
+
+ng g m modules/Authorization -m app
+ng g s modules/authorization/Authorization

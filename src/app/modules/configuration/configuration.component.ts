@@ -13,13 +13,12 @@ import { ConfigTemplateComponent } from './components/config-template/config-tem
 export class ConfigurationComponent {
   isShow: string = null;
   config = [
-    { key: 'template', component: ConfigTemplateComponent, title: 'Template configuration', isShow: false },
-    { key: 'plant', component: ConfigPlantsComponent, title: 'Plants configuration', isShow: false },
-    { key: 'department', component: ConfigDepartmentsComponent, title: 'Departments configuration', isShow: false },
-    { key: 'shift', component: ConfigShiftComponent, title: 'Shifts configuration', isShow: false },
-    { key: 'schedule', component: ConfigScheduleComponent, title: 'Schedule configuration', isShow: false },
+    { key: 'plants', component: ConfigPlantsComponent, title: 'Plants', isShow: false },
+    { key: 'departments', component: ConfigDepartmentsComponent, title: 'Departments', isShow: false },
+    { key: 'shifts', component: ConfigShiftComponent, title: 'Shifts', isShow: false },
+    { key: 'schedules', component: ConfigScheduleComponent, title: 'Schedule', isShow: false },
+    { key: 'templates', component: ConfigTemplateComponent, title: 'Template', isShow: false },
   ];
-
   showItemPanel(key) {
     this.isShow = this.isShow === key ? null : key;
   }

@@ -13,6 +13,7 @@ import { ConfigTemplateComponent } from './components/config-template/config-tem
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { TileComponent } from './components/tile/tile.component';
 import { DialogModule } from '../dialog/dialog.module';
+import { ConfigurationRoutingModule } from './configuration-routing.module';
 // import { MatCardModule } from '@angular/material/card';
 // import {MatSelectModule} from '@angular/material/select';
 // import {MatFormFieldModule} from '@angular/material/form-field';
@@ -31,11 +32,12 @@ import { DialogModule } from '../dialog/dialog.module';
 @NgModule({
   declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent, ConfigTemplateComponent, TileComponent],
   imports: [
-    AppRoutingModule,
+    // AppRoutingModule,
     CommonModule,
     FormModule,
     DynamicControlsModule,
-    DialogModule
+    DialogModule,
+    ConfigurationRoutingModule
     // MaterialModules
   ],
   exports: [ConfigurationComponent]
