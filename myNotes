@@ -84,3 +84,11 @@ module authorization
 
 ng g m modules/Authorization -m app
 ng g s modules/authorization/Authorization
+ng g guard modules/authorization/guards/auth
+ng g c modules/authorization/components/login
+
+module plants
+ng g m modules/plants -m app
+ng g c modules/plants/components/plantCard -m plants --flat
+
+

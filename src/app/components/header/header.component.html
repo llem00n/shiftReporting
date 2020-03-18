@@ -1,8 +1,11 @@
-<div class="bg-gray-400 px-4 pt-2">
+<div class="bg-gray-400 px-4 py-1 flex justify-between items-center">
   <nav class="flex items-center text-gray-700">
     <a class="cursor-default p-2" [routerLink]="['/configuration']"
       routerLinkActive="bg-gray-600 text-gray-100">Configuration</a>
     <a class="cursor-default p-2" [routerLink]="['/dataentry']"
       routerLinkActive="bg-gray-600 text-gray-100">Data entry</a>
   </nav>
+  <div>
+    <p *ngIf="user">User: {{user.name}}</p>
+  </div>
 </div>
