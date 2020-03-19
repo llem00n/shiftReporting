@@ -17,6 +17,7 @@ import { ScheduleModule } from './modules/schedule/schedule.module';
 import { DataEntryModule } from './modules/data-entry/data-entry.module';
 import { DialogModule } from './modules/dialog/dialog.module';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
+import { PlantsModule } from './modules/plants/plants.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
     ScheduleModule,
     DataEntryModule,
     DialogModule,
-    AuthorizationModule
+    AuthorizationModule,
+    PlantsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
