@@ -5,7 +5,9 @@
     <a class="cursor-default p-2" [routerLink]="['/dataentry']"
       routerLinkActive="bg-gray-600 text-gray-100">Data entry</a>
   </nav>
-  <div>
+  <div class="flex ">
+    <svg-icon *ngIf="user" src="assets/svg_icons/account.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>
+    <svg-icon *ngIf="!user" src="assets/svg_icons/account-cancel.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>
     <p *ngIf="user">User: {{user.name}}</p>
   </div>
 </div>
