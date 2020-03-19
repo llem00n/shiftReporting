@@ -86,8 +86,6 @@ export class DataEntryComponent implements OnInit {
     }
   }
 
-
-
   goBack() {
     console.log('goBack')
   }
@@ -95,7 +93,7 @@ export class DataEntryComponent implements OnInit {
     const dataEntry: DataEntry = JSON.parse(JSON.stringify(this.dataEntry))
     delete dataEntry.dataEntryId;
     dataEntry.createDate = this.getCurternDateLocal();
-    dataEntry.scheduleId = 1; //crutch
+    dataEntry.scheduleId = 11; //crutch
     dataEntry.submitUser = 'crutch' //crutch
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry }))
   }
@@ -103,6 +101,5 @@ export class DataEntryComponent implements OnInit {
     const curternDateUTC = new Date()
     return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
   }
-
 }
 
