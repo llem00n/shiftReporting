@@ -1,0 +1,24 @@
+<div *ngIf="plant" class="m-2 bg-gray-200 w-64 flex p-4 shadow-2xl">
+  <div class="mr-2">
+    <div class="w-16 h-16 bg-gray-600 rounded-full items-center flex justify-center mb-2">
+      <p class="font-bold text-gray-200 text-2xl tracking-tight">{{code}}</p>
+    </div>
+    <div class="flex justify-between">
+      <button class="focus:outline-none">
+        <svg-icon src="assets/svg_icons/delete-outline.svg" [svgStyle]="{ 'width.px':24, 'fill': '#5F5F5F' }">
+        </svg-icon>
+      </button>
+      <button class="focus:outline-none">
+        <svg-icon src="assets/svg_icons/pencil-outline.svg" [svgStyle]="{ 'width.px':24, 'fill': '#5F5F5F' }">
+        </svg-icon>
+      </button>
+    </div>
+  </div>
+  <div>
+    <p class="font-bold leading-tight mb-1">{{name}}</p>
+    <div class="flex">
+      <svg-icon src="assets/svg_icons/map-marker.svg" [svgStyle]="{ 'width.px':16, 'fill': '#5F5F5F' }"></svg-icon>
+      <p class="text-xs text-gray-800 leading-tight">{{address}}</p>
+    </div>
+  </div>
+</div>

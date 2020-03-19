@@ -89,6 +89,7 @@ ng g c modules/authorization/components/login
 
 module plants
 ng g m modules/plants -m app
-ng g c modules/plants/components/plantCard -m plants --flat
+ng g c modules/plants/components/plantCard -m plants
+ng g c modules/plants/components/plantForm -m plants
 
 

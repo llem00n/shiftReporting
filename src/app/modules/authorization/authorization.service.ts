@@ -17,7 +17,7 @@ export class AuthorizationService {
   ) { }
   
   setCurrentUser(user: User): void {
-    console.log(this.redirectUrl);
+    // console.log(this.redirectUrl);
     this.currentUser.next(user);
     this.redirectUrl && this.router.navigate([this.redirectUrl])
   }

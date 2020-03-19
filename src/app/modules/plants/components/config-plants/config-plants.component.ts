@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/app-store/plant/plant.reducer';
 import { allPlants } from 'src/app/app-store';
-import { ListData } from '../list/list.component';
+// import { ListData } from '../list/list.component';
 import { Plant } from 'src/app/app-store/plant/plant.model';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
 import { FormGroup } from '@angular/forms';
 import { PlantActions } from '@actions/*';
-import { ConfigurationService } from '../../services/configuration.service';
+// import { ConfigurationService } from '../../services/configuration.service';
 import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
 
 @Component({
@@ -19,10 +19,10 @@ export class ConfigPlantsComponent implements OnInit {
 
   constructor(
     private store: Store<State>,
-    private confService: ConfigurationService
+    // private confService: ConfigurationService
   ) { }
 
-  plantList: ListData = null;
+  plants: Plant[] = null;
   formAddPlant: FormGroup = new FormGroup({})
   formEditPlant: FormGroup = new FormGroup({})
   editingPlant: Plant;
@@ -59,9 +59,14 @@ export class ConfigPlantsComponent implements OnInit {
         this.store.dispatch(PlantActions.loadPlants());
         return
       };
-      this.plantList = this.confService.createList(plants);
+      this.plants = plants;
     })
   }
+
+clickAddPlant(){
+  console.log('ADD PLANT');
+  
+}
 
   addPlant(e) {
     this.showedAddForm = false;

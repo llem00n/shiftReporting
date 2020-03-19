@@ -4,7 +4,7 @@ import { ConfigurationComponent } from './configuration.component';
 import { FormModule } from '../form/form.module';
 import { DynamicControlsModule } from '../dynamic-controls/dynamic-controls.module';
 import { ListComponent } from './components/list/list.component';
-import { ConfigPlantsComponent } from './components/config-plants/config-plants.component';
+// import { ConfigPlantsComponent } from '';
 import { ConfigDepartmentsComponent } from './components/config-departments/config-departments.component';
 import { EditingPanelComponent } from './components/editing-panel/editing-panel.component';
 import { ConfigShiftComponent } from './components/config-shift/config-shift.component';
@@ -31,7 +31,7 @@ import { PlantsModule } from '../plants/plants.module';
 // ]
 
 @NgModule({
-  declarations: [ConfigurationComponent, ListComponent, ConfigPlantsComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent, ConfigTemplateComponent, TileComponent],
+  declarations: [ConfigurationComponent, ListComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent, ConfigTemplateComponent, TileComponent],
   imports: [
     PlantsModule,
     // AppRoutingModule,
@@ -39,7 +39,8 @@ import { PlantsModule } from '../plants/plants.module';
     FormModule,
     DynamicControlsModule,
     DialogModule,
-    ConfigurationRoutingModule
+    ConfigurationRoutingModule,
+    PlantsModule
     // MaterialModules
   ],
   exports: [ConfigurationComponent]

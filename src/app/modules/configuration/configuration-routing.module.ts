@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConfigurationComponent } from './configuration.component';
-import { ConfigPlantsComponent } from './components/config-plants/config-plants.component';
 import { ConfigDepartmentsComponent } from './components/config-departments/config-departments.component';
 import { ConfigShiftComponent } from './components/config-shift/config-shift.component';
 import { ConfigScheduleComponent } from './components/config-schedule/config-schedule.component';
 import { ConfigTemplateComponent } from './components/config-template/config-template.component';
+import { ConfigPlantsComponent } from '../plants/components/config-plants/config-plants.component';
 
 const routes: Routes = [
   {
