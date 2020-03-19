@@ -1,8 +1,10 @@
 <div class="flex flex-wrap">
-  <app-plant-card *ngFor="let plant of plants" [plant]="plant"></app-plant-card>
+  <!-- Plants list -->
+  <app-plant-card *ngFor="let plant of plants" [plant]="plant" (clickDelete)="delete($event)" (clickEdit)="edit($event)"></app-plant-card>
 
+  <!-- Add Plant -->
   <div class="m-2 w-32 bg-gray-200 p-4 shadow-2xl">
-    <div (click)="clickAddPlant()" class="flex flex-col items-center justify-center">
+    <div (click)="addPlant()" class="flex flex-col items-center justify-center">
       <p class="cursor-default">Add Plant</p>
       <svg-icon src="assets/svg_icons/plus-circle-outline.svg" [svgStyle]="{'width.px':64,'fill': '#5F5F5F' }">
       </svg-icon>

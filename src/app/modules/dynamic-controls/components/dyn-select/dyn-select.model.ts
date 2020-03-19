@@ -3,7 +3,7 @@ import { BaseControl } from '../base/base.model';
 export class DynSelect extends BaseControl {
   type = 'select';
   placeholder?: string;
-  options: { value: string, viewValue: string }[];
+  options: { value: string | number, viewValue: string }[];
   private _settings = [
     { controlId: 'placeholder', label: 'Placeholder', type: 'text' },
     { controlId: 'optionsString', label: 'Options', type: 'textarea' },

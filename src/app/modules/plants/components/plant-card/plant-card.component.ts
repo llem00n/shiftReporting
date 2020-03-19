@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Plant } from '@models/*';
 
 @Component({
@@ -8,7 +8,8 @@ import { Plant } from '@models/*';
 })
 export class PlantCardComponent implements OnInit {
   @Input() plant: Plant;
-
+  @Output() clickEdit = new EventEmitter<number>()
+  @Output() clickDelete = new EventEmitter<number>()
   constructor() { }
 
   ngOnInit(): void {
@@ -23,5 +24,10 @@ export class PlantCardComponent implements OnInit {
   get address() {
     return this.plant.address
   }
-
+  delete() {
+    this.clickDelete.emit(this.plant.plantId)
+  }
+  edit() {
+    this.clickEdit.emit(this.plant.plantId)
+  }
 }
