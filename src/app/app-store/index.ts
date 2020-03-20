@@ -13,6 +13,7 @@ import * as fromSchedule from './schedule/schedule.reducer';
 import * as fromTemplate from './template/template.reducer';
 import * as fromInterface from './interface/interface.reducer';
 import * as fromDataEntry from './data-entry/data-entry.reducer';
+import * as fromUser from './user/user.reducer';
 
 export interface State {
 
@@ -23,6 +24,7 @@ export interface State {
   [fromTemplate.templatesFeatureKey]: fromTemplate.State;
   [fromInterface.interfaceFeatureKey]: fromInterface.State;
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.State;
+  [fromUser.usersFeatureKey]: fromUser.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -34,6 +36,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromTemplate.templatesFeatureKey]: fromTemplate.reducer,
   [fromInterface.interfaceFeatureKey]: fromInterface.reducer,
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.reducer,
+  [fromUser.usersFeatureKey]: fromUser.reducer,
 };
 
 

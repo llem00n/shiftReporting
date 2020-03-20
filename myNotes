@@ -9,6 +9,7 @@ ng g en app-store/department/Department -m ../app-store -r ../index.ts -c
 ng g en app-store/shift/Shift -m ../app-store -r ../index.ts -c
 ng g en app-store/schedule/Schedule -m ../app-store -r ../index.ts -c
 ng g en app-store/template/Template -m ../app-store -r ../index.ts -c
+ng g en app-store/user/user -m ../app-store -r ../index.ts -c
 
 generate Effects:
 ng generate effect app-store/plant/Plant -m app-store --root -c -a
@@ -16,6 +17,7 @@ ng generate effect app-store/department/Department -m app-store --root -c -a
 ng generate effect app-store/shift/Shift -m app-store --root -c -a
 ng generate effect app-store/schedule/Schedule -m app-store --root -c -a
 ng generate effect app-store/template/Template -m app-store --root -c -a
+ng generate effect app-store/user/user -m app-store --root -c -a
 
 generate service:
 ng g s app-store/plant/PlantHttp
@@ -25,6 +27,7 @@ ng g s app-store/schedule/ScheduleHttp
 ng g s app-store/template/TemplateHttp
 ng g s app-store/interface/InterfaceHttp
 ng g s app-store/data-entry/DataEntryHttp
+ng g s app-store/user/userHttp
 
 module grid
 ng g m modules/Grid -m app
@@ -92,4 +95,5 @@ ng g m modules/plants -m app
 ng g c modules/plants/components/plantCard -m plants
 ng g c modules/plants/components/plantForm -m plants
 
-
+module Calendar
+ng g m modules/calendar -m app

@@ -12,6 +12,8 @@ import { ScheduleEffects } from './schedule/schedule.effects';
 import { TemplateEffects } from './template/template.effects';
 import { InterfaceEffects } from './interface/interface.effects';
 import { DataEntryEffects } from './data-entry/data-entry.effects';
+import * as fromUser from './user/user.reducer';
+import { UserEffects } from './user/user.effects';
 
 
 
@@ -34,8 +36,10 @@ import { DataEntryEffects } from './data-entry/data-entry.effects';
       ScheduleEffects,
       TemplateEffects,
       InterfaceEffects,
-      DataEntryEffects
+      DataEntryEffects,
+      UserEffects
     ]),
+    // StoreModule.forFeature(fromUser.usersFeatureKey, fromUser.reducer),
   ]
 })
 export class AppStoreModule { }

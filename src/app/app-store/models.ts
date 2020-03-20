@@ -5,3 +5,6 @@ export * from './schedule/schedule.model';
 export * from './shift/shift.model';
 export * from './data-entry/data-entry.model';
 export * from './template/template.model';
+export * from './user/role.model';
+export * from './template/template-type.model';
+export * from './user/role.model'
