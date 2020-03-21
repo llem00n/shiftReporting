@@ -4,6 +4,7 @@ import { TemplateComponent } from './modules/template/template.component';
 import { ScheduleComponent } from './modules/schedule/schedule.component';
 import { DataEntryComponent } from './modules/data-entry/data-entry.component';
 import { AuthGuard } from './modules/authorization/guards/auth.guard';
+import { CalendarComponent } from './modules/calendar/calendar.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'template', component: TemplateComponent },
   { path: 'schedule', component: ScheduleComponent },
   { path: 'dataentry', component: DataEntryComponent },
+  { path: 'calendar', component: CalendarComponent },
   { path: '', redirectTo: 'configuration', pathMatch: 'full' },
   // { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];

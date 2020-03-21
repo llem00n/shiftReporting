@@ -160,6 +160,7 @@ export class ConfigScheduleComponent implements OnInit {
   openDialog(data) {
     const dialogRef = this.dialogService.open(ScheduleComponent, data)
     dialogRef.afterClosed().subscribe(schedule => {
+      if (!schedule) return;
       if (schedule.scheduleId) {
         this.store.dispatch(ScheduleActions.updateSchedule({ schedule }))
       } else {

@@ -18,6 +18,7 @@ import { DataEntryModule } from './modules/data-entry/data-entry.module';
 import { DialogModule } from './modules/dialog/dialog.module';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { PlantsModule } from './modules/plants/plants.module';
+import { CalendarModule } from './modules/calendar/calendar.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PlantsModule } from './modules/plants/plants.module';
     DataEntryModule,
     DialogModule,
     AuthorizationModule,
-    PlantsModule
+    PlantsModule,
+    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

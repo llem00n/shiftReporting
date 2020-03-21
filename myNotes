@@ -97,3 +97,5 @@ ng g c modules/plants/components/plantForm -m plants
 
 module Calendar
 ng g m modules/calendar -m app
+ng g c modules/calendar/calendar --flat
+ng g c modules/calendar/components/weekGrid

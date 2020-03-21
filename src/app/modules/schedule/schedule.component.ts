@@ -7,15 +7,7 @@ import { Router } from '@angular/router';
 import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
 import { DynTextarea } from '../dynamic-controls/components/dyn-textarea/dyn-textarea.model';
 import { DialogService } from '../dialog/dialog.service';
-
-const daysOfWeek = [
-  { key: 'monday', name: 'Monday', threeLetters: 'Mon', twoLetters: 'MO', oneLetter: 'M' },
-  { key: 'tuesday', name: 'Tuesday', threeLetters: 'Tue', twoLetters: 'TU', oneLetter: 'T' },
-  { key: 'wednesday', name: 'Wednesday', threeLetters: 'Wed', twoLetters: 'WE', oneLetter: 'W' },
-  { key: 'thursday', name: 'Thursday', threeLetters: 'Thu', twoLetters: 'TH', oneLetter: 'U' },
-  { key: 'friday', name: 'Friday', threeLetters: 'Fri', twoLetters: 'FR', oneLetter: 'F' },
-  { key: 'saturday', name: 'Saturday', threeLetters: 'Sat', twoLetters: 'SA', oneLetter: 'S' },
-  { key: 'sunday', name: 'Sunday', threeLetters: 'Sun', twoLetters: 'SU', oneLetter: 'N' },]
+import { DateService } from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-schedule',
@@ -23,7 +15,7 @@ const daysOfWeek = [
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-  daysOfWeek = daysOfWeek;
+  daysOfWeek = this.dateService.daysOfWeek;
   schedule: Schedule;
   title: string = 'Create schedule';
   saveButton: string = 'Add';
@@ -42,7 +34,8 @@ export class ScheduleComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private dateService: DateService
   ) { }
 
   ngOnInit(): void {
@@ -59,7 +52,7 @@ export class ScheduleComponent implements OnInit {
 
   daysFormInit() {
     const group: FormGroup = new FormGroup({});
-    daysOfWeek.map(i => {
+    this.daysOfWeek.map(i => {
       group.addControl(i.key, new FormControl(false));
     })
     return group;
@@ -67,14 +60,14 @@ export class ScheduleComponent implements OnInit {
 
   getForm(e) {
     this.form = e;
-    daysOfWeek.map(i => {
+    this.daysOfWeek.map(i => {
       this.form.addControl(i.key, new FormControl(this.schedule[i.key]));
     })
     this.form.valueChanges.subscribe(value => {
       Object.assign(this.schedule, value);
     })
   }
-  
+
   togleDay(day) {
     const controlDay = this.form.get(day.key);
     controlDay.setValue(!this.form.value[day.key]);

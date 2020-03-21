@@ -2,8 +2,10 @@
   <nav class="flex items-center text-gray-700">
     <a class="cursor-default p-2" [routerLink]="['/configuration']"
       routerLinkActive="bg-gray-600 text-gray-100">Configuration</a>
-    <a class="cursor-default p-2" [routerLink]="['/dataentry']"
+      <a class="cursor-default p-2" [routerLink]="['/dataentry']"
       routerLinkActive="bg-gray-600 text-gray-100">Data entry</a>
+      <a class="cursor-default p-2" [routerLink]="['/calendar']"
+      routerLinkActive="bg-gray-600 text-gray-100">Calendar</a>
   </nav>
   <div class="flex ">
     <svg-icon *ngIf="user" src="assets/svg_icons/account.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>

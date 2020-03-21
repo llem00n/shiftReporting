@@ -1,6 +1,8 @@
-<app-header></app-header>
-<!-- <h1>Name of company</h1> -->
-<!-- <app-configuration></app-configuration> -->
-<router-outlet></router-outlet>
+<div class="h-screen flex flex-col">
+  <app-header></app-header>
+  <div class="flex-1 p-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>
 <app-message></app-message>
 <app-dialog></app-dialog>
