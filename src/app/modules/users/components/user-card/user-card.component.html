@@ -1,0 +1,36 @@
+<div *ngIf="user" class="m-2 bg-gray-300 shadow w-64  p-4 ">
+  <div class="mr-2">
+    
+    <div class="mb-4">
+      <!-- Name -->
+      <p class="font-bold leading-tight mb-1">{{firstName}} {{secondName}}</p>
+  
+      <!-- Login -->
+      <div class="flex">       
+        <p class="text-xs text-gray-800 leading-tight">Login: {{login}}</p>
+      </div>
+      <div class="flex">       
+        <p class="text-xs text-gray-800 leading-tight">Active user: </p>
+      </div>
+
+      <div class="flex items-center">
+        <svg-icon src="assets/svg_icons/at.svg" [svgStyle]="{ 'width.px':16, 'fill': '#5F5F5F' }"></svg-icon>
+        <p class="text-xs text-gray-800 leading-tight"> {{email}}</p>
+      </div>
+  
+    </div>
+
+    <!-- Active buttons -->
+    <div class="">
+      <!-- <button (click)="delete()" class="mr-4 focus:outline-none">
+        <svg-icon src="assets/svg_icons/delete-outline.svg" [svgStyle]="{ 'width.px':24, 'fill': '#5F5F5F' }">
+        </svg-icon>
+      </button> -->
+      <button (click)="edit()" class="focus:outline-none">
+        <svg-icon src="assets/svg_icons/pencil-outline.svg" [svgStyle]="{ 'width.px':24, 'fill': '#5F5F5F' }">
+        </svg-icon>
+      </button>
+    </div>
+  </div>
+
+</div>
