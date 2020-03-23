@@ -100,3 +100,11 @@ ng g m modules/calendar -m app
 ng g c modules/calendar/calendar --flat
 ng g c modules/calendar/components/weekGrid
 ng g c modules/calendar/components/weekSelector
+
+module users
+ng g m modules/users -m app
+ng g c modules/users/components/userCard
+ng g c modules/users/components/userForm
+ng g c modules/users/components/usersConfig
+
+

@@ -21,11 +21,7 @@ export class ConfigPlantsComponent implements OnInit {
   ) { }
 
   plants: Plant[] = null;
-  configPlant = [
-    new DynText({ controlId: 'name', label: 'Name', validators: { required: true } }),
-    new DynText({ controlId: 'code', label: 'Code', validators: { required: true } }),
-    new DynText({ controlId: 'address', label: 'Address', validators: { required: true } }),
-  ];
+  
   ngOnInit() {
     this.getPlants()
   }
