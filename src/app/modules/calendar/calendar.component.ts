@@ -14,7 +14,6 @@ export class CalendarComponent implements OnInit {
   schedules: Schedule[];
   date: Date;
   week: number;
-  // monday: Date;
   year: number;
   departmentId = 2;
   weekYear: { year: number, week: number };
@@ -39,7 +38,6 @@ export class CalendarComponent implements OnInit {
     ).subscribe(schedules => this.schedules = schedules)
   }
   setWeek(e) {
-    this.week = 12
     this.week = e.week;
     this.year = e.year;
   }

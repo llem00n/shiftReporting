@@ -1,4 +1,4 @@
-  <div class="flex flex-col h-full flex-1 p-4">
+  <div class="flex flex-col h-full flex-1 px-4 pb-4">
     <div>
       <div class="flex ">
         <div class="w-12 border border-gray-400 flex justify-center items-center">
@@ -24,9 +24,9 @@
         <div class="flex justify-between flex-1 h-full">
           <div *ngFor="let day of scheduleWeekList | keyvalue" class="relative flex flex-col border border-gray-400 w-full h-full">
             <div *ngFor="let shift of day.value.shifts" >
-              <div [ngStyle]="getPos(shift)" class="absolute top-0 w-full">
-                <div class="bg-orange-500 h-full border border-gray-400">
-                  <p class="p-2">{{shift.shiftName}}</p>
+              <div [ngStyle]="shift.position" class="absolute w-full" [ngClass]="shift.elClass">
+                <div class=" h-full border border-gray-400">
+                  <p class="p-2">{{shift.schedule.shiftName}}</p>
                 </div>
                 <!-- <p>{{day.value.shifts | json}}</p> -->
               </div>

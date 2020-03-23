@@ -76,15 +76,15 @@ export class DateService {
     ${monday.slice(4, 10)} 
     ${monday.slice(11) !== sunday.slice(11) ? monday.slice(11) : ''} - 
     ${monday.slice(4, 7) !== sunday.slice(4, 7) ? sunday.slice(4, 7) : ''}
-    ${sunday.slice(8, 10)} 
+    ${sunday.slice(8, 10)}, 
     ${sunday.slice(11)}`
     return result;
   }
 
   nextWeek(year, week): { year: number, week: number } {
-    return this.getWeek(new Date(this.getMonday(year, week).valueOf() + 7 * this.day_ms));
+    return this.getWeek(new Date(this.getMonday(year, week).valueOf() + 8 * this.day_ms));
   }
   prevWeek(year, week): { year: number, week: number } {
-    return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 7 * this.day_ms));
+    return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 8 * this.day_ms));
   }
 }
