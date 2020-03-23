@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppHttpResponse } from '../services/http.service';
+import { AppHttpResponse, AppHttpRequest, HttpService } from '../services/http.service';
 import { User } from './user.model';
 
 @Injectable({
@@ -8,7 +8,10 @@ import { User } from './user.model';
 })
 export class UserHttpService {
 
-  constructor() { }
+  baseUrl = 'users/'
+  constructor(
+    private httpService: HttpService
+  ) { }
 
   addUser(user: User): Observable<AppHttpResponse> { return null };
 
@@ -24,7 +27,14 @@ export class UserHttpService {
 
   getRoles(): Observable<AppHttpResponse> { return null };
 
-  getAllUsers(): Observable<AppHttpResponse> { return null };
+  getAllUsers(): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getAllUsers',
+      loadingMsg: 'Loading users ...',
+    }
+    return this.httpService.post<AppHttpResponse>(options)
+
+  };
 
   getDepartmentUsers(departmentId: number): Observable<AppHttpResponse> { return null };
 
