@@ -9,13 +9,21 @@ import { ControlsLocalService } from '../../services/controls-local.service';
 })
 export class DynCheckboxComponent implements OnInit {
   options: ControlOptions;
+  isChecked: boolean;
   constructor(
     private clService: ControlsLocalService,
   ) { }
 
   ngOnInit() {
     this.clService.getData().subscribe(options => {
-      this.options = options
+      this.options = options;
+      this.isChecked = options.form.value[options.control.controlId]
     })
+  }
+  toggleCheck() {
+    this.isChecked = !this.isChecked
+    this.options.form
+      .get(this.options.control.controlId)
+      .setValue(this.isChecked);
   }
 }
