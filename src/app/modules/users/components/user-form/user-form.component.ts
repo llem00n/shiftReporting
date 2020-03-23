@@ -9,7 +9,7 @@ import { DialogService } from 'src/app/modules/dialog/dialog.service';
 })
 export class UserFormComponent implements OnInit {
   user: User;
-  title = 'Add plant'
+  title = 'Add user'
   saveButton = 'Add'
   config = [
     new DynText({ controlId: 'firstName', label: 'First name', validators: { required: true } }),
@@ -33,17 +33,17 @@ export class UserFormComponent implements OnInit {
       this.title = 'Edit plant';
       this.saveButton = 'Save'
     };
-    console.log(this.user);    
   }
   close() {
     this.dialogService.dismiss()
   }
   getForm(e){
-    console.log(e);
+    e.valueChanges.subscribe(value => {
+      Object.assign(this.user, value)
+    })
     
   }
   save(){
-    console.log('save');
-    
+    this.dialogService.close(this.user)    
   }
 }

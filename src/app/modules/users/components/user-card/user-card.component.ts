@@ -9,10 +9,13 @@ import { User } from '@models/*';
 export class UserCardComponent implements OnInit {
   @Input() user: User;
   @Output() clickEdit = new EventEmitter<number>()
+  @Output() clickRoles = new EventEmitter<number>()
+  @Output() clickDepartments = new EventEmitter<number>()
   // @Output() clickDelete = new EventEmitter<number>()
-  constructor() { }
+  constructor(  ) { }
 
   ngOnInit(): void {
+
   }
 
   get firstName() {
@@ -30,8 +33,9 @@ export class UserCardComponent implements OnInit {
   get email() {
     return this.user.email;
   }
-
-
+  get isActive() {
+    return this.user.isActive;
+  }
 
   edit() {
     this.clickEdit.emit(this.user.userId)

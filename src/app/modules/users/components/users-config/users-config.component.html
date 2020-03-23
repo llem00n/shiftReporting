@@ -1,6 +1,7 @@
 <div class="flex flex-wrap">
   <!-- Users list -->
-  <app-user-card *ngFor="let user of users" [user]="user" (clickEdit)="edit($event)"></app-user-card>
+  <app-user-card *ngFor="let user of users" [user]="user" (clickRoles)="setRoles($event)"
+    (clickDepartments)="setDepartments($event)" (clickEdit)="edit($event)"></app-user-card>
 
   <!-- Add Plant -->
   <div class="m-2 w-32 bg-gray-300 p-4 shadow-2xl">

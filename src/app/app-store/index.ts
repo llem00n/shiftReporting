@@ -66,6 +66,8 @@ export const editingTemplate = createSelector(templateState, (state) => state.ed
 //users
 export const userState = createFeatureSelector<fromUser.State>('users');
 export const allUsers = createSelector(userState, fromUser.selectAll);
+export const roles = createSelector(userState, (state) => state.roles);
+export const userRoles = createSelector(userState, (state) => state.userRoles);
 
 
 

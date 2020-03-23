@@ -5,6 +5,7 @@ import { allUsers } from 'src/app/app-store';
 import { UserActions } from '@actions/*';
 import { DialogService } from 'src/app/modules/dialog/dialog.service';
 import { UserFormComponent } from '../user-form/user-form.component';
+import { UserRolesComponent } from '../user-roles/user-roles.component';
 
 @Component({
   selector: 'app-users-config',
@@ -36,15 +37,23 @@ export class UsersConfigComponent implements OnInit {
       this.users = users;
     })
   }
-
   addUser() {
-    this.openDialog({})
+    this.openDialogEdit({})
   }
   edit(id) {
     const user = this.users.find(i => i.userId === id)
-    this.openDialog(user)
+    this.openDialogEdit(user)
   }
-  openDialog(data) {
+  setRoles(userId) {
+    const dialogRef = this.dialogService.open(UserRolesComponent, userId)
+    // dialogRef.afterClosed().subscribe(console.log)
+  }
+  
+  setDepartments(id) {
+    console.log(id);
+  }
+
+  openDialogEdit(data) {
     const dialogRef = this.dialogService.open(UserFormComponent, data)
     dialogRef.afterClosed().subscribe(user => {
       if (!user) return;
@@ -52,7 +61,7 @@ export class UsersConfigComponent implements OnInit {
         this.store.dispatch(UserActions.updateUser({ user }))
       } else {
         delete user.userId;
-        // this.store.dispatch(PlantActions.addPlant({ plant }))
+        this.store.dispatch(UserActions.addUser({ user }))
       }
     });
   }

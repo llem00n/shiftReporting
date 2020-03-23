@@ -1,0 +1,27 @@
+<section class="w-64 mx-auto shadow bg-gray-200">
+  <!-- Header -->
+  <header class="text-gray-300 bg-blue-600 px-4 py-2 flex justify-between">
+    <div class="flex items-center">
+      <svg-icon (click)="close()" src="assets/svg_icons/arrow-left.svg" [svgStyle]="{ 'width.px':24, 'fill': '#fff'}">
+      </svg-icon>
+      <span class="ml-2">{{title}}</span>
+    </div>
+  </header>
+  <!-- Roles list -->
+  <div  class="p-4">
+    <div *ngFor="let role of roles" class="flex pb-2 ">
+      <svg-icon *ngIf="getChecked(role)" (click)="toggleRole(role)" src="assets/svg_icons/checkbox-marked.svg"
+        [svgStyle]="{ 'width.px':24, 'fill': 'rgb(95,95,95)'}">
+      </svg-icon>
+      <svg-icon *ngIf="!getChecked(role)" (click)="toggleRole(role)" src="assets/svg_icons/checkbox-blank-outline.svg"
+        [svgStyle]="{ 'width.px':24, 'fill': 'rgb(95,95,95)'}">
+      </svg-icon>
+      <div class="cursor-default pl-1" (click)="toggleRole(role)">{{role.roleName}}</div>
+    </div>
+  </div>
+  <!-- <div *ngIf="user" class="p-4">
+    <div class="">
+      <app-form [controls]='config' [values]="user" (form)="getForm($event)" ></app-form>
+    </div>
+  </div> -->
+</section>
