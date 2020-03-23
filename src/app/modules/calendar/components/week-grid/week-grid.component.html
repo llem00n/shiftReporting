@@ -1,21 +1,12 @@
-<div class="flex flex-col h-full">
-  <div class="bg-orange-300">
-
-    <p>week-grid works!</p>
-    <!-- <p *ngIf="elementView">{{elementView.nativeElement.offsetHeight}}</p> -->
-    <p>{{weekNum}}</p>
-
-    <p>{{startWeekDate}}</p>
-  </div>
-  <div class="flex flex-col h-full flex-1 bg-green-300 p-4">
+  <div class="flex flex-col h-full flex-1 p-4">
     <div>
       <div class="flex ">
-        <div class="w-12 border flex justify-center items-center">
-          <p>Time</p>
+        <div class="w-12 border border-gray-400 flex justify-center items-center">
+          <!-- <p>Time</p> -->
         </div>
         <div class="flex justify-between flex-1 ">
-          <div *ngFor="let day of scheduleWeekList | keyvalue" class="border w-full">
-            <p class="text-center">{{day.value.name}}</p>
+          <div *ngFor="let day of scheduleWeekList | keyvalue" class="border border-gray-400 w-full text-gray-700 font-bold text-sm">
+            <p class="text-center">{{day .value.name}}</p>
             <p class="text-center">{{day.value.date | date}}</p>
           </div>
         </div>
@@ -24,23 +15,23 @@
 
     <div #contentCalendar class="flex-1">
       <div class="flex h-full">
-        <div class="flex flex-col  justify-between h-full w-12 border">
-          <div *ngFor="let item of hours; let i=index" class="flex justify-center border-b flex-1">
+        <div class="flex flex-col  justify-between h-full w-12 border border-gray-400">
+          <div *ngFor="let item of hours; let i=index" class="flex justify-center border-b border-gray-400 flex-1 text-gray-700 font-bold text-xs">
             <p>{{i}}:00</p>
           </div>
         </div>
 
         <div class="flex justify-between flex-1 h-full">
-          <div *ngFor="let day of scheduleWeekList | keyvalue" class="relative flex flex-col border w-full h-full">
+          <div *ngFor="let day of scheduleWeekList | keyvalue" class="relative flex flex-col border border-gray-400 w-full h-full">
             <div *ngFor="let shift of day.value.shifts" >
               <div [ngStyle]="getPos(shift)" class="absolute top-0 w-full">
-                <div class="bg-orange-500 h-full border">
+                <div class="bg-orange-500 h-full border border-gray-400">
                   <p class="p-2">{{shift.shiftName}}</p>
                 </div>
                 <!-- <p>{{day.value.shifts | json}}</p> -->
               </div>
             </div>
-            <div *ngFor="let item of hours; let i=index" class="flex justify-center border-b flex-1">
+            <div *ngFor="let item of hours; let i=index" class="flex justify-center border-b border-gray-400 flex-1">
             </div>
           </div>
         </div>
@@ -48,7 +39,6 @@
     </div>
 
   </div>
-</div>
 <!-- <pre>{{scheduleWeekList | json}}</pre> -->
 
 <!-- <pre>{{schedules | json}}</pre> -->

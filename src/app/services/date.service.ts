@@ -24,6 +24,7 @@ export class DateService {
     { key: 'sunday', name: 'Sunday', threeLetters: 'Sun', twoLetters: 'SU', oneLetter: 'N', dayNum: 7 },
   ]
 
+  private day_ms = 24 * 60 * 60 * 1000;
 
   constructor() { }
 
@@ -36,19 +37,19 @@ export class DateService {
     return this._daysOfWeek.find(i => i.dayNum = dayNum);
   }
 
-  // getNumberOfWeek(date: Date) {
-  //   const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-  //   const pastDaysOfYear = (date.valueOf() - firstDayOfYear.valueOf()) / 86400000;
-  //   return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-  // }
-
-  lastMonday(date?: Date) {
+  lastMonday(date?: Date): Date {
     const d = date ? new Date(date) : new Date();
     d.setHours(0, 0, 0);
-    return new Date(d.valueOf() - (d.getDay() - 1) * 24 * 60 * 60 * 1000);
+    return new Date(d.valueOf() - (d.getDay() - 1) * this.day_ms);
   }
 
-  getWeekNum(date?: Date) {
+  getMonday(year: number, week: number): Date {
+    const date = new Date(year, 0, 4);
+    let monday = this.lastMonday(new Date(date.valueOf() + (week - 1) * 7 * this.day_ms));
+    return monday;
+  }
+
+  getWeek(date?: Date): { year: number, week: number } {
     const d = date ? new Date(date.valueOf()) : new Date();
     const tdt = new Date(d.valueOf());
     const dayn = (d.getDay() + 6) % 7;
@@ -58,6 +59,32 @@ export class DateService {
     if (tdt.getDay() !== 4) {
       tdt.setMonth(0, 1 + ((4 - tdt.getDay()) + 7) % 7);
     }
-    return 1 + Math.ceil((firstThursday - tdt.valueOf()) / 604800000);
+    const week = 1 + Math.ceil((firstThursday - tdt.valueOf()) / 604800000);
+    const monday = this.lastMonday(d)
+    let year = monday.getFullYear();
+    week === 1 && monday.getDate() > 27 && ++year
+    return { week, year };
+  }
+
+  getWeekString(year: number, week: number): string {
+    const monday = this.getMonday(year, week).toDateString();
+
+    const sunday = new Date(new Date(monday).valueOf() + 6 * this.day_ms).toDateString()
+
+
+    const result = `
+    ${monday.slice(4, 10)} 
+    ${monday.slice(11) !== sunday.slice(11) ? monday.slice(11) : ''} - 
+    ${monday.slice(4, 7) !== sunday.slice(4, 7) ? sunday.slice(4, 7) : ''}
+    ${sunday.slice(8, 10)} 
+    ${sunday.slice(11)}`
+    return result;
+  }
+
+  nextWeek(year, week): { year: number, week: number } {
+    return this.getWeek(new Date(this.getMonday(year, week).valueOf() + 7 * this.day_ms));
+  }
+  prevWeek(year, week): { year: number, week: number } {
+    return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 7 * this.day_ms));
   }
 }

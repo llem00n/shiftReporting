@@ -9,11 +9,13 @@ import { DateService } from 'src/app/services/date.service';
 })
 export class WeekGridComponent implements OnChanges {
   @Input() schedules: Schedule[];
+  @Input() week: number;
+  @Input() year: number;
   // @ViewChild('contentCalendar', { read: ElementRef, static: false }) elementView: ElementRef;
 
   scheduleWeekList;
   startWeekDate = this.dateService.lastMonday();
-  weekNum = this.dateService.getWeekNum()
+  // weekNum = this.dateService.getWeekNum()
   daysOfWeek = this.dateService.daysOfWeek;
   hours = new Array(24)
 
@@ -22,13 +24,8 @@ export class WeekGridComponent implements OnChanges {
     private dateService: DateService
   ) { }
 
-
-
   ngOnChanges(): void {
-    // setTimeout(i => console.log(this.elementView), 2000)
-
-
-    this.startWeekDate = this.dateService.lastMonday(new Date(2020, 0, 1))
+    this.startWeekDate = this.dateService.getMonday(this.year, this.week)
     this.scheduleWeekList = this.createScheduleWeekList(this.startWeekDate);
   }
   createScheduleWeekList(startDay: Date) {
@@ -45,7 +42,6 @@ export class WeekGridComponent implements OnChanges {
         schedule[key] && list[dayNum].shifts.push(schedule);
       })
     });
-    // console.log(list);
     return list
   }
   getPos(schedule: Schedule): {} {
@@ -53,13 +49,11 @@ export class WeekGridComponent implements OnChanges {
     const dayMins = 24 * 60;
     const startTime = getMinutes(schedule.startTime);
     const endTime = getMinutes(schedule.endTime) || dayMins;
-    console.log(startTime, endTime);
     const height = `calc(100% / ${dayMins} * ${endTime - startTime})`
     const top = `calc(100% / ${dayMins} * ${startTime})`
     return {
       height,
       top
     }
-
   }
 }

@@ -1,3 +1,15 @@
-<div class="h-full">
-  <app-week-grid [schedules]="schedules"></app-week-grid>
+<div *ngIf="week && year" class="flex flex-col h-full">
+  <div class="">
+    <span>{{week}} </span>
+    <span>/ {{date}}</span>
+    <span>/ {{year}}</span>
+    <app-week-selector [week]='week' [year]='year' (changeWeek)="setWeek($event)"></app-week-selector>
+    <!-- <p>week-grid works!</p> -->
+    <!-- <p *ngIf="elementView">{{elementView.nativeElement.offsetHeight}}</p> -->
+    <!-- <p>{{weekNum}}</!-->
+    <!-- <p>{{startWeekDate}}</p> -->
+  </div>
+  <div class="flex-1">
+    <app-week-grid [schedules]="schedules" [week]='week' [year]='year'></app-week-grid>
+  </div>
 </div>
