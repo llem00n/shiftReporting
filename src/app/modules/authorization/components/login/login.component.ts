@@ -15,11 +15,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   login(role, name) {
-    // console.log(role);
-    this.authService.isLoggedIn = true;
-    this.authService.setCurrentUser({
-      name,
-      role
-    })
+    console.log(role);
+    // this.authService.isLoggedIn = true;
+    // this.authService.setCurrentUser({
+    // name,
+    // role
+    // })
   }
 }

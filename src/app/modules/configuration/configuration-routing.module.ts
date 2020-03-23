@@ -6,6 +6,7 @@ import { ConfigShiftComponent } from './components/config-shift/config-shift.com
 import { ConfigScheduleComponent } from './components/config-schedule/config-schedule.component';
 import { ConfigTemplateComponent } from './components/config-template/config-template.component';
 import { ConfigPlantsComponent } from '../plants/components/config-plants/config-plants.component';
+import { UsersConfigComponent } from '../users/components/users-config/users-config.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
           {path: 'shifts', component: ConfigShiftComponent},
           {path: 'schedules', component: ConfigScheduleComponent},
           {path: 'templates', component: ConfigTemplateComponent},
+          {path: 'users', component: UsersConfigComponent},
         ]
       }
     ]

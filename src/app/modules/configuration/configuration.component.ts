@@ -4,6 +4,7 @@ import { ConfigDepartmentsComponent } from './components/config-departments/conf
 import { ConfigShiftComponent } from './components/config-shift/config-shift.component';
 import { ConfigScheduleComponent } from './components/config-schedule/config-schedule.component';
 import { ConfigTemplateComponent } from './components/config-template/config-template.component';
+import { UsersConfigComponent } from '../users/components/users-config/users-config.component';
 
 @Component({
   selector: 'app-configuration',
@@ -22,6 +23,7 @@ export class ConfigurationComponent {
     { key: 'shifts', component: ConfigShiftComponent, title: 'Shifts', isShow: false },
     { key: 'schedules', component: ConfigScheduleComponent, title: 'Schedule', isShow: false },
     { key: 'templates', component: ConfigTemplateComponent, title: 'Template', isShow: false },
+    { key: 'users', title: 'Users' },
   ];
   showItemPanel(key) {
     this.isShow = this.isShow === key ? null : key;

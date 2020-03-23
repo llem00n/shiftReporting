@@ -19,6 +19,7 @@ import { DialogModule } from './modules/dialog/dialog.module';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { PlantsModule } from './modules/plants/plants.module';
 import { CalendarModule } from './modules/calendar/calendar.module';
+import { UsersModule } from './modules/users/users.module';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CalendarModule } from './modules/calendar/calendar.module';
     DialogModule,
     AuthorizationModule,
     PlantsModule,
-    CalendarModule
+    CalendarModule,
+    UsersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
