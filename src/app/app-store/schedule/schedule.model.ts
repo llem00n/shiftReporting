@@ -4,7 +4,7 @@ export class Schedule {
   shiftId: number = null;
   startTime: string = null;
   endTime: string = null;
-  recurEveryWeeks: number = null;
+  recurEveryWeeks: number = 1;
   monday: boolean = false;
   tuesday: boolean = false;
   wednesday: boolean = false;
@@ -14,6 +14,8 @@ export class Schedule {
   sunday: boolean = false;
   shiftName: string = null;
   shiftDescription: string = null;
+  validFromDate: string = null;
+  validToDate: string = null;
 
   constructor(opt: {} = {}) {
     Object.keys(opt).map(key => {

@@ -8,6 +8,7 @@ import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model'
 import { DynTextarea } from '../dynamic-controls/components/dyn-textarea/dyn-textarea.model';
 import { DialogService } from '../dialog/dialog.service';
 import { DateService } from 'src/app/services/date.service';
+import { DynDate } from '../dynamic-controls/components/dyn-date/dyn-date.model';
 
 @Component({
   selector: 'app-schedule',
@@ -27,6 +28,8 @@ export class ScheduleComponent implements OnInit {
 
   ]
   generalConfig = [
+    new DynDate({ controlId: 'validFromDate', label: 'Valid from date', validators: { required: true } }),
+    new DynDate({ controlId: 'validToDate', label: 'Valid to date', validators: { required: true } }),
     new DynTime({ controlId: 'startTime', label: 'Start time', validators: { required: true } }),
     new DynTime({ controlId: 'endTime', label: 'End time', validators: { required: true } }),
     new DynNumber({ controlId: 'recurEveryWeeks', label: 'Recur Every Weeks', min: 1, max: 15, step: 1, validators: { required: true } }),
