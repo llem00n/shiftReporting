@@ -11,12 +11,14 @@ const routes: Routes = [
   {
     path: 'configuration',
     loadChildren: () => import('./modules/configuration/configuration.module').then(m => m.ConfigurationModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: 'template', component: TemplateComponent },
   { path: 'schedule', component: ScheduleComponent },
   { path: 'dataentry', component: DataEntryComponent },
-  { path: 'calendar', component: CalendarComponent },
+  {
+    path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]
+  },
   { path: '', redirectTo: 'configuration', pathMatch: 'full' },
   // { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];

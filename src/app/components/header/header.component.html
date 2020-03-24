@@ -10,6 +10,6 @@
   <div class="flex ">
     <svg-icon *ngIf="user" src="assets/svg_icons/account.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>
     <svg-icon *ngIf="!user" src="assets/svg_icons/account-cancel.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>
-    <p *ngIf="user">User: {{user.login}}</p>
+    <p *ngIf="user">{{user.login}}</p>
   </div>
 </div>

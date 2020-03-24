@@ -1,11 +1,6 @@
 <p>Login as...</p>
 <div class="p-4 w-64">
-  <div class="cursor-default p-1 bg-gray-500 m-1" (click)="login('admin','Admin')">Admin</div>
-  <div class="cursor-default p-1 bg-gray-500 m-1" (click)="login('plantMgr', 'Plant manager')">Plant manager</div>
-  <div class="cursor-default p-1 bg-gray-500 m-1" (click)="login('departmentMgr', 'Department manager')">Department
-    manager</div>
-  <div class="cursor-default p-1 bg-gray-500 m-1" (click)="login('shiftMgr', 'Shift manager')">Shift manager</div>
-  <div class="cursor-default p-1 bg-gray-500 m-1" (click)="login('reader', 'Reader')">Reader</div>
-  <div class="cursor-default p-1 bg-gray-500 m-1" (click)="login('operator', 'Shift Head Operator')">Shift Head Operator
+  <div *ngFor="let user of users" class="cursor-default p-1 bg-gray-500 m-1" (click)="login(user)">
+    {{user.login}}
   </div>
 </div>

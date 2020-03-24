@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../../authorization.service';
+import { State, User } from '@models/*';
+import { Store, select } from '@ngrx/store';
+import { UserActions } from '@actions/*';
+import { allUsers } from 'src/app/app-store';
 
 @Component({
   selector: 'app-login',
@@ -7,19 +11,25 @@ import { AuthorizationService } from '../../authorization.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  users: User[] = [];
   constructor(
-    private authService: AuthorizationService
+    private authService: AuthorizationService,
+    private store: Store<State>
   ) { }
 
   ngOnInit(): void {
+    this.getUsers()
   }
-  login(role, name) {
-    console.log(role);
-    // this.authService.isLoggedIn = true;
-    // this.authService.setCurrentUser({
-    // name,
-    // role
-    // })
+
+  getUsers() {
+    this.store.dispatch(UserActions.getAllUsers())
+    this.store.pipe(
+      select(allUsers)
+    ).subscribe(users => this.users = users)
+  }
+
+  login(user: User) {
+    this.authService.isLoggedIn = true;
+    this.authService.setCurrentUser(user)
   }
 }
