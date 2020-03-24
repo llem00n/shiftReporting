@@ -17,6 +17,8 @@ import { DynTime } from './dyn-time/dyn-time.model';
 import { DynTextarea } from './dyn-textarea/dyn-textarea.model';
 import { DynLabelComponent } from './dyn-label/dyn-label.component';
 import { DynLabel } from './dyn-label/dyn-label.model';
+import { DynDate } from './dyn-date/dyn-date.model';
+import { DynDateComponent } from './dyn-date/dyn-date.component';
 
 export const dynComponents = {
   get: function (type) { return this[type].component },
@@ -34,5 +36,6 @@ export const dynComponents = {
   textarea: { component: DynTextareaComponent, title: 'Textarea', model: DynTextarea },
   color: { component: DynColorComponent, title: 'Color', model: DynColor },
   label: { component: DynLabelComponent, title: 'Label', model: DynLabel },
+  date: { component: DynDateComponent, title: 'Date', model: DynDate },
 }
 

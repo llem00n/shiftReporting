@@ -72,6 +72,7 @@ ng g c modules/dynamic-controls/components/DynSelect
 ng g c modules/dynamic-controls/components/DynTextarea
 ng g c modules/dynamic-controls/components/DynColor
 ng g c modules/dynamic-controls/components/DynLabel
+ng g c modules/dynamic-controls/components/DynDate
 
 module DataEntry
 ng g m modules/DataEntry -m app
