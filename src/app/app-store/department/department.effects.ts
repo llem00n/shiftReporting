@@ -45,6 +45,13 @@ export class DepartmentEffects {
       }))
     )),
   ));
+  getUserDepartments$ = createEffect(() => this.actions$.pipe(
+    ofType(DepartmentActions.getUserDepartments),
+    mergeMap(action => this.departmentHttpService.getUserDepartments(action.userId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DepartmentActions.getUserDepartmentsSucces({ departments: resp.body })),
+    )),
+  ))
 
 
   constructor(

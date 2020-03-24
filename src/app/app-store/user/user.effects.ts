@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UserActions } from '@actions/*';
+import { UserActions, DepartmentActions } from '@actions/*';
 import { mergeMap, filter, map, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { UserHttpService } from './user-http.service';
@@ -65,6 +65,21 @@ export class UserEffects {
     mergeMap(action => this.userHttpService.deleteUserRole(action.userId, action.roleId).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => UserActions.getUserRoles({ userId: action.userId }))
+    )),
+  ));
+
+  addUserDepartment$ = createEffect(() => this.actions$.pipe(
+    ofType(UserActions.addUserDepartment),
+    mergeMap(action => this.userHttpService.addUserDepartment(action.userId, action.departmentId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DepartmentActions.getUserDepartments({ userId: action.userId }))
+    )),
+  ));
+  deleteUserDepartment$ = createEffect(() => this.actions$.pipe(
+    ofType(UserActions.deleteUserDepartment),
+    mergeMap(action => this.userHttpService.deleteUserDepartment(action.userId, action.departmentId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DepartmentActions.getUserDepartments({ userId: action.userId }))
     )),
   ));
 

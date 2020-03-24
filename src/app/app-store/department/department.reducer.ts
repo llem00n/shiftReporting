@@ -7,6 +7,7 @@ export const departmentsFeatureKey = 'departments';
 
 export interface State extends EntityState<Department> {
   // additional entities state properties
+  userDepartments: Department[];
 }
 
 export const adapter: EntityAdapter<Department> = createEntityAdapter<Department>({
@@ -15,6 +16,7 @@ export const adapter: EntityAdapter<Department> = createEntityAdapter<Department
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
+  userDepartments: [],
 });
 
 const departmentReducer = createReducer(
@@ -22,33 +24,22 @@ const departmentReducer = createReducer(
   on(DepartmentActions.addDepartmentSucces,
     (state, action) => adapter.addOne(action.department, state)
   ),
-  // on(DepartmentActions.upsertDepartment,
-  //   (state, action) => adapter.upsertOne(action.department, state)
-  // ),
-  // on(DepartmentActions.addDepartments,
-  //   (state, action) => adapter.addMany(action.departments, state)
-  // ),
-  // on(DepartmentActions.upsertDepartments,
-  //   (state, action) => adapter.upsertMany(action.departments, state)
-  // ),
   on(DepartmentActions.updateDepartmentSuccess,
     (state, action) => adapter.updateOne(action.department, state)
   ),
-  // on(DepartmentActions.updateDepartments,
-  //   (state, action) => adapter.updateMany(action.departments, state)
-  // ),
   on(DepartmentActions.deleteDepartmentSucces,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  // on(DepartmentActions.deleteDepartments,
-  //   (state, action) => adapter.removeMany(action.ids, state)
-  // ),
   on(DepartmentActions.loadDepartmentsSuccess,
     (state, action) => adapter.addAll(action.departments, state)
   ),
   on(DepartmentActions.clearDepartments,
     state => adapter.removeAll(state)
   ),
+  on(DepartmentActions.getUserDepartmentsSucces,
+    (state, { departments }) => ({ ...state, userDepartments: departments })
+  ),
+
 );
 
 export function reducer(state: State | undefined, action: Action) {

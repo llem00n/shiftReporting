@@ -78,5 +78,13 @@ export class DepartmentHttpService {
 
     return this.httpService.post<AppHttpResponse>(options)
   }
+  getUserDepartments(userId: number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getUserDepartments',
+      loadingMsg: "Loading user's departments ...",
+      payload: { userId }
+    }
+    return this.httpService.post<AppHttpResponse>(options)
+  }
 
 }

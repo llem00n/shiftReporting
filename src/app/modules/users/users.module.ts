@@ -7,11 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { FormModule } from '../form/form.module';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
+import { UserDepartmentsComponent } from './components/user-departments/user-departments.component';
 
 
 
 @NgModule({
-  declarations: [UserCardComponent, UserFormComponent, UsersConfigComponent, UserRolesComponent],
+  declarations: [UserCardComponent, UserFormComponent, UsersConfigComponent, UserRolesComponent, UserDepartmentsComponent],
   imports: [
     HttpClientModule,
     AngularSvgIconModule.forRoot(),

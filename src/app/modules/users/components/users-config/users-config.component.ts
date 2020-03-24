@@ -6,6 +6,7 @@ import { UserActions } from '@actions/*';
 import { DialogService } from 'src/app/modules/dialog/dialog.service';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserRolesComponent } from '../user-roles/user-roles.component';
+import { UserDepartmentsComponent } from '../user-departments/user-departments.component';
 
 @Component({
   selector: 'app-users-config',
@@ -45,12 +46,11 @@ export class UsersConfigComponent implements OnInit {
     this.openDialogEdit(user)
   }
   setRoles(userId) {
-    const dialogRef = this.dialogService.open(UserRolesComponent, userId)
-    // dialogRef.afterClosed().subscribe(console.log)
+    this.dialogService.open(UserRolesComponent, userId)
   }
   
-  setDepartments(id) {
-    console.log(id);
+  setDepartments(userId) {
+    this.dialogService.open(UserDepartmentsComponent, userId)
   }
 
   openDialogEdit(data) {

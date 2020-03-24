@@ -26,7 +26,6 @@ export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
   preConfig = [
     new DynSelect({
       controlId: 'plantId',
-      type: 'select',
       label: 'Plant',
       validators: { required: true },
       options: [],
