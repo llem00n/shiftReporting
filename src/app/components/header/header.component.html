@@ -7,9 +7,13 @@
       <a class="cursor-default p-2" [routerLink]="['/calendar']"
       routerLinkActive="bg-gray-600 text-gray-100">Calendar</a>
   </nav>
-  <div class="flex ">
+  <div class="flex items-center">
     <svg-icon *ngIf="user" src="assets/svg_icons/account.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>
     <svg-icon *ngIf="!user" src="assets/svg_icons/account-cancel.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>
     <p *ngIf="user">{{user.login}}</p>
+    <button *ngIf="user" class="pl-2 focus:outline-none" (click)="logout()">
+      <svg-icon  src="assets/svg_icons/logout.svg" [svgStyle]="{ 'width.px':24 }"></svg-icon>
+    </button>
+
   </div>
 </div>

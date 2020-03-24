@@ -17,7 +17,7 @@ export class AuthorizationService {
   constructor(
     private router: Router,
   ) { }
-  
+
   setCurrentUser(user: User): void {
     // console.log(this.redirectUrl);
     this.currentUser.next(user);
@@ -26,5 +26,10 @@ export class AuthorizationService {
 
   getCurrentUser(): Observable<User> {
     return this.currentUser.asObservable();
+  }
+  logout() {
+    this.currentUser.next(null);
+    this.isLoggedIn = false;
+    this.router.navigate(['/login'])
   }
 }
