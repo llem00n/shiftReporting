@@ -14,11 +14,8 @@ import { FormModule } from '../form/form.module';
   declarations: [PlantCardComponent, ConfigPlantsComponent, PlantFormComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
     AngularSvgIconModule.forRoot(),
     FormModule
-    // DialogModule
-
   ],
   exports: [
     PlantCardComponent, ConfigPlantsComponent

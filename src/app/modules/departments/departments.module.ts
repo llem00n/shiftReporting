@@ -10,7 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [SelectUserDepartmentComponent],
   imports: [
-    HttpClientModule,
     AngularSvgIconModule.forRoot(),
     CommonModule,
     ReactiveFormsModule

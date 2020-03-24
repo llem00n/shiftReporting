@@ -13,7 +13,6 @@ import { DepartmentsModule } from '../departments/departments.module';
   declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent],
   imports: [
     CommonModule,
-    HttpClientModule,
     AngularSvgIconModule.forRoot(),
     DepartmentsModule
   ]
