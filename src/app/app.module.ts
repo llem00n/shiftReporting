@@ -20,6 +20,7 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
 import { PlantsModule } from './modules/plants/plants.module';
 import { CalendarModule } from './modules/calendar/calendar.module';
 import { UsersModule } from './modules/users/users.module';
+import { DepartmentsModule } from './modules/departments/departments.module';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { UsersModule } from './modules/users/users.module';
     AuthorizationModule,
     PlantsModule,
     CalendarModule,
-    UsersModule
+    UsersModule,
+    DepartmentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

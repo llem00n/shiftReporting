@@ -22,11 +22,11 @@ export class WeekSelectorComponent implements OnChanges {
     this.weekStr = this.dateService.getWeekString(this.year, this.week);
   }
 
-  nextWeek() {    
+  nextWeek() {
     const week = this.dateService.nextWeek(this.year, this.week);
     console.log(this.dateService.nextWeek(2020, 43));
-    
-    this.changeWeek.emit(week)    
+
+    this.changeWeek.emit(week)
   }
 
   prevWeek() {

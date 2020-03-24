@@ -15,7 +15,7 @@ export class CalendarComponent implements OnInit {
   date: Date;
   week: number;
   year: number;
-  departmentId = 2;
+  departmentId = null;
   weekYear: { year: number, week: number };
 
   constructor(
@@ -32,7 +32,7 @@ export class CalendarComponent implements OnInit {
   }
 
   getSchedules() {
-    this.store.dispatch(ScheduleActions.getSchedules({ departmentId: this.departmentId }))
+    // this.store.dispatch(ScheduleActions.getSchedules({ departmentId: this.departmentId }))
     this.store.pipe(
       select(allSchedules)
     ).subscribe(schedules => this.schedules = schedules)
@@ -41,4 +41,8 @@ export class CalendarComponent implements OnInit {
     this.week = e.week;
     this.year = e.year;
   }
+  changeDepartment(e) {
+    this.store.dispatch(ScheduleActions.getSchedules({ departmentId: e.departmentId }))
+  }
+
 }

@@ -5,6 +5,7 @@ import { WeekGridComponent } from './components/week-grid/week-grid.component';
 import { WeekSelectorComponent } from './components/week-selector/week-selector.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { DepartmentsModule } from '../departments/departments.module';
 
 
 
@@ -14,7 +15,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     CommonModule,
     HttpClientModule,
     AngularSvgIconModule.forRoot(),
-
+    DepartmentsModule
   ]
 })
 export class CalendarModule { }

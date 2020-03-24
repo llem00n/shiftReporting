@@ -109,3 +109,6 @@ ng g c modules/users/components/usersConfig
 ng g c modules/users/components/userDepartments
 ng g c modules/users/components/userRoles
 
+module departments
+ng g m modules/departments -m app
+ng g c modules/departments/components/selectUserDepartment

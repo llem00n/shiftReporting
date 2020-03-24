@@ -1,0 +1,10 @@
+<label class="text-gray-800">Department:</label>
+<div class="relative inline-block">
+  <select [formControl]="department" class="bg-transparent appearance-none px-2 pr-8 focus:outline-none" [ngClass]="{'text-gray-600': !department.value}">
+    <option class="text-gray-600" disabled value="null">select department...</option>
+    <option  *ngFor="let opt of departments" class="text-black" [value]="opt.departmentId">{{opt.name}}</option>
+  </select>
+  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+    <svg-icon src="assets/svg_icons/chevron-down.svg" [svgStyle]="{ 'width.px':24}"> </svg-icon>
+  </div>
+</div>

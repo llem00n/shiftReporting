@@ -1,15 +1,3 @@
-<div class="flex justify-between px-4 py-2">
-  <div>
-    <label class="text-gray-700">Department:</label>
-    <div class="relative inline-block">
-      <select class="bg-transparent appearance-none text-gray-800 px-2 pr-8 focus:outline-none">
-        <option value="">opt 1</option>
-      </select>
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-        <svg-icon src="assets/svg_icons/chevron-down.svg" [svgStyle]="{ 'width.px':24}"> </svg-icon>
-      </div>
-    </div>
-  </div>
   <div class="flex">
     <p class="px-2">Week: {{week}} ({{weekStr}})</p>
     <button class="focus:outline-none" (click)="prevWeek()">
@@ -18,7 +6,5 @@
     <button class="focus:outline-none" (click)="nextWeek()">
       <svg-icon src="assets/svg_icons/arrow-right.svg" [svgStyle]="{ 'width.px':24}"> </svg-icon>
     </button>
-
     <!-- <svg-icon src="assets/svg_icons/chevron-down.svg" [svgStyle]="{ 'width.px':24}"> </svg-icon> -->
   </div>
-</div>
