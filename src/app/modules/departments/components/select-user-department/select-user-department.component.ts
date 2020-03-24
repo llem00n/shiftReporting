@@ -14,7 +14,6 @@ import { FormControl } from '@angular/forms';
 })
 export class SelectUserDepartmentComponent implements OnInit {
   @Output() changeDepartment = new EventEmitter<Department>()
-  currentUser: User;
   department = new FormControl(null);
   departments: Department[]
   constructor(
@@ -23,16 +22,18 @@ export class SelectUserDepartmentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.select(userDepartments).subscribe(dep => this.departments = dep);
+    this.store.select(userDepartments).subscribe(dep => {
+      this.departments = dep;
+      dep.length == 1 && this.department.setValue(dep[0].departmentId);
+    });
     this.authService.getCurrentUser()
       .pipe(
-        tap(user => this.currentUser = user),
         tap(({ userId }) => this.store.dispatch(DepartmentActions.getUserDepartments({ userId })))
       ).subscribe()
-      this.department.valueChanges.subscribe(val => {
-        const dep = this.departments.find(d => d.departmentId == val);
-        this.changeDepartment.emit(dep);
-      })
+    this.department.valueChanges.subscribe(val => {
+      const dep = this.departments.find(d => d.departmentId == val);
+      this.changeDepartment.emit(dep);
+    })
   }
 
 }
