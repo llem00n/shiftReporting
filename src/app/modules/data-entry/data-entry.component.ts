@@ -69,7 +69,6 @@ export class DataEntryComponent implements OnInit {
       });
       group.addControl(i.controlId, new FormControl(this.setValue(i, this.values), validators));
     });
-    console.log(group);
     return group;
   }
 
@@ -87,7 +86,6 @@ export class DataEntryComponent implements OnInit {
   }
 
   goBack() {
-    console.log('goBack')
   }
   addDataEntry() {
     const dataEntry: DataEntry = JSON.parse(JSON.stringify(this.dataEntry))

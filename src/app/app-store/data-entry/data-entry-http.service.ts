@@ -12,7 +12,6 @@ export class DataEntryHttpService {
   constructor(private httpService: HttpService) { }
 
   addDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
-    console.log(dataEntry);
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addDataEntry',
       payload: { dataEntry },

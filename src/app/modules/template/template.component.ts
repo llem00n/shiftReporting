@@ -125,7 +125,6 @@ export class TemplateComponent implements OnInit {
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
     template.lastUpdated = this.getCurternDateLocal();
-    // console.log(JSON.stringify(template));
     if (this.departmentId) {
       const departmentId = this.departmentId;
       this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
