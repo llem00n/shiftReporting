@@ -31,7 +31,7 @@ export class DataEntryEffects {
 
   getDataEntriesOnDate$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.getDataEntriesOnDate),
-    mergeMap(({ shiftId, fromDate, toDate }) => this.dataEntryHttpService.getDataEntriesOnDate(shiftId, fromDate, toDate).pipe(
+    mergeMap(({ departmentId, fromDate, toDate }) => this.dataEntryHttpService.getDataEntriesOnDate(departmentId, fromDate, toDate).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.getDataEntriesOnDateSuccess({ dataEntries: resp.body }))
     )),

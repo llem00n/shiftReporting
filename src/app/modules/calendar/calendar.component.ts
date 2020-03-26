@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Schedule, State } from '@models/*';
-import { ScheduleActions } from '@actions/*';
+import { ScheduleActions, TemplateActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
 import { allSchedules } from 'src/app/app-store';
 import { DateService } from 'src/app/services/date.service';
@@ -32,7 +32,6 @@ export class CalendarComponent implements OnInit {
   }
 
   getSchedules() {
-    // this.store.dispatch(ScheduleActions.getSchedules({ departmentId: this.departmentId }))
     this.store.pipe(
       select(allSchedules)
     ).subscribe(schedules => this.schedules = schedules)
@@ -43,6 +42,7 @@ export class CalendarComponent implements OnInit {
   }
   changeDepartment(e) {
     this.store.dispatch(ScheduleActions.getSchedules({ departmentId: e.departmentId }))
+    this.store.dispatch(TemplateActions.getTemplates({ departmentId: e.departmentId }))
   }
 
 }

@@ -30,8 +30,13 @@ export class DataEntryHttpService {
     return of(null)
   }
 
-  getDataEntriesOnDate(shiftID: number, fromDate: string, toDate: string): Observable<AppHttpResponse> {
-    return of(null)
+  getDataEntriesOnDate(departmentId: number, fromDate: string, toDate: string): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDataEntriesOnDate',
+      payload: { departmentId, fromDate, toDate },
+      loadingMsg: 'Loading data entries ...',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
   }
 
   updateDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
