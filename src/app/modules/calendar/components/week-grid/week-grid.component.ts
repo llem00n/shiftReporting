@@ -62,12 +62,14 @@ export class WeekGridComponent implements OnChanges {
           list[dayNum].shifts.push(shift);
         } else {
           list[dayNum].shifts.push({
+            part: 1,
             schedule,
             position: this.getPos(schedule)[0],
             elClass
           });
 
           list[dayNum === 7 ? 1 : dayNum + 1].shifts.push({
+            part: 2,
             schedule,
             position: this.getPos(schedule)[1],
             elClass

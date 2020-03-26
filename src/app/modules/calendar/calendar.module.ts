@@ -6,11 +6,12 @@ import { WeekSelectorComponent } from './components/week-selector/week-selector.
 import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { DepartmentsModule } from '../departments/departments.module';
+import { TemplatesListComponent } from './components/templates-list/templates-list.component';
 
 
 
 @NgModule({
-  declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent],
+  declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent, TemplatesListComponent],
   imports: [
     CommonModule,
     AngularSvgIconModule.forRoot(),

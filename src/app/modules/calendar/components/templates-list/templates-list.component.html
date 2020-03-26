@@ -1,0 +1,8 @@
+<div *ngFor="let template of templates " class="truncate flex cursor-pointer">
+
+  <svg-icon src="assets/svg_icons/check-circle-outline.svg" [svgStyle]="{ 'width': '1rem', 'fill': 'green'}"> </svg-icon>
+  <svg-icon src="assets/svg_icons/checkbox-blank-circle.svg" [svgStyle]="{ 'width': '1rem', 'fill': 'red'}"> </svg-icon>
+  <svg-icon src="assets/svg_icons/lock.svg" [svgStyle]="{ 'width': '1rem', 'fill': 'grey'}"> </svg-icon>
+  <p> {{template.name}}</p>
+
+</div>

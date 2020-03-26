@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Schedule, State } from '@models/*';
-import { ScheduleActions, TemplateActions } from '@actions/*';
+import { Schedule, State, DataEntry } from '@models/*';
+import { ScheduleActions, TemplateActions, DataEntryActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
 import { allSchedules } from 'src/app/app-store';
 import { DateService } from 'src/app/services/date.service';
@@ -17,6 +17,7 @@ export class CalendarComponent implements OnInit {
   year: number;
   departmentId = null;
   weekYear: { year: number, week: number };
+  weekDataEntries: DataEntry[];
 
   constructor(
     private store: Store<State>,
@@ -40,9 +41,18 @@ export class CalendarComponent implements OnInit {
     this.week = e.week;
     this.year = e.year;
   }
+
   changeDepartment(e) {
-    this.store.dispatch(ScheduleActions.getSchedules({ departmentId: e.departmentId }))
-    this.store.dispatch(TemplateActions.getTemplates({ departmentId: e.departmentId }))
+    const date = this.dateService.getWeekJSON(this.year, this.week);
+    console.log(date);  
+    this.store.dispatch(ScheduleActions.getSchedules({ departmentId: e.departmentId }));
+    this.store.dispatch(TemplateActions.getTemplates({ departmentId: e.departmentId }));
+    this.store.dispatch(DataEntryActions.getDataEntriesOnDate({
+      departmentId: e.departmentId,
+      fromDate: date.from,
+      toDate: date.to
+    }))
   }
 
+  getWee
 }

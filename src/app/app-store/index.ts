@@ -71,5 +71,7 @@ export const allUsers = createSelector(userState, fromUser.selectAll);
 export const roles = createSelector(userState, (state) => state.roles);
 export const userRoles = createSelector(userState, (state) => state.userRoles);
 
-
+// dataEntry
+export const dataEntryState = createFeatureSelector<fromDataEntry.State>('dataEntry');
+export const dataEntriesOnDate = createSelector(dataEntryState, (state) => state.dataEntriesOnDate);
 

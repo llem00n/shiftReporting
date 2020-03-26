@@ -87,4 +87,19 @@ export class DateService {
   prevWeek(year, week): { year: number, week: number } {
     return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 8 * this.day_ms));
   }
+
+  dateLocalJSON(date: Date): string {
+    return new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000).toJSON().slice(0, 23);
+  }
+
+  getWeekJSON(year: number, week: number): { from: string, to: string } {
+
+    // const toWeek = this.nextWeek(year, week);
+    // const toMonday = this.getMonday(toWeek.year, toWeek.week);
+    const result = {
+      from: this.dateLocalJSON(new Date(this.getMonday(year, week).valueOf() - this.day_ms)),
+      to: this.dateLocalJSON(new Date(this.getMonday(year, week).valueOf() + 8 * this.day_ms)),
+    }
+    return result
+  }
 }
