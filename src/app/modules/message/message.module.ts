@@ -7,12 +7,14 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { MessageComponent } from './message.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 
 
 @NgModule({
   declarations: [LoadingComponent, MessageComponent, ErrorComponent, AlertComponent],
   imports: [
+    AngularSvgIconModule.forRoot(),
     CommonModule,
   ],
   exports: [
