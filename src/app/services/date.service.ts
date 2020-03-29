@@ -40,7 +40,8 @@ export class DateService {
   lastMonday(date?: Date): Date {
     const d = date ? new Date(date) : new Date();
     d.setHours(0, 0, 0);
-    return new Date(d.valueOf() - (d.getDay() - 1) * this.day_ms);
+    d.setDate(d.getDate() - ((d.getDay() || 7) - 1));
+    return d;
   }
 
   getMonday(year: number, week: number): Date {
@@ -68,10 +69,7 @@ export class DateService {
 
   getWeekString(year: number, week: number): string {
     const monday = this.getMonday(year, week).toDateString();
-
     const sunday = new Date(new Date(monday).valueOf() + 6 * this.day_ms).toDateString()
-
-
     const result = `
     ${monday.slice(4, 10)} 
     ${monday.slice(11) !== sunday.slice(11) ? monday.slice(11) : ''} - 
@@ -85,7 +83,7 @@ export class DateService {
     return this.getWeek(new Date(this.getMonday(year, week).valueOf() + 8 * this.day_ms));
   }
   prevWeek(year, week): { year: number, week: number } {
-    return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 8 * this.day_ms));
+    return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 1 * this.day_ms));
   }
 
   dateLocalJSON(date: Date): string {
@@ -93,13 +91,28 @@ export class DateService {
   }
 
   getWeekJSON(year: number, week: number): { from: string, to: string } {
-
-    // const toWeek = this.nextWeek(year, week);
-    // const toMonday = this.getMonday(toWeek.year, toWeek.week);
     const result = {
       from: this.dateLocalJSON(new Date(this.getMonday(year, week).valueOf() - this.day_ms)),
       to: this.dateLocalJSON(new Date(this.getMonday(year, week).valueOf() + 8 * this.day_ms)),
     }
     return result
+  }
+
+  getCurternDateLocal(): string {
+    const curternDateUTC = new Date()
+    return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
+  }
+
+  isBetween(date, start, end): boolean {
+    const d = new Date(date).valueOf();
+    const s = new Date(start).valueOf();
+    const e = new Date(end).valueOf();
+    return (d >= s) && (d <= e) ? true : false;
+  }
+
+  getWeeks(date: Date | string, from: Date | string): number {
+    const d = new Date(date);
+    const f = new Date(from);
+    return Math.round((this.lastMonday(d).valueOf() - this.lastMonday(f).valueOf()) / (this.day_ms)) / 7
   }
 }
