@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 import { User, State, Department } from '@models/*';
-import { tap } from 'rxjs/operators';
+import { tap, filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { DepartmentActions } from '@actions/*';
 import { userDepartments } from 'src/app/app-store';
@@ -28,6 +28,7 @@ export class SelectUserDepartmentComponent implements OnInit {
     });
     this.authService.getCurrentUser()
       .pipe(
+        filter(data => !!data),
         tap(({ userId }) => this.store.dispatch(DepartmentActions.getUserDepartments({ userId })))
       ).subscribe()
     this.department.valueChanges.subscribe(val => {
