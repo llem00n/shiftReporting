@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { tap, mergeMap, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { DateService } from 'src/app/services/date.service';
+import { DataEntryActions } from '@actions/*';
 
 @Component({
   selector: 'app-templates-list',
@@ -42,7 +43,6 @@ export class TemplatesListComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.data$.unsubscribe();
-    // this.dataEntries$.unsubscribe();
   }
   getData() {
     this.data$ = this.store.pipe(
@@ -62,8 +62,8 @@ export class TemplatesListComponent implements OnInit {
   createData(data: { templates: Template[], dataEntries: DataEntry[] }) {
     let startDate = new Date(this.dateService.dateLocalJSON(this.day.value.date).slice(0, 11) + this.shift.schedule.startTime);
     let endDate = new Date(this.dateService.dateLocalJSON(this.day.value.date).slice(0, 11) + this.shift.schedule.endTime);
-    if (this.shift.part === 1) endDate = new Date(endDate.setDate(endDate.getDate() + 1))
-    if (this.shift.part === 2) startDate = new Date(startDate.setDate(endDate.getDate() - 1))
+    if (this.shift.part === 1) endDate = new Date(endDate.setDate(endDate.getDate() + 1));
+    if (this.shift.part === 2) startDate = new Date(startDate.setDate(endDate.getDate() - 1));
     const templates = data.templates.map((template: Template) => {
       let dataEntry: DataEntry = null;
       // let svgIcon = this.svgIcon.missed;
@@ -83,7 +83,7 @@ export class TemplatesListComponent implements OnInit {
         template,
         dataEntry,
       };
-    })  
+    })
     this.templates = templates;
   }
 
@@ -102,15 +102,17 @@ export class TemplatesListComponent implements OnInit {
       ).subscribe()
     }
    */
-  clickTemplate(template) {
-    console.log(template);
-
-    // const dataEntry: DataEntry = new DataEntry({
-    //   scheduleId: this.shift.schedule.scheduleId,
-    //   template: template,
-    // });
-    // this.store.dispatch(DataEntryActions.setCurrentDataEntry({ dataEntry }))
-    // this.router.navigate(['dataentry'])
+  clickTemplate(item) {
+    let dataEntry: DataEntry;
+    if (item.dataEntry) {
+      dataEntry = new DataEntry(item.dataEntry)
+    } else {
+      dataEntry = new DataEntry({
+        scheduleId: this.shift.schedule.scheduleId,
+        template: item.template,
+      });
+    }
+    this.store.dispatch(DataEntryActions.setCurrentDataEntry({ dataEntry }))
+    this.router.navigate(['dataentry'])
   }
-
 }

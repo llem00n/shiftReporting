@@ -46,4 +46,7 @@ export const submitDataEntrySuccess = createAction(
   props<{ dataEntry: DataEntry }>()
 );
 
-
+export const setCurrentDataEntry = createAction(
+  '[DataEntry] Set CurrentDataEntry',
+  props<{ dataEntry: DataEntry }>()
+);

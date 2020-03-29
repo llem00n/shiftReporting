@@ -1,23 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { DataEntry, State, DynControl } from '@models/*';
+import { DataEntry, State, DynControl, User } from '@models/*';
 import { Store, select } from '@ngrx/store';
-import { editingTemplate } from 'src/app/app-store';
-import { take, switchMap, debounceTime, tap } from 'rxjs/operators';
+import { currentDataEntry } from 'src/app/app-store';
+import { take, switchMap, tap, mergeMap, map, filter } from 'rxjs/operators';
 import { GridsterOptions } from '../grid';
 import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms';
 import { DataEntryActions } from '@actions/*';
+import { AuthorizationService } from '../authorization/authorization.service';
+import { MessageService } from '../message/sevices/message.service';
+import { DateService } from 'src/app/services/date.service';
+import { DialogService } from '../dialog/dialog.service';
+import { Location } from '@angular/common';
 
-const dataEntry = {
-  "dataEntryID": null, "scheduleID": null, "createDate": null, "submitDate": null, "template": {
-    "templateId": 1002, "name": "Yehor_edition", "description": "Test template", "body": {
-      "TemplateData": {
-        // "select17097a30cfc": "test2", "checkbox17097a3170c": true, "text17097d8fa94": "qwer", "label17097d90622": null
-      }, "PIAFTemplate": {}, "PIAFAttributes": {}, "XML": [], "Excel": [], "DatabaseTable": [], "Datasource": {}, "dashboard": [{
-        "type": "select", "gridItem": { "cols": 5, "rows": 1, "x": 14, "y": 1 }, "controlId": "select17097a30cfc", "value": null, "label": "", "name": "select", "bgColor": "#ffffff", "isRemovable": true, "options": [{ "value": 'test1', "viewValue": 'test1' }, { "value": 'test2', "viewValue": 'test2' }, { "value": 'test3', "viewValue": 'test3' }], "_settings": [{ "controlId": "placeholder", "label": "Placeholder", "type": "text" }, { "controlId": "optionsString", "label": "Options", "type": "textarea" }], "placeholder": "select"
-      }, { "type": "checkbox", "gridItem": { "cols": 1, "rows": 1, "x": 0, "y": 1 }, "controlId": "checkbox17097a3170c", "value": null, "label": "", "name": "", "bgColor": "#ffffff", "isRemovable": true, "valueType": "boolean" }, { "type": "text", "gridItem": { "cols": 5, "rows": 1, "x": 6, "y": 4 }, "controlId": "text17097d8fa94", "value": null, "label": "", "name": "Name", "bgColor": "#ffffff", "isRemovable": true, "valueType": "string", "placeholder": "" }, { "type": "label", "gridItem": { "cols": 5, "rows": 1, "x": 0, "y": 4 }, "controlId": "label17097d90622", "value": "Name", "label": "", "name": "", "bgColor": "#ffffff", "isRemovable": true, "valueType": "string", "_settings": [{ "controlId": "value", "label": "Label", "type": "text" }] }], "gridsterOptions": { "minCols": 12, "minRows": 13, "bgColor": "#587e75" }
-    }, "lastUpdated": "2020-03-01T22:46:20.23", "templateTypeId": 1, "templateTypeName": "Shift template"
-  }, "submitUser": null
-};
 
 @Component({
   selector: 'app-data-entry',
@@ -32,27 +26,52 @@ export class DataEntryComponent implements OnInit {
   options: GridsterOptions = {};
   values: { [key: string]: boolean | string | number }
   form: FormGroup;
+  user: User
+  isUpdating = false;
+  isSubmitted = true;
+
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    private authService: AuthorizationService,
+    private message: MessageService,
+    private dateService: DateService,
+    private dialog: DialogService,
+    private location: Location,
+
   ) { }
 
   ngOnInit(): void {
-    this.getTemplate()
+    this.getDataEntry();
   }
-
-  getTemplate() {
+  getDataEntry() {
+    const opt = <DataEntry>{};
     this.store.pipe(
-      select(editingTemplate),
-      take(1),
-      switchMap(template => {
-        const opt = <DataEntry>{}
-        opt.template = template
-        this.dataEntry = new DataEntry(dataEntry);
-        this.dashboard = <DynControl[]>this.dataEntry.template.body.dashboard;
-        this.values = this.dataEntry.template.body.TemplateData;
+      select(currentDataEntry),
+      // take(1),
+      filter(data => {
+        if (data?.template?.body) return true;
+        this.message.alertMessage('This template has no controls. You need to set up controls to use the template');
+        return false;
+      }),
+      tap(dataEntry => Object.assign(opt, dataEntry)),
+      mergeMap(_ => this.authService.getCurrentUser()),
+      // take(1),
+      filter(data => !!data),
+      map((user: User) => {
+        opt.modifiedUserId = user.userId;
+        return opt;
+      }),
+      switchMap(opt => {
+        this.isUpdating = opt.createDate ? true : false;
+        this.isSubmitted = opt.submitDate ? true : false;
+        this.dataEntry = new DataEntry(opt);
+        this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
+        this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
+        this.options = this.dataEntry.template.body?.gridsterOptions || {};
+        this.values = this.dataEntry.template.body?.TemplateData || {};
         this.form = this.createForm(this.dashboard);
-        Object.assign(this.dataEntry.template.body.TemplateData, this.form.value)
-        return this.form.valueChanges
+        Object.assign(this.dataEntry.template.body['TemplateData'], this.form.value)
+        return this.form.valueChanges;
       }),
       tap(values => Object.assign(this.values, values))
     ).subscribe()
@@ -86,18 +105,25 @@ export class DataEntryComponent implements OnInit {
   }
 
   goBack() {
+    this.location.back()
   }
   addDataEntry() {
-    const dataEntry: DataEntry = JSON.parse(JSON.stringify(this.dataEntry))
-    delete dataEntry.dataEntryId;
-    dataEntry.createDate = this.getCurternDateLocal();
-    dataEntry.scheduleId = 11; //crutch
-    dataEntry.submitUser = 'crutch' //crutch
-    this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry }))
+    this.dataEntry.createDate = this.dateService.getCurternDateLocal();
+    this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
   }
-  getCurternDateLocal(): string {
-    const curternDateUTC = new Date()
-    return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
+
+  // getCurternDateLocal(): string {
+  //   const curternDateUTC = new Date()
+  //   return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
+  // }
+
+  updateDataEntry() {
+    this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
+  }
+
+  submitDataEntry() {    
+    this.dataEntry.submitDate = this.dateService.getCurternDateLocal();
+    this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }))
   }
 }
 

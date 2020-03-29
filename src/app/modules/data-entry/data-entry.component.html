@@ -7,10 +7,10 @@
       </svg>
       <span>{{title}}</span>
     </div>
-    <div>
-      <button class="font-bold text-xs px-2" (click)="addDataEntry()">Add</button>
-      <button class="font-bold text-xs px-2">Submit</button>
-      <button class="font-bold text-xs px-2">Update</button>
+    <div *ngIf="!isSubmitted" >
+      <button *ngIf="!isUpdating" class="font-bold text-xs px-2" (click)="addDataEntry()">Add</button>
+      <button *ngIf="isUpdating" class="font-bold text-xs px-2" (click)="updateDataEntry()">Update</button>
+      <button class="font-bold text-xs px-2" (click)="submitDataEntry()">Submit</button>
     </div>
   </header>
   <!-- Main window -->

@@ -5,13 +5,15 @@ import { DataEntry } from './data-entry.model';
 export const dataEntryFeatureKey = 'dataEntry';
 
 export interface State {
+  currentDataEntry: DataEntry,
   latestDataEntry: DataEntry,
   dataEntriesOnDate: DataEntry[],
 }
 
 export const initialState: State = {
+  currentDataEntry: null,
   latestDataEntry: null,
-  dataEntriesOnDate: null,
+  dataEntriesOnDate: [],
 };
 
 const dataEntryReducer = createReducer(
@@ -22,6 +24,9 @@ const dataEntryReducer = createReducer(
 
   on(DataEntryActions.getDataEntriesOnDateSuccess,
     (state, { dataEntries }) => ({ ...state, dataEntriesOnDate: dataEntries })),
+
+  on(DataEntryActions.setCurrentDataEntry,
+    (state, { dataEntry }) => ({ ...state, currentDataEntry: dataEntry })),
 
 );
 

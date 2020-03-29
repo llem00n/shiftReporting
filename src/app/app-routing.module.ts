@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   { path: 'template', component: TemplateComponent },
   { path: 'schedule', component: ScheduleComponent },
-  { path: 'dataentry', component: DataEntryComponent },
+  { path: 'dataentry', component: DataEntryComponent, canActivate: [AuthGuard] },
   {
     path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]
   },

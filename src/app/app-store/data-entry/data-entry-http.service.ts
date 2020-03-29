@@ -18,12 +18,7 @@ export class DataEntryHttpService {
       loadingMsg: 'Adding the dataEntry ...',
       successMsg: `DataEntry has been added`
     }
-    // return of({
-    //   status: 200,
-    //   body: Object.assign(dataEntry, {dataEntryId: Math.random()})
-    // })
     return this.httpService.post<AppHttpResponse>(options);
-
   }
 
   getLatestDataEntry(shiftID: number): Observable<AppHttpResponse> {
@@ -40,10 +35,22 @@ export class DataEntryHttpService {
   }
 
   updateDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
-    return of(null)
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'updateDataEntry',
+      payload: { dataEntry },
+      loadingMsg: 'Updating the dataEntry ...',
+      successMsg: `DataEntry has been updated`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
   }
 
   submitDataEntry(dataEntry: DataEntry): Observable<AppHttpResponse> {
-    return of(null)
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'submitDataEntry',
+      payload: { dataEntry },
+      loadingMsg: 'Submitting the dataEntry ...',
+      successMsg: `DataEntry has been submitted`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
   }
 }

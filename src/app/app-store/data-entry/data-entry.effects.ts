@@ -15,7 +15,7 @@ export class DataEntryEffects {
     ofType(DataEntryActions.addDataEntry),
     mergeMap(({ dataEntry }) => this.dataEntryHttpService.addDataEntry(dataEntry).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => DataEntryActions.addDataEntrySuccess({ dataEntry: resp.body }))
+      map(resp => DataEntryActions.setCurrentDataEntry({ dataEntry: resp.body }))
     )),
     // mergeMap(_ => EMPTY)
   ));
@@ -42,7 +42,7 @@ export class DataEntryEffects {
     ofType(DataEntryActions.updateDataEntry),
     mergeMap(({ dataEntry }) => this.dataEntryHttpService.updateDataEntry(dataEntry).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => DataEntryActions.updateDataEntrySuccess({ dataEntry: resp.body }))
+      map(resp => DataEntryActions.setCurrentDataEntry({ dataEntry: resp.body }))
     )),
     // mergeMap(_ => EMPTY)
   ));
@@ -51,7 +51,7 @@ export class DataEntryEffects {
     ofType(DataEntryActions.submitDataEntry),
     mergeMap(({ dataEntry }) => this.dataEntryHttpService.submitDataEntry(dataEntry).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => DataEntryActions.submitDataEntrySuccess({ dataEntry: resp.body }))
+      map(resp => DataEntryActions.setCurrentDataEntry({ dataEntry: resp.body }))
     )),
     // mergeMap(_ => EMPTY)
   ));

@@ -74,4 +74,5 @@ export const userRoles = createSelector(userState, (state) => state.userRoles);
 // dataEntry
 export const dataEntryState = createFeatureSelector<fromDataEntry.State>('dataEntry');
 export const dataEntriesOnDate = createSelector(dataEntryState, (state) => state.dataEntriesOnDate);
+export const currentDataEntry = createSelector(dataEntryState, (state) => state.currentDataEntry);
 
