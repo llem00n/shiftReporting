@@ -44,7 +44,6 @@ export class CalendarComponent implements OnInit {
 
   changeDepartment(e) {
     const date = this.dateService.getWeekJSON(this.year, this.week);
-    console.log(date);  
     this.store.dispatch(ScheduleActions.getSchedules({ departmentId: e.departmentId }));
     this.store.dispatch(TemplateActions.getTemplates({ departmentId: e.departmentId }));
     this.store.dispatch(DataEntryActions.getDataEntriesOnDate({
@@ -53,6 +52,4 @@ export class CalendarComponent implements OnInit {
       toDate: date.to
     }))
   }
-
-  getWee
 }
