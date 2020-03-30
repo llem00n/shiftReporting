@@ -23,8 +23,8 @@ export const getDataEntriesOnDate = createAction(
   '[DataEntry] Get DataEntries OnDate',
   props<{ departmentId: number, fromDate: string, toDate: string }>()
 );
-export const getDataEntriesOnDateSuccess = createAction(
-  '[DataEntry] Get DataEntries OnDate Success',
+export const setDataEntriesOnDate = createAction(
+  '[DataEntry] Set DataEntries OnDate',
   props<{ dataEntries: DataEntry[] }>()
 );
 

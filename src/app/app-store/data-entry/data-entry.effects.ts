@@ -33,7 +33,7 @@ export class DataEntryEffects {
     ofType(DataEntryActions.getDataEntriesOnDate),
     mergeMap(({ departmentId, fromDate, toDate }) => this.dataEntryHttpService.getDataEntriesOnDate(departmentId, fromDate, toDate).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => DataEntryActions.getDataEntriesOnDateSuccess({ dataEntries: resp.body }))
+      map(resp => DataEntryActions.setDataEntriesOnDate({ dataEntries: resp.body }))
     )),
     // mergeMap(_ => EMPTY)
   ));

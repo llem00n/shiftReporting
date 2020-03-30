@@ -22,7 +22,7 @@ const dataEntryReducer = createReducer(
   on(DataEntryActions.getLatestDataEntrySuccess,
     (state, { dataEntry }) => ({ ...state, latestDataEntry: dataEntry })),
 
-  on(DataEntryActions.getDataEntriesOnDateSuccess,
+  on(DataEntryActions.setDataEntriesOnDate,
     (state, { dataEntries }) => ({ ...state, dataEntriesOnDate: dataEntries })),
 
   on(DataEntryActions.setCurrentDataEntry,
