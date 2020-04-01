@@ -19,9 +19,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
   daysOfWeek = this.dateService.daysOfWeek;
   hours = new Array(24)
   shiftBg = [
-    // 'bg-gray-200',
     'bg-red-200',
-    'bg-orange-200',
     'bg-yellow-200',
     'bg-green-200',
     'bg-teal-200',
@@ -29,6 +27,8 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
     'bg-indigo-200',
     'bg-purple-200',
     'bg-pink-200',
+    'bg-orange-200',
+    'bg-gray-200',
   ]
   interval;
   constructor(
@@ -76,7 +76,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.schedules.map((schedule: Schedule, index) => {
-      const elClass = this.shiftBg[index]
+      const elClass = this.shiftBg[index % 10]
       this.dateService.daysOfWeek.map(({ key, dayNum }) => {
         if (
           !schedule[key]

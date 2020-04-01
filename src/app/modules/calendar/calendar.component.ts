@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Schedule, State, DataEntry } from '@models/*';
 import { ScheduleActions, TemplateActions, DataEntryActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { DateService } from 'src/app/services/date.service';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   schedules: Schedule[];
   date: Date;
   week: number;
@@ -31,6 +31,9 @@ export class CalendarComponent implements OnInit {
     this.year = this.weekYear.year;
     this.getSchedules();
   }
+  ngOnDestroy() {
+    this.store.dispatch(ScheduleActions.clearSchedules());
+  }
 
   getSchedules() {
     this.store.pipe(
@@ -40,14 +43,27 @@ export class CalendarComponent implements OnInit {
   setWeek(e) {
     this.week = e.week;
     this.year = e.year;
+    this.getDataEntry()
   }
 
   changeDepartment(e) {
+    const departmentId = this.departmentId = e.departmentId
+    this.store.dispatch(ScheduleActions.getSchedules({ departmentId }));
+    this.store.dispatch(TemplateActions.getTemplates({ departmentId }));
+    this.getDataEntry()
+  }
+  getDataEntry() {
+    if (!this.departmentId || !this.week || !this.year) {
+      console.log('asdf');
+
+      this.store.dispatch(DataEntryActions.setDataEntriesOnDate({ dataEntries: [] }))
+      return;
+      console.log('asdasdasd');
+
+    }
     const date = this.dateService.getWeekJSON(this.year, this.week);
-    this.store.dispatch(ScheduleActions.getSchedules({ departmentId: e.departmentId }));
-    this.store.dispatch(TemplateActions.getTemplates({ departmentId: e.departmentId }));
     this.store.dispatch(DataEntryActions.getDataEntriesOnDate({
-      departmentId: e.departmentId,
+      departmentId: this.departmentId,
       fromDate: date.from,
       toDate: date.to
     }))
