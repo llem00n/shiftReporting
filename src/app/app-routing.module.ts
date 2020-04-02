@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'configuration',
     loadChildren: () => import('./modules/configuration/configuration.module').then(m => m.ConfigurationModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   { path: 'template', component: TemplateComponent },
   { path: 'schedule', component: ScheduleComponent },

@@ -21,6 +21,7 @@ import { PlantsModule } from './modules/plants/plants.module';
 import { CalendarModule } from './modules/calendar/calendar.module';
 import { UsersModule } from './modules/users/users.module';
 import { DepartmentsModule } from './modules/departments/departments.module';
+import { UsedMaterialModule } from './modules/used-material/used-material.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { DepartmentsModule } from './modules/departments/departments.module';
     PlantsModule,
     CalendarModule,
     UsersModule,
-    DepartmentsModule
+    DepartmentsModule,
+    UsedMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

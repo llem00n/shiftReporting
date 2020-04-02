@@ -12,16 +12,16 @@ const routes: Routes = [
   {
     path: '',
     component: ConfigurationComponent,
-    children:[
+    children: [
       {
         path: '',
         children: [
-          {path: 'plants', component: ConfigPlantsComponent},
-          {path: 'departments', component: ConfigDepartmentsComponent},
-          {path: 'shifts', component: ConfigShiftComponent},
-          {path: 'schedules', component: ConfigScheduleComponent},
-          {path: 'templates', component: ConfigTemplateComponent},
-          {path: 'users', component: UsersConfigComponent},
+          { path: 'plants', component: ConfigPlantsComponent },
+          { path: 'departments', component: ConfigDepartmentsComponent },
+          { path: 'shifts', component: ConfigShiftComponent },
+          { path: 'schedules', component: ConfigScheduleComponent },
+          { path: 'templates', component: ConfigTemplateComponent },
+          { path: 'users', component: UsersConfigComponent },
         ]
       }
     ]

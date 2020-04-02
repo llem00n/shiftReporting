@@ -1,6 +1,15 @@
+<div class="p-4 flex items-start max-w-6xl">
+  <mat-form-field appearance="fill" class="flex-1">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Writing...">
+  </mat-form-field>
+  <button mat-button color="primary" class="ml-4 h-12">+ Add Plant</button>
+</div>
+
 <div class="flex flex-wrap">
   <!-- Plants list -->
-  <app-plant-card *ngFor="let plant of plants" [plant]="plant" (clickDelete)="delete($event)" (clickEdit)="edit($event)"></app-plant-card>
+  <app-plant-card *ngFor="let plant of plants" [plant]="plant" (clickDelete)="delete($event)"
+    (clickEdit)="edit($event)"></app-plant-card>
 
   <!-- Add Plant -->
   <div class="m-2 w-32 bg-gray-200 p-4 shadow">
@@ -10,5 +19,4 @@
       </svg-icon>
     </div>
   </div>
-
 </div>

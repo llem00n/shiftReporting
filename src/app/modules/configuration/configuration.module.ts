@@ -14,6 +14,8 @@ import { DialogModule } from '../dialog/dialog.module';
 import { ConfigurationRoutingModule } from './configuration-routing.module';
 import { PlantsModule } from '../plants/plants.module';
 import { UsersModule } from '../users/users.module';
+import { UsedMaterialModule } from '../used-material/used-material.module';
+
 
 @NgModule({
   declarations: [ConfigurationComponent, ListComponent, ConfigDepartmentsComponent, EditingPanelComponent, ConfigShiftComponent, ConfigScheduleComponent, ConfigTemplateComponent, TileComponent],
@@ -25,7 +27,8 @@ import { UsersModule } from '../users/users.module';
     DialogModule,
     ConfigurationRoutingModule,
     PlantsModule,
-    UsersModule
+    UsersModule,
+    UsedMaterialModule
   ],
   exports: [ConfigurationComponent]
 })
