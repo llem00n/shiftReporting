@@ -13,6 +13,7 @@ import { ConfigPlantsComponent } from '../plants/components/config-plants/config
   styleUrls: ['./configuration.component.scss']
 })
 export class ConfigurationComponent {
+  isSmall = false;
   // isShow: string = null;
   config = [
     { key: 'plants', component: ConfigPlantsComponent, title: 'Plants', isShow: false, icon: 'factory' },

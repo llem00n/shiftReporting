@@ -7,25 +7,24 @@ import { ConfigScheduleComponent } from './components/config-schedule/config-sch
 import { ConfigTemplateComponent } from './components/config-template/config-template.component';
 import { ConfigPlantsComponent } from '../plants/components/config-plants/config-plants.component';
 import { UsersConfigComponent } from '../users/components/users-config/users-config.component';
+import { AuthGuard } from '../authorization/guards/auth.guard';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ConfigurationComponent,
-    children: [
-      {
-        path: '',
-        children: [
-          { path: 'plants', component: ConfigPlantsComponent },
-          { path: 'departments', component: ConfigDepartmentsComponent },
-          { path: 'shifts', component: ConfigShiftComponent },
-          { path: 'schedules', component: ConfigScheduleComponent },
-          { path: 'templates', component: ConfigTemplateComponent },
-          { path: 'users', component: UsersConfigComponent },
-        ]
-      }
-    ]
-  }
+  // {
+  //   path: 'configuration',
+  //   component: ConfigurationComponent,
+  //   canActivate: [AuthGuard],
+  //   canActivateChild: [AuthGuard],
+
+  //   children: [
+  //     { path: 'plants', component: ConfigPlantsComponent },
+  //     { path: 'departments', component: ConfigDepartmentsComponent },
+  //     { path: 'shifts', component: ConfigShiftComponent },
+  //     { path: 'schedules', component: ConfigScheduleComponent },
+  //     { path: 'templates', component: ConfigTemplateComponent },
+  //     { path: 'users', component: UsersConfigComponent },
+  //   ]
+  // }
 ];
 
 

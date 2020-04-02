@@ -1,6 +1,11 @@
-<mat-sidenav-container class="h-full">
-  <mat-sidenav mode="side" opened class="h-full">
-    <div class="flex flex-col items-center my-4">
+<!-- <mat-sidenav-container class="h-full" autosize>
+  <mat-sidenav mode="side" opened class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
+    <div class="m-4">
+      <a mat-icon-button>
+        <mat-icon svgIcon="menu" (click)="isSmall = !isSmall">icon_name</mat-icon>
+      </a>
+    </div>
+    <div *ngIf="!isSmall" class="flex flex-col items-center my-4">
       <div class="bg-blue-400 h-16 w-16 rounded-full flex justify-center items-center mb-2">
         <div class="text-gray-100 text-3xl">NL</div>
       </div>
@@ -9,21 +14,22 @@
     <mat-nav-list>
       <mat-list-item [routerLink]="['/calendar']">
         <mat-icon mat-list-icon svgIcon="calendar-month-outline"></mat-icon>
-        <p mat-line class="">Calendar</p>
+        <p mat-line *ngIf="!isSmall" class="">Calendar</p>
       </mat-list-item>
-      <div class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div>
+      <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div>
 
-      <mat-list-item *ngFor="let item of config" [routerLink]="'./' + item.key" >
+      <mat-list-item *ngFor="let item of config" [routerLink]="'./' + item.key">
         <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
-        <div mat-line routerLinkActive="mat-primary"> {{item.title}} </div>
+        <p *ngIf="!isSmall" mat-line routerLinkActive="mat-primary"> {{item.title}} </p>
       </mat-list-item>
       <mat-list-item (click)="logout()">
         <mat-icon mat-list-icon svgIcon="logout"></mat-icon>
-        <p mat-line> Logout</p>
+        <p mat-line *ngIf="!isSmall"> Logout</p>
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->
+<!-- <router-outlet></router-outlet> -->
