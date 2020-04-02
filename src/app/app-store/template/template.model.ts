@@ -22,7 +22,7 @@ export class Template {
 }
 
 class TemplateBody {
-  TemplateData: { [key: string]: ValueType };
+  TemplateData: { [key: string]: { name: 'string', value: ValueType } };
   PIAFTemplate: PIAFTemplate;
   PIAFAttributes: PIAFAttributes;
   XML: string[];
@@ -41,7 +41,26 @@ class TemplateBody {
     this.Datasource = opt['Datasource'] || {};
     this.dashboard = opt['dashboard'] || [];
     this.gridsterOptions = opt['gridsterOptions'] || {};
+  }
 
+  get templateDataKV() {
+    const result = {};
+    Object.keys(this.TemplateData).map(key => {       
+      result[key] = this.TemplateData[key].value;
+    })
+    console.log(result);    
+    return result;
+  }
+
+  set templateDataKV(data: {}) {
+    const result = {};
+    Object.keys(data).map(key => {
+      result[key] = {
+        name: this.dashboard.find(i => i.controlId === key).name,
+        value: data[key]
+      }
+    })    
+    Object.assign(this.TemplateData, result);
   }
 };
 type ValueType = number | string | boolean;

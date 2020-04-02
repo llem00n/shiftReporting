@@ -68,12 +68,13 @@ export class DataEntryComponent implements OnInit {
         this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
         this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
         this.options = this.dataEntry.template.body?.gridsterOptions || {};
-        this.values = this.dataEntry.template.body?.TemplateData || {};
+        this.values = this.dataEntry.template.body?.templateDataKV || {};
         this.form = this.createForm(this.dashboard);
-        Object.assign(this.dataEntry.template.body['TemplateData'], this.form.value)
+        // Object.assign(this.dataEntry.template.body['TemplateData'], this.form.value)
+        this.dataEntry.template.body['templateDataKV'] = this.form.value;
         return this.form.valueChanges;
       }),
-      tap(values => Object.assign(this.values, values))
+      tap(values => this.dataEntry.template.body['templateDataKV'] = values)
     ).subscribe()
   }
 
@@ -109,6 +110,8 @@ export class DataEntryComponent implements OnInit {
   }
   addDataEntry() {
     this.dataEntry.createDate = this.dateService.getCurternDateLocal();
+    console.log(this.dataEntry);
+
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
   }
 
@@ -118,10 +121,12 @@ export class DataEntryComponent implements OnInit {
   // }
 
   updateDataEntry() {
+    console.log(this.dataEntry);
+
     this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
   }
 
-  submitDataEntry() {    
+  submitDataEntry() {
     this.dataEntry.submitDate = this.dateService.getCurternDateLocal();
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }))
   }
