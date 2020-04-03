@@ -22,6 +22,7 @@ import { CalendarModule } from './modules/calendar/calendar.module';
 import { UsersModule } from './modules/users/users.module';
 import { DepartmentsModule } from './modules/departments/departments.module';
 import { UsedMaterialModule } from './modules/used-material/used-material.module';
+import { TemplatesModule } from './modules/templates/templates.module';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UsedMaterialModule } from './modules/used-material/used-material.module
     CalendarModule,
     UsersModule,
     DepartmentsModule,
-    UsedMaterialModule
+    UsedMaterialModule,
+    TemplatesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
