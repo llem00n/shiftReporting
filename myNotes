@@ -114,3 +114,8 @@ ng g c modules/users/components/userRoles
 module departments
 ng g m modules/departments -m app
 ng g c modules/departments/components/selectUserDepartment
+
+module templates
+ng g m modules/templates -m app
+ng g c modules/templates/components/templateCard
+ng g c modules/templates/templates --flat

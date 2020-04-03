@@ -9,9 +9,11 @@ import { ConfigShiftComponent } from './modules/configuration/components/config-
 import { ConfigScheduleComponent } from './modules/configuration/components/config-schedule/config-schedule.component';
 import { ConfigTemplateComponent } from './modules/configuration/components/config-template/config-template.component';
 import { UsersConfigComponent } from './modules/users/components/users-config/users-config.component';
+import { TemplateComponent } from './modules/template/template.component';
 
 
 const routes: Routes = [
+
   {
     path: 'configuration',
     // component: ConfigurationComponent,
@@ -22,7 +24,11 @@ const routes: Routes = [
       { path: 'departments', component: ConfigDepartmentsComponent },
       { path: 'shifts', component: ConfigShiftComponent },
       { path: 'schedules', component: ConfigScheduleComponent },
-      { path: 'templates', component: ConfigTemplateComponent },
+      {
+        path: 'templates', component: ConfigTemplateComponent, children: [
+          {path: ':id', component: TemplateComponent}
+        ]
+      },
       { path: 'users', component: UsersConfigComponent },
     ]
   },

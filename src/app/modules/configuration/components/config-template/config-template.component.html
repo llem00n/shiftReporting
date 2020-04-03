@@ -9,7 +9,7 @@
 <div>
   <app-tile [data]='list' (clickActionButton)='clickListsButton($event)'></app-tile>
 </div>
-
+<router-outlet> </router-outlet>
 <!-- <app-editing-panel *ngIf='isShowPanels.edit' [options]='editOptions' [object]="editingObj" (clickOk)="updateObj($event)"
   (clickCancel)="isShowPanels.edit = null"></app-editing-panel>
 <app-editing-panel *ngIf='isShowPanels.add' [options]='addNewOptions' (clickOk)="addObj($event)"

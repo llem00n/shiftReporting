@@ -129,7 +129,9 @@ export class ConfigTemplateComponent implements OnInit {
     this.store.dispatch(TemplateActions.setEditingTemplate({ template }));
     switch (e.action) {
       case 'edit':
-        this.router.navigate(['/template']);
+        console.log(`configuration/templates/${template.templateId}`);
+        
+        this.router.navigate([`configuration/templates/${template.templateId}`]);
         break;
       case 'fillIn':
         this.router.navigate(['/dataentry']);
