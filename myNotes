@@ -119,3 +119,4 @@ module templates
 ng g m modules/templates -m app
 ng g c modules/templates/templates --flat
 ng g c modules/templates/components/templateCard
+ng g c modules/templates/components/templatesList

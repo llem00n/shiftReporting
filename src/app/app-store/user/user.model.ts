@@ -1,5 +1,5 @@
 export class User {
-  userId: number = null;
+  userId: string = null;
   firstName: string = null;
   secondName: string = null;
   isActive: boolean = null;

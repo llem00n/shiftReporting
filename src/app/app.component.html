@@ -11,11 +11,14 @@
         <mat-icon svgIcon="menu" (click)="isSmall = !isSmall">icon_name</mat-icon>
       </a>
     </div>
-    <div *ngIf="!isSmall" class="flex flex-col items-center my-4">
+    <div *ngIf="!isSmall && abbreviation" class="flex flex-col items-center my-4">
       <div class="bg-blue-400 h-16 w-16 rounded-full flex justify-center items-center mb-2">
-        <div class="text-gray-100 text-3xl">NL</div>
+        <div class="text-gray-100 text-3xl">{{abbreviation}}</div>
       </div>
-      <p class="mat-h3 ">Name Lastname</p>
+      <div class="flex items-center">
+        <a class="text-normal">{{userName}} </a>
+        <mat-icon svgIcon="pencil"></mat-icon>
+      </div>
     </div>
     <mat-nav-list>
       <mat-list-item [routerLink]="['/calendar']">

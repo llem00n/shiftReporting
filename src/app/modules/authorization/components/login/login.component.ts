@@ -30,6 +30,6 @@ export class LoginComponent implements OnInit {
 
   login(user: User) {
     this.authService.isLoggedIn = true;
-    this.authService.setCurrentUser(user)
+    this.authService.setCurrentUser(user.userId)
   }
 }

@@ -10,6 +10,8 @@ import { ConfigScheduleComponent } from './modules/configuration/components/conf
 import { ConfigTemplateComponent } from './modules/configuration/components/config-template/config-template.component';
 import { UsersConfigComponent } from './modules/users/components/users-config/users-config.component';
 import { TemplateComponent } from './modules/template/template.component';
+import { TemplatesComponent } from './modules/templates/templates.component';
+import { TemplatesListComponent } from './modules/calendar/components/templates-list/templates-list.component';
 
 
 const routes: Routes = [
@@ -17,8 +19,8 @@ const routes: Routes = [
   {
     path: 'configuration',
     // component: ConfigurationComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
+    // canActivate: [AuthGuard],
+    // canActivateChild: [AuthGuard],
     children: [
       { path: 'plants', component: ConfigPlantsComponent },
       { path: 'departments', component: ConfigDepartmentsComponent },
