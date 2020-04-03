@@ -22,35 +22,35 @@ export const updateUserSuccess = createAction(
 )
 export const addUserRole = createAction(
   '[User] Add User Role',
-  props<{ userId: number, roleId: number }>()
+  props<{ userId: string, roleId: number }>()
 )
 export const addUserRoleSuccess = createAction(
   '[User] Add User Role Success',
-  props<{ userId: number, roleId: number }>()
+  props<{ userId: string, roleId: number }>()
 )
 export const deleteUserRole = createAction(
   '[User] Delete UserRole',
-  props<{ userId: number, roleId: number }>()
+  props<{ userId: string, roleId: number }>()
 )
 export const deleteUserRoleSuccess = createAction(
   '[User] Delete UserRole Success',
-  props<{ userId: number, roleId: number }>()
+  props<{ userId: string, roleId: number }>()
 )
 export const addUserDepartment = createAction(
   '[User] Add User Department',
-  props<{ userId: number, departmentId: number }>()
+  props<{ userId: string, departmentId: number }>()
 )
 export const addUserDepartmentSuccess = createAction(
   '[User] Add UserDepartment Success',
-  props<{ userId: number, departmentId: number }>()
+  props<{ userId: string, departmentId: number }>()
 )
 export const deleteUserDepartment = createAction(
   '[User] Delete UserDepartment',
-  props<{ userId: number, departmentId: number }>()
+  props<{ userId: string, departmentId: number }>()
 )
 export const deleteUserDepartmentSuccess = createAction(
   '[User] Delete UserDepartment Success',
-  props<{ userId: number, departmentId: number }>()
+  props<{ userId: string, departmentId: number }>()
 )
 export const getRoles = createAction(
   '[User] Get Roles',
@@ -76,7 +76,7 @@ export const getDepartmentUsersSuccess = createAction(
 )
 export const getUserRoles = createAction(
   '[User] Get UserRoles',
-  props<{ userId: number }>()
+  props<{ userId: string }>()
 )
 export const getUserRolesSuccess = createAction(
   '[User] Get UserRoles Success',

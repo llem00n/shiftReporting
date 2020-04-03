@@ -15,7 +15,7 @@ export class UserDepartmentsComponent implements OnInit {
   plantId: number;
   departments: Department[];
   userDepartments: Department[];
-  userId: number;
+  userId: string;
   title = "Set user's departments";
   preConfigForm: FormGroup;
   preConfig = [

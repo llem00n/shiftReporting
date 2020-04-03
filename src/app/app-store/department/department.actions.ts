@@ -41,7 +41,7 @@ export const clearDepartments = createAction(
 );
 export const getUserDepartments = createAction(
   '[Department/API] Get UserDepartments',
-  props<{ userId: number }>()
+  props<{ userId: string }>()
 )
 export const getUserDepartmentsSucces = createAction(
   '[Department/API] Get UserDepartments Succes',

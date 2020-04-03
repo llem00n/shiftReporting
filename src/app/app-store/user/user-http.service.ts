@@ -38,7 +38,7 @@ export class UserHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   };
-  addUserRole(userId: number, roleId: number): Observable<AppHttpResponse> {
+  addUserRole(userId: string, roleId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       payload: { userId, roleId },
       url: this.baseUrl + 'addUserRole',
@@ -46,7 +46,7 @@ export class UserHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
-  deleteUserRole(userId: number, roleId: number): Observable<AppHttpResponse> {
+  deleteUserRole(userId: string, roleId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       payload: { userId, roleId },
       url: this.baseUrl + 'deleteUserRole',
@@ -54,7 +54,7 @@ export class UserHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
-  getUserRoles(userId: number): Observable<AppHttpResponse> {
+  getUserRoles(userId: string): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       payload: { userId },
       url: this.baseUrl + 'getUserRoles',
@@ -73,7 +73,7 @@ export class UserHttpService {
 
 
 
-  addUserDepartment(userId: number, departmentId: number): Observable<AppHttpResponse> {
+  addUserDepartment(userId: string, departmentId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       payload: { userId, departmentId },
       url: this.baseUrl + 'addUserDepartment',
@@ -81,7 +81,7 @@ export class UserHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options)
   };
-  deleteUserDepartment(userId: number, departmentId: number): Observable<AppHttpResponse> {
+  deleteUserDepartment(userId: string, departmentId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       payload: { userId, departmentId },
       url: this.baseUrl + 'deleteUserDepartment',

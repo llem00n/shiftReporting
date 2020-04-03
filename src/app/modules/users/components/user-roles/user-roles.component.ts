@@ -13,7 +13,7 @@ import { DialogService } from 'src/app/modules/dialog/dialog.service';
 export class UserRolesComponent implements OnInit {
   roles: Role[];
   userRoles: Role[];
-  userId: number;
+  userId: string;
   title = "Set user's roles";
   constructor(
     private store: Store<State>,

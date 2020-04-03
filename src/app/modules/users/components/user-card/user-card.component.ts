@@ -8,9 +8,9 @@ import { User } from '@models/*';
 })
 export class UserCardComponent implements OnInit {
   @Input() user: User;
-  @Output() clickEdit = new EventEmitter<number>()
-  @Output() clickRoles = new EventEmitter<number>()
-  @Output() clickDepartments = new EventEmitter<number>()
+  @Output() clickEdit = new EventEmitter<string>()
+  @Output() clickRoles = new EventEmitter<string>()
+  @Output() clickDepartments = new EventEmitter<string>()
   // @Output() clickDelete = new EventEmitter<number>()
   constructor(  ) { }
 

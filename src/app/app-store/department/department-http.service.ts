@@ -78,7 +78,7 @@ export class DepartmentHttpService {
 
     return this.httpService.post<AppHttpResponse>(options)
   }
-  getUserDepartments(userId: number): Observable<AppHttpResponse> {
+  getUserDepartments(userId: string): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getUserDepartments',
       loadingMsg: "Loading user's departments ...",

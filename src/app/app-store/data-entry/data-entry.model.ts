@@ -9,7 +9,7 @@ export class DataEntry {
   submitDate: string = null;
   template: Template = null;
   submitUser: string = null;
-  modifiedUserId: number = null;
+  modifiedUserId: string = null;
 
   constructor(opt: {} = {}) {
     Object.keys(opt).map(key => {
