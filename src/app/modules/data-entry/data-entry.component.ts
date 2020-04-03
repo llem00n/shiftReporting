@@ -8,7 +8,7 @@ import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms'
 import { DataEntryActions } from '@actions/*';
 import { AuthorizationService } from '../authorization/authorization.service';
 import { MessageService } from '../message/sevices/message.service';
-import { DateService } from 'src/app/services/date.service';
+import { DateService } from 'src/app/services/date/date.service';
 import { DialogService } from '../dialog/dialog.service';
 import { Location } from '@angular/common';
 

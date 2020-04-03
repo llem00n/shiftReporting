@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { DynText } from '../dynamic-controls/components/dyn-text/dyn-text.model';
 import { DynTextarea } from '../dynamic-controls/components/dyn-textarea/dyn-textarea.model';
 import { DialogService } from '../dialog/dialog.service';
-import { DateService } from 'src/app/services/date.service';
+import { DateService } from 'src/app/services/date/date.service';
 import { DynDate } from '../dynamic-controls/components/dyn-date/dyn-date.model';
 
 @Component({

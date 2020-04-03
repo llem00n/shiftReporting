@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
-import { DateService } from 'src/app/services/date.service';
+import { DateService } from 'src/app/services/date/date.service';
 
 @Component({
   selector: 'app-week-selector',

@@ -3,7 +3,7 @@ import { Schedule, State, DataEntry } from '@models/*';
 import { ScheduleActions, TemplateActions, DataEntryActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
 import { allSchedules } from 'src/app/app-store';
-import { DateService } from 'src/app/services/date.service';
+import { DateService } from 'src/app/services/date/date.service';
 
 @Component({
   selector: 'app-calendar',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Schedule } from '@models/*';
-import { DateService } from 'src/app/services/date.service';
+import { DateService } from 'src/app/services/date/date.service';
 
 @Component({
   selector: 'app-week-grid',

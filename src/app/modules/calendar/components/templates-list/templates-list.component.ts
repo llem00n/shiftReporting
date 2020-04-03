@@ -6,7 +6,7 @@ import { allTemplates, dataEntriesOnDate } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { tap, mergeMap, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { DateService } from 'src/app/services/date.service';
+import { DateService } from 'src/app/services/date/date.service';
 import { DataEntryActions } from '@actions/*';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Template } from './template.model';
 import { Observable, of } from 'rxjs';
-import { AppHttpResponse, AppHttpRequest, HttpService } from '../services/http.service';
+import { AppHttpResponse, AppHttpRequest, HttpService } from '../../services/http/http.service';
 import { TemplateType } from './template-type.model';
 
 @Injectable({

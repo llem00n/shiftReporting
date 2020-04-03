@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AppHttpResponse, HttpService, AppHttpRequest } from '../services/http.service';
+import { AppHttpResponse, HttpService, AppHttpRequest } from '../../services/http/http.service';
 import { Shift } from './shift.model';
 
 @Injectable({
