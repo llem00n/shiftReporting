@@ -9,7 +9,6 @@ import { map, filter } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  // form: FormGroup = new FormGroup({});
   userName: string;
   abbreviation: string;
   isSmall = true;
@@ -29,12 +28,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getCurrentUser()
-      .subscribe(user => {
-        if (!user) {
+      .subscribe(currentUser => {
+        if (!currentUser) {
           this.userName = ''
           this.abbreviation = ''
           return;
         }
+        const { user } = currentUser
         this.userName = `${user.firstName} ${user.secondName}`;
         this.abbreviation = user.firstName.slice(0, 1).toUpperCase() + user.secondName.slice(0, 1).toUpperCase();
       })
