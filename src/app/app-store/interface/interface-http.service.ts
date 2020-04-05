@@ -10,10 +10,10 @@ export class InterfaceHttpService {
   baseUrl = 'interface/';
   constructor(private httpService: HttpService) { }
 
-  addInterface(intface: Interface): Observable<AppHttpResponse> {
+  addInterface(intface: Interface, templateId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addInterface',
-      payload: { intface },
+      payload: { intface, templateId },
       loadingMsg: 'Adding the interface ...',
       successMsg: `Interface has been added`
     }
@@ -22,7 +22,7 @@ export class InterfaceHttpService {
 
   updateInterface(intface: Interface): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
-      url: this.baseUrl + 'addInterface',
+      url: this.baseUrl + 'updateInterface',
       payload: { intface },
       loadingMsg: 'Updating the interface ...',
       successMsg: `Interface has been updated`
@@ -30,20 +30,21 @@ export class InterfaceHttpService {
     return this.httpService.post<AppHttpResponse>(options);
   }
 
-  deleteInterface(interfaceID: number): Observable<AppHttpResponse> {
-    const options: AppHttpRequest = {
-      url: this.baseUrl + 'addInterface',
-      payload: { interfaceID },
-      loadingMsg: 'Deleting the interface ...',
-      successMsg: `Interface has been deleted`
-    }
-    return this.httpService.post<AppHttpResponse>(options);
-   }
+  // deleteInterface(interfaceID: number): Observable<AppHttpResponse> {
+  //   const options: AppHttpRequest = {
+  //     url: this.baseUrl + 'addInterface',
+  //     payload: { interfaceID },
+  //     loadingMsg: 'Deleting the interface ...',
+  //     successMsg: `Interface has been deleted`
+  //   }
+  //   return this.httpService.post<AppHttpResponse>(options);
+  // }
 
-  getInterfaceTypes(): Observable<AppHttpResponse> {
+  getInterfaces(templateId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
-      url: this.baseUrl + 'addInterface',
-      loadingMsg: 'Deleting the interface ...',
+      payload: { templateId },
+      url: this.baseUrl + 'getInterfaces',
+      loadingMsg: 'LOading interfaces ...',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

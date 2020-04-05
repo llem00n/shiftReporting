@@ -10,34 +10,30 @@ import { InterfaceHttpService } from './interface-http.service';
 @Injectable()
 export class InterfaceEffects {
 
-  getInterfaceTypes$ = createEffect(() => this.actions$.pipe(
-    ofType(InterfaceActions.getInterfaceTypes),
-    mergeMap(_ => this.interfaceHttpService.getInterfaceTypes().pipe(
+  getInterfaces$ = createEffect(() => this.actions$.pipe(
+    ofType(InterfaceActions.getInterfaces),
+    mergeMap(({ templateId }) => this.interfaceHttpService.getInterfaces(templateId).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => InterfaceActions.getInterfaceTypesSuccess({ interfaceTypes: resp.body }))
+      map(resp => InterfaceActions.getInterfacesSuccess({ intfaces: resp.body }))
     )),
   ));
+
   addInterface$ = createEffect(() => this.actions$.pipe(
     ofType(InterfaceActions.addInterface),
-    mergeMap(action => this.interfaceHttpService.addInterface(action.intface).pipe(
+    mergeMap(({ intface, templateId }) => this.interfaceHttpService.addInterface(intface, templateId).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => InterfaceActions.addInterfaceSuccess({ intface: resp.body }))
+      map(resp => InterfaceActions.getInterfaces({ templateId }))
     )),
   ));
+
   updateInterface$ = createEffect(() => this.actions$.pipe(
     ofType(InterfaceActions.updateInterface),
-    mergeMap(action => this.interfaceHttpService.updateInterface(action.intface).pipe(
+    mergeMap(({ intface, templateId }) => this.interfaceHttpService.updateInterface(intface).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => InterfaceActions.updateInterfaceSuccess({ intface: resp.body }))
+      map(resp => InterfaceActions.getInterfaces({ templateId }))
     )),
   ));
-  deleteInterface$ = createEffect(() => this.actions$.pipe(
-    ofType(InterfaceActions.deleteInterface),
-    mergeMap(action => this.interfaceHttpService.deleteInterface(action.intfaceID).pipe(
-      filter(resp => resp && resp.status === 200),
-      map(resp => InterfaceActions.deleteInterfaceSuccess({ intfaceID: resp.body }))
-    )),
-  ));
+
   constructor(
     private actions$: Actions,
     private interfaceHttpService: InterfaceHttpService
