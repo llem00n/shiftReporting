@@ -6,7 +6,7 @@ import { take, switchMap, tap, mergeMap, map, filter } from 'rxjs/operators';
 import { GridsterOptions } from '../grid';
 import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms';
 import { DataEntryActions } from '@actions/*';
-import { AuthorizationService } from '../authorization/authorization.service';
+import { AuthorizationService, CurrentUser } from '../authorization/authorization.service';
 import { MessageService } from '../message/sevices/message.service';
 import { DateService } from 'src/app/services/date/date.service';
 import { DialogService } from '../dialog/dialog.service';
@@ -57,8 +57,8 @@ export class DataEntryComponent implements OnInit {
       mergeMap(_ => this.authService.getCurrentUser()),
       // take(1),
       filter(data => !!data),
-      map((user: User) => {
-        opt.modifiedUserId = user.userId;
+      map((user: CurrentUser) => {
+        opt.modifiedUserId = user.user.userId;
         return opt;
       }),
       switchMap(opt => {
