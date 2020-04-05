@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DomSanitizer } from '@angular/platform-browser';
+import {MatSelectModule} from '@angular/material/select';
 
 const modules = [
   MatSidenavModule,
@@ -15,7 +16,8 @@ const modules = [
   MatIconModule,
   MatInputModule,
   MatCardModule,
-  MatButtonModule
+  MatButtonModule,
+  MatSelectModule
 ]
 
 

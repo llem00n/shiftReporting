@@ -1,12 +1,12 @@
-<mat-card *ngIf="template" [ngStyle]="{'max-width': '300px'}">
-  <mat-card-header>
-    <mat-card-title>Template name</mat-card-title>
-    <mat-card-subtitle>last update</mat-card-subtitle>
-  </mat-card-header>
-    <p mat-card-content>Description</p>
-  <mat-card-actions>
-    <a mat-icon-button>
+<mat-card *ngIf="template" class="w-full">
+  <div class="flex items-center justify-between mb-2">
+    <span class="font-bold text-xl">{{template.name}}</span>
+    <a mat-icon-button (click)="clickEdit.emit(template.templateId)">
       <mat-icon svgIcon="pencil"></mat-icon>
     </a>
+  </div>
+  <mat-card-subtitle>{{template.lastUpdated}}</mat-card-subtitle>
+  <p mat-card-content>{{template.description}}</p>
+  <mat-card-actions>
   </mat-card-actions>
 </mat-card>

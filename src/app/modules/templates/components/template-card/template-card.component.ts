@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Template } from '@models/*';
 
 @Component({
@@ -8,6 +8,7 @@ import { Template } from '@models/*';
 })
 export class TemplateCardComponent implements OnInit {
   @Input() template: Template;
+  @Output() clickEdit = new EventEmitter<number>()
   constructor() { }
 
   ngOnInit(): void {
