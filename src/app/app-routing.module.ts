@@ -19,18 +19,15 @@ const routes: Routes = [
   {
     path: 'configuration',
     // component: ConfigurationComponent,
-    // canActivate: [AuthGuard],
-    // canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       { path: 'plants', component: ConfigPlantsComponent },
       { path: 'departments', component: ConfigDepartmentsComponent },
       { path: 'shifts', component: ConfigShiftComponent },
       { path: 'schedules', component: ConfigScheduleComponent },
-      {
-        path: 'templates', component: ConfigTemplateComponent, children: [
-          {path: ':id', component: TemplateComponent}
-        ]
-      },
+      { path: 'templates', component: TemplatesComponent },
+      { path: 'templates/:id', component: TemplateComponent },
       { path: 'users', component: UsersConfigComponent },
     ]
   },
@@ -39,7 +36,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: '', redirectTo: '', pathMatch: 'full' },
-  // { path: '**', redirectTo: '/', pathMatch: 'full' },
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

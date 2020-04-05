@@ -7,8 +7,10 @@ import { GridsterItem } from 'angular-gridster2';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
 import { State, editingTemplate } from 'src/app/app-store';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TemplateActions } from '@actions/*';
+import { tap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-template',
@@ -31,14 +33,16 @@ export class TemplateComponent implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
-    private store: Store<State>
+    private store: Store<State>,
+    // private route: ActivatedRoute,
   ) { }
+
   ngOnInit(): void {
     this.store.pipe(
       select(editingTemplate),
     ).subscribe(template => {
       if (!template) {
-        this.goBack();
+        this.router.navigate(['configuration/templates']);
         return;
       }
       let opt = {};
@@ -125,12 +129,16 @@ export class TemplateComponent implements OnInit {
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
     template.lastUpdated = this.getCurternDateLocal();
-    if (this.departmentId) {
-      const departmentId = this.departmentId;
-      this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
-    } else {
-      template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
-    }
+
+    console.log(template );
+    
+
+    // if (this.departmentId) {
+    //   const departmentId = this.departmentId;
+    //   this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
+    // } else {
+    //   template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
+    // }
   }
   getCurternDateLocal(): string {
     const curternDateUTC = new Date()
