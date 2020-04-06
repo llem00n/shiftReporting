@@ -18,6 +18,9 @@ body {
 
 @import "./assets/tailwind.css";
 
+button:focus {
+  outline: none;
+}
 .disabled {
   opacity: 50%;
 }
