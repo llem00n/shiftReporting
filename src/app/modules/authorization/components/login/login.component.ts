@@ -25,7 +25,11 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(UserActions.getAllUsers())
     this.store.pipe(
       select(allUsers)
-    ).subscribe(users => this.users = users)
+    ).subscribe(users => {
+      this.users = users;
+      if (!users[0]) return;
+      this.login(users[0])
+    })
   }
 
   login(user: User) {
