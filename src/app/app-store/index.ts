@@ -76,3 +76,7 @@ export const dataEntryState = createFeatureSelector<fromDataEntry.State>('dataEn
 export const dataEntriesOnDate = createSelector(dataEntryState, (state) => state.dataEntriesOnDate);
 export const currentDataEntry = createSelector(dataEntryState, (state) => state.currentDataEntry);
 
+// interfaces
+export const interfaceState = createFeatureSelector<fromInterface.State>('interface');
+export const templateInterfaces = createSelector(interfaceState, (state) => state.interfaces);
+

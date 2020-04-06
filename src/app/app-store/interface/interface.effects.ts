@@ -14,7 +14,7 @@ export class InterfaceEffects {
     ofType(InterfaceActions.getInterfaces),
     mergeMap(({ templateId }) => this.interfaceHttpService.getInterfaces(templateId).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => InterfaceActions.getInterfacesSuccess({ intfaces: resp.body }))
+      map(resp => InterfaceActions.getInterfacesSuccess({ interfaces: resp.body }))
     )),
   ));
 

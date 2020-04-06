@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class InterfaceHttpService {
-  baseUrl = 'interface/';
+  baseUrl = 'interfaces/';
   constructor(private httpService: HttpService) { }
 
   addInterface(intface: Interface, templateId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addInterface',
-      payload: { intface, templateId },
+      payload: { interface: intface, templateId },
       loadingMsg: 'Adding the interface ...',
       successMsg: `Interface has been added`
     }
@@ -23,7 +23,7 @@ export class InterfaceHttpService {
   updateInterface(intface: Interface): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateInterface',
-      payload: { intface },
+      payload: { interface: intface },
       loadingMsg: 'Updating the interface ...',
       successMsg: `Interface has been updated`
     }

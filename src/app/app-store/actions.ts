@@ -5,6 +5,7 @@ import * as ScheduleActions from './schedule/schedule.actions';
 import * as TemplateActions from './template/template.actions';
 import * as DataEntryActions from './data-entry/data-entry.actions';
 import * as UserActions from './user/user.actions';
+import * as InterfaseActions from './interface/interface.actions';
 
 // import * as DboardBuildActions from './dboard-build/dboard-build.actions';
 // import * as GeneralActions from './general/general.actions';
@@ -19,5 +20,6 @@ export {
   ScheduleActions,
   TemplateActions,
   DataEntryActions,
-  UserActions
+  UserActions,
+  InterfaseActions
 };
