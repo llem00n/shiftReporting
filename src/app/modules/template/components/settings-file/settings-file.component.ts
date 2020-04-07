@@ -8,7 +8,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./settings-file.component.scss']
 })
 export class SettingsFileComponent {
-
   form: FormGroup = new FormGroup({
     setting1: new FormControl('', [Validators.required]),
     setting2: new FormControl('', [Validators.required]),
@@ -18,11 +17,7 @@ export class SettingsFileComponent {
     public dialogRef: MatDialogRef<SettingsFileComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    dialogRef.disableClose = true
-    console.log(data);
-    
-  }
-  onNoClick(): void {
-    this.dialogRef.close();
+    dialogRef.disableClose = true;
+    data.value && this.form.patchValue(data.value);
   }
 }

@@ -24,7 +24,7 @@ export class DataEntryComponent implements OnInit {
   title: string = 'Entry ';
   dashboard: DynControl[] = [];
   options: GridsterOptions = {};
-  values: { [key: string]: boolean | string | number }
+  values: {}
   form: FormGroup;
   user: User
   isUpdating = false;
@@ -61,7 +61,7 @@ export class DataEntryComponent implements OnInit {
         opt.modifiedUserId = user.user.userId;
         return opt;
       }),
-      switchMap(opt => {        
+      switchMap(opt => {                    
         this.isUpdating = opt.createDate ? true : false;
         this.isSubmitted = opt.submitDate ? true : false;
         this.dataEntry = new DataEntry(opt);
@@ -112,18 +112,13 @@ export class DataEntryComponent implements OnInit {
   addDataEntry() {
 
     this.dataEntry.createDate = this.dateService.getCurternDateLocal();
-    console.log(this.dataEntry);
+    // console.log(this.dataEntry);
     
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
   }
 
-  // getCurternDateLocal(): string {
-  //   const curternDateUTC = new Date()
-  //   return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
-  // }
-
   updateDataEntry() {
-    console.log(this.dataEntry);
+    // console.log(this.dataEntry);
 
     this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
   }

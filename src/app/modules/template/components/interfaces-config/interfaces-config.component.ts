@@ -7,6 +7,7 @@ import { InterfaseActions } from '@actions/*';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsFileComponent } from '../settings-file/settings-file.component';
+import { SettingsPiafComponent } from '../settings-piaf/settings-piaf.component';
 
 interface InterfaceSetting {
   title: string;
@@ -27,8 +28,8 @@ const dbSettings = {
 
 
 const allInterfaces = {
-  'PIAFAttributes': { title: 'PIAF attributes', settings: piafSettings, component: SettingsFileComponent },
-  'PIAFEventFrames': { title: 'PIAF event frames', settings: piafSettings, component: SettingsFileComponent },
+  'PIAFAttributes': { title: 'PIAF attributes', settings: piafSettings, component: SettingsPiafComponent },
+  'PIAFEventFrames': { title: 'PIAF event frames', settings: piafSettings, component: SettingsPiafComponent },
   'Excel': { title: 'Excel', settings: fileSettings, component: SettingsFileComponent },
   'Xml': { title: 'Xml', settings: fileSettings, component: SettingsFileComponent },
   'DatabaseTable': { title: 'Database table', settings: dbSettings, component: SettingsFileComponent },
@@ -49,74 +50,75 @@ export class InterfacesConfigComponent implements OnInit {
 
   show = false;
   interfaces: Interface[] = [];
-  // interfacesConfig = [
-  //   new DynCheckbox({ controlId: 'PIAFTemplate', type: 'checkbox', label: 'PIAF Template' }),
-  //   new DynCheckbox({ controlId: 'PIAFAttributes', type: 'checkbox', label: 'PIAF Attributes' }),
-  //   new DynCheckbox({ controlId: 'XML', type: 'checkbox', label: "XML" }),
-  //   new DynCheckbox({ controlId: 'Excel', type: 'checkbox', label: "Excel" }),
-  //   new DynCheckbox({ controlId: 'DatabaseTable', type: 'checkbox', label: "Database Table" }),
-  // ];
+
   constructor(
     private store: Store<State>,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    // this.openDialog({ name: 'test' })
-    // console.log(Object.keys(InterfaseTypes));
-    console.log(Object.keys(allInterfaces));
-
     this.store.dispatch(InterfaseActions.getInterfaces({ templateId: this.templateId }));
     this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => this.interfaces = interfaces);
   }
 
   change(e: MatCheckboxChange) {
-    console.log(e.source.name);
+    // console.log(e.source.name);
     // if (!this.getSettingData(e.source.name)) {
     //   console.log('open dialog');
     // }
   }
 
-  getSettingData(interfaseName: string, settting?: InterfaceSetting) {
-    const iface = this.interfaces.find(i => i.name === interfaseName);
+  getSettingData(name: string, setting?: string) {
+    const iface = this.interfaces.find(i => i.name === name);
     if (!iface) return null;
-    if (!settting) return true;
+    if (!setting) return true;
+    return iface[setting]
   }
 
-  setSettings(key) {
-    console.log('setsetting ', key);
-    this.openDialog(key)
+  isChecked(name: string) {
+    const iface = this.interfaces.find(i => i.name === name);
+    if (!iface) return false;
+    return iface.isActive;
+  }
+
+  updateSettings(name: string) {
+    const iface = this.interfaces.find(i => i.name === name);
+    this.openDialog(name, iface)
+  }
+  setSettings(name: string) {
+    const iface = this.interfaces.find(i => i.name === name);
+    if (!iface) { this.openDialog(name); return; }
+    const intface = <Interface>{
+      ...iface,
+      isActive: !iface.isActive,
+    };
+    this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
+
   }
 
   openDialog(interfaceType, value?): void {
+    console.log(allInterfaces[interfaceType]);    
     const dialogRef = this.dialog.open(allInterfaces[interfaceType].component, {
       data: {
         value,
-        intFace: allInterfaces[interfaceType]
+        settings: allInterfaces[interfaceType].settings
       },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
       if (!value) {
         const intface = <Interface>{
-          setting1: null,
-          setting2: null,
-          setting3: null,
-          setting4: null,
-          setting5: null,
           ...result,
           interfaceType,
           name: interfaceType,
           isActive: true,
         };
-        console.log(intface);
-        
-        // this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.templateId }))
+        this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.templateId }))
       }
       else {
         const intface = <Interface>{}
         Object.assign(intface, value, result);
-        // this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
+        this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
 
       }
 

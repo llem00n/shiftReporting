@@ -128,6 +128,7 @@ export class TemplateComponent implements OnInit {
       this.removeExcessProps(i, ['diffGridItem', 'settings', '_settings']);
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
+    template.body.TemplateData = [];
     template.lastUpdated = this.getCurternDateLocal();
 
     

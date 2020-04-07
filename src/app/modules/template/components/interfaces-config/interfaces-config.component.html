@@ -5,14 +5,14 @@
   <!-- interfaces list -->
   <div *ngIf="show">
     <div class="mb-4" *ngFor="let key of objectKeys(allInterfaces)">
-      <div class="flex items-center justify-between w-full relative">
-        <div (click)="setSettings(key)" class="absolute w-full h-full top-0 left-0 z-10"></div>
-        <mat-checkbox (change)="change($event)" [name]="key">
-          {{allInterfaces[key].title}}
-        </mat-checkbox>
-        <a *ngIf="getSettingData(key)" mat-icon-button class="text-gray-600">
+      <div class="flex items-center justify-between w-full">
+        <div class="relative">
+          <div (click)="setSettings(key)" class="absolute w-full h-full top-0 left-0 z-10"></div>          
+          <mat-checkbox [checked]="isChecked(key)" color="primary"> {{allInterfaces[key].title}} </mat-checkbox>
+        </div>
+        <button *ngIf="getSettingData(key)" (click)="updateSettings(key)" mat-icon-button class="text-gray-600">
           <mat-icon svgIcon="pencil"></mat-icon>
-        </a>
+        </button>
       </div>
 
       <!-- interfaces settings -->
@@ -21,7 +21,7 @@
           <div class="w-4 h-4">
             <mat-icon class="text-gray-600" inline [svgIcon]="allInterfaces[key].settings[setting].icon"></mat-icon>
           </div>
-          <span class="text-xs">{{allInterfaces[key].settings[setting].title}}</span>
+          <span class="text-xs ml-2">{{getSettingData(key, setting)}}</span>
         </div>
       </div>
     </div>

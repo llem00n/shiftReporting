@@ -13,6 +13,6 @@
   <mat-dialog-actions class="flex justify-end">
     <button mat-button color="primary" mat-dialog-close>CANCEL</button>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value">SAVE</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid">SAVE</button>
   </mat-dialog-actions>
 </div>
