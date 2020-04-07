@@ -54,11 +54,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
   getDataEntry() {
     if (!this.departmentId || !this.week || !this.year) {
-      console.log('asdf');
-
       this.store.dispatch(DataEntryActions.setDataEntriesOnDate({ dataEntries: [] }))
       return;
-      console.log('asdasdasd');
 
     }
     const date = this.dateService.getWeekJSON(this.year, this.week);

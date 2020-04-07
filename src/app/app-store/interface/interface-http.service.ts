@@ -44,7 +44,7 @@ export class InterfaceHttpService {
     const options: AppHttpRequest = {
       payload: { templateId },
       url: this.baseUrl + 'getInterfaces',
-      loadingMsg: 'LOading interfaces ...',
+      loadingMsg: 'Loading interfaces ...',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

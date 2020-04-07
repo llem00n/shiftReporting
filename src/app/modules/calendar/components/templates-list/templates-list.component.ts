@@ -41,9 +41,7 @@ export class TemplatesListComponent implements OnInit {
   ngOnInit(): void {
     this.getData();
   }
-  ngOnDestroy(): void {
-    console.log('destroy');
-    
+  ngOnDestroy(): void {    
     this.data$.unsubscribe();
   }
   getData() {

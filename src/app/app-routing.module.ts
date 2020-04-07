@@ -12,6 +12,7 @@ import { UsersConfigComponent } from './modules/users/components/users-config/us
 import { TemplateComponent } from './modules/template/template.component';
 import { TemplatesComponent } from './modules/templates/templates.component';
 import { TemplatesListComponent } from './modules/calendar/components/templates-list/templates-list.component';
+import { DataEntryComponent } from './modules/data-entry/data-entry.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,8 @@ const routes: Routes = [
     path: 'calendar', component: CalendarComponent,
     canActivate: [AuthGuard]
   },
+  { path: 'dataentry', component: DataEntryComponent, canActivate: [AuthGuard] },
+
   { path: '', redirectTo: '', pathMatch: 'full' },
   // { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

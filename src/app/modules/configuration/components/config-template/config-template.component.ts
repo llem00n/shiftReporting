@@ -128,9 +128,7 @@ export class ConfigTemplateComponent implements OnInit {
     const template = JSON.parse(JSON.stringify(this.templates.find(i => i.templateId === e.item.templateId)));
     this.store.dispatch(TemplateActions.setEditingTemplate({ template }));
     switch (e.action) {
-      case 'edit':
-        console.log(`configuration/templates/${template.templateId}`);
-        
+      case 'edit':        
         this.router.navigate([`configuration/templates/${template.templateId}`]);
         break;
       case 'fillIn':

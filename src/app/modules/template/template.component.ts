@@ -130,15 +130,14 @@ export class TemplateComponent implements OnInit {
     })
     template.lastUpdated = this.getCurternDateLocal();
 
-    console.log(template );
     
 
-    // if (this.departmentId) {
-    //   const departmentId = this.departmentId;
-    //   this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
-    // } else {
-    //   template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
-    // }
+    if (this.departmentId) {
+      const departmentId = this.departmentId;
+      this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
+    } else {
+      template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
+    }
   }
   getCurternDateLocal(): string {
     const curternDateUTC = new Date()
