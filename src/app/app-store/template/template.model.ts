@@ -1,5 +1,11 @@
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
 
+export interface TemplateData {
+  key: string,
+  name: string,
+  value: ValueType
+}
+
 export class Template {
   templateId?: number;
   name: string;
@@ -22,7 +28,7 @@ export class Template {
 }
 
 class TemplateBody {
-  TemplateData: { [key: string]: { name: 'string', value: ValueType } };
+  TemplateData: TemplateData[];
   PIAFTemplate: PIAFTemplate;
   PIAFAttributes: PIAFAttributes;
   XML: string[];
@@ -32,7 +38,7 @@ class TemplateBody {
   dashboard: Array<DynControl>;
   gridsterOptions: {};
   constructor(opt: { [key: string]: any } = {}) {
-    this.TemplateData = opt['TemplateData'] || {};
+    this.TemplateData = opt['TemplateData'] || [];
     this.PIAFTemplate = opt['PIAFTemplate'] || {};
     this.PIAFAttributes = opt['PIAFAttributes'] || {};
     this.XML = opt['XML'] || [];
@@ -42,25 +48,23 @@ class TemplateBody {
     this.dashboard = opt['dashboard'] || [];
     this.gridsterOptions = opt['gridsterOptions'] || {};
   }
-
   get templateDataKV() {
     const result = {};
-    Object.keys(this.TemplateData).map(key => {       
-      result[key] = this.TemplateData[key].value;
+    this.TemplateData.map(item => {
+      result[item.key] = item.value;
     })
-    console.log(result);    
     return result;
   }
-
-  set templateDataKV(data: {}) {
-    const result = {};
+  set templateDataKV(data: { [key: string]: ValueType }) {
     Object.keys(data).map(key => {
-      result[key] = {
-        name: this.dashboard.find(i => i.controlId === key).name,
-        value: data[key]
-      }
-    })    
-    Object.assign(this.TemplateData, result);
+      const tempData = this.TemplateData.find(i => i.key === key);
+      if (tempData) { tempData.value = data[key]; return; };
+      this.TemplateData.push({
+        key,
+        name: this.dashboard.find(control => control.controlId === key).name,
+        value: data[key],
+      })
+    })
   }
 };
 type ValueType = number | string | boolean;

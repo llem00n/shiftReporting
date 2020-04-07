@@ -61,13 +61,14 @@ export class DataEntryComponent implements OnInit {
         opt.modifiedUserId = user.user.userId;
         return opt;
       }),
-      switchMap(opt => {
+      switchMap(opt => {        
         this.isUpdating = opt.createDate ? true : false;
         this.isSubmitted = opt.submitDate ? true : false;
         this.dataEntry = new DataEntry(opt);
         this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
         this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
         this.options = this.dataEntry.template.body?.gridsterOptions || {};
+        // this.values = {}
         this.values = this.dataEntry.template.body?.templateDataKV || {};
         this.form = this.createForm(this.dashboard);
         // Object.assign(this.dataEntry.template.body['TemplateData'], this.form.value)
@@ -109,9 +110,10 @@ export class DataEntryComponent implements OnInit {
     this.location.back()
   }
   addDataEntry() {
+
     this.dataEntry.createDate = this.dateService.getCurternDateLocal();
     console.log(this.dataEntry);
-
+    
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
   }
 
