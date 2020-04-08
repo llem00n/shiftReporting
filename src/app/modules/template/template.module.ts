@@ -5,7 +5,6 @@ import { GeneralConfigComponent } from './components/general-config/general-conf
 import { FormModule } from '../form/form.module';
 import { GridsterConfigComponent } from './components/gridster-config/gridster-config.component';
 import { GridModule } from '../grid/grid.module';
-import { GridComponent } from '../grid/grid.component';
 import { InterfacesConfigComponent } from './components/interfaces-config/interfaces-config.component';
 import { ControlsListComponent } from './components/controls-list/controls-list.component';
 import { ControlConfigComponent } from './components/control-config/control-config.component';

@@ -4,7 +4,7 @@
       <gridster-item *ngFor="let item of dashboard" [class.isCurrent]='item.controlId === selectedControlId'
         [item]="item.gridItem" [style.background-color]="getBackground(item)"
         (click)="itemClick($event, item.controlId)">
-        <app-dynamic-controls [control]="item" [form]="form"></app-dynamic-controls>
+        <app-dynamic-controls appearance="standard1" [control]="item" [form]="form"></app-dynamic-controls>
       </gridster-item>
     </gridster>
   </div>

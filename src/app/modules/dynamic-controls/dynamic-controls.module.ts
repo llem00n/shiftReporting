@@ -14,12 +14,14 @@ import { DynTextareaComponent } from './components/dyn-textarea/dyn-textarea.com
 import { DynColorComponent } from './components/dyn-color/dyn-color.component';
 import { DynLabelComponent } from './components/dyn-label/dyn-label.component';
 import { DynDateComponent } from './components/dyn-date/dyn-date.component';
+import { UsedMaterialModule } from '../used-material/used-material.module';
 @NgModule({
   declarations: [DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent, DynNumberComponent, DynTimeComponent, DynTextComponent, DynSelectComponent, DynTextareaComponent, DynColorComponent, DynLabelComponent, DynDateComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    UsedMaterialModule
   ],
   exports: [
     DynamicControlsComponent

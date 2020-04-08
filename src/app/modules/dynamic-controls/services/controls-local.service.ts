@@ -10,6 +10,7 @@ export class ControlsLocalService {
   private initialData = {
     control: null,
     form: null,
+    appearance: null,
   };
   private dataSourse = new BehaviorSubject<ControlOptions>(this.initialData);
   private data = this.dataSourse.asObservable();

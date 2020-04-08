@@ -16,6 +16,7 @@ import { dynComponents } from './components/dyn-components';
 export class DynamicControlsComponent implements OnChanges {
   @Input() control: DynControl;
   @Input() form: FormGroup;
+  @Input() appearance: string;
 
   component;
   private dataSourse = new BehaviorSubject<any>(null);
@@ -23,8 +24,12 @@ export class DynamicControlsComponent implements OnChanges {
   constructor(
     private clService: ControlsLocalService,
   ) { }
-  ngOnChanges() {
-    this.clService.setData({ control: this.control, form: this.form });
+  ngOnChanges() {    
+    this.clService.setData({ 
+      control: this.control, 
+      form: this.form,
+      appearance: this.appearance || 'outline'
+    });
     this.component = dynComponents.get(this.control.type);    
   }
 }
