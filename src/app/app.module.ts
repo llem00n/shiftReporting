@@ -23,6 +23,7 @@ import { UsersModule } from './modules/users/users.module';
 import { DepartmentsModule } from './modules/departments/departments.module';
 import { UsedMaterialModule } from './modules/used-material/used-material.module';
 import { TemplatesModule } from './modules/templates/templates.module';
+import { PiafModule } from './modules/piaf/piaf.module';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { TemplatesModule } from './modules/templates/templates.module';
     UsersModule,
     DepartmentsModule,
     UsedMaterialModule,
-    TemplatesModule
+    TemplatesModule,
+    PiafModule
   ],
   providers: [],
   bootstrap: [AppComponent]

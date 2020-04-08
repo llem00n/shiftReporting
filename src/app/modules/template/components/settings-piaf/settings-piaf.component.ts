@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpService, AppHttpRequest, AppHttpResponse } from 'src/app/services/http/http.service';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { PiafHttpService } from 'src/app/modules/piaf/piaf-http.service';
 
 @Component({
   selector: 'app-settings-piaf',
@@ -20,6 +21,7 @@ export class SettingsPiafComponent implements OnInit {
   });
 
   constructor(
+    private piafHttpService: PiafHttpService,
     private httpService: HttpService,
     public dialogRef: MatDialogRef<SettingsPiafComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -32,7 +34,7 @@ export class SettingsPiafComponent implements OnInit {
 
   getData(): void {
     this.form.get('setting2').disable();
-    this.getServers()
+    this.piafHttpService.getServers()
       .pipe(
         switchMap(servers => {
           this.servers = servers;
@@ -40,7 +42,7 @@ export class SettingsPiafComponent implements OnInit {
           return this.form.get('setting1').valueChanges;
         }),
         tap(_ => this.form.get('setting2').setValue(null)),
-        switchMap(serverName => this.getDatabases(serverName)),
+        switchMap(serverName => this.piafHttpService.getDatabases(serverName)),
         map(databases => {
           this.databases = databases;
           this.form.get('setting2').enable();
@@ -48,29 +50,29 @@ export class SettingsPiafComponent implements OnInit {
       ).subscribe()
   }
 
-  getServers(): Observable<string[]> {
-    const options: AppHttpRequest = {
-      url: 'piaf/getServers',
-      loadingMsg: 'Loading servers ...',
-    }
-    return this.httpService.post<AppHttpResponse>(options)
-      .pipe(
-        filter(resp => resp && resp.status === 200),
-        map(resp => resp.body),
-      )
-  }
+  // getServers(): Observable<string[]> {
+  //   const options: AppHttpRequest = {
+  //     url: 'piaf/getServers',
+  //     loadingMsg: 'Loading servers ...',
+  //   }
+  //   return this.httpService.post<AppHttpResponse>(options)
+  //     .pipe(
+  //       filter(resp => resp && resp.status === 200),
+  //       map(resp => resp.body),
+  //     )
+  // }
 
-  getDatabases(serverName: string): Observable<string[]> {
-    const options: AppHttpRequest = {
-      url: 'piaf/GetDatabases',
-      loadingMsg: 'Loading databases ...',
-      payload: { serverName }
-    }
-    return this.httpService.post<AppHttpResponse>(options)
-      .pipe(
-        filter(resp => resp && resp.status === 200),
-        map(resp => resp.body)
-      )
-  }
+  // getDatabases(serverName: string): Observable<string[]> {
+  //   const options: AppHttpRequest = {
+  //     url: 'piaf/GetDatabases',
+  //     loadingMsg: 'Loading databases ...',
+  //     payload: { serverName }
+  //   }
+  //   return this.httpService.post<AppHttpResponse>(options)
+  //     .pipe(
+  //       filter(resp => resp && resp.status === 200),
+  //       map(resp => resp.body)
+  //     )
+  // }
 
 }

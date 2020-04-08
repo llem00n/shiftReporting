@@ -125,3 +125,7 @@ ng g m modules/templates -m app
 ng g c modules/templates/templates --flat
 ng g c modules/templates/components/templateCard
 ng g c modules/templates/components/templatesList
+
+module piaf 
+ng g m modules/piaf -m app
+ng g s modules/piaf/piafHttp
