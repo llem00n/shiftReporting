@@ -8,6 +8,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsFileComponent } from '../settings-file/settings-file.component';
 import { SettingsPiafComponent } from '../settings-piaf/settings-piaf.component';
+import { SettingsDBComponent } from '../settings-db/settings-db.component';
 
 interface InterfaceSetting {
   title: string;
@@ -32,7 +33,7 @@ const allInterfaces = {
   'PIAFEventFrames': { title: 'PIAF event frames', settings: piafSettings, component: SettingsPiafComponent },
   'Excel': { title: 'Excel', settings: fileSettings, component: SettingsFileComponent },
   'Xml': { title: 'Xml', settings: fileSettings, component: SettingsFileComponent },
-  'DatabaseTable': { title: 'Database table', settings: dbSettings, component: SettingsFileComponent },
+  'DatabaseTable': { title: 'Database table', settings: dbSettings, component: SettingsDBComponent },
 }
 
 @Component({
@@ -61,12 +62,6 @@ export class InterfacesConfigComponent implements OnInit {
     this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => this.interfaces = interfaces);
   }
 
-  change(e: MatCheckboxChange) {
-    // console.log(e.source.name);
-    // if (!this.getSettingData(e.source.name)) {
-    //   console.log('open dialog');
-    // }
-  }
 
   getSettingData(name: string, setting?: string) {
     const iface = this.interfaces.find(i => i.name === name);
@@ -97,7 +92,6 @@ export class InterfacesConfigComponent implements OnInit {
   }
 
   openDialog(interfaceType, value?): void {
-    console.log(allInterfaces[interfaceType]);    
     const dialogRef = this.dialog.open(allInterfaces[interfaceType].component, {
       data: {
         value,
@@ -119,9 +113,7 @@ export class InterfacesConfigComponent implements OnInit {
         const intface = <Interface>{}
         Object.assign(intface, value, result);
         this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
-
       }
-
     });
   }
 }

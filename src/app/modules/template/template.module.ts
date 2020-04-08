@@ -13,11 +13,12 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
 import { SettingsFileComponent } from './components/settings-file/settings-file.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SettingsPiafComponent } from './components/settings-piaf/settings-piaf.component';
+import { SettingsDBComponent } from './components/settings-db/settings-db.component';
 
 
 
 @NgModule({
-  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent],
+  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent, SettingsDBComponent],
   imports: [
     CommonModule,
     FormModule,
