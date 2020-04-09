@@ -20,10 +20,10 @@ export class TemplatesListComponent implements OnInit {
 
   // svgSrc = "check-circle-outline"
   svgIcon = {
-    lock: { name: "lock", style: { fill: 'grey', width: '1rem' } },
-    submited: { name: "check-circle-outline", style: { fill: 'green', width: '1rem' } },
-    missed: { name: "checkbox-blank-circle", style: { fill: 'red', width: '1rem' } },
-    open: { name: "checkbox-blank-circle-outline", style: { fill: 'red', width: '1rem' } },
+    lock: { name: "lock", style: { fill: 'grey', width: '1rem', height: '1rem' } },
+    submited: { name: "check-circle-outline", style: { fill: 'green', width: '1rem', height: '1rem' } },
+    missed: { name: "checkbox-blank-circle", style: { fill: 'red', width: '1rem', height: '1rem' } },
+    open: { name: "checkbox-blank-circle-outline", style: { fill: 'red', width: '1rem', height: '1rem' } },
   }
 
   templates;
