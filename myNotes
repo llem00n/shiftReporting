@@ -45,6 +45,7 @@ ng g c modules/template/components/ControlConfig
 ng g c modules/template/components/settingsFile
 ng g c modules/template/components/settingsPiaf
 ng g c modules/template/components/settingsDB
+ng g c modules/template/components/settingsControl
 ng g s modules/template/services/Template
 
 
