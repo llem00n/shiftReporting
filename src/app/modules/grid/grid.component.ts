@@ -23,7 +23,7 @@ export const optionsBase: GridsterOptions = {
   // maxRows: 50,
   fixedColWidth: 40,
   fixedRowHeight: 40,
-  margin: 0,
+  margin: 4,
   mobileBreakpoint: 1,
   // pushItems: false,
   // outerMargin: true,
@@ -61,7 +61,7 @@ export class GridComponent implements OnChanges {
     itemChangeCallback: (e, i) => this.gridsterItemChange(e, i),
     emptyCellDropCallback: (e, i) => this.emptyCellDrop(e, i),
     enableEmptyCellDrop: true,
-    displayGrid: 'always',
+    displayGrid: 'onDrag&Resize',
     // displayGrid: 'onDrag&Resize',    
     draggable: {
       delayStart: 0,

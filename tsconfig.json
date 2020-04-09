@@ -24,9 +24,6 @@
       ],
       "@actions/*": [
         "src/app/app-store/actions.ts"
-      ],
-      "@selectors/*": [
-        "src/app/app-store/selectors.ts"
       ]
     }
   },
