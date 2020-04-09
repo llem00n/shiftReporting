@@ -1,7 +1,7 @@
 <div *ngFor="let i of controls">
-  <label *ngIf="i.label && i.type !=='checkbox'" [for]="i.controlId"
-    class="block  tracking-widest text-gray-700 text-xs font-bold leading-none">{{i.label}}</label>
-  <div class="mb-4">
+  <!-- <label *ngIf="i.label && i.type !=='checkbox'" [for]="i.controlId"
+    class="block  tracking-widest text-gray-700 text-xs font-bold leading-none">{{i.label}}</label> -->
+  <!-- <div class="mb-4"> -->
     <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>
-  </div>
+  <!-- </div> -->
 </div>

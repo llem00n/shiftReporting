@@ -1,4 +1,4 @@
-<span [formGroup]="options.form">
+<!-- <span [formGroup]="options.form">
   <input 
   [min]='options.control.min'
   [max]='options.control.max'
@@ -7,4 +7,15 @@
   [formControlName]="options.control.controlId" 
   [placeholder]="options.control.placeholder || ''"
   class="min-h-10 h-full w-full px-2 border-gray-200 border-2 focus:outline-none focus:border-gray-500">
-</span>
+</span> -->
+
+<!-- Material -->
+<div class="w-full h-full flex items-center">
+  <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
+    <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
+      <input matInput [min]='options.control.min' [max]='options.control.max' [step]='options.control.step'
+        type="number" [placeholder]="options.control.label" [formControlName]="options.control.controlId">
+    </div>
+  </mat-form-field>
+</div>

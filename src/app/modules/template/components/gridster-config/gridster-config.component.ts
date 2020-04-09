@@ -26,9 +26,9 @@ export class GridsterConfigComponent implements OnInit {
 
   show = false;
   gridsterConfig: DynControl[] = [
-    new DynNumber({ controlId: 'minCols', type: 'number', label: 'Columns', min: 1, max: 50, step: 1 }),
-    new DynNumber({ controlId: 'minRows', type: 'number', label: 'Rows', min: 1, max: 50, step: 1 }),
-    new DynColor({ controlId: 'bgColor', type: 'color', label: "Background color" }),
+    new DynNumber({ controlId: 'minCols', label: 'Columns', min: 1, max: 50, step: 1 }),
+    new DynNumber({ controlId: 'minRows', label: 'Rows', min: 1, max: 50, step: 1 }),
+    new DynColor({ controlId: 'bgColor', label: "Background color" }),
   ];
 
   constructor() { }
