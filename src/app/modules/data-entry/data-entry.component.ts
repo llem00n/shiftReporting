@@ -11,6 +11,7 @@ import { MessageService } from '../message/sevices/message.service';
 import { DateService } from 'src/app/services/date/date.service';
 import { DialogService } from '../dialog/dialog.service';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class DataEntryComponent implements OnInit {
     private dateService: DateService,
     private dialog: DialogService,
     private location: Location,
+    private router: Router,
 
   ) { }
 
@@ -49,7 +51,12 @@ export class DataEntryComponent implements OnInit {
       select(currentDataEntry),
       // take(1),
       filter(data => {
-        if (data?.template?.body) return true;
+        
+        if (!data) {
+          this.router.navigate(['/calendar']);
+          return; 
+        }
+        if (data.template?.body) return true;
         this.message.alertMessage('This template has no controls. You need to set up controls to use the template');
         return false;
       }),
@@ -61,7 +68,7 @@ export class DataEntryComponent implements OnInit {
         opt.modifiedUserId = user.user.userId;
         return opt;
       }),
-      switchMap(opt => {                    
+      switchMap(opt => {
         this.isUpdating = opt.createDate ? true : false;
         this.isSubmitted = opt.submitDate ? true : false;
         this.dataEntry = new DataEntry(opt);
@@ -113,7 +120,7 @@ export class DataEntryComponent implements OnInit {
 
     this.dataEntry.createDate = this.dateService.getCurternDateLocal();
     // console.log(this.dataEntry);
-    
+
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
   }
 
