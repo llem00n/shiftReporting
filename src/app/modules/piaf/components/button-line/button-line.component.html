@@ -1,0 +1,21 @@
+<div class="buttonLine nav">
+    <div class="left">
+        <span *ngFor="let item of getButtonsByPos('left')">
+      <button mat-raised-button (click)='buttonClick.emit(item.name)' *ngIf='isVisible(item.name)'
+        [disabled]="isDisabled(item.name)">
+        <mat-icon [svgIcon]="item.icon"></mat-icon>
+        <span> {{item.name}} </span>
+        </button>
+        </span>
+    </div>
+
+    <div class="right">
+        <span *ngFor="let item of getButtonsByPos('right')">
+      <button mat-raised-button (click)='buttonClick.emit(item.name)' *ngIf='isVisible(item.name)'
+        [disabled]="isDisabled(item.name)">
+        <mat-icon [svgIcon]="item.icon"></mat-icon>
+        <span> {{item.name}} </span>
+        </button>
+        </span>
+    </div>
+</div>

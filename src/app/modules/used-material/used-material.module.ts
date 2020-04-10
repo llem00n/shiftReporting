@@ -10,7 +10,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTreeModule } from '@angular/material/tree';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 const modules = [
@@ -23,7 +26,10 @@ const modules = [
   MatSelectModule,
   MatCheckboxModule,
   MatDividerModule,
-  MatDialogModule
+  MatDialogModule,
+  MatStepperModule,
+  MatTreeModule,
+  MatProgressBarModule
 ]
 
 

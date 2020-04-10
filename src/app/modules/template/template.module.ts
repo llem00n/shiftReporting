@@ -13,6 +13,7 @@ import { SettingsFileComponent } from './components/settings-file/settings-file.
 import { ReactiveFormsModule } from '@angular/forms';
 import { SettingsPiafComponent } from './components/settings-piaf/settings-piaf.component';
 import { SettingsDBComponent } from './components/settings-db/settings-db.component';
+import { PiafModule } from '../piaf/piaf.module';
 
 
 
@@ -23,7 +24,8 @@ import { SettingsDBComponent } from './components/settings-db/settings-db.compon
     FormModule,
     GridModule,
     UsedMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PiafModule
   ],
 })
 export class TemplateModule { }

@@ -1,0 +1,6 @@
+<mat-action-list *ngFor="let item of list" [class.bg-blue-400]="item === active" class="list">
+  <button mat-list-item (click)='select.emit(item)'>
+    <mat-icon matListIcon [svgIcon]="icon"></mat-icon>
+    {{item}}
+  </button>
+</mat-action-list>

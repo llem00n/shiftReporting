@@ -9,8 +9,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class SettingsDBComponent {
   form: FormGroup = new FormGroup({
-    setting1: new FormControl('', [Validators.required]),
-    setting2: new FormControl('', [Validators.required]),
+    connectionString: new FormControl('', [Validators.required]),
+    tableName: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -18,6 +18,12 @@ export class SettingsDBComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     dialogRef.disableClose = true;
-    data.value && this.form.patchValue(data.value);
+    data.value && this.patchValue(data.value);
+  }
+  patchValue(value) {
+    Object.keys(this.data.settings).map(key => {
+      const formControl = this.form.get(this.data.settings[key].key);
+      if(formControl) formControl.setValue(value[key])
+    })
   }
 }

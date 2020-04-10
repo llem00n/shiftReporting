@@ -129,4 +129,6 @@ ng g c modules/templates/components/templatesList
 
 module piaf 
 ng g m modules/piaf -m app
+ng g c modules/piaf/piaf --flat
+
 ng g s modules/piaf/piafHttp

@@ -25,7 +25,7 @@ export class PiafHttpService {
       )
   }
 
-  getDatabases(serverName: string): Observable<string[]> { 
+  getDatabases(serverName: string): Observable<string[]> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getDatabases',
       loadingMsg: 'Loading databases ...',
@@ -39,9 +39,42 @@ export class PiafHttpService {
 
   }	//<string>databaes
 
-  getDatabaseElements(serverName: string, databaseName: string) { } //<string>elements
+  getDatabaseElements(payload: { serverName: string, databaseName: string }) {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDatabaseElements',
+      loadingMsg: 'Loading databases ...',
+      payload,
+    }
+    return this.httpService.post<AppHttpResponse>(options)
+      .pipe(
+        filter(resp => resp && resp.status === 200),
+        map(resp => resp.body),
+      )
+  } //<string>elements
 
-  getDatabaseEventFrameTemplates(serverName: string, databaseName: string) { }// < string > templatesNames
+  getDatabaseEventFrameTemplates(payload: { serverName: string, databaseName: string }): Observable<string[]> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDatabaseEventFrameTemplates',
+      loadingMsg: 'Loading databases ...',
+      payload,
+    }
+    return this.httpService.post<AppHttpResponse>(options)
+      .pipe(
+        filter(resp => resp && resp.status === 200),
+        map(resp => resp.body),
+      )
+  }// < string > templatesNames
 
-  getElementStructure(elementFullPath: string) { }//	piafElement: PiAfElement
+  getElementStructure(elementFullPath: string) {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getElementStructure',
+      loadingMsg: 'Loading databases ...',
+      payload: { elementFullPath }
+    }
+    return this.httpService.post<AppHttpResponse>(options)
+      .pipe(
+        filter(resp => resp && resp.status === 200),
+        map(resp => resp.body),
+      )
+  }//	piafElement: PiAfElement
 }

@@ -20,7 +20,7 @@
 </div>
 
 <div class="flex flex-wrap p-2">
-  <div *ngFor="let template of templates" class="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4">
+  <div *ngFor="let template of templates" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4">
     <app-template-card (clickEdit)="editTemplate($event)" [template]="template"></app-template-card>
   </div>
 </div>

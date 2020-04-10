@@ -1,12 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./assets/normalize.css";
+// @import "./assets/global.scss";
+
+
 // @import 'tailwindcss/base';
 // @import 'tailwindcss/components';
 // @import './tailwindcss/custom-components/index.scss';
 // @import 'tailwindcss/utilities';
 // html, body { height: 100%; }
-
 // body { font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 html,
 body {
   height: 100%;
@@ -16,7 +17,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-@import "./assets/tailwind.css";
+@import "./assets/tailwind.scss";
 
 button:focus {
   outline: none;
