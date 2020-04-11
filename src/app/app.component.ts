@@ -16,8 +16,8 @@ export class AppComponent implements OnInit {
     { key: 'configuration/plants', title: 'Plants', isShow: false, icon: 'factory' },
     { key: 'configuration/departments', title: 'Departments', isShow: false, icon: 'graph-outline' },
     { key: 'configuration/shifts', title: 'Shifts', isShow: false, icon: 'calendar' },
-    { key: 'configuration/schedules', title: 'Schedule', isShow: false, icon: 'calendar' },
-    { key: 'configuration/templates', title: 'Template', isShow: false, icon: 'alpha-t-box-outline' },
+    { key: 'configuration/schedules', title: 'Schedule', isShow: false, icon: 'calendar-clock' },
+    { key: 'configuration/templates', title: 'Template', isShow: false, icon: 'file-table-box' },
     { key: 'configuration/users', title: 'Users', icon: 'account-group' },
   ];
 

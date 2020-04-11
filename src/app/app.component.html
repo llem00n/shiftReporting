@@ -22,7 +22,7 @@
     </div>
     <mat-nav-list>
       <mat-list-item [routerLink]="['/calendar']">
-        <mat-icon mat-list-icon svgIcon="calendar-month-outline"></mat-icon>
+        <mat-icon mat-list-icon svgIcon="calendar-month"></mat-icon>
         <p mat-line *ngIf="!isSmall" class="">Calendar</p>
       </mat-list-item>
       <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div>
@@ -41,10 +41,6 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-
-
 
 <app-message></app-message>
 <app-dialog></app-dialog>

@@ -65,6 +65,19 @@ export class PiafHttpService {
       )
   }// < string > templatesNames
 
+  getEventFrameTemplate(payload: { serverName: string, databaseName: string, eventFrameTemplateName: string }): Observable<any> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getEventFrameTemplate',
+      loadingMsg: 'Loading databases ...',
+      payload,
+    }
+    return this.httpService.post<AppHttpResponse>(options)
+      .pipe(
+        filter(resp => resp && resp.status === 200),
+        map(resp => resp.body),
+      )
+  }// < string > templatesNames
+
   getElementStructure(elementFullPath: string) {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getElementStructure',

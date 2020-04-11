@@ -19,6 +19,9 @@ body {
 
 @import "./assets/tailwind.scss";
 
+p {
+  margin: 0;
+}
 button:focus {
   outline: none;
 }

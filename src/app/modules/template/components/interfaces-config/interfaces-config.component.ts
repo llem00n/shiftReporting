@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DynCheckbox } from 'src/app/modules/dynamic-controls/components/dyn-checkbox/dyn-checkbox.model';
 import { Store, select } from '@ngrx/store';
 import { State, Interface } from '@models/*';
@@ -53,7 +53,8 @@ export class InterfacesConfigComponent implements OnInit {
   objectKeys = Object.keys;
 
   @Input() templateId: number;
-
+  @Output() changeStatus = new EventEmitter<Interface>();
+  @Output() changeSettings = new EventEmitter<Interface>();
   allInterfaces = allInterfaces;
 
   show = false;
@@ -65,11 +66,9 @@ export class InterfacesConfigComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.store.dispatch(InterfaseActions.getInterfaces({ templateId: this.templateId }));
     this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => this.interfaces = interfaces);
   }
-
 
   getSettingData(name: string, setting?: string) {
     const iface = this.interfaces.find(i => i.name === name);
@@ -95,8 +94,8 @@ export class InterfacesConfigComponent implements OnInit {
       ...iface,
       isActive: !iface.isActive,
     };
+    this.changeStatus.emit(intface);
     this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
-
   }
 
   openDialog(interfaceType, value?): void {
@@ -121,12 +120,13 @@ export class InterfacesConfigComponent implements OnInit {
           isActive: true,
         };
         this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.templateId }))
+        this.changeSettings.emit(intface);
       }
       else {
         const intface = <Interface>{}
         Object.assign(intface, value, settings);
-        console.log(intface);
         this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
+        this.changeSettings.emit(intface);
       }
     });
   }
