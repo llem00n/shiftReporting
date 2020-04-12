@@ -19,14 +19,17 @@
       <app-general-config (form)="getFormGeneral($event)" [template]='template'></app-general-config>
       <app-gridster-config [options]='options' (form)="getFormGridsterOptions($event)">
       </app-gridster-config>
-      <app-interfaces-config *ngIf="template.templateId"  [templateId]="template.templateId" (changeSettings)="changeSettingsInterface($event)" (changeStatus)="changeStatusInterface($event)"></app-interfaces-config>
+      <app-interfaces-config *ngIf="template.templateId" [templateId]="template.templateId"
+        (changeSettings)="changeSettingsInterface($event)" (changeStatus)="changeStatusInterface($event)">
+      </app-interfaces-config>
       <app-controls-list (draggableControl)="setTypeNewControl($event)"></app-controls-list>
-      <app-control-config *ngIf="selectedControl" [control]="selectedControl" (deleteControl)='deleteControl($event)'></app-control-config>
+      <app-control-config *ngIf="selectedControl" [control]="selectedControl" (deleteControl)='deleteControl($event)'>
+      </app-control-config>
     </div>
 
     <!-- Main window -->
-    <div class=" p-2 flex-1 overflow-auto h-full ">
-      
+    <div class="flex-1 p-2 overflow-auto">
+
       <!-- template info panel-->
       <!-- <div class="absolute z-50 right-0 flex flex-col h-full overflow-auto">
         <p class=" cursor-pointer btn" (click)="isShowTemplateInfo = !isShowTemplateInfo">Template info</p>
@@ -36,10 +39,12 @@
           </pre>
         </div>
       </div> -->
+      <div class="overflow-auto h-full">
+        <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
+          (dashboardChange)="dashboardChange($event)" [options]="options" [dashboard]="dashboard"
+          [appointment]="appointment" [selectedControlId]='selectedControl?.controlId'></app-grid>
+      </div>
 
-      <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
-        (dashboardChange)="dashboardChange($event)" [options]="options" [dashboard]="dashboard"
-        [appointment]="appointment" [selectedControlId]='selectedControl?.controlId'></app-grid>
     </div>
   </div>
 </section>

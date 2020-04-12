@@ -2,19 +2,16 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
-import { dynComponents } from '../dynamic-controls';
-import { GridsterItem } from 'angular-gridster2';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
-import { State, editingTemplate, templateInterfaces } from 'src/app/app-store';
-import { Router, ActivatedRoute } from '@angular/router';
-import { TemplateActions } from '@actions/*';
-import { tap, map, filter, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { PiafHttpService } from '../piaf/piaf-http.service';
+import { State, editingTemplate } from 'src/app/app-store';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Interface } from '@models/*';
 import { DashboardService } from './services/dashboard.service';
 import { DateService } from 'src/app/services/date/date.service';
+import { GridsterOptions } from '../grid';
+import { TemplateActions } from '@actions/*';
 
 @Component({
   selector: 'app-template',
@@ -25,13 +22,16 @@ export class TemplateComponent implements OnInit {
   template: Template;
   departmentId: number;
   dashboard = [];
-  options = {};
+  options: GridsterOptions = {};
   appointment = 'build';
   selectedControl: DynControl;
   newControlType: string = null;
   isShowTemplateInfo = true
   title: string = 'Create template';
   saveButton: string = 'Add';
+  formGrinsterOptions: FormGroup;
+
+  options$: Subscription;
 
   constructor(
     private location: Location,
@@ -43,18 +43,12 @@ export class TemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.store.pipe(
-    //   select(templateInterfaces),
-    //   map(ifaces => ifaces.find(i => i.name === 'PIAFEventFrames')),
-    //   filter(data => !!data),
-    //   tap(console.log),
-    //   switchMap(iface => this.piafService.getEventFrameTemplate({
-    //     serverName: iface.setting1,
-    //     databaseName: iface.setting2,
-    //     eventFrameTemplateName: iface.setting3,
-    //   })),
-    //   // tap(),
-    // ).subscribe(console.log);
+    this.options$ = this.dashboardService.getOptions().subscribe(options => {
+      if (!options || !this.template) return;
+      this.template.body.gridsterOptions = options
+      this.options = options;
+      this.formGrinsterOptions
+    })
 
     this.store.pipe(
       select(editingTemplate),
@@ -73,10 +67,13 @@ export class TemplateComponent implements OnInit {
       this.template = new Template(opt);
       this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
       this.template.body.dashboard = this.dashboard
-      this.options = this.template.body.gridsterOptions;
+      this.dashboardService.setOptions(this.template.body.gridsterOptions)
+      // this.options = this.template.body.gridsterOptions;
     })
   }
-
+  ngOnDestroy(): void {
+    this.options$.unsubscribe();
+  }
   getFormGeneral(e: FormGroup) {
     e.valueChanges.subscribe(value =>
       Object.assign(this.template, value)
@@ -84,9 +81,12 @@ export class TemplateComponent implements OnInit {
   }
 
   getFormGridsterOptions(e: FormGroup) {
+    // console.log(e);
+
+    this.formGrinsterOptions = e
     e.valueChanges.subscribe((values) => {
-      this.template.body.gridsterOptions = new Object(values);
-      this.options = this.template.body.gridsterOptions;
+      this.dashboardService.setOptions(values);
+      // this.options = this.template.body.gridsterOptions = new Object(values);
     })
   }
 
@@ -126,12 +126,17 @@ export class TemplateComponent implements OnInit {
   // }
   clickItem(controlId) {
     if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
-      this.selectedControl = this.template.body.dashboard
+      this.selectedControl = this.dashboard
         .find(i => i.controlId === controlId)
     }
   }
 
   dashboardChange(event) {
+    this.dashboardService.setOptions({
+      ...this.options,
+      minRows: Math.max(this.dashboardService.lastRow(this.dashboard), this.options.minRows),
+      minCols: Math.max(this.dashboardService.lastCol(this.dashboard), this.options.minCols),
+    })
   }
   setTypeNewControl(key) {
     this.newControlType = key
@@ -150,6 +155,9 @@ export class TemplateComponent implements OnInit {
     })
     template.body.TemplateData = [];
     template.lastUpdated = this.dateService.getCurternDateLocal();
+
+    // console.log(template.body);
+
     if (this.departmentId) {
       const departmentId = this.departmentId;
       this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
@@ -157,19 +165,12 @@ export class TemplateComponent implements OnInit {
       template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
     }
   }
-
-  // getCurternDateLocal(): string {
-  //   const curternDateUTC = new Date()
-  //   return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
-  // }
-
   deleteControl(controlId) {
     const index = this.dashboard.findIndex(i => i.controlId === controlId)
     this.dashboard.splice(index, 1);
   }
   changeStatusInterface(iface: Interface) {
-    // console.log('status', event);
-    iface.isActive && this.dashboardService.createControls(this.dashboard, iface)
+    iface.isActive && this.dashboardService.createControls(this.dashboard, iface, this.template)
     !iface.isActive && this.deleteControls()
     // if (event.name !== 'PIAFAttributes' && event.name !== 'PIAFEventFrames') return;
   }
@@ -177,7 +178,7 @@ export class TemplateComponent implements OnInit {
     console.log('settings', event);
     if ((iface.name === 'PIAFAttributes' || iface.name === 'PIAFEventFrames') && iface.isActive) {
       this.deleteControls();
-      this.dashboardService.createControls(this.dashboard, iface);
+      this.dashboardService.createControls(this.dashboard, iface, this.template);
     }
   }
   // createControls(event) {
@@ -185,6 +186,14 @@ export class TemplateComponent implements OnInit {
   // }
   deleteControls() {
     console.log('deleteControls');
+  }
+
+  setRow() {
+    console.log(this.options);
+    this.dashboardService.setOptions({
+      ...this.options,
+      minRows: 20,
+    })
   }
 
 }

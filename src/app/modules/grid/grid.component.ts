@@ -56,6 +56,7 @@ export class GridComponent implements OnChanges {
   @Output() clickItem: EventEmitter<string> = new EventEmitter<string>();
   @Output() dropNewItem: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
   @Output() dashboardChange: EventEmitter<DynControl[]> = new EventEmitter<DynControl[]>();
+  // @Output() optionsChange: EventEmitter<GridsterOptions> = new EventEmitter<GridsterOptions>()
 
   private _optionsBuild: GridsterConfig = {
     itemChangeCallback: (e, i) => this.gridsterItemChange(e, i),

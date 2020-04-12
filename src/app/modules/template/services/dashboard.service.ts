@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { dynComponents } from '../../dynamic-controls';
-import { DynControl } from '../../dynamic-controls/models';
+import { DynControl, DynText } from '../../dynamic-controls/models';
 import { GridsterItem } from 'angular-gridster2';
-import { Interface } from '@models/*';
+import { Interface, Template } from '@models/*';
 import { PiafHttpService } from '../../piaf/piaf-http.service';
 import { DynLabel } from '../../dynamic-controls/components/dyn-label/dyn-label.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { GridsterOptions, optionsBase } from '../../grid';
+import { DataTypeService } from 'src/app/services/data-type/data-type.service';
 
 interface Atribute {
   name: string;
@@ -20,7 +23,19 @@ interface Atribute {
 })
 export class DashboardService {
 
+  options = new BehaviorSubject<GridsterOptions>(null)
+
+  setOptions(opt: GridsterOptions) {
+    const { minCols, minRows, bgColor } = optionsBase
+    const nextOpt = Object.assign({ minCols, minRows, bgColor }, opt);
+    this.options.next(nextOpt);
+  }
+  getOptions(): Observable<GridsterOptions> {
+    return this.options.asObservable()
+  }
+
   preKey: string = 'attr';
+  PIAFControlList;
 
   baseAttributes: {
     [key: string]: Array<Atribute>
@@ -37,7 +52,8 @@ export class DashboardService {
     }
 
   constructor(
-    private piafHttpService: PiafHttpService
+    private piafHttpService: PiafHttpService,
+    private dataTypeService: DataTypeService
   ) { }
 
   createDashboard(dashboard: DynControl[]): DynControl[] {
@@ -56,10 +72,7 @@ export class DashboardService {
     dashboard.push(newControl)
     return newControl;
   }
-  getMaxColsS(newItem: GridsterItem, dboard: DynControl[]): number {
-    console.log(dboard);
-    console.log(newItem);
-
+  private getMaxColsS(newItem: GridsterItem, dboard: DynControl[]): number {
     const dboardGridster = dboard.map(i => i.gridItem);
     let maxLength = 5; /* maxLength - length of new element */
     for (let i = 1; i <= maxLength; i++) {
@@ -74,12 +87,16 @@ export class DashboardService {
     return maxLength;
   }
 
-  createControls(dashboard: DynControl[], iface: Interface) {
+  createControls(dashboard: DynControl[], iface: Interface, template: Template) {
+    this.PIAFControlList = {
+      Attributes: [],
+    };
     let attributes: Atribute[] = []
     switch (iface.name) {
       case 'PIAFAttributes':
         attributes = attributes.concat(this.baseAttributes[iface.name]);
         this.createAttributeControls(dashboard, attributes);
+        template.body.PIAFAttributes = { ...this.PIAFControlList };
         break;
       case 'PIAFEventFrames':
         attributes = attributes.concat(this.baseAttributes[iface.name]);
@@ -88,8 +105,9 @@ export class DashboardService {
           databaseName: iface.setting2,
           eventFrameTemplateName: iface.setting3,
         }).subscribe(efTemplate => {
-          if (efTemplate) efTemplate.attributes.map(attr => attributes.push({ ...attr, preKey: this.preKey }));
+          if (efTemplate) efTemplate.attributes.map(attr => attributes.push({ ...attr, preKey: this.preKey, label: attr.name }));
           this.createAttributeControls(dashboard, attributes);
+          template.body.PIAFTemplate = { ...this.PIAFControlList };
         });
         break;
       default:
@@ -97,31 +115,56 @@ export class DashboardService {
     }
   }
 
-  createAttributeControls(dashboard: DynControl[], attributes: Atribute[]) {
+  private createAttributeControls(dashboard: DynControl[], attributes: Atribute[]) {
     attributes.map(attr => {
-      const indexY = this.lastRow(dashboard) + 1;
+      const indexY = this.lastRow(dashboard);
       dashboard.push(this.createLabel(attr, indexY));
-      // this.createControl(attr, indexY)
+      dashboard.push(this.createControl(attr, indexY))
     });
-    console.log(this.lastRow(dashboard));
+    const lastRow = this.lastRow(dashboard)
+    if (this.options.value.minRows < lastRow) this.setOptions({
+      ...this.options.value,
+      minRows: this.lastRow(dashboard),
+    })
+
   }
   lastRow(dashboard: DynControl[]) {
-    const arr: number[] = dashboard.map(i => i.gridItem.y)
-    return arr.length ? Math.max.apply(null, arr) : -1
+    const arr: number[] = dashboard.map(i => i.gridItem.y + i.gridItem.rows);
+    return arr.length ? Math.max.apply(null, arr) : 0
   }
-  createLabel(attribute: Atribute, y: number) {
-    // console.log(y);
-    // console.log('createLabel', attribute);
+  lastCol(dashboard: DynControl[]) {
+    const arr: number[] = dashboard.map(i => i.gridItem.x + i.gridItem.cols)
+    return arr.length ? Math.max.apply(null, arr) : 0
+  }
+
+  private createLabel(attribute: Atribute, y: number) {
     const gridItem: GridsterItem = { cols: 5, rows: 1, x: 0, y }
     return new DynLabel({
+      controlId: 'label-' + attribute.name + '-' + Date.now().toString(16),
       gridItem,
       value: attribute.name
     })
   }
-  createControl(attribute: Atribute, y: number) {
-    console.log(y);
-    console.log('createControl', attribute);
 
+  private createControl(attribute: Atribute, y: number) {
+    const { type, preKey, name } = attribute
+    const gridItem: GridsterItem = { cols: 5, rows: 1, x: 6, y };
+    const controlType = this.dataTypeService.getType(type).allowableControls[0];
+    const model = dynComponents.getModel(controlType);
+    const controlId = `${preKey ? preKey + '-' : ''}${name}-${controlType}${Date.now().toString(16)}`;
+    if (preKey) {
+      const attr = {};
+      attr[name] = controlId;
+      this.PIAFControlList.Attributes.push(attr)
+    } else {
+      this.PIAFControlList[name] = controlId;
+    };
+    const opt = {
+      controlId,
+      gridItem,
+      label: attribute.label,
+    }
+    return new model(opt);
   }
 
 }

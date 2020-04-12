@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { DynControl } from 'src/app/modules/dynamic-controls/models';
 import { DynNumber } from 'src/app/modules/dynamic-controls/components/dyn-number/dyn-number.model';
 import { optionsBase } from '../../../grid'
@@ -16,12 +16,12 @@ const {
   templateUrl: './gridster-config.component.html',
   styleUrls: ['./gridster-config.component.scss']
 })
-export class GridsterConfigComponent implements OnInit {
+export class GridsterConfigComponent implements OnChanges {
   @Input() options: { [key: string]: number | string | boolean };
   @Output() form = new EventEmitter<FormGroup>()
 
 
-  optionsBase = { minCols, minRows, bgColor };
+  // optionsBase = { minCols, minRows, bgColor };
   values;
 
   show = false;
@@ -33,10 +33,11 @@ export class GridsterConfigComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.values = Object.assign(this.optionsBase, this.options)
-  }
+  // ngOnInit(): void {
+  //   this.values = this.options;
+  // }
   ngOnChanges(): void {
+    console.log(this.options);
     this.values = this.options;
   }
 }
