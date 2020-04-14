@@ -5,6 +5,7 @@ import { State, Template } from '@models/*';
 import { TemplateActions } from '@actions/*';
 import { allTemplates } from 'src/app/app-store';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-templates',
@@ -15,6 +16,7 @@ export class TemplatesComponent implements OnInit {
   currentUser: CurrentUser;
   departmentId: number;
   templates: Template[] = [];
+  templates$: Subscription;
 
   constructor(
     private authSevice: AuthorizationService,
@@ -23,7 +25,7 @@ export class TemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.pipe(
+    this.templates$ = this.store.pipe(
       select(allTemplates)
     ).subscribe(templates => {
       this.templates = templates;
@@ -42,6 +44,11 @@ export class TemplatesComponent implements OnInit {
         this.selectDepartment({ value: user.departments[0].departmentId })
       });
 
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.templates$.unsubscribe();
   }
 
   selectDepartment({ value }) {

@@ -1,9 +1,9 @@
 <!-- Material -->
 <div class="w-full h-full flex items-center">
   <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
-    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.placeholder}}</mat-label>
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
     <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
-      <mat-select [formControlName]="options.control.controlId" [placeholder]="options.control.placeholder">
+      <mat-select [formControlName]="options.control.controlId" [placeholder]="options.control.label">
         <mat-option *ngFor="let option of options.control.options " [value]="option.value">{{option.viewValue}}
         </mat-option>
       </mat-select>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { dynComponents } from '../../dynamic-controls';
-import { DynControl, DynText } from '../../dynamic-controls/models';
+import { DynControl } from '../../dynamic-controls/models';
 import { GridsterItem } from 'angular-gridster2';
 import { Interface, Template } from '@models/*';
 import { PiafHttpService } from '../../piaf/piaf-http.service';
@@ -122,8 +122,9 @@ export class DashboardService {
   private createAttributeControls(dashboard: DynControl[], attributes: Atribute[]) {
     attributes.map(attr => {
       const indexY = this.lastRow(dashboard);
-      dashboard.push(this.createLabel(attr, indexY));
-      dashboard.push(this.createControl(attr, indexY))
+      const control = this.createControl(attr, indexY)
+      dashboard.push(control);
+      dashboard.push(this.createLabel(attr, indexY, control.controlId));
     });
     const lastRow = this.lastRow(dashboard)
     if (this.options.value.minRows < lastRow) this.setOptions({
@@ -141,16 +142,19 @@ export class DashboardService {
     return arr.length ? Math.max.apply(null, arr) : 0
   }
 
-  private createLabel(attribute: Atribute, y: number) {
+  private createLabel(attribute: Atribute, y: number, forControl: string) {
     const gridItem: GridsterItem = { cols: 5, rows: 1, x: 0, y }
+    
     return new DynLabel({
       controlId: 'label-' + attribute.name + '-' + Date.now().toString(16),
       gridItem,
-      value: attribute.name
+      label: attribute.label,
+      name: attribute.name,
+      forControl: forControl,
     })
   }
 
-  private createControl(attribute: Atribute, y: number) {
+  private createControl(attribute: Atribute, y: number): DynControl {
     const { type, preKey, name } = attribute
     const gridItem: GridsterItem = { cols: 5, rows: 1, x: 6, y };
     const controlType = this.dataTypeService.getType(type).allowableControls[0];
@@ -167,6 +171,8 @@ export class DashboardService {
       controlId,
       gridItem,
       label: attribute.label,
+      name: attribute.name,
+      valueType: attribute.type,
     }
     return new model(opt);
   }

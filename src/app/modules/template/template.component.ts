@@ -14,6 +14,7 @@ import { GridsterOptions } from '../grid';
 import { TemplateActions, InterfaseActions } from '@actions/*';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
+import { allInterfaces } from './components/interfaces-config/interfaces-config.component';
 
 @Component({
   selector: 'app-template',
@@ -64,7 +65,6 @@ export class TemplateComponent implements OnInit {
         this.router.navigate(['configuration/templates']);
         return;
       }
-      console.log(template);
       let opt = {};
       if (!template._departmentId) {
         this.title = `Edit template ${template.name}`;
@@ -138,14 +138,15 @@ export class TemplateComponent implements OnInit {
   //   return maxLength;
   // }
   clickItem(controlId) {
+    const control = this.dashboard.find(i => i.controlId === controlId);
     const dialogRef = this.dialog.open(SettingsControlComponent, {
       data: {
-        controlId,
+        control,
         body: this.template.body
       }
     })
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
+      console.log(result);
 
       if (!result) return;
       Object.assign(this.template.body, result.body);
@@ -198,30 +199,26 @@ export class TemplateComponent implements OnInit {
   }
   changeStatusInterface(iface: Interface) {
     iface.isActive && this.dashboardService.createControls(this.dashboard, iface, this.template)
-    !iface.isActive && this.deleteControls()
+    !iface.isActive && this.deleteControls(iface.name);
     // if (event.name !== 'PIAFAttributes' && event.name !== 'PIAFEventFrames') return;
   }
   changeSettingsInterface(iface: Interface) {
     console.log('settings', event);
     if ((iface.name === 'PIAFAttributes' || iface.name === 'PIAFEventFrames') && iface.isActive) {
-      this.deleteControls();
+      this.deleteControls(iface.name);
       this.dashboardService.createControls(this.dashboard, iface, this.template);
     }
   }
-  // createControls(event) {
-  //   console.log('createControls');
-  // }
-  deleteControls() {
-    console.log('deleteControls');
+  deleteControls(ifaceName) {
+    const storage = this.template.body[allInterfaces[ifaceName].storage];
+    const controlsId = Object.values(storage)
+      .filter(key => typeof (key) === 'string')
+      .concat(storage['Attributes']
+        .map(i => i.key));
+    this.dashboard = this.dashboard.filter(({ controlId, forControl }) => !controlsId.includes(controlId) && !controlsId.includes(forControl));
   }
 
-  setRow() {
-    console.log(this.options);
-    this.dashboardService.setOptions({
-      ...this.options,
-      minRows: 20,
-    })
-  }
+
 
 }
 

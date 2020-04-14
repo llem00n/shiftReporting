@@ -6,7 +6,7 @@
 </div>
 <div class="flex relative">
   <div class="mr-2 w-64">
-    <app-form [controls]='control.settings' [values]='control' (form)="getControlForm($event)"></app-form>
+    <app-form [controls]='data.control.settings' [values]='data.control' (form)="getControlForm($event)"></app-form>
     <div class="relative">
       <app-form class="cursor-default" (click)="setDataSource()" [controls]='datasourceControls'
         [values]=datasourceValues></app-form>

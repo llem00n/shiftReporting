@@ -36,7 +36,7 @@ export class SettingsControlComponent implements OnInit {
     public dialogRef: MatDialogRef<SettingsControlComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       body: TemplateBody,
-      controlId: string,
+      control: DynControl,
     },
   ) { }
 
@@ -46,16 +46,18 @@ export class SettingsControlComponent implements OnInit {
     this.initialData();
   }
 
-  getControlForm(event) {
-    console.log(event);
+  getControlForm(form: FormGroup) {
+    form.valueChanges.subscribe(values => {
+      this.result.control = values
+    })
   }
 
   initialData() {
     // initial Datasource
-    const attribute = this.data.body['Datasource'].find(i => i.key === this.data.controlId);
+    const attribute = this.data.body['Datasource'].find(i => i.key === this.data.control.controlId);
     if (attribute) this.datasourceValues = { datasource: attribute.attributeName };
     //  Initial control
-    this.control = this.data.body.dashboard.find(i => i.controlId === this.data.controlId);
+    // this.control = this.data.body.dashboard.find(i => i.controlId === this.data.control.controlId);
     //  initial interfaces
     this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => {
       this.interfaces = interfaces
@@ -67,11 +69,11 @@ export class SettingsControlComponent implements OnInit {
           if (i.name !== 'PIAFEventFrames') disabled = false;
           if (storage.hasOwnProperty('Attributes')) {
             if (
-              Object.values(storage).includes(this.data.controlId)
-              || storage.Attributes.map(i => i.key).includes(this.data.controlId)
+              Object.values(storage).includes(this.data.control.controlId)
+              || storage.Attributes.map(i => i.key).includes(this.data.control.controlId)
             ) { checked = true; disabled = true };
           } else {
-            if (storage.includes(this.data.controlId)) { checked = true }
+            if (storage.includes(this.data.control.controlId)) { checked = true }
           }
           return {
             name: i.name,
@@ -92,21 +94,21 @@ export class SettingsControlComponent implements OnInit {
         this.result.body[e.source.name] = { ...storage };
       }
       if (!e.checked) {
-        this.result.body[e.source.name] = this.result.body[e.source.name].filter(i => i.key !== this.data.controlId);
+        this.result.body[e.source.name] = this.result.body[e.source.name].filter(i => i.key !== this.data.control.controlId);
         return;
       }
     } else {
       if (!this.result.body.hasOwnProperty(e.source.name)) {
         this.result.body[e.source.name] = [...storage];
       }
-      if (e.checked) this.result.body[e.source.name].push(this.data.controlId)
-      else this.result.body[e.source.name] = this.result.body[e.source.name].filter(i => i !== this.data.controlId);
+      if (e.checked) this.result.body[e.source.name].push(this.data.control.controlId)
+      else this.result.body[e.source.name] = this.result.body[e.source.name].filter(i => i !== this.data.control.controlId);
     }
   }
 
   datasourceClear() {
     if (!this.result.body['Datasource']) this.result.body['Datasource'] = [...this.data.body.Datasource];
-    this.result.body['Datasource'] = this.result.body['Datasource'].filter(({ key }) => key !== this.data.controlId);
+    this.result.body['Datasource'] = this.result.body['Datasource'].filter(({ key }) => key !== this.data.control.controlId);
     this.datasourceValues = { datasource: null };
   }
   setDataSource() {
@@ -115,13 +117,13 @@ export class SettingsControlComponent implements OnInit {
       if (!res) return;
       console.log(res);
       this.result.body['Datasource'] = [...this.data.body.Datasource];
-      const attribute = this.result.body['Datasource'].find(i => i.key === this.data.controlId);
+      const attribute = this.result.body['Datasource'].find(i => i.key === this.data.control.controlId);
       this.datasourceValues = { datasource: res.path };
       if (attribute) {
         attribute.attributeName = res.path;
       } else {
         this.result.body['Datasource'].push({
-          key: this.data.controlId,
+          key: this.data.control.controlId,
           attributeName: res.path
         })
       }
