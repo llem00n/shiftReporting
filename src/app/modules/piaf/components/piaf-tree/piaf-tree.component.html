@@ -12,7 +12,8 @@
       <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodeToggle class="node">
         <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
           <mat-icon class="mat-icon-rtl-mirror">
-            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            <mat-icon [svgIcon]="treeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right'"></mat-icon>
+            <!-- {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}} -->
           </mat-icon>
         </button>
         {{node.item}}

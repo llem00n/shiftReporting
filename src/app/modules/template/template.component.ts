@@ -4,14 +4,16 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
-import { State, editingTemplate } from 'src/app/app-store';
+import { State, editingTemplate, templateInterfaces } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Interface } from '@models/*';
 import { DashboardService } from './services/dashboard.service';
 import { DateService } from 'src/app/services/date/date.service';
 import { GridsterOptions } from '../grid';
-import { TemplateActions } from '@actions/*';
+import { TemplateActions, InterfaseActions } from '@actions/*';
+import { MatDialog } from '@angular/material/dialog';
+import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 
 @Component({
   selector: 'app-template',
@@ -30,19 +32,24 @@ export class TemplateComponent implements OnInit {
   title: string = 'Create template';
   saveButton: string = 'Add';
   formGrinsterOptions: FormGroup;
+  interfaces: Interface[]
 
   options$: Subscription;
-
+  editingTemplate$: Subscription;
   constructor(
     private location: Location,
     private router: Router,
     private store: Store<State>,
     private dashboardService: DashboardService,
     private dateService: DateService,
+    private dialog: MatDialog,
     // private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => this.interfaces = interfaces);
+
+
     this.options$ = this.dashboardService.getOptions().subscribe(options => {
       if (!options || !this.template) return;
       this.template.body.gridsterOptions = options
@@ -50,29 +57,35 @@ export class TemplateComponent implements OnInit {
       this.formGrinsterOptions
     })
 
-    this.store.pipe(
+    this.editingTemplate$ = this.store.pipe(
       select(editingTemplate),
     ).subscribe(template => {
       if (!template) {
         this.router.navigate(['configuration/templates']);
         return;
       }
+      console.log(template);
       let opt = {};
       if (!template._departmentId) {
         this.title = `Edit template ${template.name}`;
         this.saveButton = 'Save';
         opt = template;
       }
+      template.templateId && this.store.dispatch(InterfaseActions.getInterfaces({ templateId: template.templateId }));
       this.departmentId = template._departmentId;
       this.template = new Template(opt);
       this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
       this.template.body.dashboard = this.dashboard
       this.dashboardService.setOptions(this.template.body.gridsterOptions)
       // this.options = this.template.body.gridsterOptions;
+
+      // auro select first ttemplate
+      // this.dashboard.length && this.clickItem(this.dashboard[0].controlId)
     })
   }
   ngOnDestroy(): void {
     this.options$.unsubscribe();
+    this.editingTemplate$.unsubscribe();
   }
   getFormGeneral(e: FormGroup) {
     e.valueChanges.subscribe(value =>
@@ -125,10 +138,25 @@ export class TemplateComponent implements OnInit {
   //   return maxLength;
   // }
   clickItem(controlId) {
-    if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
-      this.selectedControl = this.dashboard
-        .find(i => i.controlId === controlId)
-    }
+    const dialogRef = this.dialog.open(SettingsControlComponent, {
+      data: {
+        controlId,
+        body: this.template.body
+      }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(result);
+
+      if (!result) return;
+      Object.assign(this.template.body, result.body);
+      const control = this.dashboard.find(i => i.controlId === controlId);
+      Object.assign(control, result.control);
+    })
+
+    // if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
+    //   this.selectedControl = this.dashboard
+    //     .find(i => i.controlId === controlId)
+    // }
   }
 
   dashboardChange(event) {
@@ -155,7 +183,6 @@ export class TemplateComponent implements OnInit {
     })
     template.body.TemplateData = [];
     template.lastUpdated = this.dateService.getCurternDateLocal();
-
     // console.log(template.body);
 
     if (this.departmentId) {

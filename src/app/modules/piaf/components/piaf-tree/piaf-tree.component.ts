@@ -62,13 +62,13 @@ export class DynamicDataSource {
           const index = this.data.indexOf(node);
           if (!children || index < 0) { // If no children, or cannot find the node, no op
             return;
-          }
+          }          
           if (expand) {
-            const nodesChild = children.ChildElements.map(name =>
+            const nodesChild = children.childElements.map(name =>
               new DynamicFlatNode(name, node.level + 1, true, { name, path: `${node.data.path}%5C${name}` }));
-            const nodesAttributes = children.Attributes.map(item =>
-              new DynamicFlatNode(item.Name, node.level + 1, false,
-                { name: item.Name, path: `${node.data.path}|${item.Name}`, type: item.Type }));
+            const nodesAttributes = children.attributes.map(item =>
+              new DynamicFlatNode(item.name, node.level + 1, false,
+                { name: item.name, path: `${node.data.path}|${item.name}`, type: item.type }));
             const nodes = nodesChild.concat(nodesAttributes);
             this.data.splice(index + 1, 0, ...nodes);
           } else {
@@ -126,7 +126,7 @@ export class PiafTreeComponent implements OnChanges {
       this.pis.getDatabaseElements({ serverName, databaseName })
         .pipe(
           filter((val: any) => !!val),
-          tap(_ => setTimeout(() => { this.stepper.next(); }, 100)),
+          tap(_ => this.stepper && setTimeout(() => { this.stepper.next(); }, 100)),
           map(elements => elements.map(name => new DynamicFlatNode(name, 0, true, { name, path: parentPath + name }))),
           tap(elements => this.dataSource.data = elements),
         ).subscribe();

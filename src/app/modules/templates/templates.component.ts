@@ -23,10 +23,14 @@ export class TemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.store.pipe(
       select(allTemplates)
-    ).subscribe(templates => this.templates = templates);
+    ).subscribe(templates => {
+      this.templates = templates;
+      // autostart first template
+      // templates.length && this.editTemplate(templates[0].templateId)
+    }
+    );
 
     this.authSevice.getCurrentUser()
       .subscribe(user => {

@@ -14,11 +14,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SettingsPiafComponent } from './components/settings-piaf/settings-piaf.component';
 import { SettingsDBComponent } from './components/settings-db/settings-db.component';
 import { PiafModule } from '../piaf/piaf.module';
+import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 
 
 
 @NgModule({
-  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent, SettingsDBComponent],
+  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent, SettingsDBComponent, SettingsControlComponent],
   imports: [
     CommonModule,
     FormModule,

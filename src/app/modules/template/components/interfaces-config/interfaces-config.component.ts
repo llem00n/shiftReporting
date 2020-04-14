@@ -35,12 +35,12 @@ const dbSettings = {
 };
 
 
-const allInterfaces = {
-  'PIAFAttributes': { title: 'PIAF attributes', settings: piafSettings, component: PiafComponent, type: 'server-db' },
-  'PIAFEventFrames': { title: 'PIAF event frames', settings: piafEFSettings, component: PiafComponent, type: 'server-db-template' },
-  'Excel': { title: 'Excel', settings: fileSettings, component: SettingsFileComponent },
-  'Xml': { title: 'Xml', settings: fileSettings, component: SettingsFileComponent },
-  'DatabaseTable': { title: 'Database table', settings: dbSettings, component: SettingsDBComponent },
+export const allInterfaces = {
+  'PIAFAttributes': { storage: 'PIAFAttributes', title: 'PIAF attributes', settings: piafSettings, component: PiafComponent, type: 'server-db' },
+  'PIAFEventFrames': { storage: 'PIAFTemplate', title: 'PIAF event frames', settings: piafEFSettings, component: PiafComponent, type: 'server-db-template' },
+  'Excel': { storage: 'Excel', title: 'Excel', settings: fileSettings, component: SettingsFileComponent },
+  'Xml': { storage: 'XML', title: 'Xml', settings: fileSettings, component: SettingsFileComponent },
+  'DatabaseTable': { storage: 'DatabaseTable', title: 'Database table', settings: dbSettings, component: SettingsDBComponent },
 }
 
 @Component({
@@ -53,12 +53,13 @@ export class InterfacesConfigComponent implements OnInit {
   objectKeys = Object.keys;
 
   @Input() templateId: number;
+  @Input() interfaces: Interface[];
   @Output() changeStatus = new EventEmitter<Interface>();
   @Output() changeSettings = new EventEmitter<Interface>();
   allInterfaces = allInterfaces;
 
   show = false;
-  interfaces: Interface[] = [];
+  // interfaces: Interface[] = [];
 
   constructor(
     private store: Store<State>,
@@ -66,8 +67,8 @@ export class InterfacesConfigComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(InterfaseActions.getInterfaces({ templateId: this.templateId }));
-    this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => this.interfaces = interfaces);
+    // this.store.dispatch(InterfaseActions.getInterfaces({ templateId: this.templateId }));
+    // this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => this.interfaces = interfaces);
   }
 
   getSettingData(name: string, setting?: string) {

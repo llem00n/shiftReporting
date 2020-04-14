@@ -27,14 +27,14 @@ export class Template {
   }
 }
 
-class TemplateBody {
+export class TemplateBody {
   TemplateData: TemplateData[];
   PIAFTemplate: PIAFTemplate;
   PIAFAttributes: PIAFAttributes;
   XML: string[];
   Excel: string[];
   DatabaseTable: string[];
-  Datasource: { [key: string]: ValueType };
+  Datasource: Attribute[];
   dashboard: Array<DynControl>;
   gridsterOptions: {};
   constructor(opt: { [key: string]: any } = {}) {
@@ -44,7 +44,7 @@ class TemplateBody {
     this.XML = opt['XML'] || [];
     this.Excel = opt['Excel'] || [];
     this.DatabaseTable = opt['DatabaseTable'] || [];
-    this.Datasource = opt['Datasource'] || {};
+    this.Datasource = opt['Datasource'] || [];
     this.dashboard = opt['dashboard'] || [];
     this.gridsterOptions = opt['gridsterOptions'] || {};
   }
@@ -80,14 +80,15 @@ interface PIAFTemplate {
   StartTime: string;
   EndTime: string;
   EventName: string;
-  Attributes: Attributes;
+  Attributes: Attribute[];
 };
 
 interface PIAFAttributes {
   Timestemp: string;
-  Attributes: Attributes;
+  Attributes: Attribute[];
 };
 
-interface Attributes {
-
+interface Attribute {
+  attributeName: string,
+  key: string
 };
