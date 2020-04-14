@@ -97,8 +97,6 @@ export class DashboardService {
         attributes = attributes.concat(this.baseAttributes[iface.name]);
         this.createAttributeControls(dashboard, attributes);
         template.body.PIAFAttributes = { ...this.PIAFControlList };
-        console.log(this.PIAFControlList);
-
         break;
       case 'PIAFEventFrames':
         attributes = attributes.concat(this.baseAttributes[iface.name]);
@@ -110,8 +108,6 @@ export class DashboardService {
           if (efTemplate) efTemplate.attributes.map(attr => attributes.push({ ...attr, preKey: this.preKey, label: attr.name }));
           this.createAttributeControls(dashboard, attributes);
           template.body.PIAFTemplate = { ...this.PIAFControlList };
-
-          console.log(this.PIAFControlList);
         });
         break;
       default:

@@ -42,8 +42,6 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    // console.log('logout');
-
     this.authService.logout()
   }
 }

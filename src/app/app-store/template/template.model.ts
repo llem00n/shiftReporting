@@ -57,9 +57,6 @@ export class TemplateBody {
     return result;
   }
   set templateDataKV(data: {}) {
-    // console.log(this.TemplateData);
-    // this.TemplateData = []
-    // return;
     Object.keys(data).map(key => {
       const tempData = this.TemplateData.find(i => i.key === key);
       if (tempData) { tempData.value = data[key]; return; };

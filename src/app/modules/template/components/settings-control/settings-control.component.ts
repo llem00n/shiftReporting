@@ -6,7 +6,8 @@ import { Store, select } from '@ngrx/store';
 import { templateInterfaces } from 'src/app/app-store';
 import { allInterfaces } from '../interfaces-config/interfaces-config.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { PiafComponent } from 'src/app/modules/piaf/piaf.component';
+import { PiafComponent, PIAFSelector } from 'src/app/modules/piaf/piaf.component';
+import { DataTypeService } from 'src/app/services/data-type/data-type.service';
 
 @Component({
   selector: 'app-settings-control',
@@ -21,19 +22,18 @@ export class SettingsControlComponent implements OnInit {
 
   control: DynControl;
   form = new FormGroup({});
-  interfaces = [];
+  interfacesList = [];
+  interfaces: Interface[];
   datasourceValues = { datasource: null }
 
   datasourceControls = [{ controlId: 'datasource', label: 'Data source', type: 'textarea', readonly: true }];
-  interfacesControls = [
-    // { controlId: 'datasource', label: 'Datasource', type: 'checkbox', readonly: true }
-  ]
 
 
   constructor(
     private store: Store<State>,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<SettingsControlComponent>,
+    private dataType: DataTypeService,
     @Inject(MAT_DIALOG_DATA) public data: {
       body: TemplateBody,
       control: DynControl,
@@ -60,21 +60,23 @@ export class SettingsControlComponent implements OnInit {
     // this.control = this.data.body.dashboard.find(i => i.controlId === this.data.control.controlId);
     //  initial interfaces
     this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => {
-      this.interfaces = interfaces
+      this.interfaces = interfaces;
+      this.interfacesList = interfaces
         .filter(i => i.isActive)
         .map(i => {
           let checked = false;
-          let disabled = true;
+          let disabled = false;
           const storage = this.data.body[allInterfaces[i.name].storage];
-          if (i.name !== 'PIAFEventFrames') disabled = false;
           if (storage.hasOwnProperty('Attributes')) {
+            if (Object.values(storage).includes(this.data.control.controlId)) disabled = true;
             if (
               Object.values(storage).includes(this.data.control.controlId)
               || storage.Attributes.map(i => i.key).includes(this.data.control.controlId)
-            ) { checked = true; disabled = true };
+            ) { checked = true };
           } else {
             if (storage.includes(this.data.control.controlId)) { checked = true }
           }
+          if (i.name === 'PIAFEventFrames') disabled = true;
           return {
             name: i.name,
             label: allInterfaces[i.name].title,
@@ -87,22 +89,47 @@ export class SettingsControlComponent implements OnInit {
 
   }
 
-  changeInterface(e: MatCheckboxChange) {
-    const storage = this.data.body[allInterfaces[e.source.name].storage];
+  changeInterface(iface) {
+    const ifaceStorage = allInterfaces[iface.name].storage
+    const storage = this.data.body[ifaceStorage];
     if (storage.hasOwnProperty('Attributes')) {
-      if (!this.result.body.hasOwnProperty(e.source.name)) {
-        this.result.body[e.source.name] = { ...storage };
-      }
-      if (!e.checked) {
-        this.result.body[e.source.name] = this.result.body[e.source.name].filter(i => i.key !== this.data.control.controlId);
+      if (!this.result.body.hasOwnProperty("PIAFAttributes")) this.result.body["PIAFAttributes"] = { ...storage };
+      if (iface.checked) {
+        this.result.body["PIAFAttributes"].Attributes = this.result.body["PIAFAttributes"].Attributes.filter(i => i.key !== this.data.control.controlId);
+        this.interfacesList.find(i => i.name === "PIAFAttributes").checked = false;
         return;
       }
+      const ifase = { ...this.interfaces.find(i => i.name === "PIAFAttributes") };
+      const data = {
+        type: <PIAFSelector>"attribute",
+        initialData: {
+          serverName: ifase.setting1,
+          databaseName: ifase.setting2,
+        },
+        allowedTypes: this.dataType.getAllowableTypes(this.data.control.type)
+      };
+      const dialogRef = this.dialog.open(PiafComponent, { data })
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) return;
+        this.interfacesList.find(i => i.name === "PIAFAttributes").checked = true;
+        console.log(this.result.body["PIAFAttributes"]);
+        this.result.body["PIAFAttributes"].Attributes.push({
+          key: this.data.control.controlId,
+          attributeName: res.path
+        })
+      })
+
     } else {
-      if (!this.result.body.hasOwnProperty(e.source.name)) {
-        this.result.body[e.source.name] = [...storage];
+      if (!this.result.body.hasOwnProperty(ifaceStorage)) this.result.body[ifaceStorage] = [...storage]
+
+      if (!iface.checked) {
+        this.result.body[ifaceStorage].push(this.data.control.controlId)
+        this.interfacesList.find(i => i.name === iface.name).checked = true;
       }
-      if (e.checked) this.result.body[e.source.name].push(this.data.control.controlId)
-      else this.result.body[e.source.name] = this.result.body[e.source.name].filter(i => i !== this.data.control.controlId);
+      else {
+        this.result.body[ifaceStorage] = this.result.body[ifaceStorage].filter(i => i !== this.data.control.controlId);
+        this.interfacesList.find(i => i.name === iface.name).checked = false;
+      };
     }
   }
 
@@ -112,10 +139,14 @@ export class SettingsControlComponent implements OnInit {
     this.datasourceValues = { datasource: null };
   }
   setDataSource() {
-    const dialogRef = this.dialog.open(PiafComponent, { data: { type: 'server-db-attribute', allowedTypes: ["System.String"] } })
+    const dialogRef = this.dialog.open(PiafComponent, {
+      data: {
+        type: 'server-database-attribute',
+        allowedTypes: this.dataType.getAllowableTypes(this.data.control.type)
+      }
+    })
     dialogRef.afterClosed().subscribe(res => {
       if (!res) return;
-      console.log(res);
       this.result.body['Datasource'] = [...this.data.body.Datasource];
       const attribute = this.result.body['Datasource'].find(i => i.key === this.data.control.controlId);
       this.datasourceValues = { datasource: res.path };
@@ -128,5 +159,21 @@ export class SettingsControlComponent implements OnInit {
         })
       }
     })
+  }
+
+  // isChecked(name: string) {    
+  //   console.log(name);
+  //   const iface = this.interfacesList.find(i => i.name === name);
+  //   if (!iface) return false;
+  //   console.log(name, iface.checked);
+  //   return iface.checked;
+  // }
+  asdfa(name) {
+    this.interfacesList.find(i => i.name === name).checked = true;
+
+  }
+  ffff(name) {
+    this.interfacesList.find(i => i.name === name).checked = false;
+
   }
 }

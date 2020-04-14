@@ -4,8 +4,8 @@ import { MatHorizontalStepper } from '@angular/material/stepper';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PiafHttpService } from './piaf-http.service';
 import { catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
+export declare type PIAFSelector = 'server-database-template' | 'server-database' | 'server-database-attribute' | 'attribute';
 @Component({
   selector: 'app-piaf',
   templateUrl: './piaf.component.html',
@@ -22,22 +22,37 @@ export class PiafComponent implements OnInit {
   selectedPiefTemplateName: string;
   selectedPiefTemplate;
 
+  steps = {
+    server: false,
+    database: false,
+    attribute: false,
+    template: false
+  }
+
   isSaveDisabled: boolean = true;
 
   @ViewChild('stepper', { static: false }) stepper: MatHorizontalStepper;
 
   constructor(
     public dialogRef: MatDialogRef<PiafComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { type: string, allowedTypes: string[] },
+    @Inject(MAT_DIALOG_DATA) public data: { type: PIAFSelector, allowedTypes: string[] },
     private pis: PiafHttpService,
-  ) {
-    // data.type = 'EventFrame'
-  }
+  ) { }
+
 
   ngOnInit() {
-    this.pis.getServers()
+    this.initial(this.data);
+
+    this.steps.server && this.pis.getServers()
       .subscribe(servers => this.servers = servers);
   }
+  initial(data) {
+    this.selectedServer = data?.initialData?.serverName;
+    this.selectedDatabase = data?.initialData?.databaseName;
+    data.type.split('-').map(i => this.steps[i] = true);
+  }
+
+
   onNoClick(): void {
     this.dialogRef.close(null);
   }
@@ -66,8 +81,8 @@ export class PiafComponent implements OnInit {
   selectDatabase(databaseName) {
     this.selectedDatabase = databaseName;
     this.reset('database')
-    if (this.data.type === 'server-db') return;
-    if (this.data.type === 'server-db-template') {
+    if (this.data.type === 'server-database') return;
+    if (this.data.type === 'server-database-template') {
       this.pis.getDatabaseEventFrameTemplates({
         serverName: this.selectedServer,
         databaseName: this.selectedDatabase
@@ -89,15 +104,16 @@ export class PiafComponent implements OnInit {
 
   returnFunc() {
     switch (this.data.type) {
-      case 'server-db-attribute':
+      case 'server-database-attribute':
+      case 'attribute':
         return this.selectedAttribute;
-      case 'server-db-template':
+      case 'server-database-template':
         return {
           serverName: this.selectedServer,
           databaseName: this.selectedDatabase,
           eventFrameTemplateName: this.selectedPiefTemplateName
         };
-      case 'server-db':
+      case 'server-database':
         return {
           serverName: this.selectedServer,
           databaseName: this.selectedDatabase,
@@ -106,13 +122,13 @@ export class PiafComponent implements OnInit {
   }
   disabledSave(): boolean {
     switch (this.data.type) {
-      case 'server-db-attribute':
+      case 'server-database-attribute':
         if (this.selectedAttribute) return false
         return true;
-      case 'server-db-template':
+      case 'server-database-template':
         if (this.selectedPiefTemplateName) return false
         return true;
-      case 'server-db':
+      case 'server-database':
         if (this.selectedDatabase) return false
         return true;
     }

@@ -94,8 +94,6 @@ export class TemplateComponent implements OnInit {
   }
 
   getFormGridsterOptions(e: FormGroup) {
-    // console.log(e);
-
     this.formGrinsterOptions = e
     e.valueChanges.subscribe((values) => {
       this.dashboardService.setOptions(values);
@@ -146,8 +144,7 @@ export class TemplateComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-
+      // console.log(result);
       if (!result) return;
       Object.assign(this.template.body, result.body);
       const control = this.dashboard.find(i => i.controlId === controlId);
@@ -184,7 +181,7 @@ export class TemplateComponent implements OnInit {
     })
     template.body.TemplateData = [];
     template.lastUpdated = this.dateService.getCurternDateLocal();
-    // console.log(template.body);
+    console.log(template.body);
 
     if (this.departmentId) {
       const departmentId = this.departmentId;
@@ -203,24 +200,30 @@ export class TemplateComponent implements OnInit {
     // if (event.name !== 'PIAFAttributes' && event.name !== 'PIAFEventFrames') return;
   }
   changeSettingsInterface(iface: Interface) {
-    console.log('settings', event);
     if ((iface.name === 'PIAFAttributes' || iface.name === 'PIAFEventFrames') && iface.isActive) {
       this.deleteControls(iface.name);
       this.dashboardService.createControls(this.dashboard, iface, this.template);
     }
   }
   deleteControls(ifaceName) {
+    console.log(ifaceName);
+    let controlsId: string[] = [];
     const storage = this.template.body[allInterfaces[ifaceName].storage];
-    const controlsId = Object.values(storage)
-      .filter(key => typeof (key) === 'string')
-      .concat(storage['Attributes']
-        .map(i => i.key));
+    if (storage.hasOwnProperty('Attributes')) {
+      controlsId = <string[]>Object.values(storage).filter(key => typeof (key) === 'string');
+      if (ifaceName === 'PIAFAttributes') this.template.body[allInterfaces[ifaceName].storage] = {};
+    };
+    if (ifaceName === 'PIAFEventFrames') {
+      controlsId = controlsId.concat(storage['Attributes'].map(i => i.key));
+      this.template.body[allInterfaces[ifaceName].storage] = {};
+    };
     this.dashboard = this.dashboard.filter(({ controlId, forControl }) => !controlsId.includes(controlId) && !controlsId.includes(forControl));
+    if (['Excel', 'Xml', 'DatabaseTable'].includes(ifaceName)) this.template.body[allInterfaces[ifaceName].storage] = [];
   }
-
-
-
 }
 
 // PIAFEventFrames
 // PIAFAttributes
+// Excel
+// Xml
+// DatabaseTable

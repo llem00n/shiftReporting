@@ -30,7 +30,7 @@ export class TemplatesComponent implements OnInit {
     ).subscribe(templates => {
       this.templates = templates;
       // autostart first template
-      // templates.length && this.editTemplate(templates[0].templateId)
+      templates.length && this.editTemplate(templates[0].templateId)
     }
     );
 

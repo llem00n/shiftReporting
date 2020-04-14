@@ -37,7 +37,6 @@ export class GridsterConfigComponent implements OnChanges {
   //   this.values = this.options;
   // }
   ngOnChanges(): void {
-    // console.log(this.options);
     this.values = this.options;
   }
 }

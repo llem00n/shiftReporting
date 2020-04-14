@@ -117,16 +117,11 @@ export class DataEntryComponent implements OnInit {
     this.location.back()
   }
   addDataEntry() {
-
     this.dataEntry.createDate = this.dateService.getCurternDateLocal();
-    // console.log(this.dataEntry);
-
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
   }
 
   updateDataEntry() {
-    // console.log(this.dataEntry);
-
     this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
   }
 

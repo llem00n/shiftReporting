@@ -17,20 +17,34 @@
   </div>
   <mat-divider [vertical]="true"> </mat-divider>
   <div class="pl-2 w-64">
-    <div class="form-field focus:bg-gray-300">
+    <div *ngIf="interfacesList" class="form-field  ">
       <div class="form-field-label-container">
         <label class="form-field-label">Interface setting</label>
       </div>
-      <div *ngFor="let i of interfaces; last as last" class="mb-2">
-        <mat-checkbox [name]="i.name" (change)="changeInterface($event)" [checked]="i.checked" color='primary'
+      <div *ngFor="let i of interfacesList; last as last" class="mb-2 relative">
+        <div *ngIf="!i.disabled"  (click)="changeInterface(i)"  class="absolute w-full h-full top-0 left-0 z-10"></div>
+        <mat-checkbox color='primary' [checked]='i.checked' [disabled]="i.disabled">{{i.label}}</mat-checkbox>
+        <!-- <mat-checkbox [name]="i.name" (change)="changeInterface($event)" [checked]='interfacesList.checked' color='primary'
           [disabled]="i.disabled">
-          {{i.label}}</mat-checkbox>
+          {{i.label}}</mat-checkbox> -->
       </div>
     </div>
   </div>
 </div>
+<button (click)="asdfa('PIAFAttributes')">
+  asdfasdf
+</button>
+<button (click)="ffff('PIAFAttributes')">
+  fddfffff
+</button>
+<!-- 
+<mat-checkbox [checked]='true'>text</mat-checkbox>
+<mat-checkbox [checked]='isChecked("PIAFAttributes")'>text</mat-checkbox> -->
+<div class="overflow-auto h-64">
+  <pre>{{interfacesList | json}}</pre>
+  <pre>{{data | json}}</pre>
 
-
+</div>
 
 <mat-dialog-actions class="flex justify-end">
   <button mat-button color="primary" mat-dialog-close>CANCEL</button>

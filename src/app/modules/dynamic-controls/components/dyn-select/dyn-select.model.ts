@@ -5,7 +5,7 @@ export class DynSelect extends BaseControl {
   placeholder?: string;
   options: { value: string | number, viewValue: string }[];
   private _settings = [
-    { controlId: 'placeholder', label: 'Placeholder', type: 'text' },
+    // { controlId: 'placeholder', label: 'Placeholder', type: 'text' },
     { controlId: 'optionsString', label: 'Options', type: 'textarea' },
   ]
   constructor(opt: {} = {}) {

@@ -14,6 +14,13 @@ export class DataTypeService {
   getType(type) {
     return { ...this.data[type] };
   }
+  getAllowableTypes(controlType) {
+    const result: string[] = [];
+    Object.keys(this.data).map(key => {
+      this.data[key].allowableControls.includes(controlType) && result.push(key);
+    })
+    return result;
+  }
 
   readonly data = {
     'System.Boolean': {

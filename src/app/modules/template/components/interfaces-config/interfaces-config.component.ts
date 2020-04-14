@@ -36,8 +36,8 @@ const dbSettings = {
 
 
 export const allInterfaces = {
-  'PIAFAttributes': { storage: 'PIAFAttributes', title: 'PIAF attributes', settings: piafSettings, component: PiafComponent, type: 'server-db' },
-  'PIAFEventFrames': { storage: 'PIAFTemplate', title: 'PIAF event frames', settings: piafEFSettings, component: PiafComponent, type: 'server-db-template' },
+  'PIAFAttributes': { storage: 'PIAFAttributes', title: 'PIAF attributes', settings: piafSettings, component: PiafComponent, type: 'server-database' },
+  'PIAFEventFrames': { storage: 'PIAFTemplate', title: 'PIAF event frames', settings: piafEFSettings, component: PiafComponent, type: 'server-database-template' },
   'Excel': { storage: 'Excel', title: 'Excel', settings: fileSettings, component: SettingsFileComponent },
   'Xml': { storage: 'XML', title: 'Xml', settings: fileSettings, component: SettingsFileComponent },
   'DatabaseTable': { storage: 'DatabaseTable', title: 'Database table', settings: dbSettings, component: SettingsDBComponent },
