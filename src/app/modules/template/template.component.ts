@@ -33,7 +33,10 @@ export class TemplateComponent implements OnInit {
   title: string = 'Create template';
   saveButton: string = 'Add';
   formGrinsterOptions: FormGroup;
-  interfaces: Interface[]
+  interfaces: Interface[];
+  storeInterfaces: Interface[];
+
+  // interfacesUpdating: Interface[]
 
   options$: Subscription;
   editingTemplate$: Subscription;
@@ -48,7 +51,10 @@ export class TemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => this.interfaces = interfaces);
+    this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => {
+      this.storeInterfaces = [...interfaces];
+      this.interfaces = [...interfaces];
+    });
 
 
     this.options$ = this.dashboardService.getOptions().subscribe(options => {
@@ -97,18 +103,8 @@ export class TemplateComponent implements OnInit {
     this.formGrinsterOptions = e
     e.valueChanges.subscribe((values) => {
       this.dashboardService.setOptions(values);
-      // this.options = this.template.body.gridsterOptions = new Object(values);
     })
   }
-
-  // createDashboard(dashboard: DynControl[]): DynControl[] {
-  //   const result: DynControl[] = [];
-  //   dashboard.map(i => {
-  //     const model = dynComponents.getModel(i.type);
-  //     result.push(new model(i));
-  //   });
-  //   return result;
-  // }
 
   goBack() {
     this.location.back()
@@ -116,45 +112,21 @@ export class TemplateComponent implements OnInit {
   dropNewItem(gridItem): void {
     this.dashboardService.createNewControl(this.dashboard, gridItem, this.newControlType);
   }
-
-  // createNewControl(gridItem, dashboard): DynControl {
-  //   gridItem.cols = this.getMaxColsS(gridItem, dashboard)
-  //   return new this.modelNewControl({ gridItem });
-  // }
-  // getMaxColsS(newItem: GridsterItem, dboard: DynControl[]): number {
-  //   const dboardGridster = dboard.map(i => i.gridItem);
-  //   let maxLength = 5; /* maxLength - length of new element */
-  //   for (let i = 1; i <= maxLength; i++) {
-  //     dboardGridster.map(item => {
-  //       if (item.x === newItem.x + i
-  //         && item.y <= newItem.y
-  //         && item.y + item.rows - 1 >= newItem.y) {
-  //         maxLength = i;
-  //       }
-  //     });
-  //   }
-  //   return maxLength;
-  // }
   clickItem(controlId) {
     const control = this.dashboard.find(i => i.controlId === controlId);
     const dialogRef = this.dialog.open(SettingsControlComponent, {
-      data: {
-        control,
-        body: this.template.body
-      }
+      data: { control, body: this.template.body, interfaces: this.interfaces }
     })
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
       if (!result) return;
+      if (result === 'clickDelete') {
+        this.deleteControl(controlId);
+        return
+      }
       Object.assign(this.template.body, result.body);
       const control = this.dashboard.find(i => i.controlId === controlId);
       Object.assign(control, result.control);
     })
-
-    // if (controlId === this.selectedControl?.controlId) { this.selectedControl = null; } else {
-    //   this.selectedControl = this.dashboard
-    //     .find(i => i.controlId === controlId)
-    // }
   }
 
   dashboardChange(event) {
@@ -173,6 +145,19 @@ export class TemplateComponent implements OnInit {
     props.map(prop => delete obj[prop])
   }
 
+  updateInterfaces() {
+    this.interfaces.filter(i => i.updating).map((intface) => {
+      delete intface.updating;
+      if (this.storeInterfaces.map(({ name }) => name).includes(intface.name)) {
+        this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.template.templateId }));
+        return;
+      }
+      this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.template.templateId }));
+
+    })
+
+  }
+
   save() {
     const template: Template = JSON.parse(JSON.stringify(this.template))
     template.body.dashboard.map(i => {
@@ -182,13 +167,16 @@ export class TemplateComponent implements OnInit {
     template.body.TemplateData = [];
     template.lastUpdated = this.dateService.getCurternDateLocal();
     console.log(template.body);
+    console.log(this.interfaces);
 
+    this.updateInterfaces()
     if (this.departmentId) {
       const departmentId = this.departmentId;
       this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
     } else {
       template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
     }
+
   }
   deleteControl(controlId) {
     const index = this.dashboard.findIndex(i => i.controlId === controlId)

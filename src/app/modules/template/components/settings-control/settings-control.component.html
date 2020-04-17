@@ -1,6 +1,6 @@
 <div class="flex justify-between">
   <p mat-dialog-title>Control settings</p>
-  <button mat-icon-button>
+  <button mat-button color='warn' [disabled]="isDisableDelete" [mat-dialog-close]="'clickDelete'"> Delete control
     <mat-icon svgIcon="delete"></mat-icon>
   </button>
 </div>
@@ -22,7 +22,7 @@
         <label class="form-field-label">Interface setting</label>
       </div>
       <div *ngFor="let i of interfacesList; last as last" class="mb-2 relative">
-        <div *ngIf="!i.disabled"  (click)="changeInterface(i)"  class="absolute w-full h-full top-0 left-0 z-10"></div>
+        <div *ngIf="!i.disabled" (click)="changeInterface(i)" class="absolute w-full h-full top-0 left-0 z-10"></div>
         <mat-checkbox color='primary' [checked]='i.checked' [disabled]="i.disabled">{{i.label}}</mat-checkbox>
         <!-- <mat-checkbox [name]="i.name" (change)="changeInterface($event)" [checked]='interfacesList.checked' color='primary'
           [disabled]="i.disabled">
@@ -31,20 +31,20 @@
     </div>
   </div>
 </div>
-<button (click)="asdfa('PIAFAttributes')">
+<!-- <button (click)="asdfa('PIAFAttributes')">
   asdfasdf
 </button>
 <button (click)="ffff('PIAFAttributes')">
   fddfffff
-</button>
+</button> -->
 <!-- 
 <mat-checkbox [checked]='true'>text</mat-checkbox>
 <mat-checkbox [checked]='isChecked("PIAFAttributes")'>text</mat-checkbox> -->
-<div class="overflow-auto h-64">
+<!-- <div class="overflow-auto h-64">
   <pre>{{interfacesList | json}}</pre>
   <pre>{{data | json}}</pre>
 
-</div>
+</div> -->
 
 <mat-dialog-actions class="flex justify-end">
   <button mat-button color="primary" mat-dialog-close>CANCEL</button>

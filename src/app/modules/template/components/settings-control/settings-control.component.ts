@@ -23,20 +23,21 @@ export class SettingsControlComponent implements OnInit {
   control: DynControl;
   form = new FormGroup({});
   interfacesList = [];
-  interfaces: Interface[];
+  // interfaces: Interface[];
   datasourceValues = { datasource: null }
-
+  isDisableDelete: boolean = true;
   datasourceControls = [{ controlId: 'datasource', label: 'Data source', type: 'textarea', readonly: true }];
 
 
   constructor(
-    private store: Store<State>,
+    // private store: Store<State>,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<SettingsControlComponent>,
     private dataType: DataTypeService,
     @Inject(MAT_DIALOG_DATA) public data: {
       body: TemplateBody,
       control: DynControl,
+      interfaces: Interface[]
     },
   ) { }
 
@@ -51,45 +52,56 @@ export class SettingsControlComponent implements OnInit {
       this.result.control = values
     })
   }
+  disabledDelete(ifaces, controlId) {
+    let controlsId = <string[]>[]
+    ifaces.map(iface => {
+      const storage = this.data.body[allInterfaces[iface.name].storage];
+      if (!storage.hasOwnProperty('Attributes')) return;
+      controlsId = controlsId.concat(<string[]>Object.values(storage).filter(key => typeof (key) === 'string'));
+      if ((iface.name !== 'PIAFEventFrames')) return;
+      controlsId = controlsId.concat(storage['Attributes'].map(i => i.key));
+    })
+    if (!controlsId.includes(controlId)) this.isDisableDelete = false;
+  }
 
   initialData() {
-    // initial Datasource
     const attribute = this.data.body['Datasource'].find(i => i.key === this.data.control.controlId);
-    if (attribute) this.datasourceValues = { datasource: attribute.attributeName };
-    //  Initial control
-    // this.control = this.data.body.dashboard.find(i => i.controlId === this.data.control.controlId);
-    //  initial interfaces
-    this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => {
-      this.interfaces = interfaces;
-      this.interfacesList = interfaces
-        .filter(i => i.isActive)
-        .map(i => {
-          let checked = false;
-          let disabled = false;
-          const storage = this.data.body[allInterfaces[i.name].storage];
-          if (storage.hasOwnProperty('Attributes')) {
-            if (Object.values(storage).includes(this.data.control.controlId)) disabled = true;
-            if (
-              Object.values(storage).includes(this.data.control.controlId)
-              || storage.Attributes.map(i => i.key).includes(this.data.control.controlId)
-            ) { checked = true };
-          } else {
-            if (storage.includes(this.data.control.controlId)) { checked = true }
-          }
-          if (i.name === 'PIAFEventFrames') disabled = true;
-          return {
-            name: i.name,
-            label: allInterfaces[i.name].title,
-            checked,
-            disabled,
-            info: '',
-          };
-        })
-    });
+    if (attribute) this.datasourceValues = { datasource: this.setPiafString(attribute.attributeName) };
 
+    // this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => {
+
+    // this.interfaces = interfaces;
+    this.disabledDelete(this.data.interfaces, this.data.control.controlId);
+    this.interfacesList = this.data.interfaces
+      .filter(i => i.isActive)
+      .map(i => {
+        let checked = false;
+        let disabled = false;
+        const storage = this.data.body[allInterfaces[i.name].storage];
+        if (storage.hasOwnProperty('Attributes')) {
+          if (Object.values(storage).includes(this.data.control.controlId)) disabled = true;
+          if (
+            Object.values(storage).includes(this.data.control.controlId)
+            || storage.Attributes.map(i => i.key).includes(this.data.control.controlId)
+          ) { checked = true };
+        } else {
+          if (storage.includes(this.data.control.controlId)) { checked = true }
+        }
+        if (i.name === 'PIAFEventFrames') disabled = true;
+        return {
+          name: i.name,
+          label: allInterfaces[i.name].title,
+          checked,
+          disabled,
+          info: '',
+        };
+      })
+    // });
   }
 
   changeInterface(iface) {
+    console.log(iface);
+    
     const ifaceStorage = allInterfaces[iface.name].storage
     const storage = this.data.body[ifaceStorage];
     if (storage.hasOwnProperty('Attributes')) {
@@ -99,7 +111,7 @@ export class SettingsControlComponent implements OnInit {
         this.interfacesList.find(i => i.name === "PIAFAttributes").checked = false;
         return;
       }
-      const ifase = { ...this.interfaces.find(i => i.name === "PIAFAttributes") };
+      const ifase = { ...this.data.interfaces.find(i => i.name === "PIAFAttributes") };
       const data = {
         type: <PIAFSelector>"attribute",
         initialData: {
@@ -149,7 +161,7 @@ export class SettingsControlComponent implements OnInit {
       if (!res) return;
       this.result.body['Datasource'] = [...this.data.body.Datasource];
       const attribute = this.result.body['Datasource'].find(i => i.key === this.data.control.controlId);
-      this.datasourceValues = { datasource: res.path };
+      this.datasourceValues = { datasource: this.setPiafString(res.path) };
       if (attribute) {
         attribute.attributeName = res.path;
       } else {
@@ -176,4 +188,9 @@ export class SettingsControlComponent implements OnInit {
     this.interfacesList.find(i => i.name === name).checked = false;
 
   }
+
+  setPiafString(path: string): string {
+    return path ? path.replace(/%5C/g, '\\' + ' ').replace('|', '| ') : '';
+  }
+
 }

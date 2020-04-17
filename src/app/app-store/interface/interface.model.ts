@@ -13,5 +13,6 @@ export interface Interface {
   setting5: string;
   isActive: boolean;
   interfaceType: InterfaceType;
+  updating?: boolean; 
 }
 

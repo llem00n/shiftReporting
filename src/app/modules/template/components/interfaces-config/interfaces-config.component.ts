@@ -88,6 +88,11 @@ export class InterfacesConfigComponent implements OnInit {
     const iface = this.interfaces.find(i => i.name === name);
     this.openDialog(name, iface)
   }
+
+  updateInterface(name, value) {
+    Object.assign(this.interfaces.find(i => i.name === name), value, { updating: true })
+  }
+
   setSettings(name: string) {
     const iface = this.interfaces.find(i => i.name === name);
     if (!iface) { this.openDialog(name); return; }
@@ -95,32 +100,37 @@ export class InterfacesConfigComponent implements OnInit {
       ...iface,
       isActive: !iface.isActive,
     };
+    this.updateInterface(name, intface)
+    // this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
     this.changeStatus.emit(intface);
-    this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
   }
 
-  openDialog(interfaceType, value?): void {
-    const dialogRef = this.dialog.open(allInterfaces[interfaceType].component, {
+
+  openDialog(name, value?): void {
+    const dialogRef = this.dialog.open(allInterfaces[name].component, {
       data: {
         value,
-        settings: allInterfaces[interfaceType].settings,
-        type: allInterfaces[interfaceType].type,
+        settings: allInterfaces[name].settings,
+        type: allInterfaces[name].type,
       },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;
       const settings = {};
-      Object.keys(allInterfaces[interfaceType].settings).map(key => {
-        settings[key] = result[allInterfaces[interfaceType].settings[key].key];
+      Object.keys(allInterfaces[name].settings).map(key => {
+        settings[key] = result[allInterfaces[name].settings[key].key];
       })
       if (!value) {
         const intface = <Interface>{
           ...settings,
-          interfaceType,
-          name: interfaceType,
+          interfaceType: name,
+          name,
           isActive: true,
+          updating: true,
         };
-        this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.templateId }))
+        this.interfaces.push(intface);
+        this.updateInterface(name, intface)
+        // this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.templateId }))
         this.changeSettings.emit(intface);
       }
       else {
