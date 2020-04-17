@@ -36,5 +36,4 @@ export class SelectUserDepartmentComponent implements OnInit {
       this.changeDepartment.emit(dep);
     })
   }
-
 }

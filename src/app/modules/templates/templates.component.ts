@@ -41,7 +41,7 @@ export class TemplatesComponent implements OnInit {
           return;
         }
         this.currentUser = user;
-        this.selectDepartment({ value: user.departments[0].departmentId })
+        // this.selectDepartment({ value: user.departments[0].departmentId })
       });
 
   }
@@ -51,9 +51,9 @@ export class TemplatesComponent implements OnInit {
     this.templates$.unsubscribe();
   }
 
-  selectDepartment({ value }) {
-    this.departmentId = value;
-    this.store.dispatch(TemplateActions.getTemplates({ departmentId: value }));
+  selectDepartment({departmentId}) {
+    this.departmentId = departmentId;
+    this.store.dispatch(TemplateActions.getTemplates({ departmentId }));
   }
   editTemplate(event) {
     const template = JSON.parse(JSON.stringify(this.templates.find(i => i.templateId === event)));

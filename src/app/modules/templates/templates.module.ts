@@ -4,6 +4,7 @@ import { TemplatesComponent } from './templates.component';
 import { TemplateCardComponent } from './components/template-card/template-card.component';
 import { RouterModule } from '@angular/router';
 import { UsedMaterialModule } from '../used-material/used-material.module';
+import { DepartmentsModule } from '../departments/departments.module';
 
 
 
@@ -12,7 +13,8 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
   imports: [
     CommonModule,
     RouterModule,
-    UsedMaterialModule
+    UsedMaterialModule,
+    DepartmentsModule
   ]
 })
 export class TemplatesModule { }
