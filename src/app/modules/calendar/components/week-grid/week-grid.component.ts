@@ -12,24 +12,27 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
   @Input() week: number;
   @Input() year: number;
 
-  currentShiftStyle: string = " shadow-outline z-10";
+  // currentShiftStyle: string = " shadow-outline z-10";
 
   scheduleWeekList;
   startWeekDate = this.dateService.lastMonday();
   daysOfWeek = this.dateService.daysOfWeek;
-  hours = new Array(24)
-  shiftBg = [
-    'bg-red-200',
-    'bg-yellow-200',
-    'bg-green-200',
-    'bg-teal-200',
-    'bg-blue-200',
-    'bg-indigo-200',
-    'bg-purple-200',
-    'bg-pink-200',
-    'bg-orange-200',
-    'bg-gray-200',
-  ]
+  hours = new Array(24);
+
+  shiftStyle = ['red', 'orange', 'green', 'teal', 'blue', 'indigo', 'purple', 'pink', 'yellow', 'gray']
+    .map(i => `text-${i}-500 border-${i}-400`);
+  // [
+  //   'bg-red-200',
+  //   'bg-yellow-200',
+  //   'bg-green-200',
+  //   'bg-teal-200',
+  //   'bg-blue-200',
+  //   'bg-indigo-200',
+  //   'bg-purple-200',
+  //   'bg-pink-200',
+  //   'bg-orange-200',
+  //   'bg-gray-200',
+  // ]
   interval;
   constructor(
     private dateService: DateService
@@ -39,7 +42,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
     this.interval = setInterval(() => {
       this.scheduleWeekList && Object.keys(this.scheduleWeekList).map(key => {
         this.scheduleWeekList[key].shifts.map(shift => {
-          shift.elClass = shift.elClass.split(' ')[0] + this.getClass(this.scheduleWeekList[key], shift)
+          shift['isActive'] = this.getClass(this.scheduleWeekList[key], shift)
         })
       })
     }, 1000)
@@ -54,12 +57,12 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getClass(day, shift) {
-    let result = '';
+    let result = false;
     let startDate = new Date(this.dateService.dateLocalJSON(day.date).slice(0, 11) + shift.schedule.startTime);
     let endDate = new Date(this.dateService.dateLocalJSON(day.date).slice(0, 11) + shift.schedule.endTime);
     if (shift.part === 1) endDate = new Date(endDate.setDate(endDate.getDate() + 1));
     if (shift.part === 2) startDate = new Date(startDate.setDate(endDate.getDate() - 1));
-    if (this.dateService.isBetween(new Date(), startDate, endDate)) result = result + " shadow-outline z-10"
+    if (this.dateService.isBetween(new Date(), startDate, endDate)) result = true
     return result;
   }
 
@@ -76,14 +79,14 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.schedules.map((schedule: Schedule, index) => {
-      const elClass = this.shiftBg[index % 10]
+      const elClass = this.shiftStyle[index % 10]
       this.dateService.daysOfWeek.map(({ key, dayNum }) => {
         if (
           !schedule[key]
           || !this.dateService.isBetween(list[dayNum].date, schedule.validFromDate, schedule.validToDate)
         ) return;
         const weeks = this.dateService.getWeeks(list[dayNum].date, schedule.validFromDate);
-        if (this.getMinutes(schedule.startTime) < this.getMinutes(schedule.endTime)) {
+        if (this.getMinutes(schedule.startTime) < (this.getMinutes(schedule.endTime)) || 24 * 60) {
           if (weeks % schedule.recurEveryWeeks) return;
           list[dayNum].shifts.push({
             schedule,

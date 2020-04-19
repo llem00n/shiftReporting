@@ -19,13 +19,13 @@ export class TemplatesListComponent implements OnInit {
   @Input() shift;
 
   // svgSrc = "check-circle-outline"
-  svgIcon = {
-    lock: { name: "lock", style: { fill: 'grey', width: '1rem', height: '1rem' } },
-    submited: { name: "check-circle-outline", style: { fill: 'green', width: '1rem', height: '1rem' } },
-    missed: { name: "checkbox-blank-circle", style: { fill: 'red', width: '1rem', height: '1rem' } },
-    open: { name: "checkbox-blank-circle-outline", style: { fill: 'red', width: '1rem', height: '1rem' } },
+  style = {
+    lock: { name: "lock", styleSvg: { width: '1rem', height: '1rem' }, styleClass: 'text-gray-600 bg-gray-100' },
+    submited: { name: "check-circle-outline", styleSvg: { fill: 'green', width: '1rem', height: '1rem' }, styleClass: 'bg-green-100 text-green-600' },
+    missed: { name: "alert-circle", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-600' },
+    open: { name: "alert-circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-600' },
   }
-
+  
   templates;
   dataEntries: DataEntry[];
 
@@ -41,7 +41,7 @@ export class TemplatesListComponent implements OnInit {
   ngOnInit(): void {
     this.getData();
   }
-  ngOnDestroy(): void {    
+  ngOnDestroy(): void {
     this.data$.unsubscribe();
   }
   getData() {
@@ -64,22 +64,22 @@ export class TemplatesListComponent implements OnInit {
     let endDate = new Date(this.dateService.dateLocalJSON(this.day.value.date).slice(0, 11) + this.shift.schedule.endTime);
     if (this.shift.part === 1) endDate = new Date(endDate.setDate(endDate.getDate() + 1));
     if (this.shift.part === 2) startDate = new Date(startDate.setDate(endDate.getDate() - 1));
+
     const templates = data.templates.map((template: Template) => {
       let dataEntry: DataEntry = null;
       // let svgIcon = this.svgIcon.missed;
       data.dataEntries.map((item: DataEntry) => {
         if ((item.template.templateId === template.templateId) && this.dateService.isBetween(item.createDate, startDate, endDate)) dataEntry = item
       });
-
-      const getSvgIcon = () => {
-        if (new Date() < startDate) return this.svgIcon.lock;
-        if (!dataEntry) return this.svgIcon.missed;
-        if (dataEntry.submitDate) return this.svgIcon.submited;
-        return this.svgIcon.open;
+      const getStyle = () => {
+        if (new Date() < startDate) return this.style.lock;
+        if (!dataEntry) return this.style.missed;
+        if (dataEntry.submitDate) return this.style.submited;
+        return this.style.open;
       }
 
       return {
-        svgIcon: getSvgIcon(),
+        style: getStyle(),
         template,
         dataEntry,
       };

@@ -14,7 +14,7 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
   declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent, TemplatesListComponent],
   imports: [
     CommonModule,
-    AngularSvgIconModule.forRoot(),
+    // AngularSvgIconModule.forRoot(),
     DepartmentsModule,
     UsedMaterialModule,
   ]

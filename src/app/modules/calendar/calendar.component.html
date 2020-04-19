@@ -1,5 +1,5 @@
 <div *ngIf="week && year" class="flex flex-col h-full">
-  <div class="flex justify-between px-4 py-2">
+  <div class="m-4 mb-0 flex justify-between">
     <div class="flex-1 ">
       <app-select-user-department (changeDepartment)="changeDepartment($event)"></app-select-user-department>
     </div>
@@ -7,7 +7,7 @@
       <app-week-selector [week]='week' [year]='year' (changeWeek)="setWeek($event)"></app-week-selector>
     </div>
   </div>
-  <div class="flex-1">
+  <div class="flex-1 m-4 mt-0 ">
     <app-week-grid [schedules]="schedules" [week]='week' [year]='year'></app-week-grid>
   </div>
 </div>

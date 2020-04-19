@@ -1,29 +1,11 @@
-<div *ngFor="let template of templates" class="flex cursor-pointer">
-  <svg-icon src="assets/svg_icons/{{template.svgIcon.name}}.svg" [svgStyle]="template.svgIcon.style">
-  </svg-icon>
-  <!-- <svg-icon src="assets/svg_icons/checkbox-blank-circle.svg" [svgStyle]="{ 'width': '1rem', 'fill': 'red'}"> </svg-icon>
-  <svg-icon src="assets/svg_icons/lock.svg" [svgStyle]="{ 'width': '1rem', 'fill': 'grey'}"> </svg-icon>
-  <svg-icon src="assets/svg_icons/check-circle-outline.svg" [svgStyle]="{ 'width': '1rem', 'fill': 'grey'}"> </svg-icon> -->
-  <p (click)="clickTemplate(template)" class="truncate"> {{template.template.name}}</p>
+<div class="shadow bg-white h-full border-l-4  overflow-auto" [ngClass]="shift.elClass">
+  <!-- <pre>{{shift.isActive}}</pre> -->
+  <div class="p-1">
+    <p class="truncate text-sm font-bold text-center">{{shift.schedule.shiftName}}</p>
+    <div *ngFor="let template of templates" class="cursor-pointer flex m-1 p-1 rounded shadow"
+      [ngClass]="template.style.styleClass">
+      <mat-icon svgIcon="{{template.style.name}}" [ngStyle]="template.style.styleSvg"></mat-icon>
+      <p (click)="clickTemplate(template)" class="truncate flex-1 "> {{template.template.name}}</p>
+    </div>
+  </div>
 </div>
-
-
-
-<!-- <div class="text-xs">
-  <hr>
-  <div *ngFor="let item of dataEntries">
-    <p>dataEntryId: {{item.dataEntryId}}</p>
-    <p>cd: {{item.createDate}}</p>
-  </div>
-  <hr>
-  <div>
-    <p>shift: {{shift | json}}</p>
-
-  </div>
-  <hr>
-  <div>
-    <p>day: {{day | json}}</p>
-  </div>
-  <hr>
-
-</div> -->

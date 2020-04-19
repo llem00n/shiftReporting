@@ -1,12 +1,12 @@
-<div class="flex flex-col h-full flex-1 px-4 pb-4">
+<div class="flex flex-col h-full flex-1">
   <div>
     <div class="flex ">
-      <div class="w-12 border border-gray-400 flex justify-center items-center">
+      <div class="w-12 border border-transparent flex justify-center items-center">
         <!-- <p>Time</p> -->
       </div>
       <div class="flex justify-between flex-1 ">
         <div *ngFor="let day of scheduleWeekList | keyvalue"
-          class="border border-gray-400 w-full text-gray-700 font-bold text-sm">
+          class="border border-transparent w-full text-gray-700 font-bold text-sm">
           <p class="text-center">{{day .value.name}}</p>
           <p class="text-center">{{day.value.date | date}}</p>
         </div>
@@ -14,34 +14,39 @@
     </div>
   </div>
 
-  <div #contentCalendar class="flex-1">
-    <div class="flex h-full">
-      <div class="flex flex-col  justify-between h-full w-12 border border-gray-400">
-        <div *ngFor="let item of hours; let i=index"
-          class="flex justify-center border-b border-gray-400 flex-1 text-gray-700 font-bold text-xs">
-          <p>{{i}}:00</p>
-        </div>
+  <div class="flex h-full flex-1 border-t border-gray-300">
+    <div class="flex flex-col  justify-between h-full w-12 ">
+      <!-- hours -->
+      <div *ngFor="let item of hours; let i=index"
+        class="flex justify-center border-b border-r border-gray-300 flex-1 text-gray-700 font-bold text-xs">
+        <p>{{i}}:00</p>
       </div>
+    </div>
 
-      <div class="flex justify-between flex-1 h-full">
-        <div *ngFor="let day of scheduleWeekList | keyvalue"
-          class="relative flex flex-col border border-gray-400 w-full h-full">
-          <div *ngFor="let shift of day.value.shifts">
+    <div class="flex justify-between flex-1 h-full bg-gray-100">
+      <div *ngFor="let day of scheduleWeekList | keyvalue" class="relative flex flex-col w-full h-full">
+        <!-- line -->
+        <div *ngFor="let item of hours; let i=index"
+          class="flex justify-center border-b border-r border-gray-300 flex-1"> </div>
+        <!-- shifts -->
+        <div *ngFor="let shift of day.value.shifts" [ngStyle]="shift.position"  [class.shadow-outline]="shift.isActive"
+          class="absolute w-full border-r-4  border-b-4 border-transparent overflow-hidden hover:h-auto hover:z-20 ">
+              <app-templates-list [day]="day" [shift]="shift"></app-templates-list>
 
-            <!-- shift -->
-            <div [ngStyle]="shift.position" class="absolute w-full overflow-auto hover:h-40" [ngClass]="shift.elClass">
-              <p class="px-1 truncate text-gray-700 text-sm font-bold">{{shift.schedule.shiftName}}</p>
-              <div class="">
-
-                <!-- templates -->
-                <app-templates-list [day]="day" [shift]="shift"></app-templates-list>
-              </div>
-              <!-- <p>{{day.value.shifts | json}}</p> -->
-            </div>
-          </div>
-          <div *ngFor="let item of hours; let i=index" class="flex justify-center border-b border-gray-400 flex-1">
-          </div>
+            <!-- <div class="p-1">
+              Night sift
+            </div> -->
         </div>
+
+        <!-- <mat-card class="h-full p-0">
+              <p>Night Shift</p>
+            </mat-card> -->
+        <!-- shift -->
+
+
+        <!-- <p class="px-1 truncate text-gray-700 text-sm font-bold">{{shift.schedule.shiftName}}</p> -->
+        <!-- templates -->
+        <!-- <p>{{day.value.shifts | json}}</p> -->
       </div>
     </div>
   </div>

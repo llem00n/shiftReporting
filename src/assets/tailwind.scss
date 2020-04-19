@@ -25,12 +25,12 @@
 // a {
 //   background-color: transparent;
 // }
-// abbr[title] {
-//   border-bottom: none;
-//   text-decoration: underline;
-//   -webkit-text-decoration: underline dotted;
-//   text-decoration: underline dotted;
-// }
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+}
 // b,
 // strong {
 //   font-weight: bolder;
@@ -57,9 +57,9 @@
 // sup {
 //   top: -0.5em;
 // }
-// img {
-//   border-style: none;
-// }
+img {
+  border-style: none;
+}
 // button,
 // input,
 // optgroup,
@@ -87,10 +87,10 @@
 // [type="button"]::-moz-focus-inner,
 // [type="reset"]::-moz-focus-inner,
 // [type="submit"]::-moz-focus-inner,
-// button::-moz-focus-inner {
-//   border-style: none;
-//   padding: 0;
-// }
+button::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
 // [type="button"]:-moz-focusring,
 // [type="reset"]:-moz-focusring,
 // [type="submit"]:-moz-focusring,
@@ -100,14 +100,14 @@
 // fieldset {
 //   padding: 0.35em 0.75em 0.625em;
 // }
-// legend {
-//   box-sizing: border-box;
-//   color: inherit;
-//   display: table;
-//   max-width: 100%;
-//   padding: 0;
-//   white-space: normal;
-// }
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
 // progress {
 //   vertical-align: baseline;
 // }
@@ -115,10 +115,10 @@
 //   overflow: auto;
 // }
 // [type="checkbox"],
-// [type="radio"] {
-//   box-sizing: border-box;
-//   padding: 0;
-// }
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
 // [type="number"]::-webkit-inner-spin-button,
 // [type="number"]::-webkit-outer-spin-button {
 //   height: auto;
@@ -185,14 +185,14 @@
 //   sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 //   line-height: 1.5;
 // }
-// *,
-// ::after,
-// ::before {
-//   box-sizing: border-box;
-//   border-width: 0;
-//   border-style: solid;
-//   border-color: #e2e8f0;
-// }
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #00000005;
+}
 // hr {
 //   border-top-width: 1px;
 // }
