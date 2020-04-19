@@ -24,6 +24,24 @@ interface Atribute {
 export class DashboardService {
 
   options = new BehaviorSubject<GridsterOptions>(null)
+  preKey: string = 'attr';
+  PIAFControlList;
+  baseAttributes: { [key: string]: Array<Atribute> } = {
+    PIAFEventFrames: [
+      { name: 'TemplateName', label: 'Template name', type: 'System.String', readonly: true, },
+      { name: 'StartTime', label: 'Start time', type: 'System.DateTime' },
+      { name: 'EndTime', label: 'End time', type: 'System.DateTime' },
+      { name: 'EventName', label: 'Event name', type: 'System.String' },
+    ],
+    PIAFAttributes: [
+      { name: 'Timestamp', label: 'Template stamp', type: 'System.DateTime', }
+    ]
+  }
+
+  constructor(
+    private piafHttpService: PiafHttpService,
+    private dataTypeService: DataTypeService
+  ) { }
 
   setOptions(opt: GridsterOptions) {
     const { minCols, minRows, bgColor } = optionsBase
@@ -33,28 +51,22 @@ export class DashboardService {
   getOptions(): Observable<GridsterOptions> {
     return this.options.asObservable()
   }
+  setOptionsMaxDimention(dashboard) {
+    this.setOptions({
+      ...this.options.value,
+      minRows: Math.max(this.lastRow(dashboard), this.options.value.minRows || 0),
+      minCols: Math.max(this.lastCol(dashboard), this.options.value.minCols || 0),
+    })
+  }
+  private lastRow(dashboard: DynControl[]) {
+    const arr: number[] = dashboard.map(i => i.gridItem.y + i.gridItem.rows);
+    return arr.length ? Math.max.apply(null, arr) : 0
+  }
+  private lastCol(dashboard: DynControl[]) {
+    const arr: number[] = dashboard.map(i => i.gridItem.x + i.gridItem.cols)
+    return arr.length ? Math.max.apply(null, arr) : 0
+  }
 
-  preKey: string = 'attr';
-  PIAFControlList;
-
-  baseAttributes: {
-    [key: string]: Array<Atribute>
-  } = {
-      PIAFEventFrames: [
-        { name: 'TemplateName', label: 'Template name', type: 'System.String', readonly: true, },
-        { name: 'StartTime', label: 'Start time', type: 'System.DateTime' },
-        { name: 'EndTime', label: 'End time', type: 'System.DateTime' },
-        { name: 'EventName', label: 'Event name', type: 'System.String' },
-      ],
-      PIAFAttributes: [
-        { name: 'Timestamp', label: 'Template stamp', type: 'System.DateTime', }
-      ]
-    }
-
-  constructor(
-    private piafHttpService: PiafHttpService,
-    private dataTypeService: DataTypeService
-  ) { }
 
   createDashboard(dashboard: DynControl[]): DynControl[] {
     const result: DynControl[] = [];
@@ -97,6 +109,7 @@ export class DashboardService {
         attributes = attributes.concat(this.baseAttributes[iface.name]);
         this.createAttributeControls(dashboard, attributes);
         template.body.PIAFAttributes = { ...this.PIAFControlList };
+        this.setOptionsMaxDimention(dashboard)
         break;
       case 'PIAFEventFrames':
         attributes = attributes.concat(this.baseAttributes[iface.name]);
@@ -108,6 +121,7 @@ export class DashboardService {
           if (efTemplate) efTemplate.attributes.map(attr => attributes.push({ ...attr, preKey: this.preKey, label: attr.name }));
           this.createAttributeControls(dashboard, attributes);
           template.body.PIAFTemplate = { ...this.PIAFControlList };
+          this.setOptionsMaxDimention(dashboard)
         });
         break;
       default:
@@ -122,25 +136,17 @@ export class DashboardService {
       dashboard.push(control);
       dashboard.push(this.createLabel(attr, indexY, control.controlId));
     });
-    const lastRow = this.lastRow(dashboard)
+    const lastRow = this.lastRow(dashboard);
     if (this.options.value.minRows < lastRow) this.setOptions({
       ...this.options.value,
       minRows: this.lastRow(dashboard),
     })
 
   }
-  lastRow(dashboard: DynControl[]) {
-    const arr: number[] = dashboard.map(i => i.gridItem.y + i.gridItem.rows);
-    return arr.length ? Math.max.apply(null, arr) : 0
-  }
-  lastCol(dashboard: DynControl[]) {
-    const arr: number[] = dashboard.map(i => i.gridItem.x + i.gridItem.cols)
-    return arr.length ? Math.max.apply(null, arr) : 0
-  }
 
   private createLabel(attribute: Atribute, y: number, forControl: string) {
     const gridItem: GridsterItem = { cols: 5, rows: 1, x: 0, y }
-    
+
     return new DynLabel({
       controlId: 'label-' + attribute.name + '-' + Date.now().toString(16),
       gridItem,
@@ -152,7 +158,7 @@ export class DashboardService {
 
   private createControl(attribute: Atribute, y: number): DynControl {
     const { type, preKey, name } = attribute
-    const gridItem: GridsterItem = { cols: 5, rows: 1, x: 6, y };
+    const gridItem: GridsterItem = { cols: 6, rows: 1, x: 5, y };
     const controlType = this.dataTypeService.getType(type).allowableControls[0];
     const model = dynComponents.getModel(controlType);
     const controlId = `${preKey ? preKey + '-' : ''}${name}-${controlType}${Date.now().toString(16)}`;
@@ -172,32 +178,4 @@ export class DashboardService {
     }
     return new model(opt);
   }
-
 }
-
-/*
-  name: string;
-  label?: string;
-  Type: string;
-  readonly?: boolean;
-  valueKey?: string;
-  notRequired?: boolean;
-*/
-/*
-TemplateName
-StartTime
-EndTime
-EventName
-Attributes
-*/
-
-/*
-Timestemp
-Attributes
-*/
-
-/*
-0: {name: "MaxTemperature", type: "System.Double"}
-1: {name: "Weight", type: "System.Int32"}
-2: {name: "Product", type: "System.String"}
-*/

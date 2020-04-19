@@ -19,14 +19,14 @@
       <app-general-config (form)="getFormGeneral($event)" [template]='template'></app-general-config>
       <app-gridster-config [options]='options' (form)="getFormGridsterOptions($event)">
       </app-gridster-config>
-      <app-interfaces-config *ngIf="template.templateId" [interfaces]="interfaces" [templateId]="template.templateId"
+      <app-interfaces-config [interfaces]="interfaces" [templateId]="template.templateId"
         (changeSettings)="changeSettingsInterface($event)" (changeStatus)="changeStatusInterface($event)">
       </app-interfaces-config>
       <app-controls-list (draggableControl)="setTypeNewControl($event)"></app-controls-list>
       <app-control-config *ngIf="selectedControl" [control]="selectedControl" (deleteControl)='deleteControl($event)'>
       </app-control-config>
     </div>
-
+    
     <!-- Main window -->
     <div class="flex-1 p-2 overflow-auto">
 

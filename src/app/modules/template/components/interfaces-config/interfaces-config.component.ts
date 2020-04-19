@@ -136,7 +136,7 @@ export class InterfacesConfigComponent implements OnInit {
       else {
         const intface = <Interface>{}
         Object.assign(intface, value, settings);
-        this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
+        // this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
         this.changeSettings.emit(intface);
       }
     });

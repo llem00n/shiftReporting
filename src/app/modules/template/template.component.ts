@@ -130,12 +130,10 @@ export class TemplateComponent implements OnInit {
   }
 
   dashboardChange(event) {
-    this.dashboardService.setOptions({
-      ...this.options,
-      minRows: Math.max(this.dashboardService.lastRow(this.dashboard), this.options.minRows),
-      minCols: Math.max(this.dashboardService.lastCol(this.dashboard), this.options.minCols),
-    })
+    this.dashboardService.setOptionsMaxDimention(this.dashboard);
   }
+
+
   setTypeNewControl(key) {
     this.newControlType = key
     // this.newControlType = dynComponents.getModel(key);
@@ -194,7 +192,6 @@ export class TemplateComponent implements OnInit {
     }
   }
   deleteControls(ifaceName) {
-    console.log(ifaceName);
     let controlsId: string[] = [];
     const storage = this.template.body[allInterfaces[ifaceName].storage];
     if (storage.hasOwnProperty('Attributes')) {
@@ -202,7 +199,7 @@ export class TemplateComponent implements OnInit {
       if (ifaceName === 'PIAFAttributes') this.template.body[allInterfaces[ifaceName].storage] = {};
     };
     if (ifaceName === 'PIAFEventFrames') {
-      controlsId = controlsId.concat(storage['Attributes'].map(i => i.key));
+      if (Object.keys(storage).length) controlsId = controlsId.concat(storage['Attributes'].map(i => i.key));
       this.template.body[allInterfaces[ifaceName].storage] = {};
     };
     this.dashboard = this.dashboard.filter(({ controlId, forControl }) => !controlsId.includes(controlId) && !controlsId.includes(forControl));
