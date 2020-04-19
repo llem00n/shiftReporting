@@ -14,6 +14,18 @@ export class TemplateHttpService {
   constructor(private httpService: HttpService) { }
 
   addTemplate(opt: { departmentId: number, template: Template }): Observable<AppHttpResponse> {
+
+    // const temp = { ...opt.template, templateId: 1111111 };
+    // return new Observable(observer => {
+    //   setTimeout(() => {
+    //     const resp: AppHttpResponse = {
+    //       status: 200,
+    //       body: temp
+    //     }
+    //     observer.next(resp);
+    //   }, 2000)
+    // })
+
     const { departmentId, template } = opt;
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addTemplate',

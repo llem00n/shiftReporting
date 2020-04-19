@@ -10,6 +10,7 @@ export interface State extends EntityState<Template> {
   // additional entities state properties
   templateTypes: TemplateType[];
   editingTemplate: Template;
+  addedTemplate: Template;
 }
 
 export const adapter: EntityAdapter<Template> = createEntityAdapter<Template>({
@@ -20,12 +21,16 @@ export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   templateTypes: [],
   editingTemplate: null,
+  addedTemplate: null,
 });
 
 const templateReducer = createReducer(
   initialState,
   on(TemplateActions.addTemplateSuccess,
     (state, action) => adapter.addOne(action.template, state)
+  ),
+  on(TemplateActions.addTemplateSuccess,
+    (state, action) => ({ ...state, addedTemplate: action.template })
   ),
   on(TemplateActions.updateTemplateSuccess,
     (state, action) => adapter.updateOne(action.template, state)
@@ -41,7 +46,10 @@ const templateReducer = createReducer(
   ),
 
   on(TemplateActions.setEditingTemplate,
-    (state, { template }) => ({...state, editingTemplate: template})
+    (state, { template }) => ({ ...state, editingTemplate: template })
+  ),
+  on(TemplateActions.setAddedTemplate,
+    (state, { template }) => ({ ...state, addedTemplate: template })
   ),
 
   // on(TemplateActions.upsertTemplate,

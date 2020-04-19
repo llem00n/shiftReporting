@@ -4,7 +4,7 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
-import { State, editingTemplate, templateInterfaces } from 'src/app/app-store';
+import { State, editingTemplate, templateInterfaces, addedTemplate } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Interface } from '@models/*';
@@ -15,6 +15,7 @@ import { TemplateActions, InterfaseActions } from '@actions/*';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 import { allInterfaces } from './components/interfaces-config/interfaces-config.component';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template',
@@ -81,7 +82,6 @@ export class TemplateComponent implements OnInit {
       this.departmentId = template._departmentId;
       this.template = new Template(opt);
       this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
-      this.template.body.dashboard = this.dashboard
       this.dashboardService.setOptions(this.template.body.gridsterOptions)
       // this.options = this.template.body.gridsterOptions;
 
@@ -92,6 +92,7 @@ export class TemplateComponent implements OnInit {
   ngOnDestroy(): void {
     this.options$.unsubscribe();
     this.editingTemplate$.unsubscribe();
+    this.store.dispatch(InterfaseActions.getInterfacesSuccess({ interfaces: [] }));
   }
   getFormGeneral(e: FormGroup) {
     e.valueChanges.subscribe(value =>
@@ -130,12 +131,10 @@ export class TemplateComponent implements OnInit {
   }
 
   dashboardChange(event) {
-    this.dashboardService.setOptions({
-      ...this.options,
-      minRows: Math.max(this.dashboardService.lastRow(this.dashboard), this.options.minRows),
-      minCols: Math.max(this.dashboardService.lastCol(this.dashboard), this.options.minCols),
-    })
+    this.dashboardService.setOptionsMaxDimention(this.dashboard);
   }
+
+
   setTypeNewControl(key) {
     this.newControlType = key
     // this.newControlType = dynComponents.getModel(key);
@@ -145,39 +144,47 @@ export class TemplateComponent implements OnInit {
     props.map(prop => delete obj[prop])
   }
 
-  updateInterfaces() {
+  updateInterfaces(templateId) {
     this.interfaces.filter(i => i.updating).map((intface) => {
       delete intface.updating;
       if (this.storeInterfaces.map(({ name }) => name).includes(intface.name)) {
-        this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.template.templateId }));
+        this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId }));
         return;
       }
-      this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.template.templateId }));
+      this.store.dispatch(InterfaseActions.addInterface({ intface, templateId }));
 
     })
 
   }
 
   save() {
-    const template: Template = JSON.parse(JSON.stringify(this.template))
+    this.template.body.dashboard = this.dashboard;
+    const template: Template = JSON.parse(JSON.stringify(this.template));
     template.body.dashboard.map(i => {
       this.removeExcessProps(i, ['diffGridItem', 'settings', '_settings']);
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
     template.body.TemplateData = [];
     template.lastUpdated = this.dateService.getCurternDateLocal();
-    console.log(template.body);
-    console.log(this.interfaces);
-
-    this.updateInterfaces()
     if (this.departmentId) {
       const departmentId = this.departmentId;
       this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
     } else {
       template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
+      this.updateInterfaces(template.templateId);
     }
-
+    this.store.pipe(
+      select(addedTemplate),
+      filter(val => !!val),
+      take(1)
+    ).subscribe(temp => {
+      console.log(temp);
+      this.updateInterfaces(temp.templateId);
+      this.store.dispatch(TemplateActions.setAddedTemplate({ template: null }))
+      this.store.dispatch(TemplateActions.setEditingTemplate({ template: temp }))
+    })
   }
+
   deleteControl(controlId) {
     const index = this.dashboard.findIndex(i => i.controlId === controlId)
     this.dashboard.splice(index, 1);
@@ -194,7 +201,6 @@ export class TemplateComponent implements OnInit {
     }
   }
   deleteControls(ifaceName) {
-    console.log(ifaceName);
     let controlsId: string[] = [];
     const storage = this.template.body[allInterfaces[ifaceName].storage];
     if (storage.hasOwnProperty('Attributes')) {
@@ -202,7 +208,7 @@ export class TemplateComponent implements OnInit {
       if (ifaceName === 'PIAFAttributes') this.template.body[allInterfaces[ifaceName].storage] = {};
     };
     if (ifaceName === 'PIAFEventFrames') {
-      controlsId = controlsId.concat(storage['Attributes'].map(i => i.key));
+      if (Object.keys(storage).length) controlsId = controlsId.concat(storage['Attributes'].map(i => i.key));
       this.template.body[allInterfaces[ifaceName].storage] = {};
     };
     this.dashboard = this.dashboard.filter(({ controlId, forControl }) => !controlsId.includes(controlId) && !controlsId.includes(forControl));

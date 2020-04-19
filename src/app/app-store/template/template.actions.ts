@@ -44,6 +44,10 @@ export const setEditingTemplate = createAction(
   props<{ template: Template }>()
 )
 
+export const setAddedTemplate = createAction(
+  '[Template/API] Set addedTemplate',
+  props<{ template: Template }>()
+)
 
 
 // export const upsertTemplate = createAction(
