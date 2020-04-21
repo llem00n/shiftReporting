@@ -1,11 +1,21 @@
-<div class="shadow bg-white h-full border-l-4  overflow-auto" [ngClass]="shift.elClass">
+<div #shiftEl class="relative shadow bg-white h-full border-l-4 overflow-auto overflow-x-hidden" [ngClass]="shift.elClass">
   <!-- <pre>{{shift.isActive}}</pre> -->
-  <div class="p-1">
+  <div #templateListEl class="p-1">
+    <!-- <pre>{{templateList | json}}</pre> -->
     <p class="truncate text-sm font-bold text-center">{{shift.schedule.shiftName}}</p>
-    <div *ngFor="let template of templates" class="cursor-pointer flex m-1 p-1 rounded shadow"
-      [ngClass]="template.style.styleClass">
+    <div *ngFor="let template of showedTemplates"
+      class="min-w-full mt-1 p-1 cursor-pointer flex rounded shadow" [ngClass]="template.style.styleClass">
       <mat-icon svgIcon="{{template.style.name}}" [ngStyle]="template.style.styleSvg"></mat-icon>
-      <p (click)="clickTemplate(template)" class="truncate flex-1 "> {{template.template.name}}</p>
+      <p (click)="clickTemplate(template)" class="truncate flex-1 ">
+        {{template.template.name}}</p>
+    </div>
+    <div (click)="showMore()" *ngIf="hiddenTemplates.length" class=" w-full pr-3 cursor-pointer absolute bottom-0 ">
+      <div class="flex items-center justify-between text-gray-500  ">
+        <p class="text-base font-bold truncate"> + {{hiddenTemplates.length}} more... </p>
+        <div class="h-4 w-4">
+          <mat-icon inline svgIcon="chevron-down"></mat-icon>
+        </div>
+      </div>
     </div>
   </div>
 </div>

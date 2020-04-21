@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, OnDestroy, AfterViewChecked } from '@angular/core';
 import { Schedule } from '@models/*';
 import { DateService } from 'src/app/services/date/date.service';
 
@@ -7,36 +7,38 @@ import { DateService } from 'src/app/services/date/date.service';
   templateUrl: './week-grid.component.html',
   styleUrls: ['./week-grid.component.scss']
 })
-export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
+export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
   @Input() schedules: Schedule[];
   @Input() week: number;
   @Input() year: number;
 
+  @ViewChild('calendarContent') calendarContent: ElementRef;
   // currentShiftStyle: string = " shadow-outline z-10";
 
   scheduleWeekList;
   startWeekDate = this.dateService.lastMonday();
   daysOfWeek = this.dateService.daysOfWeek;
   hours = new Array(24);
-
-  shiftStyle = ['red', 'orange', 'green', 'teal', 'blue', 'indigo', 'purple', 'pink', 'yellow', 'gray']
-    .map(i => `text-${i}-500 border-${i}-400`);
-  // [
-  //   'bg-red-200',
-  //   'bg-yellow-200',
-  //   'bg-green-200',
-  //   'bg-teal-200',
-  //   'bg-blue-200',
-  //   'bg-indigo-200',
-  //   'bg-purple-200',
-  //   'bg-pink-200',
-  //   'bg-orange-200',
-  //   'bg-gray-200',
-  // ]
   interval;
+  calendarContentHeight: number;
+
+  shiftStyle = ['red', 'orange', 'green', 'blue', 'indigo', 'purple', 'pink', 'teal', 'yellow', 'gray']
+    .map(i => `text-${i}-500 border-${i}-400`);
+
   constructor(
     private dateService: DateService
   ) { }
+  ngAfterViewChecked(): void {
+    const height = this.calendarContent.nativeElement.offsetHeight;
+    if (height !== this.calendarContentHeight && !this.shiftInfo) {
+      Object.keys(this.scheduleWeekList).map(key => {
+        this.scheduleWeekList[key].shifts.map(shift => {
+          shift['templNum'] = (height * shift.position.height.slice(0, -1) / 100 - 23.395) / 30.165 >> 0;
+          this.calendarContentHeight = height;
+        })
+      })
+    }
+  }
 
   ngOnInit() {
     this.interval = setInterval(() => {
@@ -77,7 +79,6 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
         shifts: [],
       }
     });
-
     this.schedules.map((schedule: Schedule, index) => {
       const elClass = this.shiftStyle[index % 10]
       this.dateService.daysOfWeek.map(({ key, dayNum }) => {
@@ -86,7 +87,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
           || !this.dateService.isBetween(list[dayNum].date, schedule.validFromDate, schedule.validToDate)
         ) return;
         const weeks = this.dateService.getWeeks(list[dayNum].date, schedule.validFromDate);
-        if (this.getMinutes(schedule.startTime) < (this.getMinutes(schedule.endTime)) || 24 * 60) {
+        if (!this.getMinutes(schedule.endTime) || this.getMinutes(schedule.startTime) < this.getMinutes(schedule.endTime)) {
           if (weeks % schedule.recurEveryWeeks) return;
           list[dayNum].shifts.push({
             schedule,
@@ -126,6 +127,9 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
   getMinutes(time: string): number {
     return +time.slice(0, 2) * 60 + +time.slice(3, 5)
   }
+  getTtemplNum() {
+
+  }
 
   getPos(schedule: Schedule): {} {
     const dayMins = 24 * 60;
@@ -150,6 +154,26 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
     return result;
-
+  }
+  shiftInfo = null;
+  clickShowMore(e, shift) {
+    this.shiftInfo = {};
+    this.shiftInfo.position = { ...shift.position };
+    this.shiftInfo.templNum = shift.templNum;
+    const height = (23.395 + 4 + 30.165 * e.templLength) / this.calendarContentHeight * 100;
+    shift.position.height = height > 100 ? '100%' : height + '%';
+    if (height > 100) {
+      shift.position.top = 0 + '%';
+    } else if (height > (100 - shift.position.top.slice(0, -1))) shift.position.top = 100 - height + '%';
+    shift.templNum = e.templLength;
+    this.calendarContentHeight = this.calendarContentHeight + 1;
+  }
+  mouseOut(e: MouseEvent, shift) {
+    if (e.target['id'] !== 'shift' || !this.shiftInfo) return;
+    shift.position.top = this.shiftInfo.position.top;
+    shift.position.height = this.shiftInfo.position.height;
+    shift.templNum = this.shiftInfo.templNum;
+    this.calendarContentHeight = this.calendarContentHeight - 1;
+    this.shiftInfo = null
   }
 }

@@ -100,8 +100,6 @@ export class SettingsControlComponent implements OnInit {
   }
 
   changeInterface(iface) {
-    console.log(iface);
-    
     const ifaceStorage = allInterfaces[iface.name].storage
     const storage = this.data.body[ifaceStorage];
     if (storage.hasOwnProperty('Attributes')) {
@@ -124,7 +122,6 @@ export class SettingsControlComponent implements OnInit {
       dialogRef.afterClosed().subscribe(res => {
         if (!res) return;
         this.interfacesList.find(i => i.name === "PIAFAttributes").checked = true;
-        console.log(this.result.body["PIAFAttributes"]);
         this.result.body["PIAFAttributes"].Attributes.push({
           key: this.data.control.controlId,
           attributeName: res.path
@@ -172,23 +169,6 @@ export class SettingsControlComponent implements OnInit {
       }
     })
   }
-
-  // isChecked(name: string) {    
-  //   console.log(name);
-  //   const iface = this.interfacesList.find(i => i.name === name);
-  //   if (!iface) return false;
-  //   console.log(name, iface.checked);
-  //   return iface.checked;
-  // }
-  asdfa(name) {
-    this.interfacesList.find(i => i.name === name).checked = true;
-
-  }
-  ffff(name) {
-    this.interfacesList.find(i => i.name === name).checked = false;
-
-  }
-
   setPiafString(path: string): string {
     return path ? path.replace(/%5C/g, '\\' + ' ').replace('|', '| ') : '';
   }

@@ -178,7 +178,6 @@ export class TemplateComponent implements OnInit {
       filter(val => !!val),
       take(1)
     ).subscribe(temp => {
-      console.log(temp);
       this.updateInterfaces(temp.templateId);
       this.store.dispatch(TemplateActions.setAddedTemplate({ template: null }))
       this.store.dispatch(TemplateActions.setEditingTemplate({ template: temp }))

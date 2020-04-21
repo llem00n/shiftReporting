@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Directive, ElementRef, Output, EventEmitter, AfterViewChecked, OnChanges } from '@angular/core';
 import { State, DataEntry } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { Template } from '@models/';
@@ -9,38 +9,49 @@ import { Subscription } from 'rxjs';
 import { DateService } from 'src/app/services/date/date.service';
 import { DataEntryActions } from '@actions/*';
 
+
 @Component({
   selector: 'app-templates-list',
   templateUrl: './templates-list.component.html',
   styleUrls: ['./templates-list.component.scss']
 })
-export class TemplatesListComponent implements OnInit {
+export class TemplatesListComponent implements OnInit, OnChanges {
   @Input() day;
   @Input() shift;
+  @Input() calendarHight: number;
+  @Output() clickShowMore = new EventEmitter();
 
-  // svgSrc = "check-circle-outline"
+  // @ViewChild('shiftEl') shiftEl: ElementRef;
+  // @ViewChild('templateListEl') templateListEl: ElementRef;
   style = {
     lock: { name: "lock", styleSvg: { width: '1rem', height: '1rem' }, styleClass: 'text-gray-600 bg-gray-100' },
     submited: { name: "check-circle-outline", styleSvg: { fill: 'green', width: '1rem', height: '1rem' }, styleClass: 'bg-green-100 text-green-600' },
     missed: { name: "alert-circle", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-600' },
     open: { name: "alert-circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-600' },
   }
-  
+
   templates;
   dataEntries: DataEntry[];
-
   data$: Subscription
   dataEntries$: Subscription
+  // listHeight: number;
+  // shiftHeight: number;
+  isShowMore: boolean = true;
+  showedTemplates = [];
+  hiddenTemplates = [];
 
   constructor(
     private store: Store<State>,
     private router: Router,
     private dateService: DateService,
   ) { }
-
+  ngOnChanges(): void {
+    this.calendarHight && this.templates && this.splitTemplates();
+  }
   ngOnInit(): void {
     this.getData();
   }
+
   ngOnDestroy(): void {
     this.data$.unsubscribe();
   }
@@ -85,9 +96,21 @@ export class TemplatesListComponent implements OnInit {
       };
     })
     this.templates = templates;
+    this.calendarHight && this.templates && this.splitTemplates();
   }
 
+  splitTemplates() {
+    let index = this.shift.templNum;
+    if (index < this.templates.length) index = this.shift.templNum - 1;
+    this.showedTemplates = [...this.templates];
+    this.hiddenTemplates = this.showedTemplates.splice(index);
+  }
+
+
   /* 
+  174.22
+  30.165
+  23.395
     getTemplates() {
       this.templates$ = this.store.pipe(
         select(allTemplates),
@@ -114,5 +137,10 @@ export class TemplatesListComponent implements OnInit {
     }
     this.store.dispatch(DataEntryActions.setCurrentDataEntry({ dataEntry }))
     this.router.navigate(['dataentry'])
+  }
+  showMore() {
+    // const shiftHeight = this.shiftHeight;
+    const templLength = this.templates.length;
+    this.clickShowMore.emit({ templLength })
   }
 }
