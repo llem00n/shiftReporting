@@ -24,10 +24,10 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   // @ViewChild('shiftEl') shiftEl: ElementRef;
   // @ViewChild('templateListEl') templateListEl: ElementRef;
   style = {
-    lock: { name: "lock", styleSvg: { width: '1rem', height: '1rem' }, styleClass: 'text-gray-600 bg-gray-100' },
-    submited: { name: "check-circle-outline", styleSvg: { fill: 'green', width: '1rem', height: '1rem' }, styleClass: 'bg-green-100 text-green-600' },
-    missed: { name: "alert-circle", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-600' },
-    open: { name: "alert-circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-600' },
+    lock: { name: "lock", styleSvg: { width: '1rem', height: '1rem' }, styleClass: 'text-gray-500 bg-gray-100' },
+    submited: { name: "check-circle-outline", styleSvg: { fill: 'green', width: '1rem', height: '1rem' }, styleClass: 'bg-green-100 text-green-500' },
+    missed: { name: "alert-circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-500' },
+    open: { name: "circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-500' },
   }
 
   templates;
