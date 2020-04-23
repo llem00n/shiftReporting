@@ -5,12 +5,12 @@ import { Template } from '../template/template.model';
 export class DataEntry {
   dataEntryId?: number = null;
   scheduleId: number = null;
+  templateId: number = null;
   createDate: string = null;
   submitDate: string = null;
   template: Template = null;
   submitUser: string = null;
   modifiedUserId: string = null;
-
   constructor(opt: {} = {}) {
     Object.keys(opt).map(key => {
       if (Object.keys(this).includes(key)) {
@@ -18,7 +18,11 @@ export class DataEntry {
       }
     })
     this.template = new Template(opt['template'] || {})
-
   }
+}
 
+export interface CurrentDataEntry {
+  startDate: Date;
+  endDate: Date;
+  dataEntry: DataEntry
 }

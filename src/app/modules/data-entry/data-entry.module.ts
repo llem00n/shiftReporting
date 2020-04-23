@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataEntryComponent } from './data-entry.component';
 import { GridModule } from '../grid';
+import { UsedMaterialModule } from '../used-material/used-material.module';
 
 
 
@@ -9,7 +10,8 @@ import { GridModule } from '../grid';
   declarations: [DataEntryComponent],
   imports: [
     CommonModule,
-    GridModule
+    GridModule,
+    UsedMaterialModule
   ]
 })
 export class DataEntryModule { }

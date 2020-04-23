@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Directive, ElementRef, Output, EventEmitter, AfterViewChecked, OnChanges } from '@angular/core';
-import { State, DataEntry } from '@models/*';
+import { State, DataEntry, CurrentDataEntry } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { Template } from '@models/';
 import { allTemplates, dataEntriesOnDate } from 'src/app/app-store';
@@ -8,6 +8,7 @@ import { tap, mergeMap, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { DateService } from 'src/app/services/date/date.service';
 import { DataEntryActions } from '@actions/*';
+import { MessageService } from 'src/app/modules/message/sevices/message.service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     private store: Store<State>,
     private router: Router,
     private dateService: DateService,
+    private messageService: MessageService
   ) { }
   ngOnChanges(): void {
     this.calendarHight && this.templates && this.splitTemplates();
@@ -93,6 +95,8 @@ export class TemplatesListComponent implements OnInit, OnChanges {
         style: getStyle(),
         template,
         dataEntry,
+        startDate,
+        endDate,
       };
     })
     this.templates = templates;
@@ -125,17 +129,29 @@ export class TemplatesListComponent implements OnInit, OnChanges {
       ).subscribe()
     }
    */
+  deadlineMins = 24 * 60;
   clickTemplate(item) {
-    let dataEntry: DataEntry;
+    const currentDataEntry = <CurrentDataEntry>{
+      endDate: item.endDate,
+      startDate: item.startDate,
+    };
+    const deadline = new Date(item.endDate.getTime() + this.deadlineMins * 60000);
+    if (!item.dataEntry && new Date() > deadline) {
+      this.messageService.alertMessage('data is missing')
+      return;
+    }
     if (item.dataEntry) {
-      dataEntry = new DataEntry(item.dataEntry)
+      currentDataEntry.dataEntry = new DataEntry(item.dataEntry)
     } else {
-      dataEntry = new DataEntry({
+      currentDataEntry.dataEntry = new DataEntry({
         scheduleId: this.shift.schedule.scheduleId,
         template: item.template,
+        templateId: item.template.templateId,
       });
     }
-    this.store.dispatch(DataEntryActions.setCurrentDataEntry({ dataEntry }))
+    // console.log(currentDataEntry);
+    
+    this.store.dispatch(DataEntryActions.setCurrentDataEntry({ currentDataEntry }))
     this.router.navigate(['dataentry'])
   }
   showMore() {

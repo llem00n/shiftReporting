@@ -1,11 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as DataEntryActions from './data-entry.actions';
-import { DataEntry } from './data-entry.model';
+import { DataEntry, CurrentDataEntry } from './data-entry.model';
 
 export const dataEntryFeatureKey = 'dataEntry';
 
 export interface State {
-  currentDataEntry: DataEntry,
+  currentDataEntry: CurrentDataEntry,
   latestDataEntry: DataEntry,
   dataEntriesOnDate: DataEntry[],
 }
@@ -26,7 +26,7 @@ const dataEntryReducer = createReducer(
     (state, { dataEntries }) => ({ ...state, dataEntriesOnDate: dataEntries })),
 
   on(DataEntryActions.setCurrentDataEntry,
-    (state, { dataEntry }) => ({ ...state, currentDataEntry: dataEntry })),
+    (state, { currentDataEntry }) => ({ ...state, currentDataEntry })),
 
 );
 

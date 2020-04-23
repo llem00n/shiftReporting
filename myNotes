@@ -83,6 +83,7 @@ ng g c modules/dynamic-controls/components/DynDate
 module DataEntry
 ng g m modules/DataEntry -m app
 ng g c modules/data-entry/DataEntry -m data-entry --flat
+ng g s modules/data-entry/data-source
 
 
 module dialog

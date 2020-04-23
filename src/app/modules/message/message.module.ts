@@ -8,6 +8,7 @@ import { MessageComponent } from './message.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { UsedMaterialModule } from '../used-material/used-material.module';
 
 
 
@@ -16,6 +17,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   imports: [
     AngularSvgIconModule.forRoot(),
     CommonModule,
+    UsedMaterialModule
   ],
   exports: [
     MessageComponent

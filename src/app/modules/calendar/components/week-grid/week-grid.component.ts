@@ -33,7 +33,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
     if (height !== this.calendarContentHeight && !this.shiftInfo) {
       Object.keys(this.scheduleWeekList).map(key => {
         this.scheduleWeekList[key].shifts.map(shift => {
-          shift['templNum'] = (height * shift.position.height.slice(0, -1) / 100 - 23.395) / 34.165 >> 0;
+          shift['templNum'] = (height * shift.position.height.slice(0, -1) / 100 - 27.395) / 34.165 >> 0;
           this.calendarContentHeight = height;
         })
       })
@@ -160,7 +160,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
     this.shiftInfo = {};
     this.shiftInfo.position = { ...shift.position };
     this.shiftInfo.templNum = shift.templNum;
-    const height = (23.395 + 4 + 34.165 * e.templLength) / this.calendarContentHeight * 100;
+    const height = (27.395 + 4 + 34.165 * e.templLength) / this.calendarContentHeight * 100;
     shift.position.height = height > 100 ? '100%' : height + '%';
     if (height > 100) {
       shift.position.top = 0 + '%';

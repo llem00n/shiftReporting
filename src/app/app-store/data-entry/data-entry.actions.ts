@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DataEntry } from '../models';
+import { CurrentDataEntry } from './data-entry.model';
 
 export const addDataEntry = createAction(
   '[DataEntry] Add DataEntry',
@@ -48,5 +49,5 @@ export const submitDataEntrySuccess = createAction(
 
 export const setCurrentDataEntry = createAction(
   '[DataEntry] Set CurrentDataEntry',
-  props<{ dataEntry: DataEntry }>()
+  props<{ currentDataEntry: CurrentDataEntry }>()
 );
