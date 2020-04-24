@@ -28,7 +28,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     lock: { name: "lock", styleSvg: { width: '1rem', height: '1rem' }, styleClass: 'text-gray-500 bg-gray-100' },
     submited: { name: "check-circle-outline", styleSvg: { fill: 'green', width: '1rem', height: '1rem' }, styleClass: 'bg-green-100 text-green-500' },
     missed: { name: "alert-circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-500' },
-    open: { name: "circle-outline", styleSvg: { fill: 'red', width: '1rem', height: '1rem' }, styleClass: 'bg-red-100 text-red-500' },
+    open: { name: "circle-outline", styleSvg: { width: '1rem', height: '1rem' }, styleClass: 'bg-orange-100 text-orange-500' },
   }
 
   templates;
@@ -131,11 +131,12 @@ export class TemplatesListComponent implements OnInit, OnChanges {
    */
   deadlineMins = 24 * 60;
   clickTemplate(item) {
+    const deadline = new Date(item.endDate.getTime() + this.deadlineMins * 60000);
     const currentDataEntry = <CurrentDataEntry>{
       endDate: item.endDate,
       startDate: item.startDate,
+      deadline,
     };
-    const deadline = new Date(item.endDate.getTime() + this.deadlineMins * 60000);
     if (!item.dataEntry && new Date() > deadline) {
       this.messageService.alertMessage('data is missing')
       return;
@@ -150,7 +151,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
       });
     }
     // console.log(currentDataEntry);
-    
+
     this.store.dispatch(DataEntryActions.setCurrentDataEntry({ currentDataEntry }))
     this.router.navigate(['dataentry'])
   }

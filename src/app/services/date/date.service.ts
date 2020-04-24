@@ -98,8 +98,8 @@ export class DateService {
     return result
   }
 
-  getCurternDateLocal(): string {
-    const curternDateUTC = new Date()
+  getLocalDate(date?): string {
+    const curternDateUTC = date ? new Date(date) : new Date()
     return new Date(curternDateUTC.valueOf() - curternDateUTC.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, -1);
   }
 

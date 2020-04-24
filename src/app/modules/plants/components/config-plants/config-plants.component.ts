@@ -7,6 +7,7 @@ import { PlantActions } from '@actions/*';
 import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
 import { DialogService } from 'src/app/modules/dialog/dialog.service';
 import { PlantFormComponent } from '../plant-form/plant-form.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-config-plants',
@@ -16,16 +17,17 @@ import { PlantFormComponent } from '../plant-form/plant-form.component';
 export class ConfigPlantsComponent implements OnInit {
 
   constructor(
+    private dialog: MatDialog,
     private store: Store<State>,
-    private dialogService: DialogService,
+    // private dialogService: DialogService,
   ) { }
 
   plants: Plant[] = null;
-  
+
   ngOnInit() {
     this.getPlants()
   }
-  
+
   getPlants() {
     let respCount = 0;
     this.store.pipe(
@@ -39,8 +41,8 @@ export class ConfigPlantsComponent implements OnInit {
       this.plants = plants;
     })
   }
-  addPlant() {
-    this.openDialog({})
+  addItem() {
+    this.openDialog(<Plant>{})
   }
   delete(id) {
     this.store.dispatch(PlantActions.deletePlant({ id }))
@@ -49,16 +51,15 @@ export class ConfigPlantsComponent implements OnInit {
     const plant = this.plants.find(i => i.plantId === id)
     this.openDialog(plant)
   }
-  openDialog(data) {
-    const dialogRef = this.dialogService.open(PlantFormComponent, data)
+  openDialog(plant: Plant) {
+    const dialogRef = this.dialog.open(PlantFormComponent, { data: { plant } })
     dialogRef.afterClosed().subscribe(plant => {
       if (!plant) return;
       if (plant.plantId) {
-        this.store.dispatch(PlantActions.updatePlant({ plant }))
-      } else {
-        delete plant.plantId;
-        this.store.dispatch(PlantActions.addPlant({ plant }))
+        this.store.dispatch(PlantActions.updatePlant({ plant }));
+        return;
       }
+      this.store.dispatch(PlantActions.addPlant({ plant }));
     });
   }
 

@@ -1,22 +1,18 @@
-<div class="p-4 flex items-start max-w-6xl">
-  <mat-form-field appearance="fill" class="flex-1">
+<div class="p-4 flex items-center max-w-6xl">
+  <mat-form-field appearance="outline" class="flex-1">
     <mat-label>Search</mat-label>
-    <input matInput placeholder="Writing...">
+    <input matInput placeholder="Search">
+    <mat-icon matSuffix svgIcon="magnify"></mat-icon>
   </mat-form-field>
-  <button mat-button color="primary" class="ml-4 h-12">+ Add Plant</button>
+  <div class="pb-4 mx-4">
+    <button mat-mini-fab color="primary" (click)="addItem()">
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+  </div>
 </div>
 
-<div class="flex flex-wrap">
+<div class="flex px-2 flex-wrap">
   <!-- Plants list -->
   <app-plant-card *ngFor="let plant of plants" [plant]="plant" (clickDelete)="delete($event)"
-    (clickEdit)="edit($event)"></app-plant-card>
-
-  <!-- Add Plant -->
-  <!-- <div class="m-2 w-32 bg-gray-200 p-4 shadow">
-    <div (click)="addPlant()" class="flex flex-col items-center justify-center">
-      <p class="cursor-default">Add Plant</p>
-      <svg-icon src="assets/svg_icons/plus-circle-outline.svg" [svgStyle]="{'width.px':64,'fill': '#5F5F5F' }">
-      </svg-icon>
-    </div>
-  </div> -->
+    (clickEdit)="edit($event)" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4"></app-plant-card>
 </div>

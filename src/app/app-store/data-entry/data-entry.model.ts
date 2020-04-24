@@ -9,7 +9,7 @@ export class DataEntry {
   createDate: string = null;
   submitDate: string = null;
   template: Template = null;
-  submitUser: string = null;
+  submitUserId: string = null;
   modifiedUserId: string = null;
   constructor(opt: {} = {}) {
     Object.keys(opt).map(key => {
@@ -24,5 +24,6 @@ export class DataEntry {
 export interface CurrentDataEntry {
   startDate: Date;
   endDate: Date;
-  dataEntry: DataEntry
+  deadline: Date
+  dataEntry: DataEntry;
 }

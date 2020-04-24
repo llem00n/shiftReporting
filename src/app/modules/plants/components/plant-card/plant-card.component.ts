@@ -10,12 +10,17 @@ export class PlantCardComponent implements OnInit {
   @Input() plant: Plant;
   @Output() clickEdit = new EventEmitter<number>()
   @Output() clickDelete = new EventEmitter<number>()
+
+  // name: string;
   constructor() { }
 
   ngOnInit(): void {
+    // console.log(this.plant.name);
+    // this.name = this.plant.name
+    
   }
 
-  get name() {
+  get plantName() {
     return this.plant.name;
   }
   get code() {

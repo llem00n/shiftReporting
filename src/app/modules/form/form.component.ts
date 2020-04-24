@@ -23,11 +23,14 @@ export class FormComponent implements OnChanges {
   get controls() { return this._controls }
 
   @Input() values;
+  @Input() flex: boolean;
   @Output() form = new EventEmitter<FormGroup>()
 
   customForm: FormGroup = new FormGroup({});
 
   ngOnChanges() {
+    console.log(this.flex);
+    
     this.customForm = this.createForm(this.controls);
   }
   createForm(controls): FormGroup {

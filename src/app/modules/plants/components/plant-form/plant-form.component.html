@@ -1,17 +1,12 @@
-<section class="w-64 mx-auto shadow bg-gray-200">
-  <!-- Header -->
-  <header class="text-gray-300 bg-blue-600 px-4 py-2 flex justify-between">
-    <div class="flex items-center">
-      <svg-icon (click)="close()" src="assets/svg_icons/arrow-left.svg" [svgStyle]="{ 'width.px':24, 'fill': '#fff'}">
-      </svg-icon>
-      <span class="ml-2">{{title}}</span>
-    </div>
-    <button class="font-bold text-xs px-2" (click)="save()">{{saveButton}}</button>
-  </header>
-  <!-- Plant form -->
-  <div *ngIf="plant" class="p-4">
-    <div class="">
-      <app-form [controls]='configPlant' [values]="plant" (form)="getForm($event)" ></app-form>
-    </div>
-  </div>
-</section>
+<div>
+  <p mat-dialog-title>Plant settings</p>
+  <app-form [flex]='true' [controls]='nameCode' [values]="plant" (form)="getForm($event)"></app-form>
+  <app-form [flex]='true' [controls]='address' [values]="plant" (form)="getForm($event)"></app-form>
+
+
+
+  <mat-dialog-actions class="flex justify-end">
+    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+    <button mat-raised-button color="primary" [disabled]='form.invalid' [mat-dialog-close]="plant">SAVE</button>
+  </mat-dialog-actions>
+</div>

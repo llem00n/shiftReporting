@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { DataEntry, State, DynControl, User, CurrentDataEntry } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { currentDataEntry } from 'src/app/app-store';
-import { take, switchMap, tap, mergeMap, map, filter } from 'rxjs/operators';
+import { switchMap, tap, mergeMap, map, filter } from 'rxjs/operators';
 import { GridsterOptions } from '../grid';
 import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms';
 import { DataEntryActions } from '@actions/*';
 import { AuthorizationService, CurrentUser } from '../authorization/authorization.service';
 import { MessageService } from '../message/sevices/message.service';
 import { DateService } from 'src/app/services/date/date.service';
-import { DialogService } from '../dialog/dialog.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription, of } from 'rxjs';
@@ -24,15 +23,16 @@ import { DataSourceService } from './data-source.service';
 export class DataEntryComponent implements OnInit {
 
   dataEntry: DataEntry;
-  startDate: Date;
+  // startDate: Date;
   endDate: Date;
+  deadline: Date;
   title: string = 'Entry ';
   dashboard: DynControl[] = [];
   options: GridsterOptions = {};
   values: {} = {};
   form: FormGroup;
   user: User
-  isSaveEnabled = true;
+  isSaveEnabled = false;
 
   getData$: Subscription
   constructor(
@@ -67,8 +67,10 @@ export class DataEntryComponent implements OnInit {
       }),
       tap((cDataEntry: CurrentDataEntry) => {
         Object.assign(opt, cDataEntry.dataEntry);
-        this.startDate = cDataEntry.startDate;
         this.endDate = cDataEntry.endDate;
+        this.deadline = cDataEntry.deadline;
+        if (!cDataEntry.dataEntry.submitDate && this.dateService.isBetween(new Date(), cDataEntry.startDate, cDataEntry.deadline))
+          this.isSaveEnabled = this.dateService.isBetween(new Date(), cDataEntry.startDate, cDataEntry.deadline)
       }),
       mergeMap(_ => this.authService.getCurrentUser()),
       filter(data => !!data),
@@ -76,21 +78,23 @@ export class DataEntryComponent implements OnInit {
         opt.modifiedUserId = user.user.userId;
         return opt;
       }),
-      switchMap(opt => this.dataSourceService.getDatasources(opt.templateId).pipe(
-        map(data => data.map(i => this.values[i.key] = i.value)),
-        map(_ => opt),
-      )),
-      // tap(console.log),
-      switchMap(opt => {
-        console.log(opt);
+      tap(opt => {
         this.dataEntry = new DataEntry(opt);
         this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
         this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
         this.options = this.dataEntry.template.body?.gridsterOptions || {};
-        // this.values = {}
+      }),
+      switchMap(opt => {
+        if (opt.dataEntryId) return of(opt);
+        return this.dataSourceService.getDatasources(opt.templateId).pipe(
+          map(data => data.map(i => this.values[i.key] = i.value)),
+          map(_ => opt),
+        )
+      }
+      ),
+      switchMap(opt => {
         Object.assign(this.values, this.dataEntry.template.body?.templateDataKV || {});
         this.form = this.createForm(this.dashboard);
-        // Object.assign(this.dataEntry.template.body['TemplateData'], this.form.value)
         this.dataEntry.template.body['templateDataKV'] = this.form.value;
         return this.form.valueChanges;
       }),
@@ -129,17 +133,34 @@ export class DataEntryComponent implements OnInit {
     this.location.back()
   }
 
+  getSavePermission(): boolean {
+    if (new Date() > this.deadline) {
+      this.message.errorMessage('Saving is not possible. Time is running out.');
+      this.isSaveEnabled = false;
+      return false;
+    }
+    return true;
+  }
+
   save() {
-    console.log(this.dataEntry);
+    if (!this.getSavePermission()) return;
     if (this.dataEntry.dataEntryId) {
+      console.log(this.dataEntry);
       this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
+      this.router.navigate(['/calendar']);
       return;
     }
-    this.dataEntry.createDate = this.dateService.getCurternDateLocal();
-    this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
+
+    const createDate = this.dateService.isBetween(new Date(), this.endDate, this.deadline)
+      ? this.dateService.getLocalDate(this.endDate) : this.dateService.getLocalDate();
+    this.dataEntry.createDate = createDate;
+    console.log(this.dataEntry);
+
+    this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }));
+    this.router.navigate(['/calendar']);
   }
   // addDataEntry() {
-  //   this.dataEntry.createDate = this.dateService.getCurternDateLocal();
+  //   this.dataEntry.createDate = this.dateService.getLocalDate();
   //   this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
   // }
   // updateDataEntry() {
@@ -147,8 +168,11 @@ export class DataEntryComponent implements OnInit {
   // }
 
   submitDataEntry() {
-    this.dataEntry.submitDate = this.dateService.getCurternDateLocal();
-    this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }))
+    if (!this.getSavePermission()) return;
+    this.dataEntry.submitDate = this.dateService.getLocalDate();
+    this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
+    this.router.navigate(['/calendar']);
+
   }
 }
 

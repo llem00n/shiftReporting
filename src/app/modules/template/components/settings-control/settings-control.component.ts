@@ -32,8 +32,8 @@ export class SettingsControlComponent implements OnInit {
   constructor(
     // private store: Store<State>,
     private dialog: MatDialog,
-    public dialogRef: MatDialogRef<SettingsControlComponent>,
     private dataType: DataTypeService,
+    public dialogRef: MatDialogRef<SettingsControlComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       body: TemplateBody,
       control: DynControl,

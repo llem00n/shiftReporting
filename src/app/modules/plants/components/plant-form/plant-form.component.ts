@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DynText, Plant } from '@models/*';
 import { DialogService } from 'src/app/modules/dialog/dialog.service';
 import { FormGroup } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-plant-form',
@@ -10,41 +11,37 @@ import { FormGroup } from '@angular/forms';
 })
 export class PlantFormComponent implements OnInit {
   plant: Plant;
-  title = 'Add plant'
-  saveButton = 'Add'
-  configPlant = [
+  form: FormGroup;
+  forms: FormGroup[] = [];
+  nameCode = [
     new DynText({ controlId: 'name', type: 'text', label: 'Name', validators: { required: true } }),
     new DynText({ controlId: 'code', type: 'text', label: 'Code', validators: { required: true } }),
-    new DynText({ controlId: 'address', type: 'text', label: 'Address', validators: { required: true } }),
   ];
+  address = [
+    new DynText({ controlId: 'address', type: 'text', label: 'Address', validators: { required: true } }),
+  ]
+
+
 
   constructor(
-    private dialogService: DialogService,
+    public dialogRef: MatDialogRef<PlantFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { plant: Plant, },
   ) { }
 
   ngOnInit(): void {
-    this.getData()
+    this.plant = { ...this.data.plant };
+    // this.getData()
   }
 
   getForm(e: FormGroup) {
-    e.valueChanges.subscribe(value => {
-      Object.assign(this.plant, value)
+    this.forms.push(e);
+    if (this.forms.length !== 2) return;
+    this.form = new FormGroup({
+      form1: this.forms[0],
+      form2: this.forms[1],
+    })
+    this.form.valueChanges.subscribe(value => {
+      Object.assign(this.plant, value.form1, value.form2)
     })
   }
-
-  getData() {
-    this.plant = new Plant(this.dialogService.getData())
-    if (this.plant.plantId) {
-      this.title = 'Edit plant';
-      this.saveButton = 'Save'
-    };
-  }
-
-  save() {
-    this.dialogService.close(this.plant)
-  }
-  close() {
-    this.dialogService.dismiss()
-  }
-
 }
