@@ -123,6 +123,7 @@ ng g c modules/users/components/userRoles
 module departments
 ng g m modules/departments -m app
 ng g c modules/departments/components/selectUserDepartment
+ng g c modules/departments/departments --flat
 
 module templates
 ng g m modules/templates -m app
