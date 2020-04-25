@@ -50,7 +50,7 @@ export class ConfigPlantsComponent implements OnInit {
     ).subscribe((plants: Plant[]) => {
       if (plants.length === 0 && respCount === 0) {
         ++respCount;
-        this.store.dispatch(PlantActions.loadPlants());
+        this.store.dispatch(PlantActions.getPlants());
         return
       };
       this.plants = plants;

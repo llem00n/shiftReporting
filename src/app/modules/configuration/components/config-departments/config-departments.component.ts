@@ -70,7 +70,7 @@ export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
     ).subscribe((plants: Plant[]) => {
       if (plants.length === 0 && respCount === 0) {
         ++respCount;
-        this.store.dispatch(PlantActions.loadPlants());
+        this.store.dispatch(PlantActions.getPlants());
         return;
       };
       this.preConfig
@@ -98,7 +98,7 @@ export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
     e.valueChanges.subscribe(
       value => {
         const plantId = +value.plantId;
-        this.store.dispatch(DepartmentActions.loadDepartments({ plantId }))
+        this.store.dispatch(DepartmentActions.getDepartments({ plantId }))
       }
     )
   }

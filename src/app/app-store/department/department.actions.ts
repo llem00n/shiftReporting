@@ -3,12 +3,12 @@ import { Update } from '@ngrx/entity';
 
 import { Department } from './department.model';
 
-export const loadDepartments = createAction(
-  '[Department/API] Load Departments',
+export const getDepartments = createAction(
+  '[Department/API] Get Departments',
   props<{ plantId: number }>()
 );
-export const loadDepartmentsSuccess = createAction(
-  '[Department/API] Load Departments Success',
+export const getDepartmentsSuccess = createAction(
+  '[Department/API] Get Departments Success',
   props<{ departments: Department[] }>()
 );
 

@@ -30,7 +30,7 @@ const departmentReducer = createReducer(
   on(DepartmentActions.deleteDepartmentSucces,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  on(DepartmentActions.loadDepartmentsSuccess,
+  on(DepartmentActions.getDepartmentsSuccess,
     (state, action) => adapter.addAll(action.departments, state)
   ),
   on(DepartmentActions.clearDepartments,

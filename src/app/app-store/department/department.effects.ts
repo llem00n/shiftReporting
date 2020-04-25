@@ -9,11 +9,11 @@ import { mergeMap, filter, map } from 'rxjs/operators';
 @Injectable()
 export class DepartmentEffects {
 
-  loadDepartments$ = createEffect(() => this.actions$.pipe(
-    ofType(DepartmentActions.loadDepartments),
+  getDepartments$ = createEffect(() => this.actions$.pipe(
+    ofType(DepartmentActions.getDepartments),
     mergeMap(action => this.departmentHttpService.getDepartments(action.plantId).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => DepartmentActions.loadDepartmentsSuccess({ departments: resp.body }))
+      map(resp => DepartmentActions.getDepartmentsSuccess({ departments: resp.body }))
     )),
   ));
 

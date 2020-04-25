@@ -5,16 +5,20 @@ import { SelectUserDepartmentComponent } from './components/select-user-departme
 // import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsedMaterialModule } from '../used-material/used-material.module';
+import { DepartmentsComponent } from './departments.component';
+import { DepartmentCardComponent } from './components/department-card/department-card.component';
+import { PlantsModule } from '../plants/plants.module';
 
 
 
 @NgModule({
-  declarations: [SelectUserDepartmentComponent],
+  declarations: [SelectUserDepartmentComponent, DepartmentsComponent, DepartmentCardComponent],
   imports: [
     // AngularSvgIconModule.forRoot(),
     CommonModule,
     ReactiveFormsModule,
-    UsedMaterialModule
+    UsedMaterialModule,
+    PlantsModule
   ],
   exports: [SelectUserDepartmentComponent]
 })

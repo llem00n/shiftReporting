@@ -5,12 +5,12 @@ import { Plant } from './plant.model';
 
 
 
-export const loadPlants = createAction(
-  '[Plant/API] Load Plants',
+export const getPlants = createAction(
+  '[Plant/API] Get Plants',
   // props<{ plants: Plant[] }>()
 );
-export const loadPlantsSuccess = createAction(
-  '[Plant/API] Load Plants Success',
+export const getPlantsSuccess = createAction(
+  '[Plant/API] Get Plants Success',
   props<{ plants: Plant[] }>()
 );
 

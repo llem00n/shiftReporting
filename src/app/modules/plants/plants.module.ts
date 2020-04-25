@@ -25,7 +25,7 @@ import { SelectPlantComponent } from './components/select-plant/select-plant.com
     // MatButtonModule
   ],
   exports: [
-    PlantCardComponent, ConfigPlantsComponent
+    PlantCardComponent, ConfigPlantsComponent, SelectPlantComponent
   ]
 })
 export class PlantsModule { }

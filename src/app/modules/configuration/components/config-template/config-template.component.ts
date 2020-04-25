@@ -81,7 +81,7 @@ export class ConfigTemplateComponent implements OnInit {
     ).subscribe((plants: Plant[]) => {
       if (plants.length === 0 && respCount === 0) {
         ++respCount;
-        this.store.dispatch(PlantActions.loadPlants());
+        this.store.dispatch(PlantActions.getPlants());
         return;
       };
       this.preConfig[0].options = plants.map(plant => {
@@ -110,7 +110,7 @@ export class ConfigTemplateComponent implements OnInit {
     e.get('plantId').valueChanges.subscribe(value => {
       if (value) {
         e.get('departmentId').enable();
-        this.store.dispatch(DepartmentActions.loadDepartments({ plantId: +value }));
+        this.store.dispatch(DepartmentActions.getDepartments({ plantId: +value }));
         e.get('departmentId').setValue(null)
       } else {
         e.get('departmentId').disable();

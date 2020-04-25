@@ -56,7 +56,7 @@ export class ConfigScheduleComponent implements OnInit {
     ).subscribe((plants: Plant[]) => {
       if (plants.length === 0 && respCount === 0) {
         ++respCount;
-        this.store.dispatch(PlantActions.loadPlants());
+        this.store.dispatch(PlantActions.getPlants());
         return;
       };
       this.preConfig
@@ -124,7 +124,7 @@ export class ConfigScheduleComponent implements OnInit {
       if (!value) return e.get('departmentId').disable();
       e.get('departmentId').setValue(null)
       e.get('departmentId').enable();
-      this.store.dispatch(DepartmentActions.loadDepartments({ plantId: +value }));
+      this.store.dispatch(DepartmentActions.getDepartments({ plantId: +value }));
     });
     e.get('departmentId').valueChanges.subscribe(value => {
       if (!value) return this.store.dispatch(ScheduleActions.clearSchedules())

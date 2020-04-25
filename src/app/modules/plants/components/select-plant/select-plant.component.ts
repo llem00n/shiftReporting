@@ -3,6 +3,7 @@ import { Plant, State } from '@models/*';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { allPlants } from 'src/app/app-store';
+import { PlantActions } from '@actions/*';
 
 @Component({
   selector: 'app-select-plant',
@@ -19,6 +20,7 @@ export class SelectPlantComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(PlantActions.getPlants())
     this.store.select(allPlants).subscribe(plants => {
       this.plants = plants;
       plants.length && this.plant.setValue(plants[0].plantId);

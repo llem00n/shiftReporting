@@ -9,11 +9,11 @@ import { PlantHttpService } from './plant-http.service';
 @Injectable()
 export class PlantEffects {
 
-  loadPlants$ = createEffect(() => this.actions$.pipe(
-    ofType(PlantActions.loadPlants),
+  getPlants$ = createEffect(() => this.actions$.pipe(
+    ofType(PlantActions.getPlants),
     mergeMap(_ => this.plantService.getPlants().pipe(
       filter(resp => !!resp),
-      map(resp => PlantActions.loadPlantsSuccess({ plants: resp.body }))
+      map(resp => PlantActions.getPlantsSuccess({ plants: resp.body }))
     )),
   ));
 
