@@ -102,6 +102,8 @@ module plants
 ng g m modules/plants -m app
 ng g c modules/plants/components/plantCard -m plants
 ng g c modules/plants/components/plantForm -m plants
+ng g c modules/plants/components/selectPlant
+
 
 module Calendar
 ng g m modules/calendar -m app

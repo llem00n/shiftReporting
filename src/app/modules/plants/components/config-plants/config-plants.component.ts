@@ -8,6 +8,7 @@ import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dy
 import { DialogService } from 'src/app/modules/dialog/dialog.service';
 import { PlantFormComponent } from '../plant-form/plant-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-config-plants',
@@ -15,19 +16,33 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./config-plants.component.scss']
 })
 export class ConfigPlantsComponent implements OnInit {
+  plants: Plant[] = [];
+  filterPlants: Plant[];
+  search = new FormControl('')
 
   constructor(
     private dialog: MatDialog,
     private store: Store<State>,
-    // private dialogService: DialogService,
   ) { }
 
-  plants: Plant[] = null;
 
   ngOnInit() {
-    this.getPlants()
+    this.getPlants();
+    this.search.valueChanges.subscribe(str => this.setFilterPlants(str))
   }
 
+  setFilterPlants(string?: string) {
+    if (!string) {
+      this.filterPlants = [...this.plants];
+      return;
+    }
+    const str = string.toLowerCase()
+    this.filterPlants = this.plants.filter(i => (
+      i.name.toLowerCase().includes(str)
+      || i.code.toLowerCase().includes(str)
+      || i.address.toLowerCase().includes(str)
+    ))
+  }
   getPlants() {
     let respCount = 0;
     this.store.pipe(
@@ -39,13 +54,12 @@ export class ConfigPlantsComponent implements OnInit {
         return
       };
       this.plants = plants;
+      this.filterPlants = plants;
+      this.search.setValue('')
     })
   }
   addItem() {
     this.openDialog(<Plant>{})
-  }
-  delete(id) {
-    this.store.dispatch(PlantActions.deletePlant({ id }))
   }
   edit(id) {
     const plant = this.plants.find(i => i.plantId === id)
@@ -62,5 +76,7 @@ export class ConfigPlantsComponent implements OnInit {
       this.store.dispatch(PlantActions.addPlant({ plant }));
     });
   }
-
+  delete(id) {
+    this.store.dispatch(PlantActions.deletePlant({ id }))
+  }
 }

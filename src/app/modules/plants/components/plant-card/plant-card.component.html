@@ -11,7 +11,6 @@
     <mat-icon style="height: 16px;" class="mr-2" svgIcon="map-marker"></mat-icon>
     <p class="text-sm">{{address}}</p>
   </div>
-
   <mat-card-actions align="end" class="text-gray-600">
     <button mat-icon-button (click)="delete()">
       <mat-icon svgIcon="delete-outline"></mat-icon>
@@ -21,41 +20,3 @@
     </button>
   </mat-card-actions>
 </mat-card>
-
-
-
-<ng-template #name>
-  <div *ngIf="plant" class="m-2 bg-gray-200 w-64 flex p-4 shadow">
-    <div class="mr-2">
-
-      <!-- Code -->
-      <div class="w-16 h-16 bg-gray-600 rounded-full items-center flex justify-center mb-2">
-        <p class="font-bold text-gray-200 text-2xl tracking-tight">{{code}}</p>
-      </div>
-
-      <!-- Active buttons -->
-      <div class="flex justify-between">
-        <button (click)="delete()" class="focus:outline-none">
-          <svg-icon src="assets/svg_icons/delete-outline.svg" [svgStyle]="{ 'width.px':24, 'fill': '#5F5F5F' }">
-          </svg-icon>
-        </button>
-        <button (click)="edit()" class="focus:outline-none">
-          <svg-icon src="assets/svg_icons/pencil-outline.svg" [svgStyle]="{ 'width.px':24, 'fill': '#5F5F5F' }">
-          </svg-icon>
-        </button>
-      </div>
-    </div>
-
-    <div>
-      <!-- Name -->
-      <p class="font-bold leading-tight mb-1">{{name}}</p>
-
-      <!-- Address -->
-      <div class="flex">
-        <svg-icon src="assets/svg_icons/map-marker.svg" [svgStyle]="{ 'height.px':16, 'fill': '#5F5F5F' }"></svg-icon>
-        <p class="text-xs text-gray-800 leading-tight">{{address}}</p>
-      </div>
-
-    </div>
-  </div>
-</ng-template>

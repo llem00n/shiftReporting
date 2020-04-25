@@ -1,5 +1,5 @@
 <div [ngClass]="{'flex': flex}">
-  <div *ngFor="let i of controls; last as last " [ngClass]="{'mr-0': last, 'mr-4': !last}" class="w-full"> 
+  <div *ngFor="let i of controls; last as last " [ngClass]="{'mr-0': last, 'mr-4': !last}" class="w-full">
     <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>
   </div>
 </div>

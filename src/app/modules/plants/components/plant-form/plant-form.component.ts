@@ -30,7 +30,6 @@ export class PlantFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.plant = { ...this.data.plant };
-    // this.getData()
   }
 
   getForm(e: FormGroup) {

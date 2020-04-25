@@ -6,6 +6,7 @@ import { PlantCardComponent } from './components/plant-card/plant-card.component
 import { PlantFormComponent } from './components/plant-form/plant-form.component';
 import { FormModule } from '../form/form.module';
 import { UsedMaterialModule } from '../used-material/used-material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 // import { DialogModule } from '../dialog/dialog.module';
 
 
@@ -16,7 +17,8 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
     CommonModule,
     AngularSvgIconModule.forRoot(),
     FormModule,
-    UsedMaterialModule
+    UsedMaterialModule,
+    ReactiveFormsModule
     // MatInputModule,
     // MatCardModule,
     // MatButtonModule
