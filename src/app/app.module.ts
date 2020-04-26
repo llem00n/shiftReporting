@@ -24,6 +24,7 @@ import { DepartmentsModule } from './modules/departments/departments.module';
 import { UsedMaterialModule } from './modules/used-material/used-material.module';
 import { TemplatesModule } from './modules/templates/templates.module';
 import { PiafModule } from './modules/piaf/piaf.module';
+import { ShiftsModule } from './modules/shifts/shifts.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PiafModule } from './modules/piaf/piaf.module';
     DepartmentsModule,
     UsedMaterialModule,
     TemplatesModule,
-    PiafModule
+    PiafModule,
+    // ShiftsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

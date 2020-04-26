@@ -14,6 +14,7 @@ import { TemplatesComponent } from './modules/templates/templates.component';
 import { TemplatesListComponent } from './modules/calendar/components/templates-list/templates-list.component';
 import { DataEntryComponent } from './modules/data-entry/data-entry.component';
 import { DepartmentsComponent } from './modules/departments/departments.component';
+import { ShiftsComponent } from './modules/shifts/shifts.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,7 @@ const routes: Routes = [
     children: [
       { path: 'plants', component: ConfigPlantsComponent },
       { path: 'departments', component: DepartmentsComponent },
-      { path: 'shifts', component: ConfigShiftComponent },
+      { path: 'shifts', component: ShiftsComponent },
       { path: 'schedules', component: ConfigScheduleComponent },
       { path: 'templates', component: TemplatesComponent },
       { path: 'templates/:id', component: TemplateComponent },

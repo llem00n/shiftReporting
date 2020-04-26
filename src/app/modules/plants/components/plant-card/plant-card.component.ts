@@ -6,19 +6,10 @@ import { Plant } from '@models/*';
   templateUrl: './plant-card.component.html',
   styleUrls: ['./plant-card.component.scss']
 })
-export class PlantCardComponent implements OnInit {
+export class PlantCardComponent {
   @Input() plant: Plant;
   @Output() clickEdit = new EventEmitter<number>()
   @Output() clickDelete = new EventEmitter<number>()
-
-  // name: string;
-  constructor() { }
-
-  ngOnInit(): void {
-    // console.log(this.plant.name);
-    // this.name = this.plant.name
-    
-  }
 
   get plantName() {
     return this.plant.name;

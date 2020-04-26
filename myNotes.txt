@@ -139,3 +139,11 @@ ng g c modules/piaf/piaf --flat
 ng g s modules/piaf/piafHttp
 
 ng g s services/data-type
+
+
+module shifts
+ng g m modules/shifts -m app
+ng g c modules/shifts/shifts --flat
+ng g c modules/shifts/components/shiftCard
+ng g c modules/shifts/components/shiftForm
+
