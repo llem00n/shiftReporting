@@ -8,17 +8,20 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
 import { DepartmentsComponent } from './departments.component';
 import { DepartmentCardComponent } from './components/department-card/department-card.component';
 import { PlantsModule } from '../plants/plants.module';
+import { DepartmentFormComponent } from './components/department-form/department-form.component';
+import { FormModule } from '../form/form.module';
 
 
 
 @NgModule({
-  declarations: [SelectUserDepartmentComponent, DepartmentsComponent, DepartmentCardComponent],
+  declarations: [SelectUserDepartmentComponent, DepartmentsComponent, DepartmentCardComponent, DepartmentFormComponent],
   imports: [
     // AngularSvgIconModule.forRoot(),
     CommonModule,
     ReactiveFormsModule,
     UsedMaterialModule,
-    PlantsModule
+    PlantsModule,
+    FormModule
   ],
   exports: [SelectUserDepartmentComponent]
 })

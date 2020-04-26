@@ -16,10 +16,9 @@ export class DepartmentCardComponent implements OnInit {
   ngOnInit(): void {
   }
   delete() {
-    // this.clickDelete.emit(this.plant.plantId)
+    this.clickDelete.emit(this.department.departmentId);
   }
   edit() {
-    // this.clickEdit.emit(this.plant.plantId)
+    this.clickEdit.emit(this.department.departmentId);
   }
-
 }

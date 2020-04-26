@@ -4,6 +4,8 @@ import { State, Department } from '@models/*';
 import { allDepartments } from 'src/app/app-store';
 import { FormControl } from '@angular/forms';
 import { DepartmentActions } from '@actions/*';
+import { DepartmentFormComponent } from './components/department-form/department-form.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-departments',
@@ -18,6 +20,7 @@ export class DepartmentsComponent implements OnInit {
 
   constructor(
     private store: Store<State>,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -33,9 +36,8 @@ export class DepartmentsComponent implements OnInit {
     const str = string.toLowerCase()
     this.filterDepartments = this.departments.filter(i => (
       true
-      // || i.name.toLowerCase().includes(str)
-      // || i.code.toLowerCase().includes(str)
-      // || i.address.toLowerCase().includes(str)
+      || i.name.toLowerCase().includes(str)
+      || i.description.toLowerCase().includes(str)
     ))
   }
 
@@ -53,25 +55,30 @@ export class DepartmentsComponent implements OnInit {
     this.store.dispatch(DepartmentActions.getDepartments({ plantId }));
   }
   addItem() {
-    // this.openDialog(<Plant>{})
+    this.openDialog(<Department>{})
   }
   edit(id) {
-    // const plant = this.plants.find(i => i.plantId === id)
-    // this.openDialog(plant)
+    const department = this.departments.find(i => i.departmentId === id)
+    this.openDialog(department)
   }
   openDialog(department: Department) {
-    // const dialogRef = this.dialog.open(PlantFormComponent, { data: { plant } })
-    // dialogRef.afterClosed().subscribe(plant => {
-    //   if (!plant) return;
-    //   if (plant.plantId) {
-    //     this.store.dispatch(PlantActions.updatePlant({ plant }));
-    //     return;
-    //   }
-    //   this.store.dispatch(PlantActions.addPlant({ plant }));
-    // });
+    console.log(department);
+    
+    const dialogRef = this.dialog.open(DepartmentFormComponent, { data: { department } });
+    dialogRef.afterClosed().subscribe(department => {
+      if (!department) return;
+      if (department.departmentId) {
+        this.store.dispatch(DepartmentActions.updateDepartment({ department }));
+        return;
+      }
+      department.plantId = this.plantId;
+      this.store.dispatch(DepartmentActions.addDepartment({ department }));
+    });
   }
-  delete(id) {
-    // this.store.dispatch(PlantActions.deletePlant({ id }))
+  delete(id) {    
+    this.store.dispatch(DepartmentActions.deleteDepartment({ id }))
   }
 
 }
+
+// Description for department "dep 2

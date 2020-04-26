@@ -125,6 +125,7 @@ ng g m modules/departments -m app
 ng g c modules/departments/components/selectUserDepartment
 ng g c modules/departments/departments --flat
 ng g c modules/departments/components/departmentCard
+ng g c modules/departments/components/departmentForm
 
 module templates
 ng g m modules/templates -m app
