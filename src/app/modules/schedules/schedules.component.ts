@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
-import { State, Schedule } from '@models/*';
+import { State, Schedule, Shift } from '@models/*';
 import { Subscription } from 'rxjs';
 import { allSchedules } from 'src/app/app-store';
 import { tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 
 @Component({
   selector: 'app-schedules',
@@ -13,13 +15,15 @@ import { tap } from 'rxjs/operators';
 })
 export class SchedulesComponent implements OnInit {
   departmentId: number;
-  shiftId: number;
+  shift: Shift;
+  // shiftId: number;
   schedules: Schedule[] = [];
   list: Schedule[] = [];
   schedules$: Subscription;
   isAddDisabled = true;
   constructor(
     private store: Store<State>,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -30,14 +34,12 @@ export class SchedulesComponent implements OnInit {
     ).subscribe()
   }
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     this.schedules$.unsubscribe();
   }
 
   createLIst() {
-    if (this.shiftId) {
-      this.list = this.schedules.filter(i => i.shiftId === this.shiftId);
+    if (this.shift?.shiftId) {
+      this.list = this.schedules.filter(i => i.shiftId === this.shift.shiftId);
       if (!this.list.length) this.isAddDisabled = false;
       if (this.list.length) this.isAddDisabled = true;
       return;
@@ -51,32 +53,41 @@ export class SchedulesComponent implements OnInit {
     this.store.dispatch(ScheduleActions.getSchedules({ departmentId }));
   }
   selectShift(e) {
-    this.shiftId = null;
-    if (e) this.shiftId = e.shiftId;
+    this.shift = e;
     this.createLIst();
   }
   addItem() {
-    // this.openDialog(<Shift>{})
+    // this.openDialog(<Schedule>{})
+    // const shift = this.shifts.find(i => i.shiftId === +this.preConfigForm.value['shiftId'])
+    const schedule = <Schedule>{
+      departmentId: this.departmentId,
+      shiftId: this.shift.shiftId,
+      shiftName: this.shift.name,
+      shiftDescription: this.shift.description
+    }
+    this.openDialog(schedule)
   }
 
 
   edit(id) {
-    // const shift = this.shifts.find(i => i.shiftId === id)
-    // this.openDialog(shift)
+    const schedule = this.schedules.find(i => i.scheduleId === id)
+    this.openDialog(schedule)
   }
   openDialog(schedule: Schedule) {
-    // const dialogRef = this.dialog.open(ShiftFormComponent, { data: { shift } })
-    // dialogRef.afterClosed().subscribe(shift => {
-    //   if (!shift) return;
-    //   if (shift.shiftId) {
-    //     this.store.dispatch(ShiftActions.updateShift({ shift }));
-    //     return;
-    //   }
-    //   this.store.dispatch(ShiftActions.addShift({ shift }));
-    // });
+    const dialogRef = this.dialog.open(ScheduleFormComponent, { data: { schedule } })
+    dialogRef.afterClosed().subscribe(schedule => {
+      console.log(schedule);
+      if (!schedule) return;
+      if (schedule.scheduleId) {
+        this.store.dispatch(ScheduleActions.updateSchedule({ schedule }));
+        return;
+      }
+      this.store.dispatch(ScheduleActions.addSchedule({ schedule }));
+    });
   }
+
   delete(id) {
-    // this.store.dispatch(ShiftActions.deleteShift({ id }))
+    this.store.dispatch(ScheduleActions.deleteSchedule({ id }))
   }
 
 }

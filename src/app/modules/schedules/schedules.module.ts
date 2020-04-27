@@ -7,11 +7,12 @@ import { FormModule } from '../form/form.module';
 import { UsedMaterialModule } from '../used-material/used-material.module';
 import { DepartmentsModule } from '../departments/departments.module';
 import { ShiftsModule } from '../shifts/shifts.module';
+import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 
 
 
 @NgModule({
-  declarations: [SchedulesComponent, ScheduleCardComponent],
+  declarations: [SchedulesComponent, ScheduleCardComponent, ScheduleFormComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

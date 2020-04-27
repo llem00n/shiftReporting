@@ -29,8 +29,6 @@ export class FormComponent implements OnChanges {
   customForm: FormGroup = new FormGroup({});
 
   ngOnChanges() {
-    console.log(this.flex);
-    
     this.customForm = this.createForm(this.controls);
   }
   createForm(controls): FormGroup {
