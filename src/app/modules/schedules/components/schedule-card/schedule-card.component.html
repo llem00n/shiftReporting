@@ -1,0 +1,44 @@
+<mat-card *ngIf="schedule" class="h-full">
+  <div class="flex flex-col h-full">
+    <div class="flex mb-3">
+      <mat-icon class="mr-2" svgIcon="calendar-clock" color="primary"></mat-icon>
+      <p class="font-bold text-xl">{{schedule.shiftName}} schedule</p>
+    </div>
+    <div class="flex items-center text-gray-600 mb-2">
+      <mat-icon class="mr-2" svgIcon="clock-outline"></mat-icon>
+      <p class="text-base text-gray-700">{{schedule.startTime}} - {{schedule.endTime}}</p>
+    </div>
+    <div class="flex items-center text-gray-600 mb-2">
+      <mat-icon class="mr-2" svgIcon="calendar-blank"></mat-icon>
+      <p class="text-base text-gray-700">{{validFromDate}} - {{validToDate}}</p>
+    </div>
+    <div class="flex items-center text-gray-100 mb-2">
+      <div class="mr-2 w-6"></div>
+      <div class="flex justify-around flex-wrap">
+        <div *ngFor="let day of daysList; last as last">
+          <div class="flex justify-center items-center w-6 h-6 rounded-full mr-1"
+            [ngClass]="schedule[day.key] ? 'bg-primary  text-white' : 'bg-disabled text-disabled'">
+            <div class="text-xs font-bold">{{day.twoLetters}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center text-gray-600 mb-2">
+      <div class="mr-2 w-6"></div>
+      <p class="text-base text-gray-700">Recurce every {{schedule.recurEveryWeeks}}
+        {{schedule.recurEveryWeeks ? ' week':' weeks' }} </p>
+    </div>
+
+
+
+    <div class="flex-1"></div>
+    <div align="end" class="-mb-2 -mx-2 text-gray-600">
+      <button mat-icon-button (click)="delete()">
+        <mat-icon svgIcon="delete-outline"></mat-icon>
+      </button>
+      <button mat-icon-button (click)="edit()">
+        <mat-icon svgIcon="pencil-outline"></mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-card>

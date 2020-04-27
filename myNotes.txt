@@ -146,4 +146,11 @@ ng g m modules/shifts -m app
 ng g c modules/shifts/shifts --flat
 ng g c modules/shifts/components/shiftCard
 ng g c modules/shifts/components/shiftForm
+ng g c modules/shifts/components/selectShift
+
+module schedules
+ng g m modules/schedules -m app
+ng g c modules/schedules/schedules --flat
+ng g c modules/schedules/components/scheduleCard
+ng g c modules/schedules/components/scheduleForm
 

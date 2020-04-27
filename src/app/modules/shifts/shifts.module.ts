@@ -6,16 +6,18 @@ import { ShiftFormComponent } from './components/shift-form/shift-form.component
 import { UsedMaterialModule } from '../used-material/used-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormModule } from '../form/form.module';
+import { SelectShiftComponent } from './components/select-shift/select-shift.component';
 
 
 
 @NgModule({
-  declarations: [ShiftsComponent, ShiftCardComponent, ShiftFormComponent],
+  declarations: [ShiftsComponent, ShiftCardComponent, ShiftFormComponent, SelectShiftComponent],
   imports: [
     CommonModule,
     UsedMaterialModule,
     ReactiveFormsModule,
     FormModule
-  ]
+  ],
+  exports: [SelectShiftComponent]
 })
 export class ShiftsModule { }

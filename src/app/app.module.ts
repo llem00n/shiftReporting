@@ -25,6 +25,7 @@ import { UsedMaterialModule } from './modules/used-material/used-material.module
 import { TemplatesModule } from './modules/templates/templates.module';
 import { PiafModule } from './modules/piaf/piaf.module';
 import { ShiftsModule } from './modules/shifts/shifts.module';
+import { SchedulesModule } from './modules/schedules/schedules.module';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ShiftsModule } from './modules/shifts/shifts.module';
     UsedMaterialModule,
     TemplatesModule,
     PiafModule,
+    SchedulesModule,
     // ShiftsModule
   ],
   providers: [],
