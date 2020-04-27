@@ -1,4 +1,4 @@
-<div class="h-full flex items-center justify-center items-center"
+<!-- <div class="h-full flex items-center justify-center items-center"
   [ngClass]="{'justify-center': options.appearance === 'standard1'}">
   <div class="w-6 h-6" (click)="toggleCheck()">
     <svg *ngIf="isChecked" viewBox="0 0 24 24" fill="rgb(95,95,95)">
@@ -11,4 +11,14 @@
   </div>
   <label *ngIf="options.control.label && options.appearance === 'outline'" [for]="options.control.controlId" class="pl-2"
     (click)="toggleCheck()">{{options.control.label}} </label>
+</div> -->
+
+<!-- Material -->
+<div [ngClass]="{'justify-center': options.appearance === 'standard1'}" class="w-full h-full flex items-center"
+  [formGroup]="options.form">
+  <mat-checkbox [formControlName]="options.control.controlId" color="primary">
+    <span *ngIf="options.appearance !== 'standard1'">
+      {{options.control.label}}
+    </span>
+  </mat-checkbox>
 </div>
