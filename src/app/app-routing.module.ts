@@ -7,15 +7,13 @@ import { ConfigPlantsComponent } from './modules/plants/components/config-plants
 import { ConfigDepartmentsComponent } from './modules/configuration/components/config-departments/config-departments.component';
 import { ConfigShiftComponent } from './modules/configuration/components/config-shift/config-shift.component';
 import { ConfigScheduleComponent } from './modules/configuration/components/config-schedule/config-schedule.component';
-import { ConfigTemplateComponent } from './modules/configuration/components/config-template/config-template.component';
-import { UsersConfigComponent } from './modules/users/components/users-config/users-config.component';
 import { TemplateComponent } from './modules/template/template.component';
 import { TemplatesComponent } from './modules/templates/templates.component';
-import { TemplatesListComponent } from './modules/calendar/components/templates-list/templates-list.component';
 import { DataEntryComponent } from './modules/data-entry/data-entry.component';
 import { DepartmentsComponent } from './modules/departments/departments.component';
 import { ShiftsComponent } from './modules/shifts/shifts.component';
 import { SchedulesComponent } from './modules/schedules/schedules.component'
+import { UsersComponent } from './modules/users/users.component';
 
 const routes: Routes = [
 
@@ -31,7 +29,7 @@ const routes: Routes = [
       { path: 'schedules', component: SchedulesComponent },
       { path: 'templates', component: TemplatesComponent },
       { path: 'templates/:id', component: TemplateComponent },
-      { path: 'users', component: UsersConfigComponent },
+      { path: 'users', component: UsersComponent },
     ]
   },
   {

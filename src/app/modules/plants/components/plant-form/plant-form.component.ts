@@ -11,14 +11,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class PlantFormComponent implements OnInit {
   plant: Plant;
-  form: FormGroup;
+  form = new FormGroup({});
   forms: FormGroup[] = [];
   nameCode = [
-    new DynText({ controlId: 'name', type: 'text', label: 'Name', validators: { required: true } }),
-    new DynText({ controlId: 'code', type: 'text', label: 'Code', validators: { required: true } }),
+    new DynText({ controlId: 'name', label: 'Name', validators: { required: true } }),
+    new DynText({ controlId: 'code', label: 'Code', validators: { required: true } }),
   ];
   address = [
-    new DynText({ controlId: 'address', type: 'text', label: 'Address', validators: { required: true } }),
+    new DynText({ controlId: 'address', label: 'Address', validators: { required: true } }),
   ]
 
 

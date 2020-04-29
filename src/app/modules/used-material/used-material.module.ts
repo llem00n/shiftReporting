@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTreeModule } from '@angular/material/tree';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 const modules = [
@@ -29,7 +30,8 @@ const modules = [
   MatDialogModule,
   MatStepperModule,
   MatTreeModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatChipsModule
 ]
 
 

@@ -76,7 +76,6 @@ export class SchedulesComponent implements OnInit {
   openDialog(schedule: Schedule) {
     const dialogRef = this.dialog.open(ScheduleFormComponent, { data: { schedule } })
     dialogRef.afterClosed().subscribe(schedule => {
-      console.log(schedule);
       if (!schedule) return;
       if (schedule.scheduleId) {
         this.store.dispatch(ScheduleActions.updateSchedule({ schedule }));

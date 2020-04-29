@@ -1,17 +1,49 @@
-<section class="w-64 mx-auto shadow bg-gray-200">
-  <!-- Header -->
-  <header class="text-gray-300 bg-blue-600 px-4 py-2 flex justify-between">
-    <div class="flex items-center">
-      <svg-icon (click)="close()" src="assets/svg_icons/arrow-left.svg" [svgStyle]="{ 'width.px':24, 'fill': '#fff'}">
-      </svg-icon>
-      <span class="ml-2">{{title}}</span>
+<div>
+  <p mat-dialog-title>User settings</p>
+  <div class="flex">
+    <div>
+      <app-form [flex]='true' [controls]='name' [values]="user" (form)="getForm($event)"></app-form>
+      <app-form [flex]='true' [controls]='login' [values]="user" (form)="getForm($event)"></app-form>
+      <app-form [flex]='true' [controls]='mail' [values]="user" (form)="getForm($event)"></app-form>
     </div>
-    <button class="font-bold text-xs px-2" (click)="save()">{{saveButton}}</button>
-  </header>
-  <!-- User form -->
-  <div *ngIf="user" class="p-4">
-    <div class="">
-      <app-form [controls]='config' [values]="user" (form)="getForm($event)" ></app-form>
+
+
+    <div class="border-l-2 border-gray-300 ml-2 pl-2">
+      <app-form [controls]='role' [values]="user" (form)="getForm($event)"></app-form>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Departments </mat-label>
+        <div style="height: 0; overflow: hidden;">
+          <mat-select #select [formControl]="departments" multiple>
+            <mat-option *ngFor="let department of departmentsList" [value]="department">{{department.name}}</mat-option>
+          </mat-select>
+        </div>
+        <div style="min-height: 1.4rem;">
+          <mat-chip-list>
+            <mat-chip *ngFor="let dep of departments.value" (click)="select.open()">{{dep.name}}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline">
+    <mat-label>Departments </mat-label>
+    <div style="min-height: 1.4rem;"  (click)="selectDepartments()">
+      <mat-chip-list >
+        <mat-chip (click)="selectDepartments()">hidden</mat-chip>
+        <mat-chip  (click)="selectDepartments()">hidden2</mat-chip>
+        <mat-chip (click)="selectDepartments()">hidden3</mat-chip>
+      </mat-chip-list>
+    </div>
+  </mat-form-field> -->
+
+
+
     </div>
   </div>
-</section>
+  <!-- <app-form [flex]='true' [controls]='address' [values]="plant" (form)="getForm($event)"></app-form> -->
+  <!-- <pre>{{user | json}}</pre> -->
+  <mat-dialog-actions class="flex justify-end">
+    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+    <button mat-raised-button color="primary" [disabled]='form.invalid' [mat-dialog-close]="user">SAVE</button>
+  </mat-dialog-actions>
+</div>

@@ -62,8 +62,6 @@ export class DepartmentsComponent implements OnInit {
     this.openDialog(department)
   }
   openDialog(department: Department) {
-    console.log(department);
-    
     const dialogRef = this.dialog.open(DepartmentFormComponent, { data: { department } });
     dialogRef.afterClosed().subscribe(department => {
       if (!department) return;

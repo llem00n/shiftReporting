@@ -1,36 +1,55 @@
-<div *ngIf="user" class="m-2 bg-gray-300 shadow w-64  p-4 ">
-  <div class="mr-2">
+<mat-card *ngIf="user" class="h-full">
 
-    <div class="mb-4">
-      <!-- Name -->
-      <p class="font-bold leading-tight mb-1">{{firstName}} {{secondName}}</p>
-
-      <!-- Login -->
-      <div class="flex">
-        <p class="text-xs text-gray-800 leading-tight">
-          Login: {{login}} ({{isActive ? 'active' : 'inactive'}} user)
-        </p>
+  <div class="flex  items-center h-full">
+    <!-- big letters name -->
+    <div class="flex w-1/4">
+      <div class="w-16 h-16 bg-blue-400 rounded-full shadow flex items-center mr-2">
+        <span class="w-16 text-center text-white text-3xl">{{initials}}</span>
       </div>
-
-      <div class="flex items-center">
-        <svg-icon src="assets/svg_icons/at.svg" [svgStyle]="{ 'width.px':16, 'fill': '#5F5F5F' }"></svg-icon>
-        <p class="ml-1 text-xs text-gray-800 leading-tight"> {{email}}</p>
+      <div class="mr-4">
+        <p class="font-bold text-lg mb-2">{{firstName}} {{secondName}}</p>
+        <div class="w-auto inline-block px-4 py-1 rounded-sm"
+          [ngClass]="user.isActive ? 'bg-green-600' : 'bg-gray-400'">
+          <p class="text-base text-gray-100">Active</p>
+        </div>
       </div>
-
+    </div>
+    <!-- email -->
+    <div class="mr-4 w-1/5">
+      <div class="flex text-gray-600 mb-1">
+        <div>
+          <mat-icon style="height: 16px;" class="mr-1" svgIcon="email-outline"></mat-icon>
+        </div>
+        <p class="text-sm text-gray-700">{{email ||'...'}}</p>
+      </div>
+      <div class="flex text-gray-600">
+        <mat-icon style="height: 16px;" class="mr-1" svgIcon="account-check"></mat-icon>
+        <div class="text-gray-700">
+          <p class="text-sm">{{login}}</p>
+          <p class="text-sm">{{role}}</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Active buttons -->
-    <div class="flex justify-between">
-      <button (click)="edit()" class="focus:outline-none">
-        <svg-icon src="assets/svg_icons/pencil-outline.svg" [svgStyle]="{ 'width.px':24, 'fill': '#5F5F5F' }">
-        </svg-icon>
-      </button>
-      <div class="text-xs">
-        <button (click)="clickDepartments.emit(user.userId)" class="bg-white shadow p-1 mr-2">Departments</button>
-        <button (click)="clickRoles.emit(user.userId)" class="bg-white shadow p-1">Roles</button>
+    <!-- departments -->
+    <div class="mr-4 text-gray-600 flex-1 flex items-center">
+      <div class="mr-1 w-6">
+        <mat-icon class="mr-1 w-6" svgIcon="graph-outline"></mat-icon>
       </div>
+      <div>
+        <mat-chip-list>
+          <mat-chip *ngFor="let dep of departments">{{dep.name}}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
 
+
+
+    <!-- <div class="flex-1"></div> -->
+    <div align="end" class="-mx-2 text-gray-600">
+      <button mat-icon-button (click)="edit()">
+        <mat-icon svgIcon="pencil-outline"></mat-icon>
+      </button>
     </div>
   </div>
-
-</div>
+</mat-card>

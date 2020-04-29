@@ -30,9 +30,7 @@ export class DepartmentFormComponent implements OnInit {
   getForm(e: FormGroup) {
     this.form = e;
     this.form.valueChanges.subscribe(value => {
-      Object.assign(this.department, value)
-      console.log(this.department);
-
+      Object.assign(this.department, value);
     })
   }
 }

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UserActions, DepartmentActions } from '@actions/*';
-import { mergeMap, filter, map, tap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { mergeMap, filter, map, tap, concatMap, merge } from 'rxjs/operators';
+import { EMPTY, forkJoin } from 'rxjs';
 import { UserHttpService } from './user-http.service';
+import { User } from './user.model';
+import { roles } from '..';
+import { DepartmentHttpService } from '../department/department-http.service';
+import { AppHttpResponse } from 'src/app/services/http/http.service';
 
 
 
@@ -13,10 +17,30 @@ export class UserEffects {
   getAllUsers$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.getAllUsers),
     mergeMap(_ => this.userHttpService.getAllUsers().pipe(
-      filter(resp => !!resp),
-      map(resp => UserActions.getAllUsersSuccess({ users: resp.body }))
+      filter(resp => resp && resp.status === 200),
+      map(resp => resp.body),
     )),
+    map((users) => users.map(user => {
+      return {
+        ...user,
+        departments: this.departmentHttpService.getUserDepartments(user.userId),
+        // roles: this.userHttpService.getUserRoles(user.userId)
+      }
+    })),
+    //  get Roles
+    // mergeMap(users => forkJoin(users.map(user => user.roles)).pipe(
+    //   map((resp: AppHttpResponse[]) => resp.map((item, key) => users[key].roles = resp[key].body)),
+    //   map(_ => users),
+    // )),
+    // get Departments
+    mergeMap(users => forkJoin(users.map(user => user.departments)).pipe(
+      map((resp: AppHttpResponse[]) => resp.map((item, key) => users[key].departments = resp[key].body)),
+      map(_ => users),
+    )),
+    map(users => UserActions.getAllUsersSuccess({ users })),
   ));
+
+
 
   updateUser$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.updateUser),
@@ -85,6 +109,7 @@ export class UserEffects {
 
 
   constructor(
+    private departmentHttpService: DepartmentHttpService,
     private userHttpService: UserHttpService,
     private actions$: Actions
   ) { }

@@ -1,3 +1,6 @@
+import { Department } from '../department/department.model';
+import { Role } from './role.model';
+
 export class User {
   userId: string = null;
   firstName: string = null;
@@ -6,6 +9,8 @@ export class User {
   password: string = null;
   email: string = null;
   login: string = null;
+  departments: Department[] = null;
+  roleId: number = null;
 
   constructor(opt: {} = {}) {
     Object.keys(opt).map(key => {

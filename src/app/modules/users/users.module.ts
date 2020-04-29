@@ -7,15 +7,20 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { FormModule } from '../form/form.module';
 import { UserRolesComponent } from './components/user-roles/user-roles.component';
 import { UserDepartmentsComponent } from './components/user-departments/user-departments.component';
+import { UsersComponent } from './users.component';
+import { UsedMaterialModule } from '../used-material/used-material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [UserCardComponent, UserFormComponent, UsersConfigComponent, UserRolesComponent, UserDepartmentsComponent],
+  declarations: [UserCardComponent, UserFormComponent, UsersConfigComponent, UserRolesComponent, UserDepartmentsComponent, UsersComponent],
   imports: [
-    AngularSvgIconModule.forRoot(),
+    // AngularSvgIconModule.forRoot(),
     CommonModule,
-    FormModule
+    FormModule,
+    UsedMaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class UsersModule { }

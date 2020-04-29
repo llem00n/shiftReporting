@@ -150,8 +150,6 @@ export class TemplatesListComponent implements OnInit, OnChanges {
         templateId: item.template.templateId,
       });
     }
-    // console.log(currentDataEntry);
-
     this.store.dispatch(DataEntryActions.setCurrentDataEntry({ currentDataEntry }))
     this.router.navigate(['dataentry'])
   }

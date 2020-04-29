@@ -145,7 +145,6 @@ export class DataEntryComponent implements OnInit {
   save() {
     if (!this.getSavePermission()) return;
     if (this.dataEntry.dataEntryId) {
-      console.log(this.dataEntry);
       this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
       this.router.navigate(['/calendar']);
       return;
@@ -154,7 +153,6 @@ export class DataEntryComponent implements OnInit {
     const createDate = this.dateService.isBetween(new Date(), this.endDate, this.deadline)
       ? this.dateService.getLocalDate(this.endDate) : this.dateService.getLocalDate();
     this.dataEntry.createDate = createDate;
-    console.log(this.dataEntry);
 
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }));
     this.router.navigate(['/calendar']);
