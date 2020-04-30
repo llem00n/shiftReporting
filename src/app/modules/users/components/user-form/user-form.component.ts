@@ -38,7 +38,7 @@ export class UserFormComponent implements OnInit {
 
   ]
   mail = [
-    new DynText({ controlId: 'password', label: 'Password' }),
+    new DynText({ controlId: 'password', label: 'Password', validators: { required: true } }),
     new DynCheckbox({ controlId: 'isActive', label: 'Active user' }),
   ];
 

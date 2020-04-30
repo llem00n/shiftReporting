@@ -14,6 +14,7 @@ import { DepartmentsComponent } from './modules/departments/departments.componen
 import { ShiftsComponent } from './modules/shifts/shifts.component';
 import { SchedulesComponent } from './modules/schedules/schedules.component'
 import { UsersComponent } from './modules/users/users.component';
+import { LoginComponent } from './modules/authorization/components/login/login.component';
 
 const routes: Routes = [
 
@@ -40,6 +41,8 @@ const routes: Routes = [
 
   { path: '', redirectTo: '', pathMatch: 'full' },
   // { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: 'callback.html', component: LoginComponent },
+
 ];
 
 @NgModule({

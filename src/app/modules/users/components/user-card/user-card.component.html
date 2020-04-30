@@ -2,7 +2,7 @@
 
   <div class="flex  items-center h-full">
     <!-- big letters name -->
-    <div class="flex w-1/4">
+    <div class="flex w-64">
       <div class="w-16 h-16 bg-blue-400 rounded-full shadow flex items-center mr-2">
         <span class="w-16 text-center text-white text-3xl">{{initials}}</span>
       </div>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <!-- email -->
-    <div class="mr-4 w-1/5">
+    <div class="mr-4 w-40">
       <div class="flex text-gray-600 mb-1">
         <div>
           <mat-icon style="height: 16px;" class="mr-1" svgIcon="email-outline"></mat-icon>
@@ -38,7 +38,7 @@
       </div>
       <div>
         <mat-chip-list>
-          <mat-chip *ngFor="let dep of departments">{{dep.name}}</mat-chip>
+          <mat-chip *ngFor="let dep of departments" >{{dep.name}}</mat-chip>
         </mat-chip-list>
       </div>
     </div>

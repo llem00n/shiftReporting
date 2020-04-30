@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User, Role, Department } from '@models/*';
 import { HttpService, AppHttpResponse, AppHttpRequest } from 'src/app/services/http/http.service';
 import { map, take, tap, mergeMap, switchMap } from 'rxjs/operators';
+import { OidcClientService } from './oidc-client.service';
 // import { User } from 'src/app/app-store/user/user.model';
 
 export interface CurrentUser {
@@ -20,15 +21,21 @@ export class AuthorizationService {
 
   private currentUser = new BehaviorSubject<CurrentUser>(null);
 
-  isLoggedIn = false;
+  // isLoggedIn = false;
   redirectUrl: string;
 
   constructor(
     private router: Router,
     private httpService: HttpService,
-  ) { }
+    private oidcClientService: OidcClientService,
+    
+  ) {
+    // FAKE_USER
+    this.setCurrentUser()
+   }
 
-  setCurrentUser(userId: string): void {
+  setCurrentUser(): void {
+    const userId = this.oidcClientService.getUser().profile.sub;
     this.getUser(userId)
       .pipe(
         // map(req => <CurrentUser>req.body),
@@ -40,12 +47,12 @@ export class AuthorizationService {
   }
 
 
-  getCurrentUser(): Observable<CurrentUser> {    
+  getCurrentUser(): Observable<CurrentUser> {
     return this.currentUser.asObservable();
   }
   logout() {
     this.currentUser.next(null);
-    this.isLoggedIn = false;
+    // this.isLoggedIn = false;
     this.router.navigate(['/login'])
   }
 

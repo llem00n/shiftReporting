@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthorizationService } from '../authorization.service';
+import { OidcClientService } from '../oidc-client.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
-  constructor(private authService: AuthorizationService, private router: Router) {}
+  constructor(
+    private authService: AuthorizationService,
+    private router: Router,
+    private oidcClientService: OidcClientService
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -28,10 +33,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) { return true; }
+    if (this.oidcClientService.isLoggedIn()) { return true; }
 
     // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
+    this.oidcClientService.redirectUrl = url;
 
     // Create a dummy session id
     // let sessionId = 123456789;
@@ -44,7 +49,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     // };
 
     // Navigate to the login page with extras
-    this.router.navigate(['/login']);
+    this.oidcClientService.startAuthentication()
+    // this.router.navigate(['/login']);
     return false;
   }
 

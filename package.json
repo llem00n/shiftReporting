@@ -28,6 +28,7 @@
     "@ngrx/store-devtools": "^9.0.0",
     "angular-gridster2": "^9.1.0",
     "angular-svg-icon": "^9.1.0",
+    "oidc-client": "^1.10.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.11.1",
     "zone.js": "~0.10.2"

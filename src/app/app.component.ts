@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { AuthorizationService } from './modules/authorization/authorization.service';
 import { map, filter } from 'rxjs/operators';
+import { OidcClientService } from './modules/authorization/oidc-client.service';
 
 @Component({
   selector: 'app-root',
@@ -19,10 +20,12 @@ export class AppComponent implements OnInit {
     { key: 'configuration/schedules', title: 'Schedule', isShow: false, icon: 'calendar-clock' },
     { key: 'configuration/templates', title: 'Template', isShow: false, icon: 'file-table-box' },
     { key: 'configuration/users', title: 'Users', icon: 'account-group' },
+    
   ];
 
   constructor(
     private authService: AuthorizationService,
+    private oidcCLientService: OidcClientService,
   ) { }
 
 
@@ -42,6 +45,6 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout()
+    this.oidcCLientService.logout()
   }
 }
