@@ -1,8 +1,18 @@
 <div *ngIf="week && year" class="flex flex-col h-full">
-  <div class="m-4 mb-0 flex justify-between">
+  <div class="m-4 mb-0 flex justify-between items-center">
     <div class="flex-1 ">
       <app-select-user-department (changeDepartment)="changeDepartment($event)"></app-select-user-department>
     </div>
+      <mat-button-toggle-group class="ml-4 mb-6" #group="matButtonToggleGroup">
+        <mat-button-toggle value="day" aria-label="Day">Day
+          <!-- <mat-icon>format_align_left</mat-icon> -->
+        </mat-button-toggle>
+        <mat-button-toggle value="week" aria-label="Text align center">Week
+          <!-- <mat-icon>format_align_center</mat-icon> -->
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <!-- <mat-button-toggle>Day</mat-button-toggle>
+      <mat-button-toggle>Week</mat-button-toggle> -->
     <div class="ml-4 mb-6">
       <app-week-selector [week]='week' [year]='year' (changeWeek)="setWeek($event)"></app-week-selector>
     </div>

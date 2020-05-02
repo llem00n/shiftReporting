@@ -17,19 +17,19 @@
       </div>
       <div class="flex items-center">
         <a class="text-normal">{{userName}} </a>
-        <mat-icon svgIcon="pencil"></mat-icon>
+        <mat-icon svgIcon="pencil" class="ml-4 text-gray-600"></mat-icon>
       </div>
     </div>
     <mat-nav-list>
       <mat-list-item [routerLink]="['/calendar']">
-        <mat-icon mat-list-icon svgIcon="calendar-month"></mat-icon>
-        <p mat-line *ngIf="!isSmall" class="">Calendar</p>
+        <mat-icon mat-list-icon svgIcon="calendar-month" routerLinkActive="mat-primary"></mat-icon>
+        <p mat-line *ngIf="!isSmall" class="" routerLinkActive="text-primary">Calendar</p>
       </mat-list-item>
       <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div>
 
       <mat-list-item *ngFor="let item of config" [routerLink]="'./' + item.key">
         <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
-        <p *ngIf="!isSmall" mat-line routerLinkActive="mat-primary"> {{item.title}} </p>
+        <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
       </mat-list-item>
       <mat-list-item (click)="logout()">
         <mat-icon mat-list-icon svgIcon="logout"></mat-icon>
