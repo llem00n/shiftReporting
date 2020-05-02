@@ -3,6 +3,7 @@ import { Update } from '@ngrx/entity';
 
 import { User } from './user.model';
 import { Role } from './role.model';
+import { Department } from '../department/department.model';
 
 export const addUser = createAction(
   '[User] Add User',
@@ -14,7 +15,7 @@ export const addUserSuccess = createAction(
 )
 export const updateUser = createAction(
   '[User] Update User',
-  props<{ user: User }>()
+  props<{ user: User, oldDep: Department[] }>()
 )
 export const updateUserSuccess = createAction(
   '[User] Update User Success',
@@ -36,21 +37,21 @@ export const deleteUserRoleSuccess = createAction(
   '[User] Delete UserRole Success',
   props<{ userId: string, roleId: number }>()
 )
-export const addUserDepartment = createAction(
-  '[User] Add User Department',
-  props<{ userId: string, departmentId: number }>()
+export const addUserDepartments = createAction(
+  '[User] Add User Departments',
+  props<{ userId: string, departmentId: number[] }>()
 )
-export const addUserDepartmentSuccess = createAction(
-  '[User] Add UserDepartment Success',
-  props<{ userId: string, departmentId: number }>()
+export const addUserDepartmentsSuccess = createAction(
+  '[User] Add UserDepartments Success',
+  props<{ userId: string, departmentId: number[] }>()
 )
-export const deleteUserDepartment = createAction(
-  '[User] Delete UserDepartment',
-  props<{ userId: string, departmentId: number }>()
+export const deleteUserDepartments = createAction(
+  '[User] Delete UserDepartments',
+  props<{ userId: string, departmentId: number[] }>()
 )
-export const deleteUserDepartmentSuccess = createAction(
-  '[User] Delete UserDepartment Success',
-  props<{ userId: string, departmentId: number }>()
+export const deleteUserDepartmentsSuccess = createAction(
+  '[User] Delete UserDepartments Success',
+  props<{ userId: string, departmentId: number[] }>()
 )
 export const getRoles = createAction(
   '[User] Get Roles',

@@ -26,10 +26,11 @@ export class SelectUserDepartmentComponent implements OnInit {
       this.departments = dep;
       dep.length == 1 && this.department.setValue(dep[0].departmentId);
     });
+
     this.authService.getCurrentUser()
       .pipe(
         filter(data => !!data),
-        tap(({ user }) => this.store.dispatch(DepartmentActions.getUserDepartments({ userId: user.userId })))
+        tap(({ userId }) => this.store.dispatch(DepartmentActions.getUserDepartments({ userId })))
       ).subscribe()
     this.department.valueChanges.subscribe(val => {
       const dep = this.departments.find(d => d.departmentId == val);

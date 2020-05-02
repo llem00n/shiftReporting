@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthorizationService, CurrentUser } from '../authorization/authorization.service';
+import { AuthorizationService } from '../authorization/authorization.service';
 import { Store, select } from '@ngrx/store';
-import { State, Template } from '@models/*';
+import { State, Template, User } from '@models/*';
 import { TemplateActions } from '@actions/*';
 import { allTemplates } from 'src/app/app-store';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit {
-  currentUser: CurrentUser;
+  currentUser: User;
   departmentId: number;
   templates: Template[] = [];
   templates$: Subscription;

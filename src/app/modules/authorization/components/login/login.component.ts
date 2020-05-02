@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { UserActions } from '@actions/*';
 import { allUsers } from 'src/app/app-store';
 import { OidcClientService } from '../../oidc-client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +17,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthorizationService,
     private oidcService: OidcClientService,
+    private router: Router,
     // private store: Store<State>
   ) { }
 
   ngOnInit(): void {
     this.oidcService.completeAuthentication().then(_ => {
-      this.authService.setCurrentUser()
+      this.authService.setCurrentUser();
+      this.router.navigate(['calendar'])
     });
 
     // this.getUsers()

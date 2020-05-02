@@ -55,15 +55,15 @@ export class UsersConfigComponent implements OnInit {
 
   openDialogEdit(data) {
     const dialogRef = this.dialogService.open(UserFormComponent, data)
-    dialogRef.afterClosed().subscribe(user => {
-      if (!user) return;
-      if (user.userId) {
-        this.store.dispatch(UserActions.updateUser({ user }))
-      } else {
-        delete user.userId;
-        this.store.dispatch(UserActions.addUser({ user }))
-      }
-    });
+    // dialogRef.afterClosed().subscribe(user => {
+    //   if (!user) return;
+    //   if (user.userId) {
+    //     this.store.dispatch(UserActions.updateUser({ user }))
+    //   } else {
+    //     delete user.userId;
+    //     this.store.dispatch(UserActions.addUser({ user }))
+    //   }
+    // });
   }
 }
 

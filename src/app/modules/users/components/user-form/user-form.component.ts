@@ -1,9 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { User, DynText, DynCheckbox, State, Role, DynSelect } from '@models/*';
+import { User, DynText, DynCheckbox, State, Role, DynSelect, Plant } from '@models/*';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { roles } from 'src/app/app-store';
+import { roles, userDepartments, allPlants } from 'src/app/app-store';
+import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
+import { PlantActions } from '@actions/*';
+import { filter, tap, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-form',
@@ -11,18 +14,10 @@ import { roles } from 'src/app/app-store';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-
+  currentUser: User;
   departments = new FormControl();
-  departmentsList = [
-    { departmentId: 0, name: 'Dep0' },
-    { departmentId: 1, name: 'Dep1' },
-    { departmentId: 2, name: 'Dep2' },
-    { departmentId: 3, name: 'Dep3' },
-    { departmentId: 4, name: 'Dep4' },
-    { departmentId: 5, name: 'Dep5' },
-    { departmentId: 6, name: 'Department 6' },
-  ]
-
+  departmentsList = [];
+  plants: Plant[] = [];
 
   user: User;
   form = new FormGroup({});
@@ -35,7 +30,6 @@ export class UserFormComponent implements OnInit {
   login = [
     new DynText({ controlId: 'login', label: 'Login', validators: { required: true } }),
     new DynText({ controlId: 'email', label: 'Email', validators: { email: true } }),
-
   ]
   mail = [
     new DynText({ controlId: 'password', label: 'Password', validators: { required: true } }),
@@ -48,15 +42,41 @@ export class UserFormComponent implements OnInit {
 
   constructor(
     private store: Store<State>,
+    private authService: AuthorizationService,
     public dialogRef: MatDialogRef<UserFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { user: User },
   ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(PlantActions.getPlants());
+    const plants$ = this.store.pipe(select(allPlants), filter(data => !!data))
+    this.store.select(allPlants).subscribe(plants => this.plants = plants);
+    this.authService.getCurrentUser().pipe(
+      filter(user => !!user),
+      tap(user => this.currentUser = user),
+      mergeMap(_ => plants$),
+      tap(plants => this.plants = this.plants),
+    ).subscribe(_ => this.createDepList());
+
     this.user = { ...this.data.user };
+    this.departments.setValue(this.user.departments.map(d => d.departmentId))
     this.getRoles();
+    this.departments.valueChanges
+      .subscribe(val => this.user.departments =
+        this.currentUser.departments
+          .filter(d => val.includes(d.departmentId))
+      )
   }
 
+  createDepList() {
+    const result = [];
+    this.plants.map(plant => {
+      const departments = this.currentUser.departments.filter(d => d.plantId === plant.plantId);
+      if (!departments.length) return;
+      result.push({ plant, departments, })
+    })
+    this.departmentsList = result;
+  }
   getRoles() {
     this.store.pipe(
       select(roles),

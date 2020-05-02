@@ -102,15 +102,15 @@ export class UserDepartmentsComponent implements OnInit {
     return this.userDepartments?.map(i => i.departmentId).includes(dep.departmentId)
   }
   toggleRole(dep: Department) {
-    const payload = {
-      userId: this.userId,
-      departmentId: dep.departmentId
-    }
-    if (this.userDepartments?.map(i => i.departmentId).includes(dep.departmentId)) {
-      this.store.dispatch(UserActions.deleteUserDepartment(payload))
-    } else {
-      this.store.dispatch(UserActions.addUserDepartment(payload))
-    }
+    // const payload = {
+    //   userId: this.userId,
+    //   departmentId: dep.departmentId
+    // }
+    // if (this.userDepartments?.map(i => i.departmentId).includes(dep.departmentId)) {
+    //   this.store.dispatch(UserActions.deleteUserDepartment(payload))
+    // } else {
+    //   this.store.dispatch(UserActions.addUserDepartment(payload))
+    // }
   }
 }
 

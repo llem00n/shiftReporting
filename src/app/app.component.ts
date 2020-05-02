@@ -37,9 +37,8 @@ export class AppComponent implements OnInit {
           this.abbreviation = ''
           return;
         }
-        const { user } = currentUser
-        this.userName = `${user.firstName} ${user.secondName}`;
-        this.abbreviation = user.firstName.slice(0, 1).toUpperCase() + user.secondName.slice(0, 1).toUpperCase();
+        this.userName = `${currentUser?.firstName} ${currentUser?.secondName}`;
+        this.abbreviation = currentUser?.firstName.slice(0, 1).toUpperCase() + currentUser?.secondName.slice(0, 1).toUpperCase();
       })
 
   }

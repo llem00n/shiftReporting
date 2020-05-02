@@ -66,15 +66,16 @@ export class UsersComponent implements OnInit {
     const user = this.users.find(i => i.userId === id)
     this.openDialog(user)
   }
-  openDialog(user: User) {
-    const dialogRef = this.dialog.open(UserFormComponent, { data: { user } })
+  openDialog(editUser: User) {
+    const dialogRef = this.dialog.open(UserFormComponent, { data: { user: editUser } })
     dialogRef.afterClosed().subscribe(user => {
       if (!user) return;
+      const oldDep = editUser.departments
       if (user.userId) {
-        this.store.dispatch(UserActions.updateUser({ user }));
+        this.store.dispatch(UserActions.updateUser({ user, oldDep }));
         return;
       }
-      this.store.dispatch(UserActions.addUser({ user }));
+      // this.store.dispatch(UserActions.addUser({ user }));
     });
   }
 }

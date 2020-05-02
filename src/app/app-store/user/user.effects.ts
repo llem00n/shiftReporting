@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UserActions, DepartmentActions } from '@actions/*';
 import { mergeMap, filter, map, tap, concatMap, merge } from 'rxjs/operators';
-import { EMPTY, forkJoin } from 'rxjs';
+import { EMPTY, forkJoin, of, Observable } from 'rxjs';
 import { UserHttpService } from './user-http.service';
 import { User } from './user.model';
 import { roles } from '..';
 import { DepartmentHttpService } from '../department/department-http.service';
 import { AppHttpResponse } from 'src/app/services/http/http.service';
+import { Department } from '../department/department.model';
 
 
 
@@ -44,12 +45,30 @@ export class UserEffects {
 
   updateUser$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.updateUser),
-    mergeMap(action => this.userHttpService.updateUser(action.user).pipe(
+    mergeMap(({ user, oldDep }) => {
+      const oldDepIds = oldDep.map(o => o.departmentId);
+      const newDepId = user.departments.map(d => d.departmentId);
+      const addDepIds = newDepId.filter(n => !oldDepIds.includes(n));
+      const delDepIds = oldDepIds.filter(n => !newDepId.includes(n));
+      const depChanges = []
+      addDepIds.map(d => depChanges.push(this.userHttpService.addUserDepartment(user.userId, d)));
+      delDepIds.map(d => depChanges.push(this.userHttpService.deleteUserDepartment(user.userId, d)));
+      return forkJoin(depChanges).pipe(
+        map(_ => user)
+      );
+    }),
+
+    mergeMap(user => this.userHttpService.updateUser(user).pipe(
       filter(resp => resp && resp.status === 200),
+      map(resp => resp.body),
+    )),
+    mergeMap((user: User) => this.departmentHttpService.getUserDepartments(user.userId).pipe(
+      filter(resp => resp && resp.status === 200),
+      tap(resp => user.departments = resp.body),
       map(resp => UserActions.updateUserSuccess({
         user: {
-          id: resp.body.userId,
-          changes: resp.body
+          id: user.userId,
+          changes: user
         }
       }))
     )),
@@ -92,20 +111,21 @@ export class UserEffects {
     )),
   ));
 
-  addUserDepartment$ = createEffect(() => this.actions$.pipe(
-    ofType(UserActions.addUserDepartment),
-    mergeMap(action => this.userHttpService.addUserDepartment(action.userId, action.departmentId).pipe(
-      filter(resp => resp && resp.status === 200),
-      map(resp => DepartmentActions.getUserDepartments({ userId: action.userId }))
-    )),
-  ));
-  deleteUserDepartment$ = createEffect(() => this.actions$.pipe(
-    ofType(UserActions.deleteUserDepartment),
-    mergeMap(action => this.userHttpService.deleteUserDepartment(action.userId, action.departmentId).pipe(
-      filter(resp => resp && resp.status === 200),
-      map(resp => DepartmentActions.getUserDepartments({ userId: action.userId }))
-    )),
-  ));
+  // addUserDepartment$ = createEffect(() => this.actions$.pipe(
+  //   ofType(UserActions.addUserDepartment),
+  //   mergeMap(action => this.userHttpService.addUserDepartment(action.userId, action.departmentId).pipe(
+  //     filter(resp => resp && resp.status === 200),
+  //     map(resp => DepartmentActions.getUserDepartments({ userId: action.userId }))
+  //   )),
+  // ));
+
+  // deleteUserDepartment$ = createEffect(() => this.actions$.pipe(
+  //   ofType(UserActions.deleteUserDepartment),
+  //   mergeMap(action => this.userHttpService.deleteUserDepartment(action.userId, action.departmentId).pipe(
+  //     filter(resp => resp && resp.status === 200),
+  //     map(resp => DepartmentActions.getUserDepartments({ userId: action.userId }))
+  //   )),
+  // ));
 
 
   constructor(

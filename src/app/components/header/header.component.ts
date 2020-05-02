@@ -9,17 +9,17 @@ import { User } from '@models/*';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  user: User;
-  constructor(
-    private authService: AuthorizationService
-  ) { }
+  // user: User;
+  // constructor(
+  //   private authService: AuthorizationService
+  // ) { }
 
   ngOnInit() {
-    this.authService.getCurrentUser().subscribe(user => {
-      this.user = user.user 
-    })
+    // this.authService.getCurrentUser().subscribe(user => {
+    //   this.user = user.user 
+    // })
   }
-  logout() {
-    this.authService.logout();
-  }
+  // logout() {
+  //   this.authService.logout();
+  // }
 }

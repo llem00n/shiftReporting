@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PiafTreeComponent, DynamicFlatNode, DynamicDataSource } from './piaf-tree.component';
-import { PiService } from '../../pi.service';
+// import { PiService } from '../../pi.service';
 import { MatTreeModule, MatTreeNode, MatTreeNodeToggle, MatTreeNodePadding } from '@angular/material/tree';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { of, throwError } from 'rxjs';
@@ -18,7 +18,7 @@ describe('PiafTreeComponent', () => {
   let testFlatNodes;
   let component: PiafTreeComponent;
   let fixture: ComponentFixture<PiafTreeComponent>;
-  let pisSpy: jasmine.SpyObj<PiService>;
+  // let pisSpy: jasmine.SpyObj<PiService>;
 
   beforeEach(async(() => {
     const spyPIS = jasmine.createSpyObj('PiService',
@@ -29,7 +29,7 @@ describe('PiafTreeComponent', () => {
         PiafTreeComponent,
       ],
       providers: [
-        { provide: PiService, useValue: spyPIS },
+        // { provide: PiService, useValue: spyPIS },
       ]
 
     })
