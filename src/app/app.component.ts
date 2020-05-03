@@ -12,7 +12,7 @@ import { OidcClientService } from './modules/authorization/oidc-client.service';
 export class AppComponent implements OnInit {
   userName: string;
   abbreviation: string;
-  isSmall = true;
+  isSmall = false;
   config = [
     { key: 'configuration/plants', title: 'Plants', isShow: false, icon: 'factory' },
     { key: 'configuration/departments', title: 'Departments', isShow: false, icon: 'graph-outline' },

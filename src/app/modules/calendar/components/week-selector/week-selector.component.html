@@ -1,19 +1,11 @@
 <div class="flex items-center h-full">
-  <button mat-icon-button (click)="prevWeek()">
-    <mat-icon svgIcon="chevron-left"></mat-icon>
+  <button mat-icon-button (click)="prevWeek()" class="text-gray-600">
+    <mat-icon svgIcon="chevron-left" ></mat-icon>
   </button>
 
   <p class="px-2">Week: {{week}} ({{weekStr}})</p>
 
-  <button mat-icon-button (click)="nextWeek()">
+  <button mat-icon-button (click)="nextWeek()" class="text-gray-600">
     <mat-icon svgIcon="chevron-right"></mat-icon>
   </button>
-
-  <!-- <button class="focus:outline-none" (click)="prevWeek()">
-      <svg-icon src="assets/svg_icons/arrow-left.svg" [svgStyle]="{ 'width.px':24}"> </svg-icon>
-    </button>
-    <button class="focus:outline-none" (click)="nextWeek()">
-      <svg-icon src="assets/svg_icons/arrow-right.svg" [svgStyle]="{ 'width.px':24}"> </svg-icon>
-    </button> -->
-  <!-- <svg-icon src="assets/svg_icons/chevron-down.svg" [svgStyle]="{ 'width.px':24}"> </svg-icon> -->
 </div>

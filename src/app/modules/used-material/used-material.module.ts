@@ -16,9 +16,13 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 const modules = [
+  MatNativeDateModule,
+  MatDatepickerModule,
   MatButtonToggleModule,
   MatSidenavModule,
   MatListModule,

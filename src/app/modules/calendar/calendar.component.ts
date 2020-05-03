@@ -52,17 +52,48 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.store.dispatch(TemplateActions.getTemplates({ departmentId }));
     this.getDataEntry()
   }
-  getDataEntry() {
-    if (!this.departmentId || !this.week || !this.year) {
+  getDataEntry(day?: Date) {
+    if ((!this.departmentId || !this.week || !this.year) && (!this.departmentId || !day)) {
       this.store.dispatch(DataEntryActions.setDataEntriesOnDate({ dataEntries: [] }))
       return;
-
     }
-    const date = this.dateService.getWeekJSON(this.year, this.week);
+    let date;
+    if (day) {
+      const from = new Date(day);
+      const to = new Date(day);
+
+      from.setDate(day.getDate() - 1)
+      to.setDate(day.getDate() + 1)
+      date = {
+        from: this.dateService.getLocalDate(from.setDate(day.getDate() - 1)),
+        to: this.dateService.getLocalDate(to.setDate(day.getDate() + 1)),
+      }
+    } else {
+      date = this.dateService.getWeekJSON(this.year, this.week);
+    }
+
     this.store.dispatch(DataEntryActions.getDataEntriesOnDate({
       departmentId: this.departmentId,
       fromDate: date.from,
       toDate: date.to
     }))
+  }
+
+
+  day: Date = new Date()
+  setDay(e) {
+    this.day = e;
+    this.getDataEntry(this.day)
+  }
+  dayView() {
+    this.day = this.dateService.getMonday(this.year, this.week)
+    this.getDataEntry(this.day);
+  }
+  weekView() {
+    const weekYear = this.dateService.getWeek(this.day);
+    this.week = weekYear.week;
+    this.year = weekYear.year;
+    this.day = null;
+    this.getDataEntry()
   }
 }

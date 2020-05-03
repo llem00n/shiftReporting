@@ -105,7 +105,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
 
   splitTemplates() {
     let index = this.shift.templNum;
-    if (index < this.templates.length) index = this.shift.templNum - 1;
+    if (index < this.templates.length) index = index ? this.shift.templNum - 1 : 0;
     this.showedTemplates = [...this.templates];
     this.hiddenTemplates = this.showedTemplates.splice(index);
   }

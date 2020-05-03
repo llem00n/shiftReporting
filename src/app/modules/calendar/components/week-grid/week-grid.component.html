@@ -7,7 +7,7 @@
       <div class="flex justify-between flex-1 ">
         <div *ngFor="let day of scheduleWeekList | keyvalue"
           class="border border-transparent w-full text-gray-700 font-bold text-sm">
-          <p class="text-center">{{day .value.name}}</p>
+          <p class="text-center">{{day.value.name}}</p>
           <p class="text-center">{{day.value.date | date}}</p>
         </div>
       </div>
@@ -33,26 +33,8 @@
           [class.shadow-outline]="shift.isActive" [class.z-30]="shift.isActive" class="absolute w-full  pb-1 pr-1">
           <app-templates-list [calendarHight]="calendarContentHeight" [day]="day" [shift]="shift" (clickShowMore)="clickShowMore($event, shift)">
           </app-templates-list>
-
-          <!-- <div class="p-1">
-              Night sift
-            </div> -->
         </div>
-
-        <!-- <mat-card class="h-full p-0">
-              <p>Night Shift</p>
-            </mat-card> -->
-        <!-- shift -->
-
-
-        <!-- <p class="px-1 truncate text-gray-700 text-sm font-bold">{{shift.schedule.shiftName}}</p> -->
-        <!-- templates -->
-        <!-- <p>{{day.value.shifts | json}}</p> -->
       </div>
     </div>
   </div>
-
 </div>
-<!-- <pre>{{scheduleWeekList | json}}</pre> -->
-
-<!-- <pre>{{schedules | json}}</pre> -->

@@ -7,11 +7,12 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { DepartmentsModule } from '../departments/departments.module';
 import { TemplatesListComponent } from './components/templates-list/templates-list.component';
 import { UsedMaterialModule } from '../used-material/used-material.module';
+import { DaySelectorComponent } from './components/day-selector/day-selector.component';
 
 
 
 @NgModule({
-  declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent, TemplatesListComponent],
+  declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent, TemplatesListComponent, DaySelectorComponent],
   imports: [
     CommonModule,
     // AngularSvgIconModule.forRoot(),
