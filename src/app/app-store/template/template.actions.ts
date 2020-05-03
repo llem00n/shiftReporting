@@ -71,10 +71,14 @@ export const setAddedTemplate = createAction(
 //   props<{ templates: Update<Template>[] }>()
 // );
 
-// export const deleteTemplate = createAction(
-//   '[Template/API] Delete Template',
-//   props<{ id: string }>()
-// );
+export const deleteTemplate = createAction(
+  '[Template/API] Delete Template',
+  props<{ id: number }>()
+);
+export const deleteTemplateSuccess = createAction(
+  '[Template/API] Delete Template Success',
+  props<{ id: number }>()
+);
 
 // export const deleteTemplates = createAction(
 //   '[Template/API] Delete Templates',

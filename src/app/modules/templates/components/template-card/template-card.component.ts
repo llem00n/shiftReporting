@@ -8,10 +8,17 @@ import { Template } from '@models/*';
 })
 export class TemplateCardComponent implements OnInit {
   @Input() template: Template;
-  @Output() clickEdit = new EventEmitter<number>()
+  @Output() clickDelete = new EventEmitter<number>();
+  @Output() clickEdit = new EventEmitter<number>();
   constructor() { }
 
   ngOnInit(): void {
+  }
+  delete() {
+    this.clickDelete.emit(this.template.templateId);
+  }
+  edit() {
+    this.clickEdit.emit(this.template.templateId);
   }
 
 }

@@ -51,7 +51,7 @@ export class TemplatesComponent implements OnInit {
     this.templates$.unsubscribe();
   }
 
-  selectDepartment({departmentId}) {
+  selectDepartment({ departmentId }) {
     this.departmentId = departmentId;
     this.store.dispatch(TemplateActions.getTemplates({ departmentId }));
   }
@@ -60,6 +60,12 @@ export class TemplatesComponent implements OnInit {
     this.store.dispatch(TemplateActions.setEditingTemplate({ template }));
     this.router.navigate(['configuration/templates/' + event])
   }
+  delete(id) {
+    console.log(id);
+    
+    this.store.dispatch(TemplateActions.deleteTemplate({ id }))
+  }
+
   addTemplate() {
     const _departmentId = this.departmentId;
     this.store.dispatch(TemplateActions.setEditingTemplate({ template: <Template>{ _departmentId } }));

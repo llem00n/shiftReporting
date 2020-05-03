@@ -45,6 +45,15 @@ export class TemplateHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
+  deleteTemplate(templateId: number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'deleteTemplate',
+      payload: { templateId },
+      loadingMsg: 'Deleting the template ...',
+      successMsg: `Template has been deleted`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
   getTemplates(departmentID: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getTemplates',

@@ -1,12 +1,25 @@
-<mat-card *ngIf="template" class="m-2">
-  <div class="flex items-center justify-between mb-2">
-    <span class="font-bold text-xl">{{template.name}}</span>
+<mat-card *ngIf="template" class="h-full">
+  <div class="flex flex-col h-full">
+    <div class="flex mb-1">
+      <mat-icon class="mr-2" svgIcon="file-table-box" color="primary"></mat-icon>
+      <p class="font-bold text-xl">{{template.name}}</p>
+    </div>
+    <div class="flex text-gray-600 mb-1">
+      <mat-icon style="height: 16px;" class="mr-2" svgIcon="clock-outline"></mat-icon>
+      <p class="text-sm">{{template.lastUpdated}}</p>
+    </div>
+    <div class="flex text-gray-600 mb-1">
+      <div class="mr-2 w-6"></div>
+      <p class="text-sm">{{template.description}}</p>
+    </div>
+    <div class="flex-1"></div>
+    <div align="end" class="-mb-2 -mx-2 text-gray-600">
+      <button mat-icon-button (click)="delete()">
+        <mat-icon svgIcon="delete-outline"></mat-icon>
+      </button>
+      <button mat-icon-button (click)="edit()">
+        <mat-icon svgIcon="pencil-outline"></mat-icon>
+      </button>
+    </div>
   </div>
-  <mat-card-subtitle>{{template.lastUpdated}}</mat-card-subtitle>
-  <p mat-card-content>{{template.description}}</p>
-  <mat-card-actions align="end" class="text-gray-600">
-    <button mat-icon-button (click)="clickEdit.emit(template.templateId)">
-      <mat-icon svgIcon="pencil"></mat-icon>
-    </button>
-  </mat-card-actions>
 </mat-card>

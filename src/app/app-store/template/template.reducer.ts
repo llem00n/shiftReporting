@@ -55,9 +55,9 @@ const templateReducer = createReducer(
   // on(TemplateActions.upsertTemplate,
   //   (state, action) => adapter.upsertOne(action.template, state)
   // ),
-  // on(TemplateActions.deleteTemplate,
-  //   (state, action) => adapter.removeOne(action.id, state)
-  // ),
+  on(TemplateActions.deleteTemplateSuccess,
+    (state, action) => adapter.removeOne(action.id, state)
+  ),
   // on(TemplateActions.addTemplates,
   //   (state, action) => adapter.addMany(action.templates, state)
   // ),
