@@ -59,7 +59,7 @@ export class UserFormComponent implements OnInit {
     ).subscribe(_ => this.createDepList());
 
     this.user = { ...this.data.user };
-    this.departments.setValue(this.user.departments.map(d => d.departmentId))
+    this.departments.setValue(this.user.departments?.map(d => d.departmentId) || [])
     this.getRoles();
     this.departments.valueChanges
       .subscribe(val => this.user.departments =

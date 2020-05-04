@@ -58,6 +58,7 @@ export class UsersComponent implements OnInit {
   }
   addItem() {
     const user = <User>{
+      departments: [],
       roleId: 5
     }
     this.openDialog(user)
@@ -75,7 +76,7 @@ export class UsersComponent implements OnInit {
         this.store.dispatch(UserActions.updateUser({ user, oldDep }));
         return;
       }
-      // this.store.dispatch(UserActions.addUser({ user }));
+      this.store.dispatch(UserActions.addUser({ user }));
     });
   }
 }

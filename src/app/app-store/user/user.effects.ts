@@ -53,11 +53,11 @@ export class UserEffects {
       const depChanges = []
       addDepIds.map(d => depChanges.push(this.userHttpService.addUserDepartment(user.userId, d)));
       delDepIds.map(d => depChanges.push(this.userHttpService.deleteUserDepartment(user.userId, d)));
+      if (!depChanges.length) return of(user)
       return forkJoin(depChanges).pipe(
         map(_ => user)
       );
     }),
-
     mergeMap(user => this.userHttpService.updateUser(user).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => resp.body),
