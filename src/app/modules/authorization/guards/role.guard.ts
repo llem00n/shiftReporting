@@ -38,8 +38,6 @@ export class RoleGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log(state);
-
     return this.checkRole(state.url)
   }
   canActivateChild(

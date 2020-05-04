@@ -49,6 +49,6 @@
   <!-- <pre>{{user | json}}</pre> -->
   <mat-dialog-actions class="flex justify-end">
     <button mat-button color="primary" mat-dialog-close>CANCEL</button>
-    <button mat-raised-button color="primary" [disabled]='form.invalid' [mat-dialog-close]="user">SAVE</button>
+    <button mat-raised-button color="primary" [disabled]='saveDisabled()' [mat-dialog-close]="user">SAVE</button>
   </mat-dialog-actions>
 </div>

@@ -56,11 +56,13 @@ export class UserFormComponent implements OnInit {
       tap(user => this.currentUser = user),
       mergeMap(_ => plants$),
       tap(plants => this.plants = this.plants),
-    ).subscribe(_ => this.createDepList());
+      tap(_ => this.createDepList()),
+      tap(_ => this.getRoles())
+    ).subscribe();
 
     this.user = { ...this.data.user };
     this.departments.setValue(this.user.departments?.map(d => d.departmentId) || [])
-    this.getRoles();
+    // this.getRoles();
     this.departments.valueChanges
       .subscribe(val => this.user.departments =
         this.currentUser.departments
@@ -82,7 +84,9 @@ export class UserFormComponent implements OnInit {
       select(roles),
     ).subscribe((roles: Role[]) => {
       if (!roles.length) return;
-      this.rolesView = roles.map(i => {
+      const r = this.currentUser.roleId === 1 ? roles
+        : roles.filter(i => i.roleId > this.currentUser.roleId)
+      this.rolesView = r.map(i => {
         return {
           value: i.roleId,
           viewValue: i.roleName
@@ -110,7 +114,9 @@ export class UserFormComponent implements OnInit {
   // save(){
   //   this.dialogService.close(this.user)    
   // }
-
+  saveDisabled(): boolean {
+    return this.form.invalid || !(this.departments.value.length || (this.form.value.f3.roleId < 3));
+  }
 }
 
 

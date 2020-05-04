@@ -6,6 +6,8 @@ import { Store, select } from '@ngrx/store';
 import { allUsers, roles } from 'src/app/app-store';
 import { UserActions } from '@actions/*';
 import { UserFormComponent } from './components/user-form/user-form.component';
+import { AuthorizationService } from '../authorization/authorization.service';
+import { tap, filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -17,17 +19,27 @@ export class UsersComponent implements OnInit {
   filterUsers: User[];
   search = new FormControl('')
   roles: Role[];
+  currentUser: User;
   constructor(
     private dialog: MatDialog,
     private store: Store<State>,
+    private authService: AuthorizationService,
   ) { }
 
   ngOnInit() {
-    this.getUsers();
+    this.store.dispatch(UserActions.getAllUsers());
     this.store.dispatch(UserActions.getRoles());
+    // this.getUsers();
     this.search.valueChanges.subscribe(str => this.setFilterUsers(str))
+    this.getCurrentUser().pipe(
+      mergeMap(_ => this.getUsers())
+    ).subscribe()
   }
-
+  getCurrentUser() {
+    return this.authService.getCurrentUser().pipe(
+      tap(user => this.currentUser = user)
+    )
+  }
   setFilterUsers(string?: string) {
     if (!string) {
       this.filterUsers = [...this.users];
@@ -41,21 +53,46 @@ export class UsersComponent implements OnInit {
       || i.login?.toLowerCase().includes(str)
     ))
   }
+
   getUsers() {
-    let respCount = 0;
-    this.store.pipe(
+    return this.store.pipe(
       select(allUsers),
-    ).subscribe((users: User[]) => {
-      if (users.length === 0 && respCount === 0) {
-        ++respCount;
-        this.store.dispatch(UserActions.getAllUsers());
-        return
-      };
-      this.users = users;
-      this.filterUsers = users;
-      this.search.setValue('')
-    })
+      map(users => {
+        if (this.currentUser.roleId === 1) return users;
+        if (this.currentUser.roleId === 2) return users.filter(u => u.roleId > this.currentUser.roleId);
+
+        const cus = this.currentUser.departments.map(d => d.departmentId);
+        return users.filter(u => {
+          if (u.roleId <= this.currentUser.roleId) return false;
+          if (u.departments.filter(d => cus.includes(d.departmentId)).length) return true
+        })
+      }),
+      tap(users => {
+        this.users = users;
+        this.filterUsers = users;
+        this.search.setValue('');
+      })
+    )
   }
+
+  // getUsers() {
+  //   let respCount = 0;
+  //   this.store.pipe(
+  //     select(allUsers),
+  //   ).subscribe((users: User[]) => {
+  //     if (users.length === 0 && respCount === 0) {
+  //       ++respCount;
+  //       this.store.dispatch(UserActions.getAllUsers());
+  //       return
+  //     };
+  //     this.users = users;
+  //     this.filterUsers = users;
+  //     this.search.setValue('')
+  //   })
+  // }
+
+
+
   addItem() {
     const user = <User>{
       departments: [],
