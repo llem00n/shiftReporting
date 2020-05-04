@@ -39,7 +39,7 @@ const routes: Routes = [
   },
   { path: 'dataentry', component: DataEntryComponent, canActivate: [AuthGuard] },
 
-  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuard] },
   // { path: '**', redirectTo: '', pathMatch: 'full' },
   { path: 'callback.html', component: LoginComponent },
 
