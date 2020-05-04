@@ -16,22 +16,25 @@
         <div class="text-gray-100 text-3xl">{{abbreviation}}</div>
       </div>
       <div class="flex items-center">
-        <a class="text-normal">{{userName}} </a>
+        <a class="text-normal">{{userName}} {{currentUser?.roleId}}</a>
         <mat-icon svgIcon="pencil" class="ml-4 text-gray-600"></mat-icon>
       </div>
     </div>
     <mat-nav-list>
-      <mat-list-item [routerLink]="['/calendar']">
+      <!-- <mat-list-item [routerLink]="['/calendar']">
         <mat-icon mat-list-icon svgIcon="calendar-month" routerLinkActive="mat-primary"></mat-icon>
         <p mat-line *ngIf="!isSmall" class="" routerLinkActive="text-primary">Calendar</p>
       </mat-list-item>
-      <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div>
+      <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div> -->
 
-      <mat-list-item *ngFor="let item of config" [routerLink]="'./' + item.key">
-        <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
-        <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
-      </mat-list-item>
-      <mat-list-item (click)="logout()">
+      <div *ngFor="let item of config">
+        <mat-list-item *ngIf="item.isShow" [routerLink]="'./' + item.key">
+          <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
+          <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
+        </mat-list-item>
+      </div>
+      <div class="flex-1"></div>
+      <mat-list-item *ngIf="currentUser" (click)="logout()">
         <mat-icon mat-list-icon svgIcon="logout"></mat-icon>
         <p mat-line *ngIf="!isSmall"> Logout</p>
       </mat-list-item>

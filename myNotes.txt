@@ -156,3 +156,5 @@ ng g c modules/schedules/schedules --flat
 ng g c modules/schedules/components/scheduleCard
 ng g c modules/schedules/components/scheduleForm
 
+guards
+ng g guard modules/authorization/guards/admin

@@ -51,12 +51,12 @@ export class AuthorizationService {
   getCurrentUser(): Observable<User> {
     return this.currentUser.asObservable();
   }
-  logout() {
-    this.currentUser.next(null);
-    // this.isLoggedIn = false;
-    this.router.navigate(['/login'])
-  }
-
+  // logout() {
+  //   this.currentUser.next(null);
+  //   // this.isLoggedIn = false;
+  //   this.router.navigate(['/login'])
+  // }
+  
   getUser(userId): Observable<User> {
     const options: AppHttpRequest = {
       url: 'users/getUser',
