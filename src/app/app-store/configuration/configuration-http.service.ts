@@ -16,17 +16,6 @@ export class ConfigurationHttpService {
     private dataTypeService: DataTypeService,
   ) { }
 
-  serverToValue(config: Configuration[]) {
-    // console.log(config);
-    return config.map(c => {
-      return {
-        ...c,
-        value: this.dataTypeService.getType(c.valueType).toValue(c.value)
-      }
-    })
-
-  }
-
   getConfigurations(): Observable<Configuration[]> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getConfigurations',
@@ -35,9 +24,9 @@ export class ConfigurationHttpService {
     return this.httpService.post<AppHttpResponse>(options).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => resp.body),
-      map(config => this.serverToValue(config)),
     );
   }
+  
   updateConfigurations(configurations: UpdateConfigurations[]): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateConfigurations',

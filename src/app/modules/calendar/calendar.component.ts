@@ -18,6 +18,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   departmentId = null;
   weekYear: { year: number, week: number };
   weekDataEntries: DataEntry[];
+  day: Date = new Date()
 
   constructor(
     private store: Store<State>,
@@ -25,7 +26,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.date = new Date();
+    this.day.setHours(0, 0, 0, 0)
+    this.date = new Date()
+    // this.date.setHours(0, 0, 0, 0);
     this.weekYear = this.dateService.getWeek(this.date);
     this.week = this.weekYear.week;
     this.year = this.weekYear.year;
@@ -80,7 +83,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
 
-  day: Date = new Date()
   setDay(e) {
     this.day = e;
     this.getDataEntry(this.day)

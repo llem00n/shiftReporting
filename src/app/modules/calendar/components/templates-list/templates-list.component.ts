@@ -42,7 +42,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   showedTemplates = [];
   hiddenTemplates = [];
   currentUser: User;
-  submitReportOffset: number = 0;
+  // submitReportOffset: number = 0;
 
   constructor(
     private store: Store<State>,
@@ -63,8 +63,8 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   }
   getData() {
     this.authService.getCurrentUser().subscribe(user => this.currentUser = user);
-    this.store.pipe(select(configurations))
-      .subscribe(config => this.submitReportOffset = <number>config.find(c => c.configurationId === 2)?.value || 0)
+    // this.store.pipe(select(configurations))
+    //   .subscribe(config => this.submitReportOffset = <number>config.find(c => c.configurationId === 2)?.value || 0)
 
     this.data$ = this.store.pipe(
       select(dataEntriesOnDate),
@@ -81,14 +81,9 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   }
 
   createData(data: { templates: Template[], dataEntries: DataEntry[] }) {
-    let startDate = new Date(this.dateService.dateLocalJSON(this.day.value.date).slice(0, 11) + this.shift.schedule.startTime);
-    let endDate = new Date(this.dateService.dateLocalJSON(this.day.value.date).slice(0, 11) + this.shift.schedule.endTime);
-    if (this.shift.part === 1) endDate = new Date(endDate.setDate(endDate.getDate() + 1));
-    if (this.shift.part === 2) startDate = new Date(startDate.setDate(endDate.getDate() - 1));
-
+    const {startDate, endDate, deadLine} = this.shift.shiftDates;
     const templates = data.templates.map((template: Template) => {
       let dataEntry: DataEntry = null;
-      // let svgIcon = this.svgIcon.missed;
       data.dataEntries.map((item: DataEntry) => {
         if ((item.template.templateId === template.templateId) && this.dateService.isBetween(item.createDate, startDate, endDate)) dataEntry = item
       });
@@ -98,13 +93,13 @@ export class TemplatesListComponent implements OnInit, OnChanges {
         if (dataEntry.submitDate) return this.style.submited;
         return this.style.open;
       }
-
       return {
         style: getStyle(),
         template,
         dataEntry,
         startDate,
         endDate,
+        deadLine
       };
     })
     this.templates = templates;
@@ -117,6 +112,34 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     this.showedTemplates = [...this.templates];
     this.hiddenTemplates = this.showedTemplates.splice(index);
   }
+  clickTemplate(item) {
+    const currentDataEntry = <CurrentDataEntry>{
+      endDate: item.endDate,
+      startDate: item.startDate,
+      deadline: item.deadLine,
+    };
+    if (!item.dataEntry && this.currentUser.roleId > 3 && new Date() > item.deadLine) {
+      this.messageService.alertMessage('data is missing')
+      return;
+    }
+    if (item.dataEntry) {
+      currentDataEntry.dataEntry = new DataEntry(item.dataEntry)
+    } else {
+      currentDataEntry.dataEntry = new DataEntry({
+        scheduleId: this.shift.schedule.scheduleId,
+        template: item.template,
+        templateId: item.template.templateId,
+      });
+    }
+    this.store.dispatch(DataEntryActions.setCurrentDataEntry({ currentDataEntry }))
+    this.router.navigate(['dataentry'])
+  }
+  showMore() {
+    // const shiftHeight = this.shiftHeight;
+    const templLength = this.templates.length;
+    this.clickShowMore.emit({ templLength })
+  }
+}
 
 
   /* 
@@ -139,33 +162,3 @@ export class TemplatesListComponent implements OnInit, OnChanges {
    */
   // deadlineMins = 24 * 60;
 
-  clickTemplate(item) {
-    const deadline = new Date(item.endDate.getTime() + this.submitReportOffset * 60000);
-
-    const currentDataEntry = <CurrentDataEntry>{
-      endDate: item.endDate,
-      startDate: item.startDate,
-      deadline,
-    };
-    if (!item.dataEntry && this.currentUser.roleId > 3 && new Date() > deadline) {
-      this.messageService.alertMessage('data is missing')
-      return;
-    }
-    if (item.dataEntry) {
-      currentDataEntry.dataEntry = new DataEntry(item.dataEntry)
-    } else {
-      currentDataEntry.dataEntry = new DataEntry({
-        scheduleId: this.shift.schedule.scheduleId,
-        template: item.template,
-        templateId: item.template.templateId,
-      });
-    }
-    this.store.dispatch(DataEntryActions.setCurrentDataEntry({ currentDataEntry }))
-    this.router.navigate(['dataentry'])
-  }
-  showMore() {
-    // const shiftHeight = this.shiftHeight;
-    const templLength = this.templates.length;
-    this.clickShowMore.emit({ templLength })
-  }
-}

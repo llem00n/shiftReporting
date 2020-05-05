@@ -26,7 +26,6 @@ export class RoleGuard implements CanActivate, CanActivateChild {
 
   checkRole(url) {
     return this.authService.getCurrentUser().pipe(map(user => {
-      console.log(user);
       if (!user) return false;
       const roles = routerLinks.find(r => '/' + r.key === url).allowedRoles;
       if (!roles.includes(user.roleId)) return false;

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, OnDestroy, AfterViewChecked } from '@angular/core';
-import { Schedule } from '@models/*';
+import { Schedule, State } from '@models/*';
 import { DateService } from 'src/app/services/date/date.service';
+import { Store, select } from '@ngrx/store';
+import { configurations } from 'src/app/app-store';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-week-grid',
@@ -21,33 +24,28 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
   hours = new Array(24);
   interval;
   calendarContentHeight: number;
+  submitReportOffset
 
-  shiftStyle = [
-    'blue',
-    'green',
-    'indigo',
-    'orange',
-    'teal',
-    'red',
-    'purple',
-    'pink',
-    'teal',
-    'yellow',
-    'gray'
-  ].map(i => `text-${i}-500 border-${i}-300`);
+  shiftStyle = ['blue', 'green', 'indigo', 'orange', 'teal', 'red', 'purple', 'pink', 'teal', 'yellow', 'gray'].map(i => `text-${i}-500 border-${i}-300`);
 
   constructor(
-    private dateService: DateService
+    private dateService: DateService,
+    private store: Store<State>
   ) { }
   ngAfterViewChecked(): void {
     this.setTemplateNum()
   }
 
   ngOnInit() {
+    this.store.pipe(select(configurations)).pipe(
+      tap(config => this.submitReportOffset = <number>config.find(c => c.configurationId === 2)?.value || 0),
+      tap(_ => this.createScheduleWeekList(this.startWeekDate, this.day)),
+    ).subscribe()
+
     this.interval = setInterval(() => {
       this.scheduleWeekList && Object.keys(this.scheduleWeekList).map(key => {
         this.scheduleWeekList[key].shifts.map(shift => {
-          shift['isActive'] = this.getClass(this.scheduleWeekList[key], shift)
+          shift['isActive'] = this.getClass(shift)
         })
       })
     }, 1000)
@@ -64,7 +62,6 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
   }
 
   setTemplateNum(necessarily?: boolean) {
-
     if (!this.calendarContent) return;
     const height = this.calendarContent.nativeElement.offsetHeight;
     if ((height !== this.calendarContentHeight || necessarily) && !this.shiftInfo) {
@@ -77,14 +74,15 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
     }
   }
 
-  getClass(day, shift) {
-    let result = false;
-    let startDate = new Date(this.dateService.dateLocalJSON(day.date).slice(0, 11) + shift.schedule.startTime);
-    let endDate = new Date(this.dateService.dateLocalJSON(day.date).slice(0, 11) + shift.schedule.endTime);
-    if (shift.part === 1) endDate = new Date(endDate.setDate(endDate.getDate() + 1));
-    if (shift.part === 2) startDate = new Date(startDate.setDate(endDate.getDate() - 1));
-    if (this.dateService.isBetween(new Date(), startDate, endDate)) result = true
-    return result;
+  getShiftDates(day, schedule): { startDate: Date, endDate: Date, deadLine: Date } {
+    const startDate = new Date(this.dateService.dateLocalJSON(day.date).slice(0, 11) + schedule.startTime);
+    const endDate = new Date(this.dateService.dateLocalJSON(day.date).slice(0, 11) + schedule.endTime);
+    if (startDate > endDate) endDate.setDate(endDate.getDate() + 1);
+    const deadLine = new Date(endDate.getTime() + this.submitReportOffset * 60000);
+    return { startDate, endDate, deadLine };
+  }
+  getClass(shift) {
+    return this.dateService.isBetween(new Date(), shift.shiftDates.startDate, shift.shiftDates.endDate);
   }
 
   createScheduleWeekList(startDay: Date, day?: Date) {
@@ -113,6 +111,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
     this.schedules.map((schedule: Schedule, index) => {
       const elClass = this.shiftStyle[index % 10]
       Object.keys(list).map(k => {
+        const shiftDates = this.getShiftDates(list[k], schedule)
         const dayNum = +k;
         const { key } = list[dayNum]
         let weeks = this.dateService.getWeeks(list[dayNum].date, schedule.validFromDate);
@@ -121,6 +120,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
           if (!this.dateService.isBetween(list[dayNum].date, schedule.validFromDate, schedule.validToDate)) return;
           if (weeks % schedule.recurEveryWeeks) return;
           list[dayNum].shifts.push({
+            shiftDates,
             schedule,
             position: this.getPos(schedule)[0],
             elClass,
@@ -131,6 +131,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
           && this.dateService.isBetween(list[dayNum].date, schedule.validFromDate, schedule.validToDate)
           && !(weeks % schedule.recurEveryWeeks)) {
           list[dayNum].shifts.push({
+            shiftDates,
             part: 1,
             schedule,
             position: this.getPos(schedule)[0],
@@ -144,7 +145,16 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
         if (schedule[prevDateKey]
           && this.dateService.isBetween(prevDate, schedule.validFromDate, schedule.validToDate)
           && !(weeks % schedule.recurEveryWeeks)) {
+          const prevDay = (date: Date) => {
+            const resDate = new Date(date)
+            resDate.setDate(resDate.getDate() - 1)
+            return resDate;
+          };
+          const startDate = prevDay(shiftDates.startDate)
+          const endDate = prevDay(shiftDates.endDate)
+          const deadLine = prevDay(shiftDates.deadLine)
           list[dayNum].shifts.push({
+            shiftDates: { startDate, endDate, deadLine },
             part: 2,
             schedule,
             position: this.getPos(schedule)[1],
