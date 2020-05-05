@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Directive, ElementRef, Output, EventEmitter, AfterViewChecked, OnChanges } from '@angular/core';
-import { State, DataEntry, CurrentDataEntry } from '@models/*';
+import { State, DataEntry, CurrentDataEntry, User } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { Template } from '@models/';
 import { allTemplates, dataEntriesOnDate } from 'src/app/app-store';
@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { DateService } from 'src/app/services/date/date.service';
 import { DataEntryActions } from '@actions/*';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
+import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 
 
 @Component({
@@ -40,12 +41,14 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   isShowMore: boolean = true;
   showedTemplates = [];
   hiddenTemplates = [];
+  currentUser: User;
 
   constructor(
     private store: Store<State>,
     private router: Router,
     private dateService: DateService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthorizationService,
   ) { }
   ngOnChanges(): void {
     this.calendarHight && this.templates && this.splitTemplates();
@@ -58,6 +61,8 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     this.data$.unsubscribe();
   }
   getData() {
+    this.authService.getCurrentUser().subscribe(user => this.currentUser = user)
+
     this.data$ = this.store.pipe(
       select(dataEntriesOnDate),
       mergeMap(dataEntries => this.store.select(allTemplates).pipe(
@@ -130,6 +135,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     }
    */
   deadlineMins = 24 * 60;
+
   clickTemplate(item) {
     const deadline = new Date(item.endDate.getTime() + this.deadlineMins * 60000);
     const currentDataEntry = <CurrentDataEntry>{
@@ -137,7 +143,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
       startDate: item.startDate,
       deadline,
     };
-    if (!item.dataEntry && new Date() > deadline) {
+    if (!item.dataEntry && this.currentUser.roleId > 3 && new Date() > deadline) {
       this.messageService.alertMessage('data is missing')
       return;
     }
