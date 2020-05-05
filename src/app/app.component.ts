@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
         if (!currentUser) return;
         this.userName = `${currentUser?.firstName} ${currentUser?.secondName}`;
         this.abbreviation = currentUser?.firstName.slice(0, 1).toUpperCase() + currentUser?.secondName.slice(0, 1).toUpperCase();
-        this.config.map(item => item['isShow'] = item.allowedRoles.includes(currentUser.roleId) || true)
+        this.config.map(item => item['isShow'] = item.allowedRoles.includes(currentUser.roleId))
       })
 
   }

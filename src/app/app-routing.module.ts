@@ -20,7 +20,7 @@ const routes: Routes = [
     // component: ConfigurationComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'plants', component: ConfigPlantsComponent },
+      { path: 'plants', component: ConfigPlantsComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'departments', component: DepartmentsComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'shifts', component: ShiftsComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'schedules', component: SchedulesComponent, canActivate: [AuthGuard, RoleGuard] },
