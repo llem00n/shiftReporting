@@ -42,7 +42,7 @@ export class UserRolesComponent implements OnInit {
     ).subscribe((roles: Role[]) => {
       if (roles.length === 0 && respCount === 0) {
         ++respCount;
-        this.store.dispatch(UserActions.getRoles());
+        // this.store.dispatch(UserActions.getRoles());
         return
       };
       this.roles = roles;

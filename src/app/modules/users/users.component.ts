@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(UserActions.getAllUsers());
-    this.store.dispatch(UserActions.getRoles());
+    // this.store.dispatch(UserActions.getRoles());
     // this.getUsers();
     this.search.valueChanges.subscribe(str => this.setFilterUsers(str))
     this.getCurrentUser().pipe(
