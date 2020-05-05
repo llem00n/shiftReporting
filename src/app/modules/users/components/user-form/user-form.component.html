@@ -17,7 +17,8 @@
           <mat-select #select [formControl]="departments" multiple>
             <div *ngFor="let plant of departmentsList">
               <p class="font-bold mx-4 mt-4 cursor-default">{{plant.plant.name}}</p>
-              <mat-option *ngFor="let department of plant.departments" [value]="department.departmentId">{{department.name}}
+              <mat-option *ngFor="let department of plant.departments" [value]="department.departmentId" [disabled]='department.disabled'>
+                {{department.name}}
               </mat-option>
               <mat-divider></mat-divider>
             </div>

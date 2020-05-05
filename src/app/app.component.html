@@ -16,7 +16,11 @@
         <div class="text-gray-100 text-3xl">{{abbreviation}}</div>
       </div>
       <div class="flex items-center">
-        <a class="text-normal">{{userName}} {{currentUser?.roleId}}</a>
+        <div>
+          <p class="text-gray-800 font-bold mb-1">{{userName}}</p>
+          <p class="text-gray-600 text-xs uppercase">{{userRole}}</p>
+        </div>
+
         <mat-icon svgIcon="pencil" class="ml-4 text-gray-600"></mat-icon>
       </div>
     </div>

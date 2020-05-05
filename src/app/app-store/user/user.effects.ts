@@ -25,15 +25,8 @@ export class UserEffects {
       return {
         ...user,
         departments: this.departmentHttpService.getUserDepartments(user.userId),
-        // roles: this.userHttpService.getUserRoles(user.userId)
       }
     })),
-    //  get Roles
-    // mergeMap(users => forkJoin(users.map(user => user.roles)).pipe(
-    //   map((resp: AppHttpResponse[]) => resp.map((item, key) => users[key].roles = resp[key].body)),
-    //   map(_ => users),
-    // )),
-    // get Departments
     mergeMap(users => forkJoin(users.map(user => user.departments)).pipe(
       map((resp: AppHttpResponse[]) => resp.map((item, key) => users[key].departments = resp[key].body)),
       map(_ => users),
@@ -76,11 +69,27 @@ export class UserEffects {
 
   addUser$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.addUser),
+    tap(console.log),
     mergeMap(action => this.userHttpService.addUser(action.user).pipe(
       filter(resp => resp && resp.status === 200),
-      map(resp => UserActions.addUserSuccess({ user: resp.body }))
+      map(resp => { return { user: resp.body, addDepIds: action.user.departments.map(d => d.departmentId) } }),
+    )),
+    mergeMap(data => {
+      const addDep = [];
+      data.addDepIds.map(dId => addDep.push(this.userHttpService.addUserDepartment(data.user.userId, dId)));
+      if (!addDep.length) return of(data.user)
+      return forkJoin(addDep).pipe(
+        map(_ => data.user)
+      )
+    }),
+    mergeMap((user: User) => this.departmentHttpService.getUserDepartments(user.userId).pipe(
+      filter(resp => resp && resp.status === 200),
+      tap(resp => user.departments = resp.body),
+      map(_ => UserActions.addUserSuccess({ user }))
     )),
   ));
+
+
 
   getRoles$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.getRoles),
@@ -89,6 +98,8 @@ export class UserEffects {
       map(resp => UserActions.getRolesSuccess({ roles: resp.body }))
     )),
   ));
+
+
   getUserRoles$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.getUserRoles),
     mergeMap(action => this.userHttpService.getUserRoles(action.userId).pipe(

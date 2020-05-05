@@ -24,7 +24,7 @@ export class SelectUserDepartmentComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(userDepartments).subscribe(dep => {
       this.departments = dep;
-      dep.length == 1 && this.department.setValue(dep[0].departmentId);
+      dep.length && this.department.setValue(dep[0].departmentId);
     });
 
     this.authService.getCurrentUser()

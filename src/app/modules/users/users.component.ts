@@ -96,7 +96,8 @@ export class UsersComponent implements OnInit {
   addItem() {
     const user = <User>{
       departments: [],
-      roleId: 5
+      roleId: 5,
+      isActive: true
     }
     this.openDialog(user)
   }

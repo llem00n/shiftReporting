@@ -72,8 +72,16 @@ export class UserFormComponent implements OnInit {
 
   createDepList() {
     const result = [];
+    // const depList = this.currentUser.departments.concat(this.user?.departments || []);
+    // console.log(depList);
+
     this.plants.map(plant => {
       const departments = this.currentUser.departments.filter(d => d.plantId === plant.plantId);
+      this.user?.departments.map(ud => {
+        if (departments.map(d => d.departmentId).includes(ud.departmentId)) return;
+        if (ud.plantId !== plant.plantId) return;
+        departments.push({ ...ud, disabled: true })
+      })
       if (!departments.length) return;
       result.push({ plant, departments, })
     })
