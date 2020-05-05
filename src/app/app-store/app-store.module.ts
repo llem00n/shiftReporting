@@ -14,6 +14,8 @@ import { InterfaceEffects } from './interface/interface.effects';
 import { DataEntryEffects } from './data-entry/data-entry.effects';
 import * as fromUser from './user/user.reducer';
 import { UserEffects } from './user/user.effects';
+import * as fromConfiguration from './configuration/configuration.reducer';
+import { ConfigurationEffects } from './configuration/configuration.effects';
 
 
 
@@ -39,6 +41,8 @@ import { UserEffects } from './user/user.effects';
       DataEntryEffects,
       UserEffects
     ]),
+    StoreModule.forFeature(fromConfiguration.configurationFeatureKey, fromConfiguration.reducer),
+    EffectsModule.forFeature([ConfigurationEffects]),
     // StoreModule.forFeature(fromUser.usersFeatureKey, fromUser.reducer),
   ]
 })

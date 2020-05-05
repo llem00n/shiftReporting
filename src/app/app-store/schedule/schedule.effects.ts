@@ -13,7 +13,7 @@ export class ScheduleEffects {
   getSchedules$ = createEffect(() => this.actions$.pipe(
     ofType(ScheduleActions.getSchedules),
     mergeMap(action => this.scheduleHttpService.getSchedules(action.departmentId).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => ScheduleActions.getSchedulesSuccess({ schedules: resp.body }))
     )),
     // mergeMap(_ => EMPTY)
@@ -31,7 +31,7 @@ export class ScheduleEffects {
   updateSchedule$ = createEffect(() => this.actions$.pipe(
     ofType(ScheduleActions.updateSchedule),
     mergeMap(action => this.scheduleHttpService.updateSchedule(action.schedule).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => ScheduleActions.updateScheduleSuccess({
         schedule: {
           id: resp.body.scheduleId,
@@ -45,7 +45,7 @@ export class ScheduleEffects {
   addSchedule$ = createEffect(() => this.actions$.pipe(
     ofType(ScheduleActions.addSchedule),
     mergeMap(action => this.scheduleHttpService.addSchedule(action.schedule).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => ScheduleActions.addScheduleSuccess({ schedule: resp.body }))
     )),
   ));

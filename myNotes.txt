@@ -1,6 +1,7 @@
 generate Feature
 ng g f app-store/interface/Interface -m ../app-store -r ../index.ts -c
 ng g f app-store/data-entry/DataEntry -m app-store -r ../index.ts -c //should delete selectors files
+ng g f app-store/configuration/configuration -m app-store -r ../index.ts -c //should delete selectors files
 
 
 generate Entity:
@@ -28,6 +29,7 @@ ng g s app-store/template/TemplateHttp
 ng g s app-store/interface/InterfaceHttp
 ng g s app-store/data-entry/DataEntryHttp
 ng g s app-store/user/userHttp
+ng g s app-store/configuration/configuration-http
 
 module grid
 ng g m modules/Grid -m app

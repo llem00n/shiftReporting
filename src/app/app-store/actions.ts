@@ -6,6 +6,7 @@ import * as TemplateActions from './template/template.actions';
 import * as DataEntryActions from './data-entry/data-entry.actions';
 import * as UserActions from './user/user.actions';
 import * as InterfaseActions from './interface/interface.actions';
+import * as ConfigurationsActions from './configuration/configuration.actions';
 
 // import * as DboardBuildActions from './dboard-build/dboard-build.actions';
 // import * as GeneralActions from './general/general.actions';
@@ -21,5 +22,6 @@ export {
   TemplateActions,
   DataEntryActions,
   UserActions,
-  InterfaseActions
+  InterfaseActions,
+  ConfigurationsActions
 };

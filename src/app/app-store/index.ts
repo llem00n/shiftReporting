@@ -14,6 +14,7 @@ import * as fromTemplate from './template/template.reducer';
 import * as fromInterface from './interface/interface.reducer';
 import * as fromDataEntry from './data-entry/data-entry.reducer';
 import * as fromUser from './user/user.reducer';
+import * as fromConfiguration from './configuration/configuration.reducer';
 
 export interface State {
 
@@ -25,6 +26,7 @@ export interface State {
   [fromInterface.interfaceFeatureKey]: fromInterface.State;
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.State;
   [fromUser.usersFeatureKey]: fromUser.State;
+  [fromConfiguration.configurationFeatureKey]: fromConfiguration.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -37,6 +39,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromInterface.interfaceFeatureKey]: fromInterface.reducer,
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.reducer,
   [fromUser.usersFeatureKey]: fromUser.reducer,
+  [fromConfiguration.configurationFeatureKey]: fromConfiguration.reducer,
 };
 
 
@@ -81,3 +84,6 @@ export const currentDataEntry = createSelector(dataEntryState, (state) => state.
 export const interfaceState = createFeatureSelector<fromInterface.State>('interface');
 export const templateInterfaces = createSelector(interfaceState, (state) => state.interfaces);
 
+//configurations
+export const configurationState = createFeatureSelector<fromConfiguration.State>('configuration');
+export const configurations = createSelector(configurationState, (state) => state.configurations);

@@ -13,7 +13,7 @@ export class ShiftEffects {
   getShifts$ = createEffect(() => this.actions$.pipe(
     ofType(ShiftActions.getShifts),
     mergeMap(action => this.shiftHttpService.getShifts().pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => ShiftActions.getShiftsSuccess({ shifts: resp.body }))
     )),
   ));
@@ -29,7 +29,7 @@ export class ShiftEffects {
   updateShift$ = createEffect(() => this.actions$.pipe(
     ofType(ShiftActions.updateShift),
     mergeMap(action => this.shiftHttpService.updateShift(action.shift).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => ShiftActions.updateShiftSuccess({
         shift: {
           id: resp.body.shiftId,
@@ -42,7 +42,7 @@ export class ShiftEffects {
   addShift$ = createEffect(() => this.actions$.pipe(
     ofType(ShiftActions.addShift),
     mergeMap(action => this.shiftHttpService.addShift(action.shift).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => ShiftActions.addShiftSuccess({ shift: resp.body }))
     )),
     // mergeMap(_ => EMPTY)
