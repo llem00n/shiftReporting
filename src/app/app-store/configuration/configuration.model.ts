@@ -1,5 +1,5 @@
 export interface Configuration {
-  configurationID: number;
+  configurationId: number;
   value: number | boolean | string;
   valueType: 'System.Boolean' | 'System.DateTime' | 'System.Double' | 'System.String';
   propertyName: string;

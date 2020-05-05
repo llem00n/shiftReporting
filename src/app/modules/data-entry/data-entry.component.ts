@@ -23,7 +23,7 @@ import { DataSourceService } from './data-source.service';
 export class DataEntryComponent implements OnInit {
 
   dataEntry: DataEntry;
-  // startDate: Date;
+  startDate: Date;
   endDate: Date;
   deadline: Date;
   title: string = 'Entry ';
@@ -67,14 +67,16 @@ export class DataEntryComponent implements OnInit {
       }),
       tap((cDataEntry: CurrentDataEntry) => {
         Object.assign(opt, cDataEntry.dataEntry);
+        this.startDate = cDataEntry.startDate;
         this.endDate = cDataEntry.endDate;
         this.deadline = cDataEntry.deadline;
-        if (!cDataEntry.dataEntry.submitDate && this.dateService.isBetween(new Date(), cDataEntry.startDate, cDataEntry.deadline))
-          this.isSaveEnabled = this.dateService.isBetween(new Date(), cDataEntry.startDate, cDataEntry.deadline)
+        // if (!cDataEntry.dataEntry.submitDate)
+        //   this.isSaveEnabled = this.dateService.isBetween(new Date(), cDataEntry.startDate, cDataEntry.deadline)
       }),
       mergeMap(_ => this.authService.getCurrentUser()),
       filter(data => !!data),
       map((user: User) => {
+        this.user = user;
         opt.modifiedUserId = user.userId;
         return opt;
       }),
@@ -83,6 +85,7 @@ export class DataEntryComponent implements OnInit {
         this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
         this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
         this.options = this.dataEntry.template.body?.gridsterOptions || {};
+        this.getSavePermission()
       }),
       switchMap(opt => {
         if (opt.dataEntryId) return of(opt);
@@ -90,15 +93,15 @@ export class DataEntryComponent implements OnInit {
           map(data => data.map(i => this.values[i.key] = i.value)),
           map(_ => opt),
         )
-      }
-      ),
+      }),
       switchMap(opt => {
         Object.assign(this.values, this.dataEntry.template.body?.templateDataKV || {});
         this.form = this.createForm(this.dashboard);
         this.dataEntry.template.body['templateDataKV'] = this.form.value;
         return this.form.valueChanges;
       }),
-      tap(values => this.dataEntry.template.body['templateDataKV'] = values)
+      tap(values => this.dataEntry.template.body['templateDataKV'] = values),
+      tap(_ => console.log(this.dataEntry))
     ).subscribe()
   }
 
@@ -134,11 +137,12 @@ export class DataEntryComponent implements OnInit {
   }
 
   getSavePermission(): boolean {
-    if (new Date() > this.deadline) {
-      this.message.errorMessage('Saving is not possible. Time is running out.');
+    if ((this.dataEntry.submitDate) || (new Date() < this.startDate) || (this.user.roleId > 3 && new Date() > this.deadline)) {
+      (this.user.roleId > 3 && new Date() > this.deadline) && this.message.errorMessage('Saving is not possible. Time is running out.');
       this.isSaveEnabled = false;
       return false;
     }
+    this.isSaveEnabled = true;
     return true;
   }
 
@@ -157,13 +161,6 @@ export class DataEntryComponent implements OnInit {
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }));
     this.router.navigate(['/calendar']);
   }
-  // addDataEntry() {
-  //   this.dataEntry.createDate = this.dateService.getLocalDate();
-  //   this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }))
-  // }
-  // updateDataEntry() {
-  // this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
-  // }
 
   submitDataEntry() {
     if (!this.getSavePermission()) return;

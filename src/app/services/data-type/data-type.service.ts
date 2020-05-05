@@ -25,7 +25,7 @@ export class DataTypeService {
   readonly data = {
     'System.Boolean': {
       allowableControls: ['checkbox', 'label'],
-      // transformToServer: this.stringToBoolean,
+      toValue: (value) => Boolean(value),
       // transformServerData: this.stringToBoolean
     },
     'System.Byte': {
@@ -54,9 +54,8 @@ export class DataTypeService {
       // transformServerData: this.stringToNumber
     },
     'System.Double': {
-      // type: 'System.Double',
-      // typeName: 'double',
       allowableControls: ['number', 'label'],
+      toValue: (value) => Number(value),
       // inputType: 'text',
       // regexp: regExpReal,
       minValue: -1.79769313486231e308, // -1.79769313486232e308
@@ -101,6 +100,7 @@ export class DataTypeService {
       // type: 'System.String',
       // typeName: 'string',
       allowableControls: ['text', 'label', 'select', 'textarea'],
+      toValue: (value) => value,
       // inputType: 'text',
       // transformToServer: this.stringToString,
       // transformServerData: this.stringToString

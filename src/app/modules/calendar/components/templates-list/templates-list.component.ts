@@ -2,10 +2,10 @@ import { Component, OnInit, Input, ViewChild, Directive, ElementRef, Output, Eve
 import { State, DataEntry, CurrentDataEntry, User } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { Template } from '@models/';
-import { allTemplates, dataEntriesOnDate } from 'src/app/app-store';
+import { allTemplates, dataEntriesOnDate, configurations } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { tap, mergeMap, map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, config } from 'rxjs';
 import { DateService } from 'src/app/services/date/date.service';
 import { DataEntryActions } from '@actions/*';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
@@ -42,6 +42,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   showedTemplates = [];
   hiddenTemplates = [];
   currentUser: User;
+  submitReportOffset: number = 0;
 
   constructor(
     private store: Store<State>,
@@ -61,7 +62,9 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     this.data$.unsubscribe();
   }
   getData() {
-    this.authService.getCurrentUser().subscribe(user => this.currentUser = user)
+    this.authService.getCurrentUser().subscribe(user => this.currentUser = user);
+    this.store.pipe(select(configurations))
+      .subscribe(config => this.submitReportOffset = <number>config.find(c => c.configurationId === 2)?.value || 0)
 
     this.data$ = this.store.pipe(
       select(dataEntriesOnDate),
@@ -134,10 +137,11 @@ export class TemplatesListComponent implements OnInit, OnChanges {
       ).subscribe()
     }
    */
-  deadlineMins = 24 * 60;
+  // deadlineMins = 24 * 60;
 
   clickTemplate(item) {
-    const deadline = new Date(item.endDate.getTime() + this.deadlineMins * 60000);
+    const deadline = new Date(item.endDate.getTime() + this.submitReportOffset * 60000);
+
     const currentDataEntry = <CurrentDataEntry>{
       endDate: item.endDate,
       startDate: item.startDate,
