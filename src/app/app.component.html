@@ -4,24 +4,28 @@
 <!-- <router-outlet></!-->
 <!-- </div> -->
 <!-- </section> -->
+<div *ngIf="smallScreen">
+  <div class="">
+    <a mat-icon-button>
+      <mat-icon svgIcon="menu" (click)="snav.toggle()">icon_name</mat-icon>
+    </a>
+  </div>
+</div>
 <mat-sidenav-container class="h-full" autosize>
-  <mat-sidenav mode="side" opened class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
-    <div class="m-4">
-      <a mat-icon-button>
-        <mat-icon svgIcon="menu" (click)="isSmall = !isSmall">icon_name</mat-icon>
-      </a>
-    </div>
+  <mat-sidenav #snav [fixedInViewport]="smallScreen" [mode]="smallScreen ? 'over' : 'side'" [opened]="isSnavOpen"
+    class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
     <div *ngIf="!isSmall && abbreviation" class="flex flex-col items-center my-4">
       <div class="bg-blue-400 h-16 w-16 rounded-full flex justify-center items-center mb-2">
         <div class="text-gray-100 text-3xl">{{abbreviation}}</div>
       </div>
       <div class="flex items-center">
-        <div>
+        <div class="mr-4">
           <p class="text-gray-800 font-bold mb-1">{{userName}}</p>
           <p class="text-gray-600 text-xs uppercase">{{userRole}}</p>
         </div>
-
-        <mat-icon svgIcon="pencil" class="ml-4 text-gray-600"></mat-icon>
+        <button mat-icon-button (click)="editUserInfo()">
+          <mat-icon svgIcon="pencil" class="text-gray-600"></mat-icon>
+        </button>
       </div>
     </div>
     <mat-nav-list>
@@ -32,13 +36,13 @@
       <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div> -->
 
       <div *ngFor="let item of config">
-        <mat-list-item *ngIf="item.isShow" [routerLink]="'./' + item.key">
+        <mat-list-item *ngIf="item.isShow" [routerLink]="'./' + item.key" (click)="smallScreen && snav.toggle()">
           <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
           <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
         </mat-list-item>
       </div>
       <div class="flex-1"></div>
-      <mat-list-item *ngIf="currentUser" (click)="logout()">
+      <mat-list-item *ngIf="currentUser" (click)="smallScreen && snav.toggle(); logout() ">
         <mat-icon mat-list-icon svgIcon="logout"></mat-icon>
         <p mat-line *ngIf="!isSmall"> Logout</p>
       </mat-list-item>

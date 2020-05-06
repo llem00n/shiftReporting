@@ -16,11 +16,15 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {LayoutModule} from '@angular/cdk/layout';
 
 
 const modules = [
+  LayoutModule,
+  MatProgressSpinnerModule,
   MatNativeDateModule,
   MatDatepickerModule,
   MatButtonToggleModule,
@@ -52,7 +56,8 @@ const modules = [
 })
 export class UsedMaterialModule {
   constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
-    // matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/icons.svg')); // Or whatever path you placed mdi.svg at
+    // matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/svg_loaders/spinning-circles.svg')); // Or whatever path you placed mdi.svg at
     matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg')); // Or whatever path you placed mdi.svg at
+    // matIconRegistry.addSvgIcon('spinning-circles', './assets/svg_loaders/spinning-circles.svg')
   }
 }
