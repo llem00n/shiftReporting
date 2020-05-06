@@ -12,6 +12,7 @@ export const routerLinks = [
   { key: 'configuration/schedules', title: 'Schedule', icon: 'calendar-clock', allowedRoles: [1, 2, 3] },
   { key: 'configuration/templates', title: 'Template', icon: 'file-table-box', allowedRoles: [1, 2, 3] },
   { key: 'configuration/users', title: 'Users', icon: 'account-group', allowedRoles: [1, 2, 3] },
+  { key: 'configuration/app', title: 'Users', icon: 'cog-outline', allowedRoles: [1] },
 ];
 
 

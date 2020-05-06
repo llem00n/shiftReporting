@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'templates', component: TemplatesComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'templates/:id', component: TemplateComponent, canActivate: [AuthGuard] },
       { path: 'users', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },
+      { path: 'app', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },
     ]
   },
   {

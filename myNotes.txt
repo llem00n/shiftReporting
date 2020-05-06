@@ -120,6 +120,7 @@ ng g m modules/users -m app
 ng g c modules/users/users --flat
 ng g c modules/users/components/userCard
 ng g c modules/users/components/userForm
+ng g c modules/users/components/current-user-form
 ng g c modules/users/components/usersConfig
 ng g c modules/users/components/userDepartments
 ng g c modules/users/components/userRoles

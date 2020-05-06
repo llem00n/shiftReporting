@@ -15,7 +15,7 @@ export const addUserSuccess = createAction(
 )
 export const updateUser = createAction(
   '[User] Update User',
-  props<{ user: User, oldDep: Department[] }>()
+  props<{ user: User, oldDep: Department[], isCurrent?: boolean }>()
 )
 export const updateUserSuccess = createAction(
   '[User] Update User Success',

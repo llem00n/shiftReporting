@@ -29,10 +29,10 @@ export class UserFormComponent implements OnInit {
   ]
   login = [
     new DynText({ controlId: 'login', label: 'Login', validators: { required: true } }),
-    new DynText({ controlId: 'email', label: 'Email', validators: { email: true } }),
+    new DynText({ controlId: 'password', label: 'Password', validators: { required: true } }),
   ]
   mail = [
-    new DynText({ controlId: 'password', label: 'Password', validators: { required: true } }),
+    new DynText({ controlId: 'email', label: 'Email', validators: { email: true } }),
     new DynCheckbox({ controlId: 'isActive', label: 'Active user' }),
   ];
 
@@ -44,7 +44,9 @@ export class UserFormComponent implements OnInit {
     private store: Store<State>,
     private authService: AuthorizationService,
     public dialogRef: MatDialogRef<UserFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { user: User },
+    @Inject(MAT_DIALOG_DATA) public data: {
+      user: User,
+    },
   ) { }
 
   ngOnInit(): void {
@@ -62,7 +64,6 @@ export class UserFormComponent implements OnInit {
 
     this.user = { ...this.data.user };
     this.departments.setValue(this.user.departments?.map(d => d.departmentId) || [])
-    // this.getRoles();
     this.departments.valueChanges
       .subscribe(val => this.user.departments =
         this.currentUser.departments
@@ -72,9 +73,6 @@ export class UserFormComponent implements OnInit {
 
   createDepList() {
     const result = [];
-    // const depList = this.currentUser.departments.concat(this.user?.departments || []);
-    // console.log(depList);
-
     this.plants.map(plant => {
       const departments = this.currentUser.departments.filter(d => d.plantId === plant.plantId);
       this.user?.departments.map(ud => {

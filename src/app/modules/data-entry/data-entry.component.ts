@@ -150,7 +150,8 @@ export class DataEntryComponent implements OnInit {
   save() {
     this.store.pipe(
       select(currentDataEntry),
-      skip(1)
+      skip(1),
+      take(1)
     ).subscribe(d => {
       this.router.navigate(['/calendar']);
     })
@@ -169,7 +170,8 @@ export class DataEntryComponent implements OnInit {
   submitDataEntry() {
     this.store.pipe(
       select(currentDataEntry),
-      skip(1)
+      skip(1),
+      take(1)
     ).subscribe(d => {
       this.router.navigate(['/calendar']);
     })

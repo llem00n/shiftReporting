@@ -8,8 +8,10 @@ import { routerLinks } from './modules/authorization/guards/role.guard';
 import { Store, select } from '@ngrx/store';
 import { ConfigurationsActions, UserActions } from './app-store/actions'
 import { getRoles } from './app-store/user/user.actions';
-import { userRoles, roles } from './app-store';
+import { userRoles, roles, userDepartments } from './app-store';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
+import { CurrentUserFormComponent } from './modules/users/components/current-user-form/current-user-form.component';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit {
     private authService: AuthorizationService,
     private oidcCLientService: OidcClientService,
     private store: Store<State>,
+    private dialog: MatDialog,
   ) { }
 
 
@@ -60,7 +63,11 @@ export class AppComponent implements OnInit {
     ).subscribe()
   }
   editUserInfo() {
-    // this.message.loadingMessage('start')
+    const dialogRef = this.dialog.open(CurrentUserFormComponent, { data: { user: this.currentUser } });
+    dialogRef.afterClosed().subscribe(user => {
+      if (!user) return;
+      this.store.dispatch(UserActions.updateUser({ user, oldDep: user.departments, isCurrent: true }));
+    });
   }
 
   logout() {

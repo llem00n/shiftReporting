@@ -10,17 +10,19 @@ import { UserDepartmentsComponent } from './components/user-departments/user-dep
 import { UsersComponent } from './users.component';
 import { UsedMaterialModule } from '../used-material/used-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CurrentUserFormComponent } from './components/current-user-form/current-user-form.component';
 
 
 
 @NgModule({
-  declarations: [UserCardComponent, UserFormComponent, UsersConfigComponent, UserRolesComponent, UserDepartmentsComponent, UsersComponent],
+  declarations: [UserCardComponent, UserFormComponent, UsersConfigComponent, UserRolesComponent, UserDepartmentsComponent, UsersComponent, CurrentUserFormComponent],
   imports: [
     // AngularSvgIconModule.forRoot(),
     CommonModule,
     FormModule,
     UsedMaterialModule,
     ReactiveFormsModule
-  ]
+  ],
+  exports: [CurrentUserFormComponent]
 })
 export class UsersModule { }

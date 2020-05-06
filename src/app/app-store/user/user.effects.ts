@@ -9,6 +9,7 @@ import { roles } from '..';
 import { DepartmentHttpService } from '../department/department-http.service';
 import { AppHttpResponse } from 'src/app/services/http/http.service';
 import { Department } from '../department/department.model';
+import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 
 
 
@@ -38,7 +39,7 @@ export class UserEffects {
 
   updateUser$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.updateUser),
-    mergeMap(({ user, oldDep }) => {
+    mergeMap(({ user, oldDep, isCurrent }) => {
       const oldDepIds = oldDep.map(o => o.departmentId);
       const newDepId = user.departments.map(d => d.departmentId);
       const addDepIds = newDepId.filter(n => !oldDepIds.includes(n));
@@ -46,14 +47,15 @@ export class UserEffects {
       const depChanges = []
       addDepIds.map(d => depChanges.push(this.userHttpService.addUserDepartment(user.userId, d)));
       delDepIds.map(d => depChanges.push(this.userHttpService.deleteUserDepartment(user.userId, d)));
-      if (!depChanges.length) return of(user)
+      if (!depChanges.length) return of({ user, isCurrent })
       return forkJoin(depChanges).pipe(
-        map(_ => user)
+        map(_ => { return { user, isCurrent } })
       );
     }),
-    mergeMap(user => this.userHttpService.updateUser(user).pipe(
+    mergeMap(({ user, isCurrent }) => this.userHttpService.updateUser(user).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => resp.body),
+      tap(_ => isCurrent && this.authService.setCurrentUser())
     )),
     mergeMap((user: User) => this.departmentHttpService.getUserDepartments(user.userId).pipe(
       filter(resp => resp && resp.status === 200),
@@ -142,7 +144,8 @@ export class UserEffects {
   constructor(
     private departmentHttpService: DepartmentHttpService,
     private userHttpService: UserHttpService,
-    private actions$: Actions
+    private actions$: Actions,
+    private authService: AuthorizationService,
   ) { }
 
 }

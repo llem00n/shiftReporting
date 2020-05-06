@@ -1,0 +1,10 @@
+<p mat-dialog-title>User settings</p>
+<div>
+  <app-form [flex]='true' [controls]='name' [values]="editingUser" (form)="getForm($event)"></app-form>
+  <app-form [flex]='true' [controls]='login' [values]="editingUser" (form)="getForm($event)"></app-form>
+  <app-form [flex]='true' [controls]='mail' [values]="editingUser" (form)="getForm($event)"></app-form>
+</div>
+<mat-dialog-actions class="flex justify-end">
+  <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+  <button mat-raised-button color="primary" [disabled]='form.invalid' [mat-dialog-close]="editingUser">SAVE</button>
+</mat-dialog-actions>
