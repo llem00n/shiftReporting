@@ -4,7 +4,7 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
-import { State, editingTemplate, templateInterfaces, addedTemplate } from 'src/app/app-store';
+import { State, editingTemplate, templateInterfaces, addedTemplate, configurations } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Interface } from '@models/*';
@@ -15,7 +15,7 @@ import { TemplateActions, InterfaseActions } from '@actions/*';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 import { allInterfaces } from './components/interfaces-config/interfaces-config.component';
-import { filter, take } from 'rxjs/operators';
+import { filter, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template',
@@ -36,7 +36,7 @@ export class TemplateComponent implements OnInit {
   formGrinsterOptions: FormGroup;
   interfaces: Interface[];
   storeInterfaces: Interface[];
-
+  isInterfacesEnabled: boolean = false;
   // interfacesUpdating: Interface[]
 
   options$: Subscription;
@@ -52,6 +52,11 @@ export class TemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.pipe(select(configurations)).pipe(
+      tap(config => this.isInterfacesEnabled = <boolean>config.find(c => c.configurationId === 1)?.value || false),
+    ).subscribe()
+
+
     this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => {
       this.storeInterfaces = [...interfaces];
       this.interfaces = [...interfaces];
@@ -78,7 +83,7 @@ export class TemplateComponent implements OnInit {
         this.saveButton = 'Save';
         opt = template;
       }
-      template.templateId && this.store.dispatch(InterfaseActions.getInterfaces({ templateId: template.templateId }));
+      template.templateId && this.isInterfacesEnabled && this.store.dispatch(InterfaseActions.getInterfaces({ templateId: template.templateId }));
       this.departmentId = template._departmentId;
       this.template = new Template(opt);
       this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
@@ -89,6 +94,8 @@ export class TemplateComponent implements OnInit {
       // this.dashboard.length && this.clickItem(this.dashboard[0].controlId)
     })
   }
+
+
   ngOnDestroy(): void {
     this.options$.unsubscribe();
     this.editingTemplate$.unsubscribe();
@@ -116,7 +123,10 @@ export class TemplateComponent implements OnInit {
   clickItem(controlId) {
     const control = this.dashboard.find(i => i.controlId === controlId);
     const dialogRef = this.dialog.open(SettingsControlComponent, {
-      data: { control, body: this.template.body, interfaces: this.interfaces }
+      data: {
+        control, body: this.template.body,
+        interfaces: this.interfaces,
+      }
     })
     dialogRef.afterClosed().subscribe(result => {
       if (!result) return;

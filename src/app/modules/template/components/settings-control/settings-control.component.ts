@@ -23,14 +23,12 @@ export class SettingsControlComponent implements OnInit {
   control: DynControl;
   form = new FormGroup({});
   interfacesList = [];
-  // interfaces: Interface[];
   datasourceValues = { datasource: null }
   isDisableDelete: boolean = true;
   datasourceControls = [{ controlId: 'datasource', label: 'Data source', type: 'textarea', readonly: true }];
 
 
   constructor(
-    // private store: Store<State>,
     private dialog: MatDialog,
     private dataType: DataTypeService,
     public dialogRef: MatDialogRef<SettingsControlComponent>,
@@ -48,6 +46,7 @@ export class SettingsControlComponent implements OnInit {
   }
 
   getControlForm(form: FormGroup) {
+    this.form = form;
     form.valueChanges.subscribe(values => {
       this.result.control = values
     })
@@ -61,16 +60,17 @@ export class SettingsControlComponent implements OnInit {
       if ((iface.name !== 'PIAFEventFrames')) return;
       controlsId = controlsId.concat(storage['Attributes'].map(i => i.key));
     })
+
     if (!controlsId.includes(controlId)) this.isDisableDelete = false;
   }
 
   initialData() {
+    if (!this.data.interfaces.length) {
+      this.isDisableDelete = false;
+      return;
+    };
     const attribute = this.data.body['Datasource'].find(i => i.key === this.data.control.controlId);
     if (attribute) this.datasourceValues = { datasource: this.setPiafString(attribute.attributeName) };
-
-    // this.store.pipe(select(templateInterfaces)).subscribe((interfaces: Interface[]) => {
-
-    // this.interfaces = interfaces;
     this.disabledDelete(this.data.interfaces, this.data.control.controlId);
     this.interfacesList = this.data.interfaces
       .filter(i => i.isActive)

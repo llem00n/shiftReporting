@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataEntry, State, DynControl, User, CurrentDataEntry } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { currentDataEntry } from 'src/app/app-store';
-import { switchMap, tap, mergeMap, map, filter } from 'rxjs/operators';
+import { switchMap, tap, mergeMap, map, filter, skip, take } from 'rxjs/operators';
 import { GridsterOptions } from '../grid';
 import { FormGroup, ValidatorFn, Validators, FormControl } from '@angular/forms';
 import { DataEntryActions } from '@actions/*';
@@ -65,6 +65,7 @@ export class DataEntryComponent implements OnInit {
         this.message.alertMessage('This template has no controls. You need to set up controls to use the template');
         return false;
       }),
+      take(1),
       tap((cDataEntry: CurrentDataEntry) => {
         Object.assign(opt, cDataEntry.dataEntry);
         this.startDate = cDataEntry.startDate;
@@ -147,27 +148,35 @@ export class DataEntryComponent implements OnInit {
   }
 
   save() {
+    this.store.pipe(
+      select(currentDataEntry),
+      skip(1)
+    ).subscribe(d => {
+      this.router.navigate(['/calendar']);
+    })
     if (!this.getSavePermission()) return;
     if (this.dataEntry.dataEntryId) {
       this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
-      this.router.navigate(['/calendar']);
       return;
     }
 
-    const createDate = this.dateService.isBetween(new Date(), this.endDate, this.deadline)
-      ? this.dateService.getLocalDate(this.endDate) : this.dateService.getLocalDate();
+    const createDate = this.dateService.isBetween(new Date(), this.startDate, this.endDate)
+      ? this.dateService.getLocalDate() : this.dateService.getLocalDate(this.endDate.getTime() - 1000);
     this.dataEntry.createDate = createDate;
-
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }));
-    this.router.navigate(['/calendar']);
   }
 
   submitDataEntry() {
+    this.store.pipe(
+      select(currentDataEntry),
+      skip(1)
+    ).subscribe(d => {
+      this.router.navigate(['/calendar']);
+    })
     if (!this.getSavePermission()) return;
     this.dataEntry.submitDate = this.dateService.getLocalDate();
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
-    this.router.navigate(['/calendar']);
-
+    // this.router.navigate(['/calendar']);
   }
 }
 

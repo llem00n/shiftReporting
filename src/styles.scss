@@ -66,9 +66,11 @@ width: fit-content;
 }
 
 .menu-button-place{
-  width: 56px;
+  min-width: 56px;
+  min-height: 56px;
   @media (min-width: 960px) {
-  width: 0;
+  min-width: 0;
+  min-height: 0;;
   }
 
 }
