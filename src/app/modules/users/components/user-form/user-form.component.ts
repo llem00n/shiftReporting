@@ -80,7 +80,9 @@ export class UserFormComponent implements OnInit {
       this.user?.departments.map(ud => {
         if (departments.map(d => d.departmentId).includes(ud.departmentId)) return;
         if (ud.plantId !== plant.plantId) return;
-        departments.push({ ...ud, disabled: true })
+        const o = { ...ud };
+        o['disabled'] = true
+        departments.push(o)
       })
       if (!departments.length) return;
       result.push({ plant, departments, })

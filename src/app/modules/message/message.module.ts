@@ -7,7 +7,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { MessageComponent } from './message.component';
 import { ErrorComponent } from './components/error/error.component';
 import { AlertComponent } from './components/alert/alert.component';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+// import { AngularSvgIconModule } from 'angular-svg-icon';
 import { UsedMaterialModule } from '../used-material/used-material.module';
 
 
@@ -15,7 +15,7 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
 @NgModule({
   declarations: [LoadingComponent, MessageComponent, ErrorComponent, AlertComponent],
   imports: [
-    AngularSvgIconModule.forRoot(),
+    // AngularSvgIconModule.forRoot(),
     CommonModule,
     UsedMaterialModule
   ],

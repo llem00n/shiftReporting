@@ -1,3 +1,8 @@
+<style>
+    .mat-spinner::ng-deep circle {
+        stroke: #fff;
+    }
+</style>
 <div class="flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3" role="alert">
     <!-- <div class="mr-4 w-4 h-4 ">
         <svg class="fill-current " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -8,7 +13,10 @@
     <div class="mr-10 flex-1">
         <ng-content></ng-content>
     </div>
-    <div class="w-6 h-6">
-        <svg-icon src="assets/svg_loaders/spinning-circles.svg" [svgStyle]="{'width.px':24,'height.px':24,'fill': '#5F5F5F' }"> </svg-icon>
+    <div class="w-6 h-6 text-white">
+        <mat-spinner [diameter]='24'></mat-spinner>
+
+        <!-- <mat-icon svgIcon="spinning-circles">123</mat-icon> -->
+        <!-- <svg-icon src="assets/svg_loaders/spinning-circles.svg" [svgStyle]="{'width.px':24,'height.px':24,'fill': '#5F5F5F' }"> </svg-icon> -->
     </div>
 </div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+// import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ConfigPlantsComponent } from './components/config-plants/config-plants.component';
 import { PlantCardComponent } from './components/plant-card/plant-card.component';
 import { PlantFormComponent } from './components/plant-form/plant-form.component';
@@ -16,7 +16,7 @@ import { SelectPlantComponent } from './components/select-plant/select-plant.com
   declarations: [PlantCardComponent, ConfigPlantsComponent, PlantFormComponent, SelectPlantComponent],
   imports: [
     CommonModule,
-    AngularSvgIconModule.forRoot(),
+    // AngularSvgIconModule.forRoot(),
     FormModule,
     UsedMaterialModule,
     ReactiveFormsModule
