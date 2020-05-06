@@ -64,3 +64,11 @@ width: fit-content;
 .text-disabled{
   color: rgba($color: #000000, $alpha: 0.26);
 }
+
+.menu-button-place{
+  width: 56px;
+  @media (min-width: 960px) {
+  width: 0;
+  }
+
+}

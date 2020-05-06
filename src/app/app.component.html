@@ -4,13 +4,6 @@
 <!-- <router-outlet></!-->
 <!-- </div> -->
 <!-- </section> -->
-<div *ngIf="smallScreen">
-  <div class="">
-    <a mat-icon-button>
-      <mat-icon svgIcon="menu" (click)="snav.toggle()">icon_name</mat-icon>
-    </a>
-  </div>
-</div>
 <mat-sidenav-container class="h-full" autosize>
   <mat-sidenav #snav [fixedInViewport]="smallScreen" [mode]="smallScreen ? 'over' : 'side'" [opened]="isSnavOpen"
     class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
@@ -49,6 +42,11 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
+    <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
+      <button mat-icon-button color="primary">
+        <mat-icon svgIcon="menu" (click)="snav.toggle()">icon_name</mat-icon>
+      </button>
+    </div>    
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

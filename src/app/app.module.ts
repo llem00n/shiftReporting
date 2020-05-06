@@ -26,11 +26,13 @@ import { TemplatesModule } from './modules/templates/templates.module';
 import { PiafModule } from './modules/piaf/piaf.module';
 import { ShiftsModule } from './modules/shifts/shifts.module';
 import { SchedulesModule } from './modules/schedules/schedules.module';
+import { MenuButtonComponent } from './components/menu-button/menu-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    MenuButtonComponent
   ],
   imports: [
     BrowserModule,

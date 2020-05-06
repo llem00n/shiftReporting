@@ -1,7 +1,7 @@
 <section *ngIf="template" class="w-full h-full top-0 left-0 flex flex-col bg-white">
 
   <!-- Header -->
-  <header class="text-gray-300 bg-blue-600 px-4 py-2 flex justify-between">
+  <!-- <header class="text-gray-300 bg-blue-600 px-4 py-2 flex justify-between">
     <div class="flex items-center">
       <svg (click)="goBack()" class="inline mr-2 fill-current w-6 h-6 mr-6" viewBox="0 0 24 24">
         <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
@@ -9,26 +9,76 @@
       <span>{{title}}</span>
     </div>
     <button class="font-bold text-xs px-2" (click)="save()">{{saveButton}}</button>
-  </header>
+  </header> -->
+  
+  <div class="flex justify-center">
+    <div class="m-2">
+      <button (click)="goBack()" mat-stroked-button color="primary">CANCEL</button>
+    </div>
+    <div class="m-2">
+      <button (click)="save()" mat-flat-button color="primary">SAVE</button>
+    </div>
+  </div>
 
   <div class="flex flex-1 overflow-auto">
 
     <!-- Sidebar -->
 
-    <div class="w-64 p-2 overflow-y-auto">
-      <app-general-config (form)="getFormGeneral($event)" [template]='template'></app-general-config>
-      <app-gridster-config [options]='options' (form)="getFormGridsterOptions($event)">
-      </app-gridster-config>
-      <app-interfaces-config [interfaces]="interfaces" [templateId]="template.templateId"
-        (changeSettings)="changeSettingsInterface($event)" (changeStatus)="changeStatusInterface($event)">
-      </app-interfaces-config>
-      <app-controls-list (draggableControl)="setTypeNewControl($event)"></app-controls-list>
+    <div class="w-64 m-2 overflow-y-auto">
+      <mat-accordion multi>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              General settings
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="-mx-2">
+            <app-general-config (form)="getFormGeneral($event)" [template]='template'></app-general-config>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Gridster settings
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="-mx-2">
+            <app-gridster-config [options]='options' (form)="getFormGridsterOptions($event)"></app-gridster-config>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Interfaces settings
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="-mx-2">
+            <app-interfaces-config [interfaces]="interfaces" [templateId]="template.templateId"
+              (changeSettings)="changeSettingsInterface($event)" (changeStatus)="changeStatusInterface($event)">
+            </app-interfaces-config>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              New controls
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="-mx-2">
+            <app-controls-list (draggableControl)="setTypeNewControl($event)"></app-controls-list>
+          </div>
+        </mat-expansion-panel>
+
+
+      </mat-accordion>
       <app-control-config *ngIf="selectedControl" [control]="selectedControl" (deleteControl)='deleteControl($event)'>
       </app-control-config>
-      <!-- <pre>{{dashboard | json}}</pre>
-      <pre>{{template.body.dashboard | json}}</pre> -->
     </div>
-    
+
     <!-- Main window -->
     <div class="flex-1 p-2 overflow-auto">
 
