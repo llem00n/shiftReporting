@@ -16,6 +16,14 @@ export class ConfigurationEffects {
       map(configurations => ConfigurationActions.getConfigurationsSuccess({ configurations }))
     ))
   ));
+  updateConfigurations$ = createEffect(() => this.actions$.pipe(
+    ofType(ConfigurationActions.updateConfigurations),
+    mergeMap(action => this.configHttpService.updateConfigurations(action.configurations)
+      .pipe(
+        filter(resp => resp && resp.status === 200),
+        map(configurations => ConfigurationActions.getConfigurations())
+      ))
+  ));
 
   constructor(
     private actions$: Actions,

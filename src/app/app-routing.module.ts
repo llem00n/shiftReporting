@@ -12,6 +12,7 @@ import { SchedulesComponent } from './modules/schedules/schedules.component'
 import { UsersComponent } from './modules/users/users.component';
 import { LoginComponent } from './modules/authorization/components/login/login.component';
 import { RoleGuard } from './modules/authorization/guards/role.guard';
+import { ConfigComponent } from './modules/config/config.component';
 
 const routes: Routes = [
 
@@ -27,7 +28,7 @@ const routes: Routes = [
       { path: 'templates', component: TemplatesComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'templates/:id', component: TemplateComponent, canActivate: [AuthGuard] },
       { path: 'users', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },
-      { path: 'app', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },
+      { path: 'config', component: ConfigComponent, canActivate: [AuthGuard, RoleGuard] },
     ]
   },
   {

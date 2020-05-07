@@ -21,6 +21,9 @@ export class DataTypeService {
     })
     return result;
   }
+  getAllowableControls(dataType): string[] {
+    return this.data[dataType].allowableControls;
+  }
 
   readonly data = {
     'System.Boolean': {

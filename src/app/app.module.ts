@@ -27,6 +27,7 @@ import { PiafModule } from './modules/piaf/piaf.module';
 import { ShiftsModule } from './modules/shifts/shifts.module';
 import { SchedulesModule } from './modules/schedules/schedules.module';
 import { MenuButtonComponent } from './components/menu-button/menu-button.component';
+import { ConfigModule } from './modules/config/config.module';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { MenuButtonComponent } from './components/menu-button/menu-button.compon
     TemplatesModule,
     PiafModule,
     SchedulesModule,
+    ConfigModule,
     // ShiftsModule
   ],
   providers: [],
