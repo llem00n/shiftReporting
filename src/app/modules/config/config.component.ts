@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { State, DynControl } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { configurations } from 'src/app/app-store';
-import { Configuration, UpdateConfigurations } from 'src/app/app-store/configuration/configuration.model';
+import { Configuration } from 'src/app/app-store/configuration/configuration.model';
 import { tap } from 'rxjs/operators';
 import { DataTypeService } from 'src/app/services/data-type/data-type.service';
 import { FormGroup } from '@angular/forms';
-import { merge } from 'rxjs';
 import { ConfigurationsActions } from '@actions/*';
 
 @Component({

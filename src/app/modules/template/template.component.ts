@@ -123,6 +123,7 @@ export class TemplateComponent implements OnInit {
   clickItem(controlId) {
     const control = this.dashboard.find(i => i.controlId === controlId);
     const dialogRef = this.dialog.open(SettingsControlComponent, {
+      autoFocus: false,
       data: {
         control, body: this.template.body,
         interfaces: this.interfaces,
