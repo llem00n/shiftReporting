@@ -5,9 +5,9 @@
       <app-select-user-department (changeDepartment)="changeDepartment($event)"></app-select-user-department>
     </div>
     <mat-button-toggle-group class="ml-4 mb-6" #group="matButtonToggleGroup">
-      <mat-button-toggle value="day" [checked]="day" (click)="dayView()">Day
+      <mat-button-toggle value="day" [checked]="day" (click)="dayView()" matTooltip="Day view">D
       </mat-button-toggle>
-      <mat-button-toggle value="week" [checked]="!day" (click)="weekView()">Week
+      <mat-button-toggle value="week" [checked]="!day" (click)="weekView()" matTooltip="Week view">W
       </mat-button-toggle>
     </mat-button-toggle-group>
 

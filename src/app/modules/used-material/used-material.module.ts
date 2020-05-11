@@ -19,11 +19,13 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {LayoutModule} from '@angular/cdk/layout';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 const modules = [
+  MatTooltipModule,
   MatExpansionModule,
   LayoutModule,
   MatProgressSpinnerModule,

@@ -1,13 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { DynControl } from 'src/app/modules/dynamic-controls/models';
-import { DynTextarea } from 'src/app/modules/dynamic-controls/components/dyn-textarea/dyn-textarea.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Template } from 'src/app/app-store/template/template.model';
-import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
-import { DynSelect } from 'src/app/modules/dynamic-controls/components/dyn-select/dyn-select.model';
 import { Store } from '@ngrx/store';
 import { State, templateTypes } from 'src/app/app-store';
 import { TemplateActions } from '@actions/*';
+import { DynText, DynSelect, DynTextarea } from '@models/*';
 
 @Component({
   selector: 'app-general-config',
@@ -20,11 +17,16 @@ export class GeneralConfigComponent implements OnInit {
 
   show = false;
 
-  generalConfig = new Map([
-    ['name', { key: 'name', type: 'text', placeholder: "Name", label: 'Name', validators: { required: true } }],
-    ['templateTypeId', { key: 'templateTypeId', type: 'select', placeholder: "Select type", label: "Type", options: [], validators: { required: true } }],
-    ['description', { key: 'type', type: 'textarea', placeholder: "Description", label: "Description" }],
-  ]);
+  // generalConfig = new Map([
+  //   ['name', { key: 'name', type: 'text', placeholder: "Name", label: 'Name', validators: { required: true } }],
+  //   ['templateTypeId', { key: 'templateTypeId', type: 'select', placeholder: "Select type", label: "Type", options: [], validators: { required: true } }],
+  //   ['description', { key: 'type', type: 'textarea', placeholder: "Description", label: "Description" }],
+  // ]);
+  generalConfig = [
+    new DynText({ controlId: 'name', type: 'text', placeholder: "Name", label: 'Name', validators: { required: true } }),
+    new DynSelect({ controlId: 'templateTypeId', type: 'select', placeholder: "Select type", label: "Type", options: [], validators: { required: true } }),
+    new DynTextarea({ controlId: 'type', type: 'textarea', placeholder: "Description", label: "Description" }),
+  ];
   constructor(
     private store: Store<State>
   ) { }
@@ -37,10 +39,12 @@ export class GeneralConfigComponent implements OnInit {
       const options = types.map(i => {
         return { value: i.templateTypeId, viewValue: i.name, }
       });
-      this.generalConfig.get('templateTypeId')['options'] = options
+      this.generalConfig.find(c => c.controlId === 'templateTypeId')['options'] = options
     })
   }
   getForm(e: FormGroup) {
+    console.log(e);
+
     e.addControl('templateTypeName', new FormControl(null))
     e.get('templateTypeId').valueChanges.subscribe(id =>
       (id === 0 || id) && e.get('templateTypeName').setValue(this.getTemplateTypeName(id))
@@ -49,7 +53,7 @@ export class GeneralConfigComponent implements OnInit {
   }
   getTemplateTypeName(templateTypeId): string {
     return this.generalConfig
-      .get('templateTypeId')['options']
+      .find(c => c.controlId === 'templateTypeId')['options']
       .find(i => i.value == templateTypeId).viewValue
   }
 }

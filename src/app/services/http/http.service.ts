@@ -39,17 +39,18 @@ export class HttpService {
     const payload = options.payload || {}
     let headers = new HttpHeaders({ 'Authorization': this.oidcClientService.getAuthorizationHeaderValue() });
 
-    return this.http.post<T>(url, payload, { observe: 'response',headers }).pipe(
+    return this.http.post<T>(url, payload, { observe: 'response', headers }).pipe(
       tap(_ => this.message.alertMessage(options.successMsg)),
       map(resp => { return <AppHttpResponse>{ status: resp.status, body: resp.body } }),
       catchError((error: HttpErrorResponse) => {
-        this.message.errorMessage(`${error.statusText}... ${error.error}... ${error.message}`);
+        // this.message.errorMessage(`${error.statusText}... ${error.error}... ${error.message}`);
+        this.message.errorMessage(`${error.message}`);
         // deleteDepartmentSucces(error);
         return of(null)
       })
     )
   }
-  
+
   get(options: AppHttpRequest): Observable<any> {
     const url = `${this.baseUrl}/${options.url}`
     return this.http.get(url)

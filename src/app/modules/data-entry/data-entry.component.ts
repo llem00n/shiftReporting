@@ -138,8 +138,8 @@ export class DataEntryComponent implements OnInit {
   }
 
   getSavePermission(): boolean {
-    if ((this.dataEntry.submitDate) || (new Date() < this.startDate) || (this.user.roleId > 3 && new Date() > this.deadline)) {
-      (this.user.roleId > 3 && new Date() > this.deadline) && this.message.errorMessage('Saving is not possible. Time is running out.');
+    if ((this.dataEntry.submitDate) || (new Date() < this.startDate) || (this.user.roleId === 4) || (this.user.roleId === 5 && new Date() > this.deadline)) {
+      (this.user.roleId === 3 && new Date() > this.deadline) && this.message.errorMessage('Saving is not possible. Time is running out.');
       this.isSaveEnabled = false;
       return false;
     }

@@ -1,7 +1,12 @@
 <div class="flex justify-between">
   <p mat-dialog-title>Control settings</p>
-  <button mat-icon-button color='warn' [disabled]="isDisableDelete" [mat-dialog-close]="'clickDelete'">
-    <!-- Delete control -->
+  <!-- Delete control -->
+  <button mat-icon-button color='warn' 
+  matTooltip="Delete control"
+  matTooltipPosition="before"
+  [disabled]="isDisableDelete" 
+  [mat-dialog-close]="'clickDelete'"
+  >
     <mat-icon svgIcon="delete"></mat-icon>
   </button>
 

@@ -1,11 +1,11 @@
 <div class="flex items-center h-full">
-  <button mat-icon-button (click)="prevWeek()" class="text-gray-600">
+  <button mat-icon-button (click)="prevWeek()" class="text-gray-600" matTooltip="Previos week">
     <mat-icon svgIcon="chevron-left" ></mat-icon>
   </button>
 
   <p class="px-2">Week: {{week}} ({{weekStr}})</p>
 
-  <button mat-icon-button (click)="nextWeek()" class="text-gray-600">
+  <button mat-icon-button (click)="nextWeek()" class="text-gray-600" matTooltip="Next week">
     <mat-icon svgIcon="chevron-right"></mat-icon>
   </button>
 </div>
