@@ -75,7 +75,7 @@
       <div>
         <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
           (dashboardChange)="dashboardChange($event)" [options]="options" [dashboard]="dashboard"
-          [appointment]="appointment" [selectedControlId]='selectedControl?.controlId'></app-grid>
+          [appointment]="appointment" [selectedControlId]='selectedControl?.controlId' [blind]='true'></app-grid>
       </div>
     </div>
   </div>

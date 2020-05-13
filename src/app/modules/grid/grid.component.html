@@ -5,6 +5,7 @@
         [item]="item.gridItem" [style.background-color]="getBackground(item)"
         (click)="itemClick($event, item.controlId)">
         <app-dynamic-controls appearance="standard1" [control]="item" [form]="form"></app-dynamic-controls>
+        <div class="bg-transparent absolute h-full w-full top-0 left-0" [ngClass]="{'hidden': !blind}"></div>
       </gridster-item>
     </gridster>
   </div>

@@ -52,6 +52,7 @@ export class GridComponent implements OnChanges {
   @Input() form: FormGroup;
   @Input() showInvalid: boolean;
   @Input() controlsErrors //: TemplateDataItem[];
+  @Input() blind: boolean;
 
   @Output() clickItem: EventEmitter<string> = new EventEmitter<string>();
   @Output() dropNewItem: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
@@ -79,7 +80,7 @@ export class GridComponent implements OnChanges {
   optionsAppointment: GridsterOptions;
   elementErrors//: ElementError[];
 
-  ngOnChanges(): void {    
+  ngOnChanges(): void {
     this.processingOptions(this.appointment);
   }
   processingOptions(appointment: string) {
