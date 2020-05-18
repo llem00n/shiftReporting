@@ -5,7 +5,7 @@
       <button (click)="goBack()" mat-stroked-button color="primary">CANCEL</button>
     </div>
     <div *ngIf="isSaveEnabled" class="m-2">
-      <button (click)="save()" mat-flat-button color="primary">SAVE</button>
+      <button (click)="save()" mat-flat-button color="primary" [disabled]="!form?.valid">SAVE</button>
     </div>
     <div *ngIf="isSaveEnabled" class="m-2">
       <button (click)="submitDataEntry()" mat-flat-button color="primary">SUBMIT</button>
@@ -16,4 +16,4 @@
       <app-grid [options]="options" [dashboard]="dashboard" [form]="form"></app-grid>
     </div>
   </div>
-</section> 
+</section>
