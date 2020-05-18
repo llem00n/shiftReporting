@@ -14,7 +14,7 @@
   <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
     <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
     <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
-      <input matInput [min]='options.control.min' [max]='options.control.max' [step]='options.control.step'
+      <input matInput [min]='min' [max]='max' [step]='options.control.step'
         type="number" [placeholder]="options.control.label" [formControlName]="options.control.controlId">
     </div>
   </mat-form-field>
