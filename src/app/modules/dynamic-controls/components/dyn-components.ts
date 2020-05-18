@@ -1,4 +1,3 @@
-import { InputComponent } from "./input/input.component";
 import { DynSelectComponent } from './dyn-select/dyn-select.component';
 import { DynDatetimeComponent } from './dyn-datetime/dyn-datetime.component';
 import { DynCheckboxComponent } from './dyn-checkbox/dyn-checkbox.component';
@@ -26,16 +25,17 @@ export const dynComponents = {
     return Object.keys(this).filter(i => this[i].title).map(i => { return { title: this[i].title, key: i } })
   },
   getModel: function (type) { return this[type].model || null },
+  
   // input: { component: InputComponent, title: 'Input' },
-  select: { component: DynSelectComponent, title: 'Select', model: DynSelect },
-  datetime: { component: DynDatetimeComponent, title: 'Datetime', model: DynDatetime },
-  checkbox: { component: DynCheckboxComponent, title: 'Checkbox', model: DynCheckbox },
-  number: { component: DynNumberComponent, title: 'Number', model: DynNumber },
-  time: { component: DynTimeComponent, title: 'Time', model: DynTime },
-  text: { component: DynTextComponent, title: 'Text', model: DynText },
-  textarea: { component: DynTextareaComponent, title: 'Textarea', model: DynTextarea },
-  color: { component: DynColorComponent, title: 'Color', model: DynColor },
   label: { component: DynLabelComponent, title: 'Label', model: DynLabel },
-  date: { component: DynDateComponent, title: 'Date', model: DynDate },
+  text: { component: DynTextComponent, title: 'Text', model: DynText },
+  number: { component: DynNumberComponent, title: 'Number', model: DynNumber },
+  select: { component: DynSelectComponent, title: 'Select', model: DynSelect },
+  checkbox: { component: DynCheckboxComponent, title: 'Checkbox', model: DynCheckbox },
+  datetime: { component: DynDatetimeComponent, title: 'Datetime', model: DynDatetime },
+  time: { component: DynTimeComponent, /* title: 'Time', */ model: DynTime },
+  textarea: { component: DynTextareaComponent, /* title: 'Textarea', */ model: DynTextarea },
+  color: { component: DynColorComponent, /* title: 'Color', */ model: DynColor },
+  date: { component: DynDateComponent, /* title: 'Date', */ model: DynDate },
 }
 
