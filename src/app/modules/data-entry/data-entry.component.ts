@@ -102,7 +102,7 @@ export class DataEntryComponent implements OnInit {
         return this.form.valueChanges;
       }),
       tap(values => this.dataEntry.template.body['templateDataKV'] = values),
-      tap(_ => console.log(this.dataEntry))
+      // tap(_ => console.log(this.dataEntry))
     ).subscribe()
   }
 

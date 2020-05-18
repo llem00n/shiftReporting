@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
     this.bpObserver.observe('(max-width: 960px)').subscribe(result => {
       this.smallScreen = result.matches;
       this.isSnavOpen = !result.matches
-      console.log(result)
     })
     this.store.pipe(
       select(roles),

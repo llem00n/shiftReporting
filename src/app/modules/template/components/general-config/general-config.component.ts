@@ -43,8 +43,6 @@ export class GeneralConfigComponent implements OnInit {
     })
   }
   getForm(e: FormGroup) {
-    console.log(e);
-
     e.addControl('templateTypeName', new FormControl(null))
     e.get('templateTypeId').valueChanges.subscribe(id =>
       (id === 0 || id) && e.get('templateTypeName').setValue(this.getTemplateTypeName(id))
