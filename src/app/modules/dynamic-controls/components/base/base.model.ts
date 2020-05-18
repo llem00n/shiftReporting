@@ -11,6 +11,7 @@ export class BaseControl {
   bgColor?: string;
   isRemovable?: boolean;
   readonly: boolean;
+  // isRequired?: boolean;
 
 
   gridItem?: Partial<GridsterItem> = {
@@ -24,6 +25,7 @@ export class BaseControl {
   settings = [
     { controlId: 'name', label: 'Name', type: 'text', validators: { required: true } },
     { controlId: 'label', label: 'Label', type: 'text' },
+    { controlId: 'isRequired', label: 'Required', type: 'checkbox' },
 
     // { controlId: 'bgColor', label: 'Background', type: 'color' }
   ]
@@ -32,13 +34,24 @@ export class BaseControl {
   constructor(opt: {} = {}) {
     this.controlId = opt['controlId'] || null;
     this.value = opt.hasOwnProperty('value') ? opt['value'] : null;
+    this.validators = opt['validators'] || {};
     this.label = opt['label'] || '';
     this.name = opt['name'] || '';
     this.bgColor = opt['bgColor'] || '#ffffff';
     this.gridItem = this.setGridItem(opt['gridItem']);
     this.isRemovable = opt['isRemovable'] || true;
-    this.validators = opt['validators'] || null;
     this.readonly = opt['readonly'] || false;
+  }
+
+  set isRequired(value: boolean) {
+    if (!value) {
+      delete this.validators['required'];
+      return;
+    }
+    this.validators['required'] = true;
+  }
+  get isRequired() {
+    return <boolean>this.validators['required'] || false;
   }
 
   setGridItem(gridItem) {
