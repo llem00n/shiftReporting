@@ -8,6 +8,7 @@ import { DynNumber } from '../components/dyn-number/dyn-number.model';
 import { DynColor } from '../components/dyn-color/dyn-color.model';
 import { DynCheckbox } from '../components/dyn-checkbox/dyn-checkbox.model';
 import { DynText } from '../components/dyn-text/dyn-text.model'
+import { DynDate } from '../components/dyn-date/dyn-date.model'
 
 export {
   DynDatetime,
@@ -19,7 +20,8 @@ export {
   DynColor,
   DynCheckbox,
   BaseControl,
-  DynText
+  DynText,
+  DynDate
 }
 
 

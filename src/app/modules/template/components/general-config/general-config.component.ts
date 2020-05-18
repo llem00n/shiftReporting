@@ -4,7 +4,7 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { Store } from '@ngrx/store';
 import { State, templateTypes } from 'src/app/app-store';
 import { TemplateActions } from '@actions/*';
-import { DynText, DynSelect, DynTextarea } from '@models/*';
+import { DynText, DynSelect, DynTextarea, DynDate } from '@models/*';
 
 @Component({
   selector: 'app-general-config',
@@ -25,12 +25,16 @@ export class GeneralConfigComponent implements OnInit {
   generalConfig = [
     new DynText({ controlId: 'name', type: 'text', placeholder: "Name", label: 'Name', validators: { required: true } }),
     new DynSelect({ controlId: 'templateTypeId', type: 'select', placeholder: "Select type", label: "Type", options: [], validators: { required: true } }),
-    new DynTextarea({ controlId: 'type', type: 'textarea', placeholder: "Description", label: "Description" }),
+    new DynDate({ controlId: 'validFromDate', label: "Valid from date", validators: { required: true } }),
+    new DynDate({ controlId: 'validToDate', label: "Valid to date", validators: { required: true } }),
+    new DynTextarea({ controlId: 'description', type: 'textarea', placeholder: "Description", label: "Description" }),
   ];
   constructor(
     private store: Store<State>
   ) { }
   ngOnInit(): void {
+    console.log(this.template);
+    
     this.getTemplateTypes()
   }
   getTemplateTypes() {
@@ -43,7 +47,7 @@ export class GeneralConfigComponent implements OnInit {
     })
   }
   getForm(e: FormGroup) {
-    e.addControl('templateTypeName', new FormControl(null))
+    e.addControl('templateTypeName', new FormControl(this.template.templateTypeName))
     e.get('templateTypeId').valueChanges.subscribe(id =>
       (id === 0 || id) && e.get('templateTypeName').setValue(this.getTemplateTypeName(id))
     )

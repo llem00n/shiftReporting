@@ -15,6 +15,8 @@ export class Template {
   templateTypeId: number;
   templateTypeName: string;
   _departmentId?: number;
+  validFromDate: string;
+  validToDate: string;
   constructor(opt: { [key: string]: any } = {}) {
     if (opt['templateId']) { this.templateId = opt['templateId'] }
     // this.templateId = opt['templateId'] || null;
@@ -24,6 +26,8 @@ export class Template {
     this.description = opt['description'] || '';
     this.lastUpdated = opt['lastUpdated'] || '';
     this.body = new TemplateBody(opt['body'] || {});
+    this.validFromDate = opt['validFromDate'] || null;
+    this.validToDate = opt['validToDate'] || null;
   }
 }
 
