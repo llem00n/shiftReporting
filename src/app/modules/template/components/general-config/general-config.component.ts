@@ -33,8 +33,6 @@ export class GeneralConfigComponent implements OnInit {
     private store: Store<State>
   ) { }
   ngOnInit(): void {
-    console.log(this.template);
-    
     this.getTemplateTypes()
   }
   getTemplateTypes() {

@@ -26,8 +26,7 @@ export class SettingsControlComponent implements OnInit {
   datasourceValues = { datasource: null }
   isDisableDelete: boolean = true;
   datasourceControls = [{ controlId: 'datasource', label: 'Data source', type: 'textarea', readonly: true }];
-
-
+  
   constructor(
     private dialog: MatDialog,
     private dataType: DataTypeService,
@@ -43,6 +42,10 @@ export class SettingsControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialData();
+  }
+
+  getEnabledDatasource(): boolean {
+    return this.interfacesList.find(i => i.name === 'PIAFEventFrames' || i.name === 'PIAFAttributes')
   }
 
   getControlForm(form: FormGroup) {
@@ -65,7 +68,7 @@ export class SettingsControlComponent implements OnInit {
   }
 
   initialData() {
-    if (!this.data.interfaces.length) {
+    if (!this.data.interfaces.length || this.data.control.type === 'label') {
       this.isDisableDelete = false;
       return;
     };
