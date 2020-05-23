@@ -61,8 +61,6 @@ export class TemplatesComponent implements OnInit {
     this.router.navigate(['configuration/templates/' + event])
   }
   delete(id) {
-    console.log(id);
-    
     this.store.dispatch(TemplateActions.deleteTemplate({ id }))
   }
 

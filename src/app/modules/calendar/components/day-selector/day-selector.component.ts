@@ -17,16 +17,8 @@ export class DaySelectorComponent implements OnInit {
 
   }
   ngOnInit() {
-    // this.controlDay.setValue(this.day.toISOString());
-    // this.controlDay.valueChanges.subscribe(console.log)
-    // console.log(this.controlDay);
-
   }
-  // ngOnChanges(): void {
-  // this.weekStr = this.dateService.getWeekString(this.year, this.week);
-  // }
   dateChange(a, e) {
-    console.log(a, e.value);
     this.changeDay.emit(e.value)
 
   }
@@ -41,8 +33,6 @@ export class DaySelectorComponent implements OnInit {
     const day = new Date(this.day)
     day.setHours(0, 0, 0, 0);
     day.setDate(this.day.getDate() - 1)
-    console.log(day);
-
     this.changeDay.emit(day)
   }
 }

@@ -15,7 +15,11 @@ export class DynDatetimeComponent implements OnInit {
 
   ngOnInit() {
     this.clService.getData().subscribe(options => {
+      console.log(options);
+      
       this.options = options
     })
   }
+  get min (){return this.options.control.min}
+  get max (){return this.options.control.max}
 }

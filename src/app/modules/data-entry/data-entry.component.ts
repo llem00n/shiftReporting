@@ -102,20 +102,32 @@ export class DataEntryComponent implements OnInit {
         return this.form.valueChanges;
       }),
       tap(values => this.dataEntry.template.body['templateDataKV'] = values),
-      // tap(_ => console.log(this.dataEntry))
     ).subscribe()
   }
 
   createForm(controls: DynControl[]): FormGroup {
     const group = new FormGroup({});
-    controls.map(i => {
-      if (i.type === 'label') return;
+    controls.map(control => {
+      if (control.type === 'label') return;
       const validators: ValidatorFn[] = [];
-      i.validators && Object.keys(i.validators).map(controlId => {
-        if (typeof (i.validators[controlId]) === 'boolean') validators.push(Validators[controlId])
-        else validators.push(Validators[controlId](i.validators[controlId]));
+      control.validators && Object.keys(control.validators).map(vKey => {
+        if (vKey === 'startShiftDatetimeValidation') {
+          console.log('startShiftDatetimeValidation');
+          console.log(this.dateService.getLocalDate(this.startDate));
+          control['min'] = this.dateService.getLocalDate(this.startDate);
+          return;
+        }
+        if (vKey === 'endShiftDatetimeValidation') {
+          console.log('endShiftDatetimeValidation');
+          console.log(this.endDate);
+          control['max'] = this.dateService.getLocalDate(this.endDate);
+          return;
+        }
+
+        if (typeof (control.validators[vKey]) === 'boolean') validators.push(Validators[vKey])
+        else validators.push(Validators[vKey](control.validators[vKey]));
       });
-      group.addControl(i.controlId, new FormControl(this.setValue(i, this.values), validators));
+      group.addControl(control.controlId, new FormControl(this.setValue(control, this.values), validators));
     });
     return group;
   }

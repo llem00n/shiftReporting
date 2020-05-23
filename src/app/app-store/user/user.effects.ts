@@ -71,7 +71,6 @@ export class UserEffects {
 
   addUser$ = createEffect(() => this.actions$.pipe(
     ofType(UserActions.addUser),
-    tap(console.log),
     mergeMap(action => this.userHttpService.addUser(action.user).pipe(
       filter(resp => resp && resp.status === 200),
       map(resp => { return { user: resp.body, addDepIds: action.user.departments.map(d => d.departmentId) } }),
