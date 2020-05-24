@@ -4,6 +4,7 @@ import { ScheduleActions, TemplateActions, DataEntryActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
 import { allSchedules } from 'src/app/app-store';
 import { DateService } from 'src/app/services/date/date.service';
+import { CalendarService } from './calendar.service';
 
 @Component({
   selector: 'app-calendar',
@@ -18,24 +19,31 @@ export class CalendarComponent implements OnInit, OnDestroy {
   departmentId = null;
   weekYear: { year: number, week: number };
   weekDataEntries: DataEntry[];
-  day: Date = new Date()
+  day: Date;
 
   constructor(
     private store: Store<State>,
-    private dateService: DateService
+    private dateService: DateService,
+    private calendarService: CalendarService
   ) { }
 
   ngOnInit(): void {
-    this.day.setHours(0, 0, 0, 0)
-    this.date = new Date()
-    // this.date.setHours(0, 0, 0, 0);
-    this.weekYear = this.dateService.getWeek(this.date);
-    this.week = this.weekYear.week;
-    this.year = this.weekYear.year;
+    this.calendarService.getCalendarState()
+      .subscribe(state => {
+        const { day, week, year } = state;
+        this.day = day;
+        this.week = week;
+        this.year = year;
+        this.getDataEntry(this.day);
+      })
     this.getSchedules();
   }
   ngOnDestroy() {
     this.store.dispatch(ScheduleActions.clearSchedules());
+  }
+
+  setState(state: { week: number, year: number, day: Date }) {
+    this.calendarService.setCalendarState(state)
   }
 
   getSchedules() {
@@ -43,17 +51,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
       select(allSchedules)
     ).subscribe(schedules => this.schedules = schedules)
   }
-  setWeek(e) {
-    this.week = e.week;
-    this.year = e.year;
-    this.getDataEntry()
-  }
 
   changeDepartment(e) {
     const departmentId = this.departmentId = e.departmentId
     this.store.dispatch(ScheduleActions.getSchedules({ departmentId }));
     this.store.dispatch(TemplateActions.getTemplates({ departmentId }));
-    this.getDataEntry()
+    this.getDataEntry(this.day);
   }
   getDataEntry(day?: Date) {
     if ((!this.departmentId || !this.week || !this.year) && (!this.departmentId || !day)) {
@@ -83,19 +86,24 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
 
-  setDay(e) {
-    this.day = e;
-    this.getDataEntry(this.day)
+  setDay(day) {
+    this.setState({ day, week: 1, year: 1 })
   }
   dayView() {
-    this.day = this.dateService.getMonday(this.year, this.week)
-    this.getDataEntry(this.day);
+    const day = this.dateService.getMonday(this.year, this.week)
+    this.setState({ day, week: 1, year: 1 })
   }
+
+  setWeek(e) {
+    const week = e.week;
+    const year = e.year;
+    this.setState({ day: null, week, year })
+  }
+  
   weekView() {
     const weekYear = this.dateService.getWeek(this.day);
-    this.week = weekYear.week;
-    this.year = weekYear.year;
-    this.day = null;
-    this.getDataEntry()
+    const week = weekYear.week;
+    const year = weekYear.year;
+    this.setState({ day: null, week, year })
   }
 }

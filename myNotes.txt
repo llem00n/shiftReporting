@@ -114,6 +114,7 @@ ng g c modules/calendar/components/weekGrid
 ng g c modules/calendar/components/weekSelector
 ng g c modules/calendar/components/daySelector
 ng g c modules/calendar/components/templatesList
+ng g s modules/calendar/calendar
 
 module users
 ng g m modules/users -m app
