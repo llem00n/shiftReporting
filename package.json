@@ -29,7 +29,7 @@
     "angular-gridster2": "^9.1.0",
     "oidc-client": "^1.10.1",
     "rxjs": "~6.5.4",
-    "tslib": "^1.11.1",
+    "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -39,7 +39,7 @@
     "@angular/language-service": "^9.0.5",
     "@types/jasmine": "^3.5.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^13.13.4",
+    "@types/node": "^14.0.5",
     "codelyzer": "^5.1.2",
     "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "^5.0.2",
@@ -48,7 +48,7 @@
     "karma-coverage-istanbul-reporter": "^3.0.2",
     "karma-jasmine": "^3.1.1",
     "karma-jasmine-html-reporter": "^1.5.2",
-    "protractor": "^5.4.3",
+    "protractor": "^7.0.0",
     "tailwindcss": "^1.2.0",
     "ts-node": "^8.9.1",
     "tslint": "^6.1.2",
