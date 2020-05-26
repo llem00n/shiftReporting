@@ -25,7 +25,6 @@ export interface AppHttpResponse {
 export class HttpService {
 
   baseUrl: string = `${environment.baseUrl}/api`
-  // baseUrl: string = `https://localhost:999/api`
 
   constructor(
     private http: HttpClient,
@@ -43,9 +42,7 @@ export class HttpService {
       tap(_ => this.message.alertMessage(options.successMsg)),
       map(resp => { return <AppHttpResponse>{ status: resp.status, body: resp.body } }),
       catchError((error: HttpErrorResponse) => {
-        // this.message.errorMessage(`${error.statusText}... ${error.error}... ${error.message}`);
-        this.message.errorMessage(`${error.message}`);
-        // deleteDepartmentSucces(error);
+        this.message.errorMessage(`${error.error.message || error.error.title}`);
         return of(null)
       })
     )

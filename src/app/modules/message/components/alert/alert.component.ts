@@ -11,7 +11,7 @@ export class AlertComponent implements OnInit {
     private messageService: MessageService
   ) { }
   ngOnInit() {
-    setTimeout(_ => { this.messageService.close() }, 3000)
+    setTimeout(_ => { this.messageService.close() }, 2000)
   }
   close() {
     this.messageService.close()
