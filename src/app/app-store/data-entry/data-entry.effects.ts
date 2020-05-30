@@ -5,7 +5,7 @@ import { EMPTY } from 'rxjs';
 
 import * as DataEntryActions from './data-entry.actions';
 import { DataEntryHttpService } from './data-entry-http.service';
-import { mergeMap, filter, map } from 'rxjs/operators';
+import { mergeMap, filter, map, tap } from 'rxjs/operators';
 
 
 @Injectable()
@@ -55,6 +55,16 @@ export class DataEntryEffects {
     )),
     // mergeMap(_ => EMPTY)
   ));
+
+  getDataEntryLogs$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getDataEntryLogs),
+    mergeMap(({ dataEntryId }) => this.dataEntryHttpService.getDataEntryLogs(dataEntryId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.getDataEntryLogsSuccess({ dataEntryLogs: resp.body }))
+    )),
+    // mergeMap(_ => EMPTY)
+  ));
+
 
 
   constructor(

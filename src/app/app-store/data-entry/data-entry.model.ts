@@ -27,3 +27,11 @@ export interface CurrentDataEntry {
   deadline: Date
   dataEntry: DataEntry;
 }
+
+export interface DataEntryLog {
+  controlName: string;
+  value: string;
+  recordDate: string;
+  firstName: string;
+  secondName: string;
+}

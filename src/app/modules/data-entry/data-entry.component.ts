@@ -84,6 +84,7 @@ export class DataEntryComponent implements OnInit {
       tap(opt => {
         this.dataEntry = new DataEntry(opt);
         this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
+        this.dataEntry.dataEntryId && this.store.dispatch(DataEntryActions.getDataEntryLogs({ dataEntryId: this.dataEntry.dataEntryId }));
         this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
         this.options = this.dataEntry.template.body?.gridsterOptions || {};
         this.getSavePermission()
@@ -112,14 +113,10 @@ export class DataEntryComponent implements OnInit {
       const validators: ValidatorFn[] = [];
       control.validators && Object.keys(control.validators).map(vKey => {
         if (vKey === 'startShiftDatetimeValidation') {
-          console.log('startShiftDatetimeValidation');
-          console.log(this.dateService.getLocalDate(this.startDate));
           control['min'] = this.dateService.getLocalDate(this.startDate);
           return;
         }
         if (vKey === 'endShiftDatetimeValidation') {
-          console.log('endShiftDatetimeValidation');
-          console.log(this.endDate);
           control['max'] = this.dateService.getLocalDate(this.endDate);
           return;
         }
@@ -191,6 +188,10 @@ export class DataEntryComponent implements OnInit {
     this.dataEntry.submitDate = this.dateService.getLocalDate();
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
     // this.router.navigate(['/calendar']);
+  }
+  showLogs() {
+    console.log('showLogs');
+
   }
 }
 

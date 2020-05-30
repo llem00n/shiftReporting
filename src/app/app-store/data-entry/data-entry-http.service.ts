@@ -53,4 +53,12 @@ export class DataEntryHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
+  getDataEntryLogs(dataEntryId: number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDataEntryLogs',
+      payload: { dataEntryId },
+      loadingMsg: 'Loading the dataEntry log ...',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
 }

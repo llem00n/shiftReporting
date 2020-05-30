@@ -167,3 +167,6 @@ ng g c modules/config/config --flat
 
 guards
 ng g guard modules/authorization/guards/admin
+
+data-entry
+ng g c modules/data-entry/components/data-entry-log

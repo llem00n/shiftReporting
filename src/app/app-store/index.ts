@@ -79,6 +79,7 @@ export const userRoles = createSelector(userState, (state) => state.userRoles);
 export const dataEntryState = createFeatureSelector<fromDataEntry.State>('dataEntry');
 export const dataEntriesOnDate = createSelector(dataEntryState, (state) => state.dataEntriesOnDate);
 export const currentDataEntry = createSelector(dataEntryState, (state) => state.currentDataEntry);
+export const dataEntryLogs = createSelector(dataEntryState, (state) => state.dataEntryLogs);
 
 // interfaces
 export const interfaceState = createFeatureSelector<fromInterface.State>('interface');

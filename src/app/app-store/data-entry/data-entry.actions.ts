@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DataEntry } from '../models';
-import { CurrentDataEntry } from './data-entry.model';
+import { CurrentDataEntry, DataEntryLog } from './data-entry.model';
 
 export const addDataEntry = createAction(
   '[DataEntry] Add DataEntry',
@@ -51,3 +51,11 @@ export const setCurrentDataEntry = createAction(
   '[DataEntry] Set CurrentDataEntry',
   props<{ currentDataEntry: CurrentDataEntry }>()
 );
+export const getDataEntryLogs = createAction(
+  '[DataEntry] Get DataEntryLogs',
+  props<{ dataEntryId: number }>()
+)
+export const getDataEntryLogsSuccess = createAction(
+  '[DataEntry] Get DataEntryLogs Success',
+  props<{ dataEntryLogs: DataEntryLog[] }>()
+)
