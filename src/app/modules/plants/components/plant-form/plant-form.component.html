@@ -1,0 +1,9 @@
+<div>
+  <p mat-dialog-title>Plant settings</p>
+  <app-form [flex]='true' [controls]='nameCode' [values]="plant" (form)="getForm($event)"></app-form>
+  <app-form [flex]='true' [controls]='address' [values]="plant" (form)="getForm($event)"></app-form>
+  <mat-dialog-actions class="flex justify-end">
+    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+    <button mat-raised-button color="primary" [disabled]='form.invalid' [mat-dialog-close]="plant">SAVE</button>
+  </mat-dialog-actions>
+</div>

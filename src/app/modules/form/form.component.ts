@@ -14,8 +14,8 @@ export class FormComponent implements OnChanges {
     if (controls['__proto__'].constructor.name === 'Array') this._controls = <DynControl[]>controls;
     else {
       const result: DynControl[] = [];
-      controls.forEach((i, key) => {
-        result.push({ ...i, key })
+      controls.forEach((i, controlId) => {
+        result.push({ ...i, controlId: controlId })
       })
       this._controls = result
     }
@@ -23,6 +23,7 @@ export class FormComponent implements OnChanges {
   get controls() { return this._controls }
 
   @Input() values;
+  @Input() flex: boolean;
   @Output() form = new EventEmitter<FormGroup>()
 
   customForm: FormGroup = new FormGroup({});
@@ -34,24 +35,26 @@ export class FormComponent implements OnChanges {
     const group = new FormGroup({});
     controls.map(i => {
       const validators: ValidatorFn[] = [];
-      i.validators && Object.keys(i.validators).map(key => {
-        if (typeof (i.validators[key]) === 'boolean') validators.push(Validators[key])
-        else validators.push(Validators[key](i.validators[key]));
+      i.validators && Object.keys(i.validators).map(controlId => {
+        if (typeof (i.validators[controlId]) === 'boolean') validators.push(Validators[controlId])
+        else validators.push(Validators[controlId](i.validators[controlId]));
       });
-      group.addControl(i.key, new FormControl(this.setValue(i, this.values), validators));
+      group.addControl(i.controlId, new FormControl(this.setValue(i, this.values), validators));
     });
     this.form.emit(group);
     return group;
   }
   setValue(control: DynControl, values): string | boolean | number {
-    if (control.type === 'checkbox') return values[control.key];
-    if (!values || !values[control.key]) return null;
+    // if (control.type === 'checkbox') return values ? values[control.controlId] : false;
+    if (!values
+      || values[control.controlId] === null
+      || values[control.controlId] === undefined) return null;
     switch (control.type) {
       case 'datetime':
-        const a = new Date(values[control.key])
+        const a = new Date(values[control.controlId])
         return new Date(a.valueOf() - a.getTimezoneOffset() * 1000 * 60).toJSON().slice(0, 16);
       default:
-        return values[control.key]
+        return values[control.controlId]
     }
   }
 

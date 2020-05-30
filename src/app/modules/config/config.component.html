@@ -1,0 +1,28 @@
+<div class="m-4 ">
+  <div class="menu-button-place"></div>
+
+  <div>
+    <div *ngFor="let control of controls" class="mb-4 max-w-2xl">
+      <mat-card>
+        <p class="mb-2">{{control.description}}</p>
+        <div class="w-64">
+          <app-form [controls]='[control]' [values]="values" (form)="getForm($event)"></app-form>
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+  <mat-dialog-actions class="flex justify-start">
+    <!-- <button mat-button color="primary" mat-dialog-close>CANCEL</button> -->
+    <button mat-raised-button color="primary" (click)="save()">SAVE</button>
+  </mat-dialog-actions>
+</div>
+
+
+
+<!-- <pre>
+  {{result | json}}
+</pre> -->
+<!-- <pre>
+  {{controls | json}}
+</pre> -->

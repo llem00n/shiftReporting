@@ -1,4 +1,55 @@
-<app-header></app-header>
-<!-- <h1>Name of company</h1> -->
-<app-configuration></app-configuration>
+<!-- <section class="main h-screen flex-col">   -->
+<!-- <app-header></app-header> -->
+<!-- <div class="flex-1"> -->
+<!-- <router-outlet></!-->
+<!-- </div> -->
+<!-- </section> -->
+<mat-sidenav-container class="h-full" autosize>
+  <mat-sidenav #snav [fixedInViewport]="smallScreen" [mode]="smallScreen ? 'over' : 'side'" [opened]="isSnavOpen"
+    class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
+    <div *ngIf="!isSmall && abbreviation" class="flex flex-col items-center my-4">
+      <div class="bg-blue-400 h-16 w-16 rounded-full flex justify-center items-center mb-2">
+        <div class="text-gray-100 text-3xl">{{abbreviation}}</div>
+      </div>
+      <div class="flex items-center">
+        <div class="mr-4">
+          <p class="text-gray-800 font-bold mb-1">{{userName}}</p>
+          <p class="text-gray-600 text-xs uppercase">{{userRole}}</p>
+        </div>
+        <button mat-icon-button (click)="editUserInfo()">
+          <mat-icon svgIcon="pencil" class="text-gray-600"></mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-nav-list>
+      <!-- <mat-list-item [routerLink]="['/calendar']">
+        <mat-icon mat-list-icon svgIcon="calendar-month" routerLinkActive="mat-primary"></mat-icon>
+        <p mat-line *ngIf="!isSmall" class="" routerLinkActive="text-primary">Calendar</p>
+      </mat-list-item>
+      <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div> -->
+
+      <div *ngFor="let item of config">
+        <mat-list-item *ngIf="item.isShow" [routerLink]="'./' + item.key" (click)="smallScreen && snav.toggle()">
+          <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
+          <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
+        </mat-list-item>
+      </div>
+      <div class="flex-1"></div>
+      <mat-list-item *ngIf="currentUser" (click)="smallScreen && snav.toggle(); logout() ">
+        <mat-icon mat-list-icon svgIcon="logout"></mat-icon>
+        <p mat-line *ngIf="!isSmall"> Logout</p>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
+      <button mat-icon-button color="primary">
+        <mat-icon svgIcon="menu" (click)="snav.toggle()">icon_name</mat-icon>
+      </button>
+    </div>    
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
 <app-message></app-message>
+<app-dialog></app-dialog>

@@ -1,0 +1,172 @@
+generate Feature
+ng g f app-store/interface/Interface -m ../app-store -r ../index.ts -c
+ng g f app-store/data-entry/DataEntry -m app-store -r ../index.ts -c //should delete selectors files
+ng g f app-store/configuration/configuration -m app-store -r ../index.ts -c //should delete selectors files
+
+
+generate Entity:
+ng g en app-store/plant/Plant -m ../app-store -r ../index.ts -c
+ng g en app-store/department/Department -m ../app-store -r ../index.ts -c
+ng g en app-store/shift/Shift -m ../app-store -r ../index.ts -c
+ng g en app-store/schedule/Schedule -m ../app-store -r ../index.ts -c
+ng g en app-store/template/Template -m ../app-store -r ../index.ts -c
+ng g en app-store/user/user -m ../app-store -r ../index.ts -c
+
+generate Effects:
+ng generate effect app-store/plant/Plant -m app-store --root -c -a
+ng generate effect app-store/department/Department -m app-store --root -c -a
+ng generate effect app-store/shift/Shift -m app-store --root -c -a
+ng generate effect app-store/schedule/Schedule -m app-store --root -c -a
+ng generate effect app-store/template/Template -m app-store --root -c -a
+ng generate effect app-store/user/user -m app-store --root -c -a
+
+generate service:
+ng g s app-store/plant/PlantHttp
+ng g s app-store/department/DepartmentHttp
+ng g s app-store/shift/ShiftHttp
+ng g s app-store/schedule/ScheduleHttp
+ng g s app-store/template/TemplateHttp
+ng g s app-store/interface/InterfaceHttp
+ng g s app-store/data-entry/DataEntryHttp
+ng g s app-store/user/userHttp
+ng g s app-store/configuration/configuration-http
+
+module grid
+ng g m modules/Grid -m app
+ng g c modules/grid/Grid -m grid --flat
+
+modulse template
+ng g m modules/Template -m app
+ng g c modules/template/Template -m template --flat
+
+ng g c modules/template/components/GeneralConfig
+ng g c modules/template/components/GridsterConfig
+ng g c modules/template/components/InterfacesConfig
+ng g c modules/template/components/ControlsList
+ng g c modules/template/components/ControlConfig
+ng g c modules/template/components/settingsFile
+ng g c modules/template/components/settingsPiaf
+ng g c modules/template/components/settingsDB
+ng g c modules/template/components/settingsControl
+ng g s modules/template/services/dashboard
+
+
+
+
+modulse schedule
+ng g m modules/Schedule -m app
+ng g c modules/schedule/Schedule -m schedule --flat
+
+
+
+
+configuration component
+ng g c modules/configuration/components/ConfigSchedule
+ng g c modules/configuration/components/ConfigTemplate
+ng g c modules/configuration/components/Tile
+
+ng generate module modules/configuration/configuration-routing --flat
+
+
+
+
+dynamic component
+ng g c modules/dynamic-controls/components/DynDatetime
+ng g c modules/dynamic-controls/components/DynCheckbox
+ng g c modules/dynamic-controls/components/DynNumber
+ng g c modules/dynamic-controls/components/DynTime
+ng g c modules/dynamic-controls/components/DynText
+ng g c modules/dynamic-controls/components/DynSelect
+ng g c modules/dynamic-controls/components/DynTextarea
+ng g c modules/dynamic-controls/components/DynColor
+ng g c modules/dynamic-controls/components/DynLabel
+ng g c modules/dynamic-controls/components/DynDate
+
+module DataEntry
+ng g m modules/DataEntry -m app
+ng g c modules/data-entry/DataEntry -m data-entry --flat
+ng g s modules/data-entry/data-source
+
+
+module dialog
+ng g m modules/Dialog -m app
+ng g c modules/dialog/Dialog -m dialog --flat
+ng g s modules/dialog/Dialog
+
+module authorization
+
+ng g m modules/Authorization -m app
+ng g s modules/authorization/Authorization
+ng g guard modules/authorization/guards/auth
+ng g c modules/authorization/components/login
+
+module plants
+ng g m modules/plants -m app
+ng g c modules/plants/components/plantCard -m plants
+ng g c modules/plants/components/plantForm -m plants
+ng g c modules/plants/components/selectPlant
+
+
+module Calendar
+ng g m modules/calendar -m app
+ng g c modules/calendar/calendar --flat
+ng g c modules/calendar/components/weekGrid
+ng g c modules/calendar/components/weekSelector
+ng g c modules/calendar/components/daySelector
+ng g c modules/calendar/components/templatesList
+ng g s modules/calendar/calendar
+
+module users
+ng g m modules/users -m app
+ng g c modules/users/users --flat
+ng g c modules/users/components/userCard
+ng g c modules/users/components/userForm
+ng g c modules/users/components/current-user-form
+ng g c modules/users/components/usersConfig
+ng g c modules/users/components/userDepartments
+ng g c modules/users/components/userRoles
+
+module departments
+ng g m modules/departments -m app
+ng g c modules/departments/components/selectUserDepartment
+ng g c modules/departments/departments --flat
+ng g c modules/departments/components/departmentCard
+ng g c modules/departments/components/departmentForm
+
+module templates
+ng g m modules/templates -m app
+ng g c modules/templates/templates --flat
+ng g c modules/templates/components/templateCard
+ng g c modules/templates/components/templatesList
+
+module piaf 
+ng g m modules/piaf -m app
+ng g c modules/piaf/piaf --flat
+ng g s modules/piaf/piafHttp
+
+ng g s services/data-type
+
+
+module shifts
+ng g m modules/shifts -m app
+ng g c modules/shifts/shifts --flat
+ng g c modules/shifts/components/shiftCard
+ng g c modules/shifts/components/shiftForm
+ng g c modules/shifts/components/selectShift
+
+module schedules
+ng g m modules/schedules -m app
+ng g c modules/schedules/schedules --flat
+ng g c modules/schedules/components/scheduleCard
+ng g c modules/schedules/components/scheduleForm
+
+
+module configurations
+ng g m modules/config -m app
+ng g c modules/config/config --flat
+
+guards
+ng g guard modules/authorization/guards/admin
+
+data-entry
+ng g c modules/data-entry/components/data-entry-log

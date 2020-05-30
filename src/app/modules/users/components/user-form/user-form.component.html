@@ -1,0 +1,55 @@
+<div>
+  <p mat-dialog-title>User settings</p>
+  <div class="flex">
+    <div>
+      <app-form [flex]='true' [controls]='name' [values]="user" (form)="getForm($event)"></app-form>
+      <app-form [flex]='true' [controls]='login' [values]="user" (form)="getForm($event)"></app-form>
+      <app-form [flex]='true' [controls]='mail' [values]="user" (form)="getForm($event)"></app-form>
+    </div>
+
+
+    <div class="border-l-2 border-gray-300 ml-2 pl-2">
+      <app-form [controls]='role' [values]="user" (form)="getForm($event)"></app-form>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Departments </mat-label>
+        <div style="height: 0; overflow: hidden;">
+          <mat-select #select [formControl]="departments" multiple>
+            <div *ngFor="let plant of departmentsList">
+              <p class="font-bold mx-4 mt-4 cursor-default">{{plant.plant.name}}</p>
+              <mat-option *ngFor="let department of plant.departments" [value]="department.departmentId" [disabled]='department.disabled'>
+                {{department.name}}
+              </mat-option>
+              <mat-divider></mat-divider>
+            </div>
+          </mat-select>
+        </div>
+        <div style="min-height: 1.4rem;">
+          <mat-chip-list>
+            <mat-chip *ngFor="let dep of user.departments" (click)="select.open()">{{dep.name}}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline">
+    <mat-label>Departments </mat-label>
+    <div style="min-height: 1.4rem;"  (click)="selectDepartments()">
+      <mat-chip-list >
+        <mat-chip (click)="selectDepartments()">hidden</mat-chip>
+        <mat-chip  (click)="selectDepartments()">hidden2</mat-chip>
+        <mat-chip (click)="selectDepartments()">hidden3</mat-chip>
+      </mat-chip-list>
+    </div>
+  </mat-form-field> -->
+
+
+
+    </div>
+  </div>
+  <!-- <app-form [flex]='true' [controls]='address' [values]="plant" (form)="getForm($event)"></app-form> -->
+  <!-- <pre>{{user | json}}</pre> -->
+  <mat-dialog-actions class="flex justify-end">
+    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+    <button mat-raised-button color="primary" [disabled]='saveDisabled()' [mat-dialog-close]="user">SAVE</button>
+  </mat-dialog-actions>
+</div>

@@ -3,6 +3,10 @@ import * as DepartmentActions from './department/department.actions';
 import * as ShiftActions from './shift/shift.actions';
 import * as ScheduleActions from './schedule/schedule.actions';
 import * as TemplateActions from './template/template.actions';
+import * as DataEntryActions from './data-entry/data-entry.actions';
+import * as UserActions from './user/user.actions';
+import * as InterfaseActions from './interface/interface.actions';
+import * as ConfigurationsActions from './configuration/configuration.actions';
 
 // import * as DboardBuildActions from './dboard-build/dboard-build.actions';
 // import * as GeneralActions from './general/general.actions';
@@ -15,9 +19,9 @@ export {
   DepartmentActions,
   ShiftActions,
   ScheduleActions,
-  TemplateActions
-  // DboardBuildActions,
-  // GeneralActions,
-  // FillDataActions,
-  // AuthActions
+  TemplateActions,
+  DataEntryActions,
+  UserActions,
+  InterfaseActions,
+  ConfigurationsActions
 };

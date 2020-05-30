@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>PIAF database settings</h2>
+<div [formGroup]="form">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label> Select server </mat-label>
+    <mat-select formControlName="setting1">
+      <mat-option *ngFor="let item of servers" [value]="item">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label> Select database </mat-label>
+    <mat-select formControlName="setting2">
+      <mat-option *ngFor="let item of databases" [value]="item">{{item}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-dialog-actions class="flex justify-end">
+    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="form.invalid">SAVE</button>
+  </mat-dialog-actions>
+</div>

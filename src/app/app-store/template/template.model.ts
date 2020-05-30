@@ -1,9 +1,95 @@
-export interface Template {
-  templateId: number;
+import { DynControl } from 'src/app/modules/dynamic-controls/models';
+
+export interface TemplateData {
+  key: string,
+  name: string,
+  value: ValueType
+}
+
+export class Template {
+  templateId?: number;
   name: string;
   description: string;
-  body: any; //Jobject
+  body: TemplateBody; //Jobject
   lastUpdated: string;
   templateTypeId: number;
   templateTypeName: string;
+  _departmentId?: number;
+  validFromDate: string;
+  validToDate: string;
+  constructor(opt: { [key: string]: any } = {}) {
+    if (opt['templateId']) { this.templateId = opt['templateId'] }
+    // this.templateId = opt['templateId'] || null;
+    this.name = opt['name'] || '';
+    this.templateTypeId = opt['templateTypeId'] || null;
+    this.templateTypeName = opt['templateTypeName'] || '';
+    this.description = opt['description'] || '';
+    this.lastUpdated = opt['lastUpdated'] || '';
+    this.body = new TemplateBody(opt['body'] || {});
+    this.validFromDate = opt['validFromDate'] || null;
+    this.validToDate = opt['validToDate'] || null;
+  }
 }
+
+export class TemplateBody {
+  TemplateData: TemplateData[];
+  PIAFTemplate: PIAFTemplate;
+  PIAFAttributes: PIAFAttributes;
+  XML: string[];
+  Excel: string[];
+  DatabaseTable: string[];
+  Datasource: Attribute[];
+  dashboard: Array<DynControl>;
+  gridsterOptions: {};
+  constructor(opt: { [key: string]: any } = {}) {
+    this.TemplateData = opt['TemplateData'] || [];
+    this.PIAFTemplate = opt['PIAFTemplate'] || {};
+    this.PIAFAttributes = opt['PIAFAttributes'] || {};
+    this.XML = opt['XML'] || [];
+    this.Excel = opt['Excel'] || [];
+    this.DatabaseTable = opt['DatabaseTable'] || [];
+    this.Datasource = opt['Datasource'] || [];
+    this.dashboard = opt['dashboard'] || [];
+    this.gridsterOptions = opt['gridsterOptions'] || {};
+  }
+  get templateDataKV() {
+    // return []
+    const result = {};
+    this.TemplateData.map(item => {
+      result[item.key] = item.value;
+    })
+    return result;
+  }
+  set templateDataKV(data: {}) {
+    Object.keys(data).map(key => {
+      const tempData = this.TemplateData.find(i => i.key === key);
+      if (tempData) { tempData.value = data[key]; return; };
+      this.TemplateData.push({
+        key,
+        name: this.dashboard.find(control => control.controlId === key).name,
+        value: data[key],
+      })
+    })
+  }
+};
+
+
+type ValueType = number | string | boolean;
+
+interface PIAFTemplate {
+  TemplateName: string;
+  StartTime: string;
+  EndTime: string;
+  EventName: string;
+  Attributes: Attribute[];
+};
+
+interface PIAFAttributes {
+  Timestemp: string;
+  Attributes: Attribute[];
+};
+
+interface Attribute {
+  attributeName: string,
+  key: string
+};

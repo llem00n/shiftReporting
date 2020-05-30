@@ -11,6 +11,11 @@ import { ShiftEffects } from './shift/shift.effects';
 import { ScheduleEffects } from './schedule/schedule.effects';
 import { TemplateEffects } from './template/template.effects';
 import { InterfaceEffects } from './interface/interface.effects';
+import { DataEntryEffects } from './data-entry/data-entry.effects';
+import * as fromUser from './user/user.reducer';
+import { UserEffects } from './user/user.effects';
+import * as fromConfiguration from './configuration/configuration.reducer';
+import { ConfigurationEffects } from './configuration/configuration.effects';
 
 
 
@@ -32,14 +37,13 @@ import { InterfaceEffects } from './interface/interface.effects';
       ShiftEffects,
       ScheduleEffects,
       TemplateEffects,
-      InterfaceEffects
+      InterfaceEffects,
+      DataEntryEffects,
+      UserEffects
     ]),
-    // EffectsModule.forFeature([InterfaceEffects]),
-    // StoreModule.forFeature(fromTemplate.templatesFeatureKey, fromTemplate.reducer),
-    // StoreModule.forFeature(fromPlant.plantsFeatureKey, fromPlant.reducer),
-    // StoreModule.forFeature(fromDepartment.departmentsFeatureKey, fromDepartment.reducer),
-    // StoreModule.forFeature(fromShift.shiftsFeatureKey, fromShift.reducer),
-    // StoreModule.forFeature(fromSchedule.schedulesFeatureKey, fromSchedule.reducer)
+    StoreModule.forFeature(fromConfiguration.configurationFeatureKey, fromConfiguration.reducer),
+    EffectsModule.forFeature([ConfigurationEffects]),
+    // StoreModule.forFeature(fromUser.usersFeatureKey, fromUser.reducer),
   ]
 })
 export class AppStoreModule { }

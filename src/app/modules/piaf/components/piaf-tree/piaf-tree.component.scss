@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.tree {
+  flex: 1;
+  overflow: auto;
+}
+.legend {
+  border: 2px solid rgba(128, 128, 128, 0.466);
+  padding: 0 16px;
+  .nodetext {
+    color: inherit;
+    margin: 16px;
+  }
+}
+
+.example-tree-progress-bar {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.node {
+  cursor: default;
+}
+.active {
+  background: rgba(21, 148, 120, 0.5);
+}
+.nodetext {
+  position: relative;
+  color: grey;
+  &:before {
+    background: red;
+    content: "";
+    position: absolute;
+    height: 150%;
+    width: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -16px;
+  }
+}
+.allowed {
+  color: inherit;
+  position: relative;
+  &:before {
+    background: green;
+  }
+}

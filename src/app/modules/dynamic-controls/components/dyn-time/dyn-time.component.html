@@ -1,4 +1,15 @@
-<span [formGroup]="options.form">
-  <input type="time" step="1" [formControlName]="options.control.key" [placeholder]="options.control.placeholder || ''"
-    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight   focus:outline-none focus:bg-white focus:border-gray-500">
-</span>
+<!-- <span [formGroup]="options.form">
+  <input type="time" step="1" [formControlName]="options.control.controlId" [placeholder]="options.control.placeholder || ''"
+    class="min-h-10 h-full w-full px-2 border-gray-200 border-2 focus:outline-none focus:border-gray-500"
+    >
+</span> -->
+
+<!-- Material -->
+<div class="w-full h-full flex items-center">
+  <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
+    <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
+      <input type='time' matInput [placeholder]="options.control.label" [formControlName]="options.control.controlId">
+    </div>
+  </mat-form-field>
+</div>

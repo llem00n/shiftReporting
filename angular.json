@@ -15,11 +15,8 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "customWebpackConfig": {
-              "path": "./webpack.config.js"
-            },
             "outputPath": "dist/shiftReporting",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,9 +25,11 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
+              "src/web.config",
               "src/assets"
             ],
             "styles": [
+              "src/custom-material-theme.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -68,11 +67,8 @@
           }
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "customWebpackConfig": {
-              "path": "./webpack.config.js"
-            },
             "browserTarget": "shiftReporting:build"
           },
           "configurations": {

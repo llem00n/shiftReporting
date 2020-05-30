@@ -1,0 +1,23 @@
+<!-- Material -->
+<div class="w-full h-full flex items-center">
+  <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
+    <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
+      <mat-select readonly  [formControlName]="options.control.controlId" [placeholder]="options.control.label">
+        <mat-option *ngFor="let option of options.control.options " [value]="option.value">{{option.viewValue}}
+        </mat-option>
+      </mat-select>
+    </div>
+  </mat-form-field>
+</div>
+
+<!-- Tailwind -->
+<!-- <span [formGroup]="options.form">
+  <select name="" id="" [formControlName]="options.control.controlId"
+    class="min-h-10 bg-white h-full w-full px-2 border-gray-200 border-2 focus:outline-none focus:border-gray-500">
+    <option *ngIf="options.control.placeholder" class="bg-white" disabled [value]="null">{{options.control.placeholder}}
+    </option>
+    <option class="bg-white" *ngFor="let option of options.control.options " [value]="option.value">{{option.viewValue}}
+    </option>
+  </select>
+</span> -->

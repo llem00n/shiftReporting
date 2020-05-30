@@ -43,7 +43,7 @@ const plantReducer = createReducer(
   // on(PlantActions.deletePlants,
   //   (state, action) => adapter.removeMany(action.ids, state)
   // ),
-  on(PlantActions.loadPlantsSuccess,
+  on(PlantActions.getPlantsSuccess,
     (state, action) => adapter.addAll(action.plants, state)
   ),
   // on(PlantActions.clearPlants,

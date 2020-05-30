@@ -9,18 +9,18 @@ import { mergeMap, filter, map } from 'rxjs/operators';
 @Injectable()
 export class DepartmentEffects {
 
-  loadDepartments$ = createEffect(() => this.actions$.pipe(
-    ofType(DepartmentActions.loadDepartments),
+  getDepartments$ = createEffect(() => this.actions$.pipe(
+    ofType(DepartmentActions.getDepartments),
     mergeMap(action => this.departmentHttpService.getDepartments(action.plantId).pipe(
-      filter(resp => !!resp),
-      map(resp => DepartmentActions.loadDepartmentsSuccess({ departments: resp.body }))
+      filter(resp => resp && resp.status === 200),
+      map(resp => DepartmentActions.getDepartmentsSuccess({ departments: resp.body }))
     )),
   ));
 
   addDepartment$ = createEffect(() => this.actions$.pipe(
     ofType(DepartmentActions.addDepartment),
     mergeMap(action => this.departmentHttpService.addDepartment(action.department).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => DepartmentActions.addDepartmentSucces({ department: resp.body }))
     )),
   ));
@@ -36,7 +36,7 @@ export class DepartmentEffects {
   updateDepartment$ = createEffect(() => this.actions$.pipe(
     ofType(DepartmentActions.updateDepartment),
     mergeMap(action => this.departmentHttpService.updateDepartment(action.department).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => DepartmentActions.updateDepartmentSuccess({
         department: {
           id: resp.body.departmentId,
@@ -45,6 +45,13 @@ export class DepartmentEffects {
       }))
     )),
   ));
+  getUserDepartments$ = createEffect(() => this.actions$.pipe(
+    ofType(DepartmentActions.getUserDepartments),
+    mergeMap(action => this.departmentHttpService.getUserDepartments(action.userId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DepartmentActions.getUserDepartmentsSucces({ departments: resp.body })),
+    )),
+  ))
 
 
   constructor(

@@ -1,18 +1,17 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as InterfaceActions from './interface.actions';
 import { Interface } from './interface.model';
-import { InterfaceType } from './interface-type.model';
 
 export const interfaceFeatureKey = 'interface';
 
 export interface State {
-  interface: Interface;
-  interfaceTypes: InterfaceType[];
+  interfaces: Interface[];
+  // interfaceTypes: InterfaceType[];
 }
 
 export const initialState: State = {
-  interface: null,
-  interfaceTypes: null
+  interfaces: [],
+  // interfaceTypes: null
 };
 
 const interfaceReducer = createReducer(
@@ -20,18 +19,18 @@ const interfaceReducer = createReducer(
   // on(InterfaceActions.loadInterfaces, state => state),
   // on(InterfaceActions.loadInterfacesSuccess, (state, action) => state),
   // on(InterfaceActions.loadInterfacesFailure, (state, action) => state),
-  on(InterfaceActions.getInterfaceTypesSuccess, (state, { interfaceTypes }) =>
-    ({ ...state, interfaceTypes })
+  on(InterfaceActions.getInterfacesSuccess, (state, { interfaces }) =>
+    ({ ...state, interfaces })
   ),
-  on(InterfaceActions.addInterfaceSuccess, (state, { intface }) =>
-    ({ ...state, interface: intface })
-  ),
-  on(InterfaceActions.updateInterfaceSuccess, (state, { intface }) =>
-    ({ ...state, interface: intface })
-  ),
-  on(InterfaceActions.deleteInterfaceSuccess, (state, { intfaceID }) =>
-    ({ ...state, interface: null })
-  ),
+  // on(InterfaceActions.addInterfaceSuccess, (state, { intface }) =>
+  //   ({ ...state, interface: intface })
+  // ),
+  // on(InterfaceActions.updateInterfaceSuccess, (state, { intface }) =>
+  //   ({ ...state, interface: intface })
+  // ),
+  // on(InterfaceActions.deleteInterfaceSuccess, (state, { intfaceID }) =>
+  //   ({ ...state, interface: null })
+  // ),
 
 
 );

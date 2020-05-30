@@ -1,0 +1,19 @@
+<div class="flex flex-wrap bg-gray-100">
+  <div *ngFor="let item of data.tableData"
+    class="max-w-xs m-2 shadow bg-white  p-4 flex flex-col justify-between leading-normal">
+    <div class="mb-8">
+      <div class="text-gray-900 font-bold text-xl mb-2">{{item.name}}</div>
+      <p *ngFor="let prop of data.head" class="text-gray-600 text-xs">
+        {{prop.key}}: <span class="text-gray-900">{{item[prop.key]}}</span>
+      </p>
+    </div>
+    <div align="end">
+      <button *ngFor='let button of data.actionButtons' (click)="clickActButton(button.key, item)"
+        class="bg-gray-100 shadow px-3 py-1 mx-1">{{button.title}}</button>
+
+    </div>
+  </div>
+  <!-- <p>name: {{item.name}}</p> -->
+</div>
+
+<!-- <pre>{{data | json}}</pre> -->

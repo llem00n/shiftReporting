@@ -22,6 +22,7 @@ export class MessageComponent implements OnInit {
   component;
   content = null;
   isShow = false;
+  isError = false;
   constructor(
     private messageService: MessageService
   ) { }
@@ -32,6 +33,7 @@ export class MessageComponent implements OnInit {
         filter(v => !!v)
       )
       .subscribe(message => {
+        this.isError = message.type === 'error' ? true : false;
         this.content = [[document.createTextNode(message.message)]]
         this.component = messageComponent[message.type];
       });

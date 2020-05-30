@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService, AppHttpResponse, AppHttpRequest } from '../services/http.service';
+import { HttpService, AppHttpResponse, AppHttpRequest } from '../../services/http/http.service';
 import { Department } from './department.model';
 import { Observable, of } from 'rxjs';
 
@@ -76,6 +76,14 @@ export class DepartmentHttpService {
     //   ]
     // })
 
+    return this.httpService.post<AppHttpResponse>(options)
+  }
+  getUserDepartments(userId: string): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getUserDepartments',
+      loadingMsg: "Loading user's departments ...",
+      payload: { userId }
+    }
     return this.httpService.post<AppHttpResponse>(options)
   }
 

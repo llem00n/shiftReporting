@@ -1,0 +1,29 @@
+<div class="container" *ngIf='dataSource.data.length'>
+  <div class="tree">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <mat-tree-node *matTreeNodeDef="let node"
+        [class.active]="selectedAttribute && (node.data.path === selectedAttribute.path)" matTreeNodePadding
+        class="node attribute" (click)='nodeTypeIsAllowed(node) && clickAttr(node)'>
+        <button mat-icon-button disabled></button>
+        <span class="nodetext" [class.allowed]="nodeTypeIsAllowed(node)">
+          {{node.item}} ({{node.data.type}})
+        </span>
+      </mat-tree-node>
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodeToggle class="node">
+        <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+          <mat-icon class="mat-icon-rtl-mirror">
+            <mat-icon [svgIcon]="treeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right'"></mat-icon>
+            <!-- {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}} -->
+          </mat-icon>
+        </button>
+        {{node.item}}
+        <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
+        </mat-progress-bar>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+  <div class="legend">
+    <p class="nodetext"> - the attribute type does not match the type of control;</p>
+    <p class="allowed nodetext"> - attribute is allowed</p>
+  </div>
+</div>

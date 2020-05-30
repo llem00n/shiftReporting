@@ -1,0 +1,15 @@
+<div class="flex flex-wrap">
+  <!-- Users list -->
+  <app-user-card *ngFor="let user of users" [user]="user" (clickRoles)="setRoles($event)"
+    (clickDepartments)="setDepartments($event)" (clickEdit)="edit($event)"></app-user-card>
+
+  <!-- Add Plant -->
+  <div class="m-2 w-32 bg-gray-300 p-4 shadow">
+    <div (click)="addUser()" class="flex flex-col items-center justify-center">
+      <p class="cursor-default">Add user</p>
+      <!-- <svg-icon src="assets/svg_icons/plus-circle-outline.svg" [svgStyle]="{'width.px':64,'fill': '#5F5F5F' }">
+      </svg-icon> -->
+    </div>
+  </div>
+
+</div>

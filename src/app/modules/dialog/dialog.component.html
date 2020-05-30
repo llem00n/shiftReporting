@@ -1,0 +1,6 @@
+<div *ngFor="let i of dialogs" class="z-40">
+  <div class="blind"></div>
+  <div class="dialogContainer">
+    <ng-container *ngComponentOutlet="i.component"></ng-container>
+  </div>
+</div>

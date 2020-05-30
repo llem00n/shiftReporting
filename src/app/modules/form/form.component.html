@@ -1,8 +1,5 @@
-  <div *ngFor="let i of controls">
-      <label *ngIf="i.label"class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">{{i.label}}: </label>
-      <div class="mb-6">
-        <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>
-      </div>
-  </div>   
-
-
+<div [ngClass]="{'flex': flex}">
+  <div *ngFor="let i of controls; last as last " [ngClass]="{'mr-0': last, 'mr-4': !last}" class="w-full">
+    <app-dynamic-controls [control]="i" [form]="customForm"></app-dynamic-controls>
+  </div>
+</div>

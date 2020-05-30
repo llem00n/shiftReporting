@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AppHttpResponse, HttpService, AppHttpRequest } from '../services/http.service';
+import { AppHttpResponse, HttpService, AppHttpRequest } from '../../services/http/http.service';
 import { Schedule } from './schedule.model';
 
 @Injectable({
@@ -31,8 +31,6 @@ export class ScheduleHttpService {
     return this.httpService.post<AppHttpResponse>(options);
   }
   deleteSchedule(scheduleId) {
-    console.log(scheduleId);
-    
     const options: AppHttpRequest = {
       url: this.baseUrl + 'deleteSchedule',
       payload: { scheduleId },

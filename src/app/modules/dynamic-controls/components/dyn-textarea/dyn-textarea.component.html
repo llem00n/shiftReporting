@@ -1,0 +1,19 @@
+<!-- <span [formGroup]="options.form">
+  <textarea [readonly]="options.control.readonly"
+    class="h-full w-full px-2 border-gray-200 border-2 focus:outline-none focus:border-gray-500"
+    [formControlName]="options.control.controlId" [placeholder]="options.control.placeholder || ''" rows="3"></textarea>
+</span> -->
+
+<!-- Material in gridster-->
+<div *ngIf="options.appearance === 'standard1'" class="w-full h-full " [formGroup]="options.form" class="w-full h-full">
+  <textarea class="w-full h-full resize-none p-1" [readonly]="options.control.readonly" type="text" [placeholder]="options.control.label"
+    [formControlName]="options.control.controlId"></textarea>
+</div>
+<!-- out of gridster -->
+<div *ngIf="options.appearance === 'outline'" class="w-full h-full flex items-center">
+  <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full h-full">
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
+    <textarea rows="3" [readonly]="options.control.readonly" type="text" matInput [placeholder]="options.control.label"
+      [formControlName]="options.control.controlId"></textarea>
+  </mat-form-field>
+</div>

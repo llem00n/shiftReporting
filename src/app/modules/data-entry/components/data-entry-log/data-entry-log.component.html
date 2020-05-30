@@ -1,0 +1,30 @@
+<table matSort (matSortChange)="sortData($event)">
+  <tr>
+    <th mat-sort-header="recordDate" class="p-1">Record date</th>
+    <th mat-sort-header="firstName" class="p-1">User name</th>
+    <th mat-sort-header="controlName" class="p-1">Control name</th>
+    <th mat-sort-header="value" class="p-1">Value</th>
+  </tr>
+
+  <tr *ngFor="let log of sortedData">
+    <td class="p-1 text-sm">{{log.recordDate.slice(0,19)}}</td>
+    <td class="p-1">{{log.firstName}} {{log.secondName}}</td>
+    <td class="p-1">{{log.controlName}}</td>
+    <td class="p-1">{{log.value}}</td>
+  </tr>
+</table>
+<style>
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid rgba(128, 128, 128, 0.507);
+  }
+</style>

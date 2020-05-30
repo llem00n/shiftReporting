@@ -9,6 +9,9 @@ import { ListData } from '../list/list.component';
 import { Department } from 'src/app/app-store/department/department.model';
 import { ConfigurationService } from '../../services/configuration.service';
 import { DynInput } from 'src/app/modules/dynamic-controls/components/input/input.model';
+import { DynSelect } from 'src/app/modules/dynamic-controls/components/dyn-select/dyn-select.model';
+import { DynTextarea } from 'src/app/modules/dynamic-controls/components/dyn-textarea/dyn-textarea.model';
+import { DynText } from 'src/app/modules/dynamic-controls/components/dyn-text/dyn-text.model';
 
 @Component({
   selector: 'app-config-departments',
@@ -21,20 +24,19 @@ export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
   plantsList = []
   preConfigForm: FormGroup;
   preConfig = [
-    <Select>{
-      key: 'plantId',
-      type: 'select',
+    new DynSelect({
+      controlId: 'plantId',
       label: 'Plant',
       validators: { required: true },
       options: [],
       placeholder: 'Select plant'
-    },
+    })
   ]
   editingObj: Department;
 
   configDepartment = [
-    <DynInput>{ key: 'name', type: 'input', label: 'Name', validators: { required: true } },
-    <DynInput>{ key: 'description', type: 'input', label: 'Description' },
+    new DynText({ controlId: 'name', type: 'text', label: 'Name', validators: { required: true } }),
+    new DynText({ controlId: 'description', type: 'text', label: 'Description' }),
   ]
 
   editOptions = {
@@ -68,15 +70,17 @@ export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
     ).subscribe((plants: Plant[]) => {
       if (plants.length === 0 && respCount === 0) {
         ++respCount;
-        this.store.dispatch(PlantActions.loadPlants());
+        this.store.dispatch(PlantActions.getPlants());
         return;
       };
-      this.preConfig[0].options = plants.map(plant => {
-        return {
-          value: plant.plantId,
-          viewValue: `${plant.name} (${plant.code}, ${plant.address})`
-        }
-      })
+      this.preConfig
+        .find(i => i.controlId === 'plantId')
+        .options = plants.map(plant => {
+          return {
+            value: plant.plantId,
+            viewValue: `${plant.name} (${plant.code}, ${plant.address})`
+          }
+        })
     })
   }
 
@@ -94,7 +98,7 @@ export class ConfigDepartmentsComponent implements OnInit, OnDestroy {
     e.valueChanges.subscribe(
       value => {
         const plantId = +value.plantId;
-        this.store.dispatch(DepartmentActions.loadDepartments({ plantId }))
+        this.store.dispatch(DepartmentActions.getDepartments({ plantId }))
       }
     )
   }

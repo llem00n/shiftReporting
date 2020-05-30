@@ -1,0 +1,24 @@
+<div *ngIf="currentUser" class="p-4 flex items-center max-w-6xl">
+  <div class="menu-button-place"></div>
+
+  <app-select-user-department class="flex-1" (changeDepartment)="selectDepartment($event)"></app-select-user-department>
+  <mat-form-field appearance="outline" class="flex-1 mx-4">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search" formControlName="search">
+    <mat-icon matSuffix svgIcon="magnify"></mat-icon>
+  </mat-form-field>
+  <div class="pb-4">
+    <button mat-mini-fab color="primary" (click)="addTemplate()">
+      <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="flex flex-wrap px-2 relative">
+  <div *ngFor="let template of templates" class="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4">
+    <app-template-card (clickDelete)="delete($event)" (clickEdit)="editTemplate($event)" [template]="template"></app-template-card>
+  </div>
+</div>
+<!-- <p>templates works!</p> -->
+<!-- <app-template-card></app-template-card> -->
+<!-- <router-outlet></router-outlet> -->

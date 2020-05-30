@@ -1,0 +1,31 @@
+<div>
+  <p mat-dialog-title>{{schedule.shiftName}} schedule settings</p>
+
+  <app-form [flex]='true' [controls]='date' [values]="schedule" (form)="getForm($event)"></app-form>
+  <app-form [flex]='true' [controls]='time' [values]="schedule" (form)="getForm($event)"></app-form>
+  <app-form [flex]='true' [controls]='recurEveryWeeks' [values]="schedule" (form)="getForm($event)"></app-form>
+
+  <div class="flex items-center">
+    <label class="mr-4">Working days: </label>
+    <div class="flex justify-around flex-wrap">
+      <div *ngFor="let day of daysList; last as last">
+        <div (click)="togleDay(day)" class=" flex justify-center items-center w-6 h-6 rounded-full mr-1 cursor-pointer"
+          [ngClass]="schedule[day.key] ? 'bg-primary  text-white' : 'bg-disabled text-disabled'">
+          <div class="text-xs font-bold">{{day.twoLetters}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="flex justify-between">
+    <p *ngFor="let day of daysOfWeek" class="cursor-default p-1 text-xs font-bold rounded-full"
+      [ngClass]="getDayStyle(day)" (click)="togleDay(day)">
+      {{day.twoLetters}}
+    </p>
+  </div> -->
+
+  <mat-dialog-actions class="flex justify-end">
+    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+    <button mat-raised-button color="primary" [disabled]='form.invalid' [mat-dialog-close]="schedule">SAVE</button>
+  </mat-dialog-actions>
+</div>
+<!-- <pre>{{schedule | json}}</pre> -->

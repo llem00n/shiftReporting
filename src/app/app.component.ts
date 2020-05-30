@@ -1,5 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { AuthorizationService } from './modules/authorization/authorization.service';
+import { map, filter, tap, mergeMap } from 'rxjs/operators';
+import { OidcClientService } from './modules/authorization/oidc-client.service';
+import { User, State, Role } from './models';
+import { routerLinks } from './modules/authorization/guards/role.guard';
+import { Store, select } from '@ngrx/store';
+import { ConfigurationsActions, UserActions } from './app-store/actions'
+import { getRoles } from './app-store/user/user.actions';
+import { userRoles, roles, userDepartments } from './app-store';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
+import { CurrentUserFormComponent } from './modules/users/components/current-user-form/current-user-form.component';
 
 @Component({
   selector: 'app-root',
@@ -7,29 +19,57 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  form: FormGroup = new FormGroup({});
+  isSnavOpen = false;
+  userName: string;
+  abbreviation: string;
+  isSmall = false;
+  currentUser: User;
+  config = routerLinks;
+  roles: Role[];
+  userRole: string = ""
+  smallScreen = true;
 
   constructor(
-    private fb: FormBuilder,
+    private bpObserver: BreakpointObserver,
+    private authService: AuthorizationService,
+    private oidcCLientService: OidcClientService,
+    private store: Store<State>,
+    private dialog: MatDialog,
   ) { }
 
-  controls1 = [
-    { key: 'key_First', value: 'val_First', placeholder: 'pl_First', label: 'Label First' },
-    { key: 'key_Second', value: 'val_Second', placeholder: 'pl_Second', label: 'Label Second' },
-    { key: 'key_Third', value: 'val_Third', placeholder: 'pl_Third', label: 'Label Third' },
-    { key: 'key_Fourth', value: 'val_Fourth', placeholder: 'pl_Fourth', label: 'Label Fourth' },
-  ]
-  controls2 = [
-    { key: 'key_First', value: 'val_First', placeholder: 'pl_First', label: 'Label First' },
-    { key: 'key_Second', value: 'val_Second', placeholder: 'pl_Second', label: 'Label Second' },
-    { key: 'key_Third', value: 'val_Third', placeholder: 'pl_Third', label: 'Label Third' },
-    { key: 'key_Fourth', value: 'val_Fourth', placeholder: 'pl_Fourth', label: 'Label Fourth' },
-  ]
-
-
-
-  title = 'shiftReporting';
 
   ngOnInit(): void {
+    this.bpObserver.observe('(max-width: 960px)').subscribe(result => {
+      this.smallScreen = result.matches;
+      this.isSnavOpen = !result.matches
+    })
+    this.store.pipe(
+      select(roles),
+      filter(roles => !!roles.length),
+      tap(roles => this.roles = roles),
+      tap(_ => this.userRole = this.roles.find(r => r.roleId === this.currentUser.roleId).roleName || '')
+    ).subscribe();
+    this.authService.getCurrentUser().pipe(
+      filter(user => !!user),
+      tap(currentUser => {
+        this.currentUser = currentUser;
+        this.store.dispatch(UserActions.getRoles());
+        this.store.dispatch(ConfigurationsActions.getConfigurations());
+        this.userName = `${currentUser?.firstName} ${currentUser?.secondName}`;
+        this.abbreviation = currentUser?.firstName.slice(0, 1).toUpperCase() + currentUser?.secondName.slice(0, 1).toUpperCase();
+        this.config.map(item => item['isShow'] = item.allowedRoles.includes(currentUser.roleId))
+      }),
+    ).subscribe()
+  }
+  editUserInfo() {
+    const dialogRef = this.dialog.open(CurrentUserFormComponent, { data: { user: this.currentUser } });
+    dialogRef.afterClosed().subscribe(user => {
+      if (!user) return;
+      this.store.dispatch(UserActions.updateUser({ user, oldDep: user.departments, isCurrent: true }));
+    });
+  }
+
+  logout() {
+    this.oidcCLientService.logout()
   }
 }

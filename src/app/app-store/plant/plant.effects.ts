@@ -9,18 +9,18 @@ import { PlantHttpService } from './plant-http.service';
 @Injectable()
 export class PlantEffects {
 
-  loadPlants$ = createEffect(() => this.actions$.pipe(
-    ofType(PlantActions.loadPlants),
+  getPlants$ = createEffect(() => this.actions$.pipe(
+    ofType(PlantActions.getPlants),
     mergeMap(_ => this.plantService.getPlants().pipe(
-      filter(resp => !!resp),
-      map(resp => PlantActions.loadPlantsSuccess({ plants: resp.body }))
+      filter(resp => resp && resp.status === 200),
+      map(resp => PlantActions.getPlantsSuccess({ plants: resp.body }))
     )),
   ));
 
   addPlant$ = createEffect(() => this.actions$.pipe(
     ofType(PlantActions.addPlant),
     mergeMap(action => this.plantService.addPlant(action.plant).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => PlantActions.addPlantSuccess({ plant: resp.body }))
     )),
   ));
@@ -36,7 +36,7 @@ export class PlantEffects {
   updatePlant$ = createEffect(() => this.actions$.pipe(
     ofType(PlantActions.updatePlant),
     mergeMap(action => this.plantService.updatePlant(action.plant).pipe(
-      filter(resp => !!resp),
+      filter(resp => resp && resp.status === 200),
       map(resp => PlantActions.updatePlantSucces({
         plant: {
           id: resp.body.plantId,

@@ -1,0 +1,21 @@
+<div #shiftEl class="relative shadow bg-white h-full border-l-4 overflow-auto overflow-x-hidden" [ngClass]="shift.elClass">
+  <!-- <pre>{{shift.isActive}}</pre> -->
+  <div #templateListEl class="p-1">
+    <!-- <pre>{{templateList | json}}</pre> -->
+    <p class="truncate text-sm font-bold text-center">{{shift.schedule.shiftName}}</p>
+    <div *ngFor="let template of showedTemplates" (click)="clickTemplate(template)"
+      class="min-w-full mt-2 p-1 cursor-pointer flex rounded shadow" [ngClass]="template.style.styleClass">
+      <mat-icon svgIcon="{{template.style.name}}" [ngStyle]="template.style.styleSvg"></mat-icon>
+      <p  class="truncate flex-1 ml-1">
+        {{template.template.name}}</p>
+    </div>
+    <div (click)="showMore()" *ngIf="hiddenTemplates.length" class=" w-full pr-3 cursor-pointer absolute bottom-0 ">
+      <div class="flex items-center justify-between text-gray-500  ">
+        <p class="m-1 text-base font-bold truncate"> + {{hiddenTemplates.length}} more... </p>
+        <div class="h-4 w-4">
+          <mat-icon inline svgIcon="chevron-down"></mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

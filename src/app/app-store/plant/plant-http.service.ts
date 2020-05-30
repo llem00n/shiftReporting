@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Plant } from 'src/app/app-store/plant/plant.model';
-import { HttpService, AppHttpResponse, AppHttpRequest } from '../services/http.service';
+import { HttpService, AppHttpResponse, AppHttpRequest } from '../../services/http/http.service';
 
 @Injectable({
   providedIn: 'root'

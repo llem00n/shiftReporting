@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Output file settings</h2>
+<div [formGroup]="form">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>File path</mat-label>
+    <input matInput formControlName="filePath">
+    <mat-icon matSuffix svgIcon="folder" class="text-gray-600"></mat-icon>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>File name</mat-label>
+    <input matInput formControlName="fileName">
+    <mat-icon matSuffix svgIcon="file" class="text-gray-600"></mat-icon>
+  </mat-form-field>
+  <mat-dialog-actions class="flex justify-end">
+    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid">SAVE</button>
+  </mat-dialog-actions>
+</div>

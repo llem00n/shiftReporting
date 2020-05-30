@@ -1,0 +1,23 @@
+<!-- <span [formGroup]="options.form">
+  <input class="min-h-10 w-full border-gray-200 border-2 focus:outline-none focus:border-gray-500" type="color"
+    [formControlName]="options.control.controlId">
+</span> -->
+
+<div class="w-full h-full flex items-center">
+  <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
+    <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
+      <input type='color' matInput [placeholder]="options.control.label" [formControlName]="options.control.controlId">
+    </div>
+  </mat-form-field>
+</div>
+
+
+<!-- <div class="m-10 w-64 bg-yellow-300 ">
+  <mat-form-field appearance='outline' class="w-full">
+    <mat-label>Input</mat-label>
+    <div>
+      <input matInput placeholder="Input">
+    </div>
+  </mat-form-field>
+</div> -->

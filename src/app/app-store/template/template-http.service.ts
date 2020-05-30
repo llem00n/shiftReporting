@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Template } from './template.model';
 import { Observable, of } from 'rxjs';
-import { AppHttpResponse, AppHttpRequest, HttpService } from '../services/http.service';
+import { AppHttpResponse, AppHttpRequest, HttpService } from '../../services/http/http.service';
 import { TemplateType } from './template-type.model';
 
 @Injectable({
@@ -14,6 +14,18 @@ export class TemplateHttpService {
   constructor(private httpService: HttpService) { }
 
   addTemplate(opt: { departmentId: number, template: Template }): Observable<AppHttpResponse> {
+
+    // const temp = { ...opt.template, templateId: 1111111 };
+    // return new Observable(observer => {
+    //   setTimeout(() => {
+    //     const resp: AppHttpResponse = {
+    //       status: 200,
+    //       body: temp
+    //     }
+    //     observer.next(resp);
+    //   }, 2000)
+    // })
+
     const { departmentId, template } = opt;
     const options: AppHttpRequest = {
       url: this.baseUrl + 'addTemplate',
@@ -30,6 +42,15 @@ export class TemplateHttpService {
       payload: { template },
       loadingMsg: 'Updating the template ...',
       successMsg: `Template has been updated`
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+  deleteTemplate(templateId: number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'deleteTemplate',
+      payload: { templateId },
+      loadingMsg: 'Deleting the template ...',
+      successMsg: `Template has been deleted`
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

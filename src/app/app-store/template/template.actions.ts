@@ -39,7 +39,15 @@ export const getTemplateTypesSuccess = createAction(
   props<{ templateTypes: TemplateType[] }>()
 );
 
+export const setEditingTemplate = createAction(
+  '[Template/API] Set editingTemplate',
+  props<{ template: Template }>()
+)
 
+export const setAddedTemplate = createAction(
+  '[Template/API] Set addedTemplate',
+  props<{ template: Template }>()
+)
 
 
 // export const upsertTemplate = createAction(
@@ -63,10 +71,14 @@ export const getTemplateTypesSuccess = createAction(
 //   props<{ templates: Update<Template>[] }>()
 // );
 
-// export const deleteTemplate = createAction(
-//   '[Template/API] Delete Template',
-//   props<{ id: string }>()
-// );
+export const deleteTemplate = createAction(
+  '[Template/API] Delete Template',
+  props<{ id: number }>()
+);
+export const deleteTemplateSuccess = createAction(
+  '[Template/API] Delete Template Success',
+  props<{ id: number }>()
+);
 
 // export const deleteTemplates = createAction(
 //   '[Template/API] Delete Templates',

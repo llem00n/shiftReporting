@@ -46,6 +46,14 @@ export class TemplateEffects {
       map(({ body }) => TemplateActions.getTemplateTypesSuccess({ templateTypes: body }))
     )),
   ));
+  deleteTemplate$ = createEffect(() => this.actions$.pipe(
+    ofType(TemplateActions.deleteTemplate),
+    mergeMap(action => this.templateHttpService.deleteTemplate(action.id)
+      .pipe(
+        filter(resp => resp && resp.status === 200),
+        map(_ => TemplateActions.deleteTemplateSuccess({ id: action.id }))
+      )),
+  ));
 
   constructor(
     private actions$: Actions,

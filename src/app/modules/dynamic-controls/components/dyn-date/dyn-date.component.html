@@ -1,0 +1,16 @@
+<!-- Tailwind -->
+<!-- <span [formGroup]="options.form">
+  <input type="date" [formControlName]="options.control.controlId"
+    class="min-h-10 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+</span> -->
+
+<!-- Material -->
+
+<div class="w-full h-full flex items-center">
+  <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
+    <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
+      <input type='date' matInput [placeholder]="options.control.label" [formControlName]="options.control.controlId">
+    </div>
+  </mat-form-field>
+</div>
