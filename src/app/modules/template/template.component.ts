@@ -127,6 +127,7 @@ export class TemplateComponent implements OnInit {
       data: {
         control, body: this.template.body,
         interfaces: this.interfaces,
+        isInterfacesEnabled: this.isInterfacesEnabled
       }
     })
     dialogRef.afterClosed().subscribe(result => {

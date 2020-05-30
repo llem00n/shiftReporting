@@ -15,8 +15,6 @@ export class DynDatetimeComponent implements OnInit {
 
   ngOnInit() {
     this.clService.getData().subscribe(options => {
-      console.log(options);
-      
       this.options = options
     })
   }

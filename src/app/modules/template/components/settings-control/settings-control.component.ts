@@ -25,8 +25,9 @@ export class SettingsControlComponent implements OnInit {
   interfacesList = [];
   datasourceValues = { datasource: null }
   isDisableDelete: boolean = true;
+  isInterfacesEnabled: boolean = false;
   datasourceControls = [{ controlId: 'datasource', label: 'Data source', type: 'textarea', readonly: true }];
-  
+
   constructor(
     private dialog: MatDialog,
     private dataType: DataTypeService,
@@ -34,7 +35,8 @@ export class SettingsControlComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: {
       body: TemplateBody,
       control: DynControl,
-      interfaces: Interface[]
+      interfaces: Interface[],
+      isInterfacesEnabled: boolean,
     },
   ) { }
 
@@ -68,6 +70,7 @@ export class SettingsControlComponent implements OnInit {
   }
 
   initialData() {
+    this.isInterfacesEnabled = this.data.isInterfacesEnabled;
     if (!this.data.interfaces.length || this.data.control.type === 'label') {
       this.isDisableDelete = false;
       return;

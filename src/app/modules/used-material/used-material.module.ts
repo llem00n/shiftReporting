@@ -22,9 +22,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
 
 
 const modules = [
+  MatTableModule,
+  MatSortModule,
   MatTooltipModule,
   MatExpansionModule,
   LayoutModule,
