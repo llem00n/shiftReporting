@@ -26,7 +26,19 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
   calendarContentHeight: number;
   submitReportOffset
 
-  shiftStyle = ['blue', 'green', 'indigo', 'orange', 'teal', 'red', 'purple', 'pink', 'teal', 'yellow', 'gray'].map(i => `text-${i}-500 border-${i}-300`);
+  shiftStyle = [
+    'text-blue-500 border-blue-300',
+    'text-green-500 border-green-300',
+    'text-indigo-500 border-indigo-300',
+    'text-orange-500 border-orange-300',
+    'text-teal-500 border-teal-300',
+    'text-red-500 border-red-300',
+    'text-purple-500 border-purple-300',
+    'text-pink-500 border-pink-300',
+    'text-teal-500 border-teal-300',
+    'text-yellow-500 border-yellow-300',
+    'text-gray-500 border-gray-300'
+  ];
 
   constructor(
     private dateService: DateService,
