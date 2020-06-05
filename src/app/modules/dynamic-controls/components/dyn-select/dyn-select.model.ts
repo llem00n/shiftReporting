@@ -14,6 +14,7 @@ export class DynSelect extends BaseControl {
     this.controlId = this.controlId || this.createControlId(this.type);
     this.placeholder = opt['placeholder'] || '';
     this.options = opt['options'] || [];
+    this.name = opt['name'] || this.type;
   }
   
   get optionsString() { return this.options.map(i => i.value).join('\n') }

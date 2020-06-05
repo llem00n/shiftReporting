@@ -10,5 +10,6 @@ export class DynLabel extends BaseControl {
     this.settings = this.settings.filter(s => s.controlId !== 'isRequired' && s.controlId !== 'name')
     this.forControl = opt['forControl'] || null;
     this.controlId = this.controlId || this.createControlId(this.type);
+    this.name = opt['name'] || this.type
   }
 } 
