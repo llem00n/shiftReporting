@@ -1,4 +1,4 @@
 <!-- <p>{{options | json}}</p> -->
-<div class="flex items-center h-full">
-  <p class="">{{options.control.label}}</p>
+<div class="flex items-center h-full" [ngStyle]="{'background-color': options.control.bgColor}">
+  <p class="mx-1 truncate">{{options.control.label}}</p>
 </div>
