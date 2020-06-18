@@ -28,6 +28,13 @@ export class DateService {
 
   constructor() { }
 
+  getLocalTime(time: string) {
+    const date = new Date('0001-01-01T' + time);
+    const dateStr = date.toLocaleTimeString()
+    const sp = dateStr.indexOf(':', 3);
+    return dateStr.slice(0, sp,) + dateStr.slice(sp + 3)
+  }
+
   get daysOfWeek(): Day[] {
     return this._daysOfWeek;
   }
