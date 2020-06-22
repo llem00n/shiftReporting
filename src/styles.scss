@@ -27,6 +27,9 @@ p {
 button:focus {
   outline: none;
 }
+input:focus {
+  outline: none;
+}
 .disabled {
   opacity: 50%;
 }
