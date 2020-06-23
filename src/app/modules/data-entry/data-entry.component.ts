@@ -189,9 +189,5 @@ export class DataEntryComponent implements OnInit {
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
     // this.router.navigate(['/calendar']);
   }
-  showLogs() {
-    console.log('showLogs');
-
-  }
 }
 

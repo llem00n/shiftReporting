@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
 
     this.store.pipe(
       select(allDepartments),
-      tap(console.log),
       tap(_ => this.authService.updateUserDepartments())
     ).subscribe()
 

@@ -38,6 +38,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       })
     this.getSchedules();
   }
+
   ngOnDestroy() {
     this.store.dispatch(ScheduleActions.clearSchedules());
   }
@@ -90,6 +91,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.setState({ day, week: 1, year: 1 })
   }
   dayView() {
+    if (this.day) return;
     const day = this.dateService.getMonday(this.year, this.week)
     this.setState({ day, week: 1, year: 1 })
   }

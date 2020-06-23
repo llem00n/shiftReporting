@@ -8,11 +8,12 @@ import { DepartmentsModule } from '../departments/departments.module';
 import { TemplatesListComponent } from './components/templates-list/templates-list.component';
 import { UsedMaterialModule } from '../used-material/used-material.module';
 import { DaySelectorComponent } from './components/day-selector/day-selector.component';
+import { YearWeekSelectorComponent } from './components/year-week-selector/year-week-selector.component';
 
 
 
 @NgModule({
-  declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent, TemplatesListComponent, DaySelectorComponent],
+  declarations: [CalendarComponent, WeekGridComponent, WeekSelectorComponent, TemplatesListComponent, DaySelectorComponent, YearWeekSelectorComponent],
   imports: [
     CommonModule,
     // AngularSvgIconModule.forRoot(),

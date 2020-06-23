@@ -77,12 +77,7 @@ export class DateService {
   getWeekString(year: number, week: number): string {
     const monday = this.getMonday(year, week).toDateString();
     const sunday = new Date(new Date(monday).valueOf() + 6 * this.day_ms).toDateString()
-    const result = `
-    ${monday.slice(4, 10)} 
-    ${monday.slice(11) !== sunday.slice(11) ? monday.slice(11) : ''} - 
-    ${monday.slice(4, 7) !== sunday.slice(4, 7) ? sunday.slice(4, 7) : ''}
-    ${sunday.slice(8, 10)}, 
-    ${sunday.slice(11)}`
+    const result = `${monday.slice(4, 10)}${monday.slice(11) !== sunday.slice(11) ? ' ' + monday.slice(11) + ' ' : ' '}-${monday.slice(4, 7) !== sunday.slice(4, 7) ? ' ' + sunday.slice(4, 7) : ''} ${sunday.slice(8, 10)}, ${sunday.slice(11)}`
     return result;
   }
 
@@ -122,4 +117,5 @@ export class DateService {
     const f = new Date(from);
     return Math.round((this.lastMonday(d).valueOf() - this.lastMonday(f).valueOf()) / (this.day_ms)) / 7
   }
+
 }
