@@ -29,17 +29,6 @@ export class InterfaceHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
-
-  // deleteInterface(interfaceID: number): Observable<AppHttpResponse> {
-  //   const options: AppHttpRequest = {
-  //     url: this.baseUrl + 'addInterface',
-  //     payload: { interfaceID },
-  //     loadingMsg: 'Deleting the interface ...',
-  //     successMsg: `Interface has been deleted`
-  //   }
-  //   return this.httpService.post<AppHttpResponse>(options);
-  // }
-
   getInterfaces(templateId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       payload: { templateId },

@@ -39,11 +39,9 @@ import { ConfigurationEffects } from './configuration/configuration.effects';
       TemplateEffects,
       InterfaceEffects,
       DataEntryEffects,
-      UserEffects
+      UserEffects,
+      ConfigurationEffects
     ]),
-    StoreModule.forFeature(fromConfiguration.configurationFeatureKey, fromConfiguration.reducer),
-    EffectsModule.forFeature([ConfigurationEffects]),
-    // StoreModule.forFeature(fromUser.usersFeatureKey, fromUser.reducer),
   ]
 })
 export class AppStoreModule { }

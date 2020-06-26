@@ -10,7 +10,6 @@
 
     <div class="border-l-2 border-gray-300 ml-2 pl-2">
       <app-form [controls]='role' [values]="user" (form)="getForm($event)"></app-form>
-
       <mat-form-field appearance="outline">
         <mat-label>Departments </mat-label>
         <div style="height: 0; overflow: hidden;">
@@ -30,24 +29,8 @@
           </mat-chip-list>
         </div>
       </mat-form-field>
-
-      <!-- <mat-form-field appearance="outline">
-    <mat-label>Departments </mat-label>
-    <div style="min-height: 1.4rem;"  (click)="selectDepartments()">
-      <mat-chip-list >
-        <mat-chip (click)="selectDepartments()">hidden</mat-chip>
-        <mat-chip  (click)="selectDepartments()">hidden2</mat-chip>
-        <mat-chip (click)="selectDepartments()">hidden3</mat-chip>
-      </mat-chip-list>
-    </div>
-  </mat-form-field> -->
-
-
-
     </div>
   </div>
-  <!-- <app-form [flex]='true' [controls]='address' [values]="plant" (form)="getForm($event)"></app-form> -->
-  <!-- <pre>{{user | json}}</pre> -->
   <mat-dialog-actions class="flex justify-end">
     <button mat-button color="primary" mat-dialog-close>CANCEL</button>
     <button mat-raised-button color="primary" [disabled]='saveDisabled()' [mat-dialog-close]="user">SAVE</button>

@@ -22,33 +22,15 @@ const plantReducer = createReducer(
   on(PlantActions.addPlantSuccess,
     (state, action) => adapter.addOne(action.plant, state)
   ),
-  // on(PlantActions.upsertPlant,
-  //   (state, action) => adapter.upsertOne(action.plant, state)
-  // ),
-  // on(PlantActions.addPlants,
-  //   (state, action) => adapter.addMany(action.plants, state)
-  // ),
-  // on(PlantActions.upsertPlants,
-  //   (state, action) => adapter.upsertMany(action.plants, state)
-  // ),
   on(PlantActions.updatePlantSucces,
     (state, action) => adapter.updateOne(action.plant, state)
   ),
-  // on(PlantActions.updatePlants,
-  //   (state, action) => adapter.updateMany(action.plants, state)
-  // ),
   on(PlantActions.deletePlantSuccess,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  // on(PlantActions.deletePlants,
-  //   (state, action) => adapter.removeMany(action.ids, state)
-  // ),
   on(PlantActions.getPlantsSuccess,
     (state, action) => adapter.addAll(action.plants, state)
   ),
-  // on(PlantActions.clearPlants,
-  //   state => adapter.removeAll(state)
-  // ),
 );
 
 export function reducer(state: State | undefined, action: Action) {
