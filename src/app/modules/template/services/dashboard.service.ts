@@ -133,6 +133,7 @@ export class DashboardService {
     attributes.map(attr => {
       const indexY = this.lastRow(dashboard);
       const control = this.createControl(attr, indexY);
+      if (!control) return;
       dashboard.push(control);
       dashboard.push(this.createLabel(attr, indexY, control.controlId));
     });
@@ -159,7 +160,8 @@ export class DashboardService {
   private createControl(attribute: Atribute, y: number): DynControl {
     const { type, preKey, name } = attribute
     const gridItem: GridsterItem = { cols: 6, rows: 1, x: 5, y };
-    const controlType = this.dataTypeService.getType(type).allowableControls[0];
+    const controlType = this.dataTypeService.getType(type)?.allowableControls[0];
+    if (!controlType) return null;
     const model = dynComponents.getModel(controlType);
     const controlId = `${preKey ? preKey + '-' : ''}${name}-${controlType}${Date.now().toString(16)}`;
     if (preKey) {

@@ -12,7 +12,7 @@ import { Injectable } from '@angular/core';
 export class DataTypeService {
 
   getType(type) {
-    return { ...this.data[type] };
+    return this.data[type];
   }
   getAllowableTypes(controlType) {
     const result: string[] = [];
