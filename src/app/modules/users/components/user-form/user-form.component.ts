@@ -29,7 +29,7 @@ export class UserFormComponent implements OnInit {
   ]
   login = [
     new DynText({ controlId: 'login', label: 'Login', validators: { required: true } }),
-    new DynText({ controlId: 'password', label: 'Password', validators: { required: true } }),
+    new DynText({ controlId: 'password', label: 'Password', validators: { required: this.data.user.userId ? false : true } }),
   ]
   mail = [
     new DynText({ controlId: 'email', label: 'Email', validators: { email: true } }),
