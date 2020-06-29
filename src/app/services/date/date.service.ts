@@ -88,8 +88,9 @@ export class DateService {
     return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 1 * this.day_ms));
   }
 
-  dateLocalJSON(date: Date): string {
-    return new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000).toJSON().slice(0, 23);
+  dateLocalJSON(date?: Date): string {
+    const d = date || new Date();
+    return new Date(d.valueOf() - d.getTimezoneOffset() * 60 * 1000).toJSON().slice(0, 23);
   }
 
   getWeekJSON(year: number, week: number): { from: string, to: string } {

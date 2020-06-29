@@ -31,8 +31,8 @@ export class TemplateComponent implements OnInit {
   selectedControl: DynControl;
   newControlType: string = null;
   isShowTemplateInfo = true
-  title: string = 'Create template';
-  saveButton: string = 'Add';
+  // title: string = 'Create template';
+  // saveButton: string = 'Add';
   formGrinsterOptions: FormGroup;
   interfaces: Interface[];
   storeInterfaces: Interface[];
@@ -78,10 +78,18 @@ export class TemplateComponent implements OnInit {
         return;
       }
       let opt = {};
-      if (!template._departmentId) {
-        this.title = `Edit template ${template.name}`;
-        this.saveButton = 'Save';
-        opt = template;
+
+      if (!template._departmentId) opt = template
+      else {
+        const validFromDate = this.dateService.dateLocalJSON().slice(0, 11) + "00:00:00"
+        const validToDate = new Date(validFromDate);
+        validToDate.setFullYear(validToDate.getFullYear() + 30);
+        opt = {
+          templateTypeId: 1,
+          templateTypeName: "Shift template",
+          validFromDate,
+          validToDate: this.dateService.dateLocalJSON(validToDate),
+        }
       }
       template.templateId && this.isInterfacesEnabled && this.store.dispatch(InterfaseActions.getInterfaces({ templateId: template.templateId }));
       this.departmentId = template._departmentId;
@@ -94,7 +102,6 @@ export class TemplateComponent implements OnInit {
       // this.dashboard.length && this.clickItem(this.dashboard[0].controlId)
     })
   }
-
 
   ngOnDestroy(): void {
     this.options$.unsubscribe();
