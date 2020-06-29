@@ -1,18 +1,3 @@
-<!-- <div class="h-full flex items-center justify-center items-center"
-  [ngClass]="{'justify-center': options.appearance === 'standard1'}">
-  <div class="w-6 h-6" (click)="toggleCheck()">
-    <svg *ngIf="isChecked" viewBox="0 0 24 24" fill="rgb(95,95,95)">
-      <path
-        d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
-    </svg>
-    <svg *ngIf="!isChecked" viewBox="0 0 24 24" fill="rgb(95,95,95)">
-      <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z" />
-    </svg>
-  </div>
-  <label *ngIf="options.control.label && options.appearance === 'outline'" [for]="options.control.controlId" class="pl-2"
-    (click)="toggleCheck()">{{options.control.label}} </label>
-</div> -->
-
 <!-- Material -->
 <div [ngClass]="options.appearance === 'standard1' ? 'justify-center': 'mb-4' " class="w-full h-full flex items-center"
   [formGroup]="options.form">
