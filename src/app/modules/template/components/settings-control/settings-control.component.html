@@ -28,11 +28,12 @@
         <div *ngFor="let i of interfacesList; last as last" class="mb-2 relative">
           <div *ngIf="!i.disabled" (click)="changeInterface(i)" class="absolute w-full h-full top-0 left-0 z-10"></div>
           <mat-checkbox color='primary' [checked]='i.checked' [disabled]="i.disabled">{{i.label}}</mat-checkbox>
+          <p *ngIf="i.name === 'PIAFAttributes'" class="text-xs text-gray-700">{{attributeString}}</p>
+          <mat-divider *ngIf="!last"> </mat-divider>
         </div>
       </mat-form-field>
     </div>
   </div>
-
 </div>
 <mat-dialog-actions class="flex justify-end">
   <button mat-button color="primary" mat-dialog-close>CANCEL</button>
