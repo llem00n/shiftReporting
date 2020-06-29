@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { ControlsLocalService } from './services/controls-local.service';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from './models/';
-import { DynInput } from './components/input/input.model';
 import { dynComponents } from './components/dyn-components';
 
 
@@ -24,12 +23,21 @@ export class DynamicControlsComponent implements OnChanges {
   constructor(
     private clService: ControlsLocalService,
   ) { }
-  ngOnChanges() {    
-    this.clService.setData({ 
-      control: this.control, 
+  ngOnChanges() {
+    this.clService.setData({
+      control: this.control,
       form: this.form,
       appearance: this.appearance || 'outline'
     });
-    this.component = dynComponents.get(this.control.type);    
+    this.component = dynComponents.get(this.control.type);
+  }
+
+  get isInvalid() {
+    if (this.appearance !== 'standard1') return false;
+    if (!this.form) return false;
+    if (this.control.type === 'label') return false;
+    if (!this.form.controls[this.control.controlId].errors) return false;
+    console.log(this.form.controls[this.control.controlId].errors);
+    return true;
   }
 }
