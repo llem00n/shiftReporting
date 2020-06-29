@@ -130,9 +130,11 @@ export class DataEntryComponent implements OnInit {
   }
 
   setValue(control: DynControl, values): string | boolean | number {
+    if (control.value) return control.value
     if (!values
       || values[control.controlId] === null
       || values[control.controlId] === undefined) return null;
+
     switch (control.type) {
       case 'datetime':
         const a = new Date(values[control.controlId])

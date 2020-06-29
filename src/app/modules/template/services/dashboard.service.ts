@@ -16,6 +16,7 @@ interface Atribute {
   readonly?: boolean;
   valueKey?: string;
   preKey?: string;
+  value?: string;
 }
 
 @Injectable({
@@ -119,6 +120,8 @@ export class DashboardService {
           eventFrameTemplateName: iface.setting3,
         }).subscribe(efTemplate => {
           if (efTemplate) efTemplate.attributes.map(attr => attributes.push({ ...attr, preKey: this.preKey, label: attr.name }));
+          console.log(attributes);
+          attributes.find(a => a.name === 'TemplateName')['value'] = iface.setting3;
           this.createAttributeControls(dashboard, attributes);
           template.body.PIAFTemplate = { ...this.PIAFControlList };
           this.setOptionsMaxDimention(dashboard)
@@ -177,7 +180,10 @@ export class DashboardService {
       label: attribute.label,
       name: attribute.name,
       valueType: attribute.type,
+      validators: { required: true },
+      readonly: attribute.readonly,
     }
+    if (attribute.value) opt['value'] = attribute.value;
     return new model(opt);
   }
 }
