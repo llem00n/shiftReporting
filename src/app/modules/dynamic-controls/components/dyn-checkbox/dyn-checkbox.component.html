@@ -1,5 +1,5 @@
 <!-- Material -->
-<div [ngClass]="options.appearance === 'standard1' ? 'justify-center': 'mb-4' " class="w-full h-full flex items-center"
+<div [ngClass]="options.appearance === 'standard1'  ? 'justify-center h-full': 'mb-4 h-auto' " class="w-full flex items-center"
   [formGroup]="options.form">
   <mat-checkbox [formControlName]="options.control.controlId" color="primary" [indeterminate]='options.form.value[options.control.controlId] === null'>
     <span *ngIf="options.appearance !== 'standard1'">
