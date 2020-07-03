@@ -35,6 +35,9 @@ const templateReducer = createReducer(
   on(TemplateActions.updateTemplateSuccess,
     (state, action) => adapter.updateOne(action.template, state)
   ),
+  on(TemplateActions.updateTemplateSuccess,
+    (state, action) => ({ ...state, addedTemplate: <Template>{templateId: action.template.id} })
+  ),
   on(TemplateActions.getTemplatesSuccess,
     (state, action) => adapter.addAll(action.templates, state)
   ),

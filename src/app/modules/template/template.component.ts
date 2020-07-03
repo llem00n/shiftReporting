@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
 import { State, editingTemplate, templateInterfaces, addedTemplate, configurations } from 'src/app/app-store';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Interface } from '@models/*';
 import { DashboardService } from './services/dashboard.service';
@@ -48,7 +48,6 @@ export class TemplateComponent implements OnInit {
     private dashboardService: DashboardService,
     private dateService: DateService,
     private dialog: MatDialog,
-    // private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -171,7 +170,6 @@ export class TemplateComponent implements OnInit {
         return;
       }
       this.store.dispatch(InterfaseActions.addInterface({ intface, templateId }));
-
     })
 
   }
@@ -190,7 +188,6 @@ export class TemplateComponent implements OnInit {
       this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
     } else {
       template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
-      this.updateInterfaces(template.templateId);
     }
     this.store.pipe(
       select(addedTemplate),
@@ -199,7 +196,8 @@ export class TemplateComponent implements OnInit {
     ).subscribe(temp => {
       this.updateInterfaces(temp.templateId);
       this.store.dispatch(TemplateActions.setAddedTemplate({ template: null }))
-      this.store.dispatch(TemplateActions.setEditingTemplate({ template: temp }))
+      this.store.dispatch(TemplateActions.setEditingTemplate({ template: null }))
+      this.router.navigate(['configuration/templates']);
     })
   }
 
