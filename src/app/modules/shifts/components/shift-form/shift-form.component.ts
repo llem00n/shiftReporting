@@ -25,7 +25,11 @@ export class ShiftFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.shift = { ...this.data.shift };
+    console.log(this.data.shift.shiftId);
+    
+    if (this.data.shift.shiftId) this.shift = { ...this.data.shift }
+    else this.shift = <Shift>{isActive: true}
+    
   }
 
   getForm(e: FormGroup) {

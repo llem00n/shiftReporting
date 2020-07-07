@@ -18,7 +18,7 @@
           <button (click)="save()" mat-flat-button color="primary" [disabled]="!form?.valid">SAVE</button>
         </div>
         <div *ngIf="isSaveEnabled" class="m-2">
-          <button (click)="submitDataEntry()" mat-flat-button color="primary">SUBMIT</button>
+          <button (click)="submitDataEntry()" mat-flat-button color="primary" [disabled]="!form?.valid">SUBMIT</button>
         </div>
       </div>
       <div class="p-2 overflow-auto">
