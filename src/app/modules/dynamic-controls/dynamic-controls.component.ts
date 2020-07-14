@@ -37,7 +37,6 @@ export class DynamicControlsComponent implements OnChanges {
     if (!this.form) return false;
     if (this.control.type === 'label') return false;
     if (!this.form.controls[this.control.controlId].errors) return false;
-    console.log(this.form.controls[this.control.controlId].errors);
     return true;
   }
 }
