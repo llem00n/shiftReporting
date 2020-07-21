@@ -14,7 +14,7 @@
       <app-form [controls]='data.control.settings' [values]='data.control' (form)="getControlForm($event)"></app-form>
     </div>
     <mat-divider *ngIf="isInterfacesEnabled" [vertical]="true"> </mat-divider>
-    <div *ngIf="isInterfacesEnabled" class="pl-2 w-64">
+    <div *ngIf="isInterfacesEnabled && data.control.type !== 'label'" class="pl-2 w-64">
       <div class="relative">
         <app-form class="cursor-default" (click)="setDataSource()" [controls]='datasourceControls'
           [values]=datasourceValues></app-form>

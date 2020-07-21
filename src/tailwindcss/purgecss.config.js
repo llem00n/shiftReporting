@@ -1,6 +1,6 @@
 /* 
 for generate clean css file:
-purgecss -c ./src/tailwindcss/purgecss.config.js 
+npx purgecss -c ./src/tailwindcss/purgecss.config.js 
  */
 
 const purgecss = {};

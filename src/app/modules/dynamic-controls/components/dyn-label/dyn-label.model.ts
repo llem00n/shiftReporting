@@ -6,6 +6,9 @@ export class DynLabel extends BaseControl {
   forControl: string;
   private _settings = [
     { controlId: 'bgColor', label: 'Background color', type: 'color' },
+    { controlId: 'bold', label: 'Bold', type: 'checkbox' },
+    { controlId: 'italic', label: 'Italic', type: 'checkbox' },
+    { controlId: 'underline', label: 'Underline', type: 'checkbox' },
     // { controlId: 'max', label: 'Maximum value', type: 'number' },
   ]
 
