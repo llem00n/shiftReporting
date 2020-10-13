@@ -158,6 +158,11 @@ export class DataEntryComponent implements OnInit {
     return true;
   }
 
+  getCreateDate(): string {
+    return this.dateService.isBetween(new Date(), this.startDate, this.endDate)
+      ? this.dateService.getLocalDate() : this.dateService.getLocalDate(this.endDate.getTime() - 1000);
+  }
+
   save() {
     this.store.pipe(
       select(currentDataEntry),
@@ -171,10 +176,7 @@ export class DataEntryComponent implements OnInit {
       this.store.dispatch(DataEntryActions.updateDataEntry({ dataEntry: this.dataEntry }));
       return;
     }
-
-    const createDate = this.dateService.isBetween(new Date(), this.startDate, this.endDate)
-      ? this.dateService.getLocalDate() : this.dateService.getLocalDate(this.endDate.getTime() - 1000);
-    this.dataEntry.createDate = createDate;
+    this.dataEntry.createDate = this.getCreateDate();
     this.store.dispatch(DataEntryActions.addDataEntry({ dataEntry: this.dataEntry }));
   }
 
@@ -187,6 +189,7 @@ export class DataEntryComponent implements OnInit {
       this.router.navigate(['/calendar']);
     })
     if (!this.getSavePermission()) return;
+    this.dataEntry.createDate = this.dataEntry.createDate || this.getCreateDate();
     this.dataEntry.submitDate = this.dateService.getLocalDate();
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
     // this.router.navigate(['/calendar']);
