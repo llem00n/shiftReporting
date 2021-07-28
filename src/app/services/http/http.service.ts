@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, tap, map } from 'rxjs/operators';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 import { OidcClientService } from 'src/app/modules/authorization/oidc-client.service';
 
 export interface AppHttpRequest {

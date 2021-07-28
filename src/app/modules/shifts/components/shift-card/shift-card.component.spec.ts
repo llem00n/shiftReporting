@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ShiftCardComponent } from './shift-card.component';
 
@@ -6,7 +6,7 @@ describe('ShiftCardComponent', () => {
   let component: ShiftCardComponent;
   let fixture: ComponentFixture<ShiftCardComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ShiftCardComponent ]
     })

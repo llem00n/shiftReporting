@@ -44,7 +44,7 @@ const plantReducer = createReducer(
   //   (state, action) => adapter.removeMany(action.ids, state)
   // ),
   on(PlantActions.getPlantsSuccess,
-    (state, action) => adapter.addAll(action.plants, state)
+    (state, action) => adapter.setAll(action.plants, state)
   ),
   // on(PlantActions.clearPlants,
   //   state => adapter.removeAll(state)

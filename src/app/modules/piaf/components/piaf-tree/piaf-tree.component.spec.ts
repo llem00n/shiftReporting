@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { PiafTreeComponent, DynamicFlatNode, DynamicDataSource } from './piaf-tree.component';
 // import { PiService } from '../../pi.service';
 import { MatTreeModule, MatTreeNode, MatTreeNodeToggle, MatTreeNodePadding } from '@angular/material/tree';
@@ -20,7 +20,7 @@ describe('PiafTreeComponent', () => {
   let fixture: ComponentFixture<PiafTreeComponent>;
   // let pisSpy: jasmine.SpyObj<PiService>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     const spyPIS = jasmine.createSpyObj('PiService',
       ['getDatabaseElements', 'getElementStructure']);
     TestBed.configureTestingModule({

@@ -46,7 +46,7 @@ const scheduleReducer = createReducer(
   //   (state, action) => adapter.removeMany(action.ids, state)
   // ),
   on(ScheduleActions.getSchedulesSuccess,
-    (state, action) => adapter.addAll(action.schedules, state)
+    (state, action) => adapter.setAll(action.schedules, state)
   ),
   on(ScheduleActions.clearSchedules,
     state => adapter.removeAll(state)

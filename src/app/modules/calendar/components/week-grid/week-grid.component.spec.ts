@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WeekGridComponent } from './week-grid.component';
 
@@ -6,7 +6,7 @@ describe('WeekGridComponent', () => {
   let component: WeekGridComponent;
   let fixture: ComponentFixture<WeekGridComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WeekGridComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DynDateComponent } from './dyn-date.component';
 
@@ -6,7 +6,7 @@ describe('DynDateComponent', () => {
   let component: DynDateComponent;
   let fixture: ComponentFixture<DynDateComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DynDateComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WeekSelectorComponent } from './week-selector.component';
 
@@ -6,7 +6,7 @@ describe('WeekSelectorComponent', () => {
   let component: WeekSelectorComponent;
   let fixture: ComponentFixture<WeekSelectorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WeekSelectorComponent ]
     })

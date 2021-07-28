@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GridsterConfigComponent } from './gridster-config.component';
 
@@ -6,7 +6,7 @@ describe('GridsterConfigComponent', () => {
   let component: GridsterConfigComponent;
   let fixture: ComponentFixture<GridsterConfigComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ GridsterConfigComponent ]
     })

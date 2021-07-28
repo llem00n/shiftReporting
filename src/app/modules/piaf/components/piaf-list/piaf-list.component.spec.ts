@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PiafListComponent } from './piaf-list.component';
 import { By } from '@angular/platform-browser';
@@ -8,7 +8,7 @@ describe('PiafListComponent', () => {
   let component: PiafListComponent;
   let fixture: ComponentFixture<PiafListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PiafListComponent],
     })

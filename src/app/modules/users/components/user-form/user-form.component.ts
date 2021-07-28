@@ -22,7 +22,7 @@ export class UserFormComponent implements OnInit {
   user: User;
   form = new FormGroup({});
   forms: FormGroup[] = [];
-  rolesView;
+  rolesView = null;
   name = [
     new DynText({ controlId: 'firstName', label: 'First name', validators: { required: true } }),
     new DynText({ controlId: 'secondName', label: 'Second name', validators: { required: true } }),

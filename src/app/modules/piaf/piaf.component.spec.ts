@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { PiafComponent } from './piaf.component';
 
@@ -6,7 +6,7 @@ describe('PiafComponent', () => {
   let component: PiafComponent;
   let fixture: ComponentFixture<PiafComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PiafComponent ]
     })
