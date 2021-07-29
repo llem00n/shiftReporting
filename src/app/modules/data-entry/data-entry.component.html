@@ -5,7 +5,31 @@
     </div>
   </mat-drawer>
   <mat-drawer-content>
-    <section class="h-full flex flex-col justify-center items-center">
+    <section *ngIf="isSmallScreen">
+      <div class="h-12 ml-20 flex items-end">
+        <p class=".mat-headline">{{title}}</p>
+      </div>
+      <div>
+        <app-mobile-entry-form [dashboard]="dashboard" [form]="form">content</app-mobile-entry-form>
+        <div>
+          <div class="mx-4 my-2">
+            <button class="w-full" (click)="goBack()" mat-stroked-button color="primary">CANCEL</button>
+          </div>
+          <div class="mx-4 my-2">
+            <button class="w-full" (click)="drawer.toggle()" mat-stroked-button color="primary">SHOW LOGS</button>
+          </div>
+          <div *ngIf="isSaveEnabled" class="mx-4 my-2">
+            <button class="w-full" (click)="save()" mat-flat-button color="primary"
+              [disabled]="!form?.valid">SAVE</button>
+          </div>
+          <div *ngIf="isSaveEnabled" class="mx-4 my-2">
+            <button class="w-full" (click)="submitDataEntry()" mat-flat-button color="primary">SUBMIT</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section *ngIf="!isSmallScreen" class="h-full flex flex-col justify-center items-center">
       <!-- Main window -->
       <div class="flex justify-center">
         <div class="m-2">

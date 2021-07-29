@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription, of } from 'rxjs';
 import { DataSourceService } from './data-source.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class DataEntryComponent implements OnInit {
   form: FormGroup;
   user: User
   isSaveEnabled = false;
+  isSmallScreen: boolean = false;
 
   getData$: Subscription
   constructor(
@@ -42,16 +44,20 @@ export class DataEntryComponent implements OnInit {
     private dateService: DateService,
     private location: Location,
     private router: Router,
-    private dataSourceService: DataSourceService
-
+    private dataSourceService: DataSourceService,
+    private bpObserver: BreakpointObserver,
   ) { }
 
   ngOnInit(): void {
     this.getDataEntry();
+    this.bpObserver.observe('(max-width: 960px)').subscribe(result => {
+      this.isSmallScreen = result.matches;
+    })
   }
   ngOnDestroy(): void {
     this.getData$.unsubscribe();
   }
+
   getDataEntry() {
     const opt = <DataEntry>{};
     this.getData$ = this.store.pipe(
@@ -71,6 +77,7 @@ export class DataEntryComponent implements OnInit {
         this.startDate = cDataEntry.startDate;
         this.endDate = cDataEntry.endDate;
         this.deadline = cDataEntry.deadline;
+        this.title = cDataEntry.dataEntry.template.name;
         // if (!cDataEntry.dataEntry.submitDate)
         //   this.isSaveEnabled = this.dateService.isBetween(new Date(), cDataEntry.startDate, cDataEntry.deadline)
       }),

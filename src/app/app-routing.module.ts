@@ -13,9 +13,9 @@ import { UsersComponent } from './modules/users/users.component';
 import { LoginComponent } from './modules/authorization/components/login/login.component';
 import { RoleGuard } from './modules/authorization/guards/role.guard';
 import { ConfigComponent } from './modules/config/config.component';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
-
   {
     path: 'configuration',
     // component: ConfigurationComponent,
@@ -39,7 +39,6 @@ const routes: Routes = [
 
   // { path: '', redirectTo: 'calendar', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'calendar', pathMatch: 'full' },
-
 ];
 
 @NgModule({
