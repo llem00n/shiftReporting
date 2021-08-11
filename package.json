@@ -27,6 +27,7 @@
     "@ngrx/schematics": "^12.3.0",
     "@ngrx/store": "^12.3.0",
     "@ngrx/store-devtools": "^12.3.0",
+    "@tailwindcss/typography": "^0.4.1",
     "angular-gridster2": "^9.1.0",
     "oidc-client": "^1.10.1",
     "rxjs": "~6.5.4",
