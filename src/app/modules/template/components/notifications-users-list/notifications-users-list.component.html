@@ -1,0 +1,18 @@
+<div>
+	<mat-form-field appearance="outline">
+		<mat-label>Time</mat-label>
+		<input matInput type="time" />
+	</mat-form-field>
+
+	<div class="flex flex-row">
+		<div *ngFor="let day of weekDays">
+			<p class="cursor-default p-1 text-xs font-bold rounded-full">{{ day.twoLetters }}</p>
+		</div>
+	</div>
+
+	<div class="mt-2">
+		<p>Users</p>
+
+		<div></div>
+	</div>
+</div>

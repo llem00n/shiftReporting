@@ -4,18 +4,18 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
-import { State, editingTemplate, templateInterfaces, addedTemplate, configurations } from 'src/app/app-store';
+import { State, editingTemplate, templateInterfaces, addedTemplate, configurations, allUsers, currentDepartment } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Interface } from '@models/*';
+import { Interface, User } from '@models/*';
 import { DashboardService } from './services/dashboard.service';
 import { DateService } from 'src/app/services/date/date.service';
 import { GridsterOptions } from '../grid';
-import { TemplateActions, InterfaseActions } from '@actions/*';
+import { TemplateActions, InterfaseActions, UserActions } from '@actions/*';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 import { allInterfaces } from './components/interfaces-config/interfaces-config.component';
-import { filter, take, tap } from 'rxjs/operators';
+import { filter, mergeMap, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template',
@@ -37,6 +37,7 @@ export class TemplateComponent implements OnInit {
   interfaces: Interface[];
   storeInterfaces: Interface[];
   isInterfacesEnabled: boolean = false;
+  departmentUsers: User[];
   // interfacesUpdating: Interface[]
 
   options$: Subscription;
@@ -52,6 +53,9 @@ export class TemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.dispatch(UserActions.getAllUsers());
+
+
     this.store.pipe(select(configurations)).pipe(
       tap(config => this.isInterfacesEnabled = <boolean>config.find(c => c.configurationId === 1)?.value || false),
     ).subscribe()
@@ -72,27 +76,37 @@ export class TemplateComponent implements OnInit {
 
     this.editingTemplate$ = this.store.pipe(
       select(editingTemplate),
-    ).subscribe(template => {
-      if (!template) {
-        this.router.navigate(['configuration/templates']);
-        return;
-      }
-      let opt = {};
-      if (!template._departmentId) {
-        this.title = `Edit template ${template.name}`;
-        this.saveButton = 'Save';
-        opt = template;
-      }
-      template.templateId && this.isInterfacesEnabled && this.store.dispatch(InterfaseActions.getInterfaces({ templateId: template.templateId }));
-      this.departmentId = template._departmentId;
-      this.template = new Template(opt);
-      this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
-      this.dashboardService.setOptions(this.template.body.gridsterOptions)
-      // this.options = this.template.body.gridsterOptions;
+      tap(template => {
+        if (!template) {
+          this.router.navigate(['configuration/templates']);
+          return;
+        }
+        let opt = {};
+        if (!template._departmentId) {
+          this.title = `Edit template ${template.name}`;
+          this.saveButton = 'Save';
+          opt = template;
+        }
+        template.templateId && this.isInterfacesEnabled && this.store.dispatch(InterfaseActions.getInterfaces({ templateId: template.templateId }));
+        this.departmentId = template._departmentId;
+        this.template = new Template(opt);
+        this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
+        this.dashboardService.setOptions(this.template.body.gridsterOptions)
 
-      // auro select first ttemplate
-      // this.dashboard.length && this.clickItem(this.dashboard[0].controlId)
-    })
+        console.log(template);
+        // this.options = this.template.body.gridsterOptions;
+
+        // auro select first ttemplate
+        // this.dashboard.length && this.clickItem(this.dashboard[0].controlId)
+      }),
+      mergeMap(_ => this.store.select(currentDepartment)),
+      mergeMap(department => this.store.select(allUsers).pipe(
+        tap(users => {
+          this.departmentUsers = users.filter(user => user.departments.find(dep => dep.departmentId == department.departmentId));
+          console.log(this.departmentUsers);
+        })
+      ))
+    ).subscribe();
   }
 
 
