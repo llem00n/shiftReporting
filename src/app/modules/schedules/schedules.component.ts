@@ -7,6 +7,7 @@ import { allSchedules } from 'src/app/app-store';
 import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
+import { DateService } from 'src/app/services/date/date.service';
 
 @Component({
   selector: 'app-schedules',
@@ -24,6 +25,7 @@ export class SchedulesComponent implements OnInit {
   constructor(
     private store: Store<State>,
     private dialog: MatDialog,
+    private dateService: DateService,
   ) { }
 
   ngOnInit(): void {
@@ -57,13 +59,20 @@ export class SchedulesComponent implements OnInit {
     this.createLIst();
   }
   addItem() {
+    const validFromDate = this.dateService.dateLocalJSON().slice(0, 11) + "00:00:00"
+    const validToDate = new Date(validFromDate);
+    validToDate.setFullYear(validToDate.getFullYear() + 30);
+
     // this.openDialog(<Schedule>{})
     // const shift = this.shifts.find(i => i.shiftId === +this.preConfigForm.value['shiftId'])
     const schedule = <Schedule>{
       departmentId: this.departmentId,
       shiftId: this.shift.shiftId,
       shiftName: this.shift.name,
-      shiftDescription: this.shift.description
+      shiftDescription: this.shift.description,
+      validFromDate,
+      validToDate: this.dateService.dateLocalJSON(validToDate),
+
     }
     this.openDialog(schedule)
   }

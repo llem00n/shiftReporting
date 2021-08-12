@@ -20,10 +20,6 @@ export class DepartmentHttpService {
       loadingMsg: 'Adding the department ...',
       successMsg: `Department has been added`
     }
-    // return of({
-    //   status: 200,
-    //   body: Object.assign(department, {departmentId: Math.random()})
-    // })
     return this.httpService.post<AppHttpResponse>(options);
   }
 
@@ -34,10 +30,6 @@ export class DepartmentHttpService {
       loadingMsg: 'Updating the department ...',
       successMsg: `Department has been updated`
     }
-    // return of({
-    //   status: 200,
-    //   body: department
-    // })
     return this.httpService.post<AppHttpResponse>(options);
   }
 
@@ -57,25 +49,6 @@ export class DepartmentHttpService {
       loadingMsg: 'Loading departments ...',
       payload: { plantId }
     }
-
-    // return of({
-    //   status: 200,
-    //   body: [
-    //     <Department>{
-    //       departmentId: 1,
-    //       description: 'description1',
-    //       name: 'name1',
-    //       plantID: plantId
-    //     },
-    //     <Department>{
-    //       departmentId: 2,
-    //       description: 'description2',
-    //       name: 'name2',
-    //       plantID: plantId
-    //     },
-    //   ]
-    // })
-
     return this.httpService.post<AppHttpResponse>(options)
   }
   getUserDepartments(userId: string): Observable<AppHttpResponse> {

@@ -12,6 +12,9 @@ export class BaseControl {
   isRemovable?: boolean;
   readonly: boolean;
   // isRequired?: boolean;
+  bold: boolean;
+  italic: boolean;
+  underline: boolean;
 
 
   gridItem?: Partial<GridsterItem> = {
@@ -41,6 +44,10 @@ export class BaseControl {
     this.gridItem = this.setGridItem(opt['gridItem']);
     this.isRemovable = opt['isRemovable'] || true;
     this.readonly = opt['readonly'] || false;
+    this.bold = opt['bold'] || false; 
+    this.italic = opt['italic'] || false; 
+    this.underline = opt['underline'] || false; 
+  
   }
 
   set isRequired(value: boolean) {

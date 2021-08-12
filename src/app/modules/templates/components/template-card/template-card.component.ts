@@ -14,6 +14,9 @@ export class TemplateCardComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  get lastUpdated(){
+    return new Date(this.template.lastUpdated).toLocaleString()
+  }
   delete() {
     this.clickDelete.emit(this.template.templateId);
   }

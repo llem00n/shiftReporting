@@ -7,10 +7,10 @@
   </tr>
 
   <tr *ngFor="let log of sortedData">
-    <td class="p-1 text-sm">{{log.recordDate.slice(0,19)}}</td>
+    <td class="p-1 text-sm">{{getLocalDate(log.recordDate)}}</td>
     <td class="p-1">{{log.firstName}} {{log.secondName}}</td>
     <td class="p-1">{{log.controlName}}</td>
-    <td class="p-1">{{log.value}}</td>
+    <td class="p-1">{{valueToDate(log.value)}}</td>
   </tr>
 </table>
 <style>

@@ -29,15 +29,17 @@ export class UserFormComponent implements OnInit {
   ]
   login = [
     new DynText({ controlId: 'login', label: 'Login', validators: { required: true } }),
-    new DynText({ controlId: 'password', label: 'Password', validators: { required: true } }),
+    new DynText({ controlId: 'password', label: 'Password', validators: { required: this.data.user.userId ? false : true } }),
   ]
   mail = [
     new DynText({ controlId: 'email', label: 'Email', validators: { email: true } }),
-    new DynCheckbox({ controlId: 'isActive', label: 'Active user' }),
   ];
-
+  
   role = [
     new DynSelect({ controlId: 'roleId', label: 'Role', options: this.rolesView, validators: { required: true }, }),
+  ]
+  active =[
+    new DynCheckbox({ controlId: 'isActive', label: 'Active user' }),
   ]
 
   constructor(
@@ -100,21 +102,22 @@ export class UserFormComponent implements OnInit {
           viewValue: i.roleName
         }
       })
-      this.role.find(i => i.controlId = 'roleId').options = this.rolesView;
+      this.role.find(i => i.controlId = 'roleId')['options'] = this.rolesView;
     })
   }
 
   getForm(e: FormGroup) {
     this.forms.push(e);
-    if (this.forms.length !== 4) return;
+    if (this.forms.length !== 5) return;
     this.form = new FormGroup({
       f0: this.forms[0],
       f1: this.forms[1],
       f2: this.forms[2],
       f3: this.forms[3],
+      f4: this.forms[4],
     })
     this.form.valueChanges.subscribe(value => {
-      Object.assign(this.user, value.f0, value.f1, value.f2, value.f3)
+      Object.assign(this.user, value.f0, value.f1, value.f2, value.f3, value.f4)
     })
   }
 

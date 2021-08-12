@@ -11,13 +11,14 @@ export class DynNumber extends BaseControl {
   ]
 
 
-  constructor(options: {} = {}) {
-    super(options);
+  constructor(opt: {} = {}) {
+    super(opt);
     this.settings = this.settings.concat(this._settings);
 
     this.controlId = this.controlId || this.createControlId(this.type);
-    this.placeholder = options['placeholder'] || '';
-    this.step = options['step'] || null;
+    this.placeholder = opt['placeholder'] || '';
+    this.step = opt['step'] || null;
+    this.name = opt['name'] || this.type
   }
 
   get min() {

@@ -1,1 +1,4 @@
-<ng-container *ngComponentOutlet="component"></ng-container>
+<div class="w-full h-full relative">
+  <ng-container *ngComponentOutlet="component"></ng-container>
+  <div *ngIf="isInvalid" style="background-color: #F44336;" class="h-full w-1 absolute left-0 top-0"></div>
+</div>

@@ -20,11 +20,22 @@ export class DataEntryLogComponent implements OnInit {
     private store: Store<State>
   ) {
   }
+  getLocalDate(dateStr) {
+    return new Date(dateStr).toLocaleString()
+  }
+
+  valueToDate(value) {
+    if (typeof (value) !== 'string'
+      || !/\d{4}-0[0-9]|1[0-2]-[0-2][0-9]|3[0-1]T[0-1][0-9]|2[0-4]:[0-5][0-9]/.test(value)) return value;
+    const date = new Date(value).toLocaleString();
+    if (date === 'Invalid Date') return value;
+    return date;
+  }
 
   ngOnInit() {
     this.store.pipe(
       select(dataEntryLogs),
-      filter(data => !!data.length)
+      filter(data => !!data)
     ).subscribe(logs => {
       this.logs = logs;
       this.sortedData = logs.slice();
@@ -44,7 +55,7 @@ export class DataEntryLogComponent implements OnInit {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'controlName': return compare(a.controlName, b.controlName, isAsc);
-        case 'recordDate': return compare(a.recordDate, b.recordDate, isAsc);
+        case 'recordDate': return compare(new Date(a.recordDate).valueOf(), new Date(b.recordDate).valueOf(), isAsc);
         case 'firstName': return compare(a.firstName, b.firstName, isAsc);
         case 'value': return compare(a.value, b.value, isAsc);
         // case 'protein': return compare(a.protein, b.protein, isAsc);

@@ -24,9 +24,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 const modules = [
+  MatAutocompleteModule,
   MatTableModule,
   MatSortModule,
   MatTooltipModule,
