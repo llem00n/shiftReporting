@@ -197,7 +197,7 @@ export class DataEntryComponent implements OnInit {
     // this.router.navigate(['/calendar']);
   }
   showLogs() {
-    console.log('showLogs');
+    // console.log('showLogs');
 
   }
 }

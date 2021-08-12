@@ -41,11 +41,14 @@ export class TemplateBody {
   Datasource: Attribute[];
   dashboard: Array<DynControl>;
   gridsterOptions: {};
+  toNotifyUserIdList: string[];
+
   constructor(opt: { [key: string]: any } = {}) {
     this.TemplateData = opt['TemplateData'] || [];
     this.PIAFTemplate = opt['PIAFTemplate'] || {};
     this.PIAFAttributes = opt['PIAFAttributes'] || {};
     this.XML = opt['XML'] || [];
+    this. toNotifyUserIdList = opt['toNotifyUserIdList'] || [];
     this.Excel = opt['Excel'] || [];
     this.DatabaseTable = opt['DatabaseTable'] || [];
     this.Datasource = opt['Datasource'] || [];

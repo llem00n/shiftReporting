@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DateService } from 'src/app/services/date/date.service';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { User } from '@models/*';
 
 @Component({
   selector: 'app-notifications-users-list',
@@ -7,13 +7,23 @@ import { DateService } from 'src/app/services/date/date.service';
   styleUrls: ['./notifications-users-list.component.scss']
 })
 export class NotificationsUsersListComponent implements OnInit {
-  weekDays = this.dateService.daysOfWeek;
+  @Input() users?: User[];
+  @Input() checkedUsers?: string[];
+
+  @Output() checkedUser = new EventEmitter<string>();
+  @Output() uncheckedUser = new EventEmitter<string>();
 
   constructor(
-    private dateService: DateService
   ) { }
 
   ngOnInit(): void {
+  }
+
+  onChange(event, user) {
+    if (event.checked) 
+      this.checkedUser.emit(user.userId);
+    else 
+      this.uncheckedUser.emit(user.userId);
   }
 
 }

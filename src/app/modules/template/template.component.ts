@@ -93,7 +93,6 @@ export class TemplateComponent implements OnInit {
         this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
         this.dashboardService.setOptions(this.template.body.gridsterOptions)
 
-        console.log(template);
         // this.options = this.template.body.gridsterOptions;
 
         // auro select first ttemplate
@@ -103,7 +102,6 @@ export class TemplateComponent implements OnInit {
       mergeMap(department => this.store.select(allUsers).pipe(
         tap(users => {
           this.departmentUsers = users.filter(user => user.departments.find(dep => dep.departmentId == department.departmentId));
-          console.log(this.departmentUsers);
         })
       ))
     ).subscribe();
@@ -238,6 +236,16 @@ export class TemplateComponent implements OnInit {
     };
     this.dashboard = this.dashboard.filter(({ controlId, forControl }) => !controlsId.includes(controlId) && !controlsId.includes(forControl));
     if (['Excel', 'Xml', 'DatabaseTable'].includes(ifaceName)) this.template.body[allInterfaces[ifaceName].storage] = [];
+  }
+
+  addUserToNotifyList(userId: string) {
+    if (!~this.template.body.toNotifyUserIdList.indexOf(userId))
+      this.template.body.toNotifyUserIdList.push(userId);
+  }
+
+  removeUserFromToNotifyList(userId: string) {
+    if (~this.template.body.toNotifyUserIdList.indexOf(userId))
+      this.template.body.toNotifyUserIdList = this.template.body.toNotifyUserIdList.filter(id => id != userId);
   }
 }
 

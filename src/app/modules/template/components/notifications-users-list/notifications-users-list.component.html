@@ -1,18 +1,7 @@
-<div>
-	<mat-form-field appearance="outline">
-		<mat-label>Time</mat-label>
-		<input matInput type="time" />
-	</mat-form-field>
 
-	<div class="flex flex-row">
-		<div *ngFor="let day of weekDays">
-			<p class="cursor-default p-1 text-xs font-bold rounded-full">{{ day.twoLetters }}</p>
-		</div>
-	</div>
-
-	<div class="mt-2">
-		<p>Users</p>
-
-		<div></div>
-	</div>
+<div *ngFor="let user of users" class="mb-3">
+	<mat-checkbox color="primary" (change)="onChange($event, user)" [checked]="checkedUsers.indexOf(user.userId) != -1">
+		<p>{{ user.firstName }} {{ user.secondName }}</p>
+		<p class="text-xs text-gray-500">{{ user.email }}</p>
+	</mat-checkbox>
 </div>
