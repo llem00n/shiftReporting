@@ -37,6 +37,7 @@ export class SelectUserDepartmentComponent implements OnInit {
           return ;
 
         this.department.setValue(cd.departmentId);
+        this.changeDepartment.emit(this.departments.find(d => d.departmentId == this.department.value));
       })
     ).subscribe();
 
