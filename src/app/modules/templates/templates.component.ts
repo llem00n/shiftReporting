@@ -3,9 +3,11 @@ import { AuthorizationService } from '../authorization/authorization.service';
 import { Store, select } from '@ngrx/store';
 import { State, Template, User } from '@models/*';
 import { TemplateActions } from '@actions/*';
-import { allTemplates } from 'src/app/app-store';
+import { allTemplates, userDepartments } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { TemplateCopyComponent } from './components/template-copy/template-copy.component';
 
 @Component({
   selector: 'app-templates',
@@ -22,6 +24,7 @@ export class TemplatesComponent implements OnInit {
     private authSevice: AuthorizationService,
     private store: Store<State>,
     private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -68,5 +71,23 @@ export class TemplatesComponent implements OnInit {
     const _departmentId = this.departmentId;
     this.store.dispatch(TemplateActions.setEditingTemplate({ template: <Template>{ _departmentId } }));
     this.router.navigate(['configuration/templates/' + 'new'])
+  }
+
+  copy(id:number){
+
+    const templateToCopy = JSON.parse(JSON.stringify(this.templates.find(i => i.templateId === id)));
+    this.dialog.open(TemplateCopyComponent,{data: {
+      templateName:templateToCopy.name,
+      departmentsAvailable:this.currentUser.departments,
+      currentDepartmentId:this.departmentId 
+    }}).afterClosed().subscribe(
+      result => { // result = {departmentId:number,name:string}
+        if(result){
+          templateToCopy._departmentId = result.departmentId;
+          templateToCopy.name = result.name;//the user is asked to change the name if he copies the template in the same department
+          this.store.dispatch(TemplateActions.addTemplate({departmentId:templateToCopy._departmentId,template:templateToCopy}));
+        }
+      }
+    )
   }
 }
