@@ -7,6 +7,11 @@
 <mat-sidenav-container class="h-full" autosize>
   <mat-sidenav #snav [fixedInViewport]="smallScreen" [mode]="smallScreen ? 'over' : 'side'" [opened]="isSnavOpen"
     class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
+    <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
+      <button mat-icon-button color="primary">
+        <mat-icon svgIcon="menu" (click)="snav.toggle()"></mat-icon>
+      </button>
+    </div>   
     <div *ngIf="!isSmall && abbreviation" class="flex flex-col items-center my-4">
       <div class="bg-blue-400 h-16 w-16 rounded-full flex justify-center items-center mb-2">
         <div class="text-gray-100 text-3xl">{{abbreviation}}</div>
@@ -44,7 +49,7 @@
   <mat-sidenav-content>
     <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
       <button mat-icon-button color="primary">
-        <mat-icon svgIcon="menu" (click)="snav.toggle()">icon_name</mat-icon>
+        <mat-icon svgIcon="menu" (click)="snav.toggle()"></mat-icon>
       </button>
     </div>    
     <router-outlet></router-outlet>
