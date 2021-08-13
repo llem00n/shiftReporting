@@ -83,6 +83,7 @@ export class TemplatesComponent implements OnInit {
     }}).afterClosed().subscribe(
       result => { // result = {departmentId:number,name:string}
         if(result){
+          delete templateToCopy.notification;
           templateToCopy._departmentId = result.departmentId;
           templateToCopy.name = result.name;//the user is asked to change the name if he copies the template in the same department
           this.store.dispatch(TemplateActions.addTemplate({departmentId:templateToCopy._departmentId,template:templateToCopy}));
