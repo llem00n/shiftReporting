@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
 import { State, editingTemplate, templateInterfaces, addedTemplate, configurations, allUsers, currentDepartment } from 'src/app/app-store';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Interface, User } from '@models/*';
 import { DashboardService } from './services/dashboard.service';
@@ -31,8 +31,8 @@ export class TemplateComponent implements OnInit {
   selectedControl: DynControl;
   newControlType: string = null;
   isShowTemplateInfo = true
-  title: string = 'Create template';
-  saveButton: string = 'Add';
+  // title: string = 'Create template';
+  // saveButton: string = 'Add';
   formGrinsterOptions: FormGroup;
   interfaces: Interface[];
   storeInterfaces: Interface[];
@@ -49,7 +49,6 @@ export class TemplateComponent implements OnInit {
     private dashboardService: DashboardService,
     private dateService: DateService,
     private dialog: MatDialog,
-    // private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -82,17 +81,24 @@ export class TemplateComponent implements OnInit {
           return;
         }
         let opt = {};
-        if (!template._departmentId) {
-          this.title = `Edit template ${template.name}`;
-          this.saveButton = 'Save';
-          opt = template;
+
+        if (!template._departmentId) opt = template
+        else {
+          const validFromDate = this.dateService.dateLocalJSON().slice(0, 11) + "00:00:00"
+          const validToDate = new Date(validFromDate);
+          validToDate.setFullYear(validToDate.getFullYear() + 30);
+          opt = {
+            templateTypeId: 1,
+            templateTypeName: "Shift template",
+            validFromDate,
+            validToDate: this.dateService.dateLocalJSON(validToDate),
+          }
         }
         template.templateId && this.isInterfacesEnabled && this.store.dispatch(InterfaseActions.getInterfaces({ templateId: template.templateId }));
         this.departmentId = template._departmentId;
         this.template = new Template(opt);
         this.dashboard = this.dashboardService.createDashboard(this.template.body.dashboard);
         this.dashboardService.setOptions(this.template.body.gridsterOptions)
-
         // this.options = this.template.body.gridsterOptions;
 
         // auro select first ttemplate
@@ -103,10 +109,8 @@ export class TemplateComponent implements OnInit {
         tap(users => {
           this.departmentUsers = users.filter(user => user.departments.find(dep => dep.departmentId == department.departmentId));
         })
-      ))
-    ).subscribe();
+      ))).subscribe()
   }
-
 
   ngOnDestroy(): void {
     this.options$.unsubscribe();
@@ -176,7 +180,6 @@ export class TemplateComponent implements OnInit {
         return;
       }
       this.store.dispatch(InterfaseActions.addInterface({ intface, templateId }));
-
     })
 
   }
@@ -195,7 +198,6 @@ export class TemplateComponent implements OnInit {
       this.store.dispatch(TemplateActions.addTemplate({ template, departmentId }));
     } else {
       template.templateId && this.store.dispatch(TemplateActions.updateTemplate({ template }));
-      this.updateInterfaces(template.templateId);
     }
     this.store.pipe(
       select(addedTemplate),
@@ -204,7 +206,8 @@ export class TemplateComponent implements OnInit {
     ).subscribe(temp => {
       this.updateInterfaces(temp.templateId);
       this.store.dispatch(TemplateActions.setAddedTemplate({ template: null }))
-      this.store.dispatch(TemplateActions.setEditingTemplate({ template: temp }))
+      this.store.dispatch(TemplateActions.setEditingTemplate({ template: null }))
+      this.router.navigate(['configuration/templates']);
     })
   }
 

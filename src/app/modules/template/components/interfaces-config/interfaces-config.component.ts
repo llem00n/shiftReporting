@@ -115,28 +115,25 @@ export class InterfacesConfigComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
+
       if (!result) return;
       const settings = {};
       Object.keys(allInterfaces[name].settings).map(key => {
         settings[key] = result[allInterfaces[name].settings[key].key];
       })
+      const intface = <Interface>{}
       if (!value) {
-        const intface = <Interface>{
-          ...settings,
-          interfaceType: name,
-          name,
-          isActive: true,
-          updating: true,
-        };
+        Object.assign(intface, settings);
+        intface.isActive = true;
+        intface.interfaceType = name;
+        intface.name = name;
         this.interfaces.push(intface);
         this.updateInterface(name, intface)
-        // this.store.dispatch(InterfaseActions.addInterface({ intface, templateId: this.templateId }))
         this.changeSettings.emit(intface);
       }
       else {
-        const intface = <Interface>{}
         Object.assign(intface, value, settings);
-        // this.store.dispatch(InterfaseActions.updateInterface({ intface, templateId: this.templateId }))
+        this.updateInterface(name, intface)
         this.changeSettings.emit(intface);
       }
     });

@@ -1,5 +1,3 @@
-// import { Template } from '@models/*';
-
 import { Template } from '../template/template.model';
 
 export class DataEntry {

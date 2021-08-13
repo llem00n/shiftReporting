@@ -16,6 +16,7 @@ interface Atribute {
   readonly?: boolean;
   valueKey?: string;
   preKey?: string;
+  value?: string;
 }
 
 @Injectable({
@@ -119,6 +120,8 @@ export class DashboardService {
           eventFrameTemplateName: iface.setting3,
         }).subscribe(efTemplate => {
           if (efTemplate) efTemplate.attributes.map(attr => attributes.push({ ...attr, preKey: this.preKey, label: attr.name }));
+          // console.log(attributes);
+          attributes.find(a => a.name === 'TemplateName')['value'] = iface.setting3;
           this.createAttributeControls(dashboard, attributes);
           template.body.PIAFTemplate = { ...this.PIAFControlList };
           this.setOptionsMaxDimention(dashboard)
@@ -133,6 +136,7 @@ export class DashboardService {
     attributes.map(attr => {
       const indexY = this.lastRow(dashboard);
       const control = this.createControl(attr, indexY);
+      if (!control) return;
       dashboard.push(control);
       dashboard.push(this.createLabel(attr, indexY, control.controlId));
     });
@@ -159,7 +163,8 @@ export class DashboardService {
   private createControl(attribute: Atribute, y: number): DynControl {
     const { type, preKey, name } = attribute
     const gridItem: GridsterItem = { cols: 6, rows: 1, x: 5, y };
-    const controlType = this.dataTypeService.getType(type).allowableControls[0];
+    const controlType = this.dataTypeService.getType(type)?.allowableControls[0];
+    if (!controlType) return null;
     const model = dynComponents.getModel(controlType);
     const controlId = `${preKey ? preKey + '-' : ''}${name}-${controlType}${Date.now().toString(16)}`;
     if (preKey) {
@@ -175,7 +180,10 @@ export class DashboardService {
       label: attribute.label,
       name: attribute.name,
       valueType: attribute.type,
+      validators: { required: true },
+      readonly: attribute.readonly,
     }
+    if (attribute.value) opt['value'] = attribute.value;
     return new model(opt);
   }
 }

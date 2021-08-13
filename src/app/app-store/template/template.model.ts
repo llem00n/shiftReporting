@@ -88,7 +88,7 @@ interface PIAFTemplate {
 };
 
 interface PIAFAttributes {
-  Timestemp: string;
+  Timestamp: string;
   Attributes: Attribute[];
 };
 

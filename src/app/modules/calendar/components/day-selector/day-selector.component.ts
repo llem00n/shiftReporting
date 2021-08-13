@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { DateService } from 'src/app/services/date/date.service';
 
 @Component({
   selector: 'app-day-selector',
@@ -12,16 +13,21 @@ export class DaySelectorComponent implements OnInit {
   // controlDay = new FormControl('')
   // weekStr: string;
   constructor(
-    // private dateService: DateService
+    private dateService: DateService
   ) {
 
   }
   ngOnInit() {
   }
-  dateChange(a, e) {
-    this.changeDay.emit(e.value)
+  get dayInput() { return this.dateService.getLocalDate(this.day).slice(0, 10) }
 
+  change(e) {
+    this.changeDay.emit(new Date(e.target.value))
   }
+  // dateChange(a, e) {
+  //   this.changeDay.emit(e.value)
+
+  // }
   nextDay() {
     const day = new Date(this.day)
     day.setHours(0, 0, 0, 0);

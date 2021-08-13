@@ -18,7 +18,6 @@ import { environment } from 'src/environments/environment';
 const routes: Routes = [
   {
     path: 'configuration',
-    // component: ConfigurationComponent,
     canActivate: [AuthGuard],
     children: [
       { path: 'plants', component: ConfigPlantsComponent, canActivate: [AuthGuard, RoleGuard] },
@@ -36,8 +35,6 @@ const routes: Routes = [
   },
   { path: 'dataentry', component: DataEntryComponent, canActivate: [AuthGuard] },
   { path: 'callback.html', component: LoginComponent },
-
-  // { path: '', redirectTo: 'calendar', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'calendar', pathMatch: 'full' },
 ];
 

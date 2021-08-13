@@ -25,7 +25,12 @@ export class ScheduleCardComponent {
   get validToDate() {
     return new Date(this.schedule.validToDate).toLocaleDateString()
   }
-
+  get startTime(){    
+    return this.dateService.getLocalTime(this.schedule.startTime)
+  }
+  get endTime(){
+    return this.dateService.getLocalTime(this.schedule.endTime)
+  }
   delete() {
     this.clickDelete.emit(this.schedule.scheduleId)
   }

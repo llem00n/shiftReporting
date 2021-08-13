@@ -48,29 +48,6 @@ export class ScheduleHttpService {
       loadingMsg: 'Loading the schedule ...',
     }
     return this.httpService.post<AppHttpResponse>(options);
-
-    // return of({
-    //   status: 200,
-    //   body: [
-    //     <Schedule>{
-    //       ScheduleID: 1,
-    //       DepartmentID: 4,
-    //       ShiftID: 2,
-    //       StartTime: "0111-11-11T09:08:56",
-    //       EndTime: "0011-11-11T09:08:56Z",
-    //       RecurEveryWeeks: 1,
-    //       Monday: true,
-    //       Tuesday: false,
-    //       Wednesday: true,
-    //       Thursday: false,
-    //       Friday: false,
-    //       Saturday: false,
-    //       Sunday: false,
-    //     },
-    //     // <Schedule>{},
-    //     // <Schedule>{},
-    //   ]
-    // });
     return of(null)
   }
 }

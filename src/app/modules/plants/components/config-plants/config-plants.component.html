@@ -1,13 +1,13 @@
-<div class="p-4 flex items-center max-w-6xl">
+<div *ngIf="plantsReceived" class="p-4 flex items-center max-w-6xl">
   <div class="menu-button-place"></div>
-  <mat-form-field appearance="outline" class="flex-1">
+  <!-- <mat-form-field appearance="outline" class="flex-1">
     <mat-label>Search</mat-label>
     <div matSuffix class="flex items-center text-gray-500">
       <mat-icon svgIcon="magnify"></mat-icon>
     </div>
     <input matInput placeholder="Search" [formControl]='search' autocomplete="'false'">
-  </mat-form-field>
-  <div class="pb-4 mx-4">
+  </mat-form-field> -->
+  <div *ngIf="!plants.length" class="pb-4 mx-4">
     <button mat-mini-fab color="primary" (click)="addItem()">
       <mat-icon svgIcon="plus"></mat-icon>
     </button>

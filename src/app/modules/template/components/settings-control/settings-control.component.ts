@@ -17,7 +17,7 @@ import { DataTypeService } from 'src/app/services/data-type/data-type.service';
 export class SettingsControlComponent implements OnInit {
   result = {
     body: <TemplateBody>{},
-    control: {}
+    control: <DynControl>{}
   };
 
   control: DynControl;
@@ -44,6 +44,19 @@ export class SettingsControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialData();
+  }
+
+  get attributeString() {
+    const pIAFAttributes = this.result.body.PIAFAttributes || this.data.body.PIAFAttributes
+    const getPath = () => {
+      const attr = pIAFAttributes.Attributes.find(a => a.key === this.data.control.controlId);
+      return attr ? this.setPiafString(attr.attributeName).split('\\').slice(4).join('\\ ') : null;
+    }
+    const attribute = pIAFAttributes.Timestamp === this.data.control.controlId ?
+      'Timestamp' :
+      getPath();
+
+    return attribute
   }
 
   getEnabledDatasource(): boolean {
@@ -102,7 +115,6 @@ export class SettingsControlComponent implements OnInit {
           info: '',
         };
       })
-    // });
   }
 
   changeInterface(iface) {
@@ -133,15 +145,12 @@ export class SettingsControlComponent implements OnInit {
           attributeName: res.path
         })
       })
-
     } else {
-      if (!this.result.body.hasOwnProperty(ifaceStorage)) this.result.body[ifaceStorage] = [...storage]
-
+      if (!this.result.body.hasOwnProperty(ifaceStorage)) this.result.body[ifaceStorage] = [...storage];
       if (!iface.checked) {
         this.result.body[ifaceStorage].push(this.data.control.controlId)
         this.interfacesList.find(i => i.name === iface.name).checked = true;
-      }
-      else {
+      } else {
         this.result.body[ifaceStorage] = this.result.body[ifaceStorage].filter(i => i !== this.data.control.controlId);
         this.interfacesList.find(i => i.name === iface.name).checked = false;
       };

@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Output file settings</h2>
-<div [formGroup]="form">
+<div mat-dialog-content [formGroup]="form">
   <mat-form-field appearance="outline" class="w-full">
     <mat-label>{{data.settings.setting1.title}}</mat-label>
     <input matInput formControlName="connectionString">
@@ -10,9 +10,9 @@
     <input matInput formControlName="tableName">
     <mat-icon matSuffix [svgIcon]="data.settings.setting2.icon" class="text-gray-600"></mat-icon>
   </mat-form-field>
-  <mat-dialog-actions class="flex justify-end">
-    <button mat-button color="primary" mat-dialog-close>CANCEL</button>
-    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid">SAVE</button>
-  </mat-dialog-actions>
 </div>
+<mat-dialog-actions class="flex justify-end">
+  <button mat-button color="primary" mat-dialog-close>CANCEL</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-raised-button color="primary" [mat-dialog-close]="form.value" [disabled]="!form.valid">SAVE</button>
+</mat-dialog-actions>

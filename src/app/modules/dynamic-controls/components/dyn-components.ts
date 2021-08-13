@@ -29,12 +29,12 @@ export const dynComponents = {
   // input: { component: InputComponent, title: 'Input' },
   label: { component: DynLabelComponent, title: 'Label', model: DynLabel },
   text: { component: DynTextComponent, title: 'Text', model: DynText },
+  textarea: { component: DynTextareaComponent, title: 'Textarea', model: DynTextarea },
   number: { component: DynNumberComponent, title: 'Number', model: DynNumber },
   select: { component: DynSelectComponent, title: 'Select', model: DynSelect },
   checkbox: { component: DynCheckboxComponent, title: 'Checkbox', model: DynCheckbox },
   datetime: { component: DynDatetimeComponent, title: 'Datetime', model: DynDatetime },
   time: { component: DynTimeComponent, /* title: 'Time', */ model: DynTime },
-  textarea: { component: DynTextareaComponent, /* title: 'Textarea', */ model: DynTextarea },
   color: { component: DynColorComponent, /* title: 'Color', */ model: DynColor },
   date: { component: DynDateComponent, /* title: 'Date', */ model: DynDate },
 }

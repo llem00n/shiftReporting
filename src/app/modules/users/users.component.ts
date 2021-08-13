@@ -60,7 +60,6 @@ export class UsersComponent implements OnInit {
       map(users => {
         if (this.currentUser.roleId === 1) return users;
         if (this.currentUser.roleId === 2) return users.filter(u => u.roleId > this.currentUser.roleId);
-
         const cus = this.currentUser.departments.map(d => d.departmentId);
         return users.filter(u => {
           if (u.roleId <= this.currentUser.roleId) return false;
@@ -74,24 +73,6 @@ export class UsersComponent implements OnInit {
       })
     )
   }
-
-  // getUsers() {
-  //   let respCount = 0;
-  //   this.store.pipe(
-  //     select(allUsers),
-  //   ).subscribe((users: User[]) => {
-  //     if (users.length === 0 && respCount === 0) {
-  //       ++respCount;
-  //       this.store.dispatch(UserActions.getAllUsers());
-  //       return
-  //     };
-  //     this.users = users;
-  //     this.filterUsers = users;
-  //     this.search.setValue('')
-  //   })
-  // }
-
-
 
   addItem() {
     const user = <User>{
