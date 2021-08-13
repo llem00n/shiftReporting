@@ -11,11 +11,12 @@ export class DynDatetime extends BaseControl {
     { controlId: 'endShiftDatetimeValidation', label: 'Maximum end of the shift', type: 'checkbox' },
   ]
 
-  constructor(options: {} = {}) {
-    super(options);
+  constructor(opt: {} = {}) {
+    super(opt);
     this.settings = this.settings.concat(this._settings);
 
     this.controlId = this.controlId || this.createControlId(this.type);
+    this.name = opt['name'] || this.type
   }
   get startShiftDatetimeValidation() {
     return <boolean>this.validators['startShiftDatetimeValidation'] || false;

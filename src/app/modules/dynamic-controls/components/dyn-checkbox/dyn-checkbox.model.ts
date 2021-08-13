@@ -12,6 +12,7 @@ export class DynCheckbox extends BaseControl {
   constructor(opt: {} = {}) {
     super(opt);
     this.controlId = this.controlId || this.createControlId(this.type);
+    this.name = opt['name'] || this.type
     this.gridItem && Object.assign(this.gridItem, this.diffGridItem)
   }
 } 

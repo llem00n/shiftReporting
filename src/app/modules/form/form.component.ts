@@ -36,7 +36,9 @@ export class FormComponent implements OnChanges {
     controls.map(i => {
       const validators: ValidatorFn[] = [];
       i.validators && Object.keys(i.validators).map(controlId => {
-        if (typeof (i.validators[controlId]) === 'boolean') validators.push(Validators[controlId])
+        if (typeof (i.validators[controlId]) === 'boolean') {
+          i.validators[controlId] && validators.push(Validators[controlId])
+        }
         else validators.push(Validators[controlId](i.validators[controlId]));
       });
       group.addControl(i.controlId, new FormControl(this.setValue(i, this.values), validators));

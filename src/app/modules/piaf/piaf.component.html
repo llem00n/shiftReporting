@@ -1,39 +1,36 @@
-<mat-horizontal-stepper #stepper>
+<mat-horizontal-stepper #stepper linear>
 
   <mat-step *ngIf="steps.server" [completed]="!!selectedServer" aria-label="server">
     <ng-template matStepLabel>Choose server</ng-template>
     <ng-template matStepperIcon="edit">
       <mat-icon svgIcon="pencil"></mat-icon>
     </ng-template>
-    <div class="overflow">
+    <div mat-dialog-content>
       <app-piaf-list [list]='servers' [icon]="'server'" [active]='selectedServer' (select)="selectServer($event)">
       </app-piaf-list>
     </div>
   </mat-step>
 
-
   <mat-step *ngIf="steps.database" aria-label="database" [completed]="!!selectedDatabase">
     <ng-template matStepLabel>Choose Database</ng-template>
-    <div class="overflow">
+    <div mat-dialog-content>
       <app-piaf-list [icon]="'database'" [list]='databases' [active]='selectedDatabase'
         (select)="selectDatabase($event)"></app-piaf-list>
     </div>
   </mat-step>
 
-
   <mat-step *ngIf="steps.attribute" aria-label="attribute" [completed]="!!selectedAttribute">
     <ng-template matStepLabel>Chose attribute</ng-template>
-    <div class="overflow">
+    <div mat-dialog-content>
       <app-piaf-tree [serverName]='selectedServer' [databaseName]='selectedDatabase' [allowedTypes]="data.allowedTypes"
         (selectAttribute)='selectAttribute($event)' [stepper]='stepper'>
       </app-piaf-tree>
     </div>
   </mat-step>
 
-
   <mat-step *ngIf="steps.template" aria-label="eventFrameTemplate" [completed]="!!selectedPiefTemplateName">
     <ng-template matStepLabel>Choose event frame template</ng-template>
-    <div class="overflow">
+    <div mat-dialog-content>
       <app-piaf-list icon='note' [list]='piefTemplates' [active]='selectedPiefTemplateName'
         (select)="selectPiefTemplate($event)">
       </app-piaf-list>

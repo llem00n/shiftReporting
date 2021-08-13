@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-// import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DynamicControlsModule } from './modules/dynamic-controls/dynamic-controls.module';
@@ -43,7 +42,6 @@ import { ConfigModule } from './modules/config/config.module';
     ConfigurationModule,
     AppStoreModule,
     HttpClientModule,
-    // AngularSvgIconModule.forRoot(),
     BrowserAnimationsModule,
     MessageModule,
     GridModule,
@@ -61,7 +59,6 @@ import { ConfigModule } from './modules/config/config.module';
     PiafModule,
     SchedulesModule,
     ConfigModule,
-    // ShiftsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

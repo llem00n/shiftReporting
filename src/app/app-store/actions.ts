@@ -8,12 +8,6 @@ import * as UserActions from './user/user.actions';
 import * as InterfaseActions from './interface/interface.actions';
 import * as ConfigurationsActions from './configuration/configuration.actions';
 
-// import * as DboardBuildActions from './dboard-build/dboard-build.actions';
-// import * as GeneralActions from './general/general.actions';
-// import * as FillDataActions from './fill-data/fill-data.actions';
-// import * as AuthActions from './auth/auth.actions';
-
-
 export {
   PlantActions,
   DepartmentActions,

@@ -35,8 +35,7 @@ export class DepartmentsComponent implements OnInit {
     }
     const str = string.toLowerCase()
     this.filterDepartments = this.departments.filter(i => (
-      true
-      || i.name.toLowerCase().includes(str)
+      i.name.toLowerCase().includes(str)
       || i.description.toLowerCase().includes(str)
     ))
   }

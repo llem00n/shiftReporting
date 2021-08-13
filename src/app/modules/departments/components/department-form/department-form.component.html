@@ -1,6 +1,8 @@
 <div>
   <p mat-dialog-title>Department settings</p>
-  <app-form [controls]='config' [values]="department" (form)="getForm($event)"></app-form>
+  <div mat-dialog-content>
+    <app-form [controls]='config' [values]="department" (form)="getForm($event)"></app-form>
+  </div>
   <mat-dialog-actions class="flex justify-end">
     <button mat-button color="primary" mat-dialog-close>CANCEL</button>
     <button mat-raised-button color="primary" [disabled]='form.invalid' [mat-dialog-close]="department">SAVE</button>

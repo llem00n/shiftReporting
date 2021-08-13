@@ -6,8 +6,7 @@ import { Plant } from './plant.model';
 
 
 export const getPlants = createAction(
-  '[Plant/API] Get Plants',
-  // props<{ plants: Plant[] }>()
+  '[Plant/API] Get Plants'
 );
 export const getPlantsSuccess = createAction(
   '[Plant/API] Get Plants Success',
@@ -22,22 +21,6 @@ export const addPlantSuccess = createAction(
   '[Plant/API] Add Plant Success',
   props<{ plant: Plant }>()
 );
-
-// export const upsertPlant = createAction(
-//   '[Plant/API] Upsert Plant',
-//   props<{ plant: Plant }>()
-// );
-
-// export const addPlants = createAction(
-//   '[Plant/API] Add Plants',
-//   props<{ plants: Plant[] }>()
-// );
-
-// export const upsertPlants = createAction(
-//   '[Plant/API] Upsert Plants',
-//   props<{ plants: Plant[] }>()
-// );
-
 export const updatePlant = createAction(
   '[Plant/API] Update Plant',
   props<{ plant: Plant }>()
@@ -47,11 +30,6 @@ export const updatePlantSucces = createAction(
   props<{ plant: Update<Plant> }>()
 );
 
-// export const updatePlants = createAction(
-//   '[Plant/API] Update Plants',
-//   props<{ plants: Update<Plant>[] }>()
-// );
-
 export const deletePlant = createAction(
   '[Plant/API] Delete Plant',
   props<{ id: number }>()
@@ -60,12 +38,3 @@ export const deletePlantSuccess = createAction(
   '[Plant/API] Delete Plant Success',
   props<{ id: number }>()
 );
-
-// export const deletePlants = createAction(
-//   '[Plant/API] Delete Plants',
-//   props<{ ids: number[] }>()
-// );
-
-// export const clearPlants = createAction(
-//   '[Plant/API] Clear Plants'
-// );

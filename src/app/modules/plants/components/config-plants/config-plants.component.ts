@@ -18,7 +18,8 @@ import { FormControl } from '@angular/forms';
 export class ConfigPlantsComponent implements OnInit {
   plants: Plant[] = [];
   filterPlants: Plant[];
-  search = new FormControl('')
+  search = new FormControl('');
+  plantsReceived = false;
 
   constructor(
     private dialog: MatDialog,
@@ -54,6 +55,7 @@ export class ConfigPlantsComponent implements OnInit {
         return
       };
       this.plants = plants;
+      this.plantsReceived = true;
       this.filterPlants = plants;
       this.search.setValue('')
     })

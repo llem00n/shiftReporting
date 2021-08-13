@@ -17,7 +17,6 @@ export class DataEntryEffects {
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body }))
     )),
-    // mergeMap(_ => EMPTY)
   ));
 
   getLatestDataEntry$ = createEffect(() => this.actions$.pipe(
@@ -26,7 +25,6 @@ export class DataEntryEffects {
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.getLatestDataEntrySuccess({ dataEntry: resp.body }))
     )),
-    // mergeMap(_ => EMPTY)
   ));
 
   getDataEntriesOnDate$ = createEffect(() => this.actions$.pipe(
@@ -35,7 +33,6 @@ export class DataEntryEffects {
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.setDataEntriesOnDate({ dataEntries: resp.body }))
     )),
-    // mergeMap(_ => EMPTY)
   ));
 
   updateDataEntry$ = createEffect(() => this.actions$.pipe(
@@ -44,7 +41,6 @@ export class DataEntryEffects {
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body }))
     )),
-    // mergeMap(_ => EMPTY)
   ));
 
   submitDataEntry$ = createEffect(() => this.actions$.pipe(
@@ -53,7 +49,6 @@ export class DataEntryEffects {
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.setCurrentDataEntry({ currentDataEntry: resp.body }))
     )),
-    // mergeMap(_ => EMPTY)
   ));
 
   getDataEntryLogs$ = createEffect(() => this.actions$.pipe(
@@ -62,7 +57,6 @@ export class DataEntryEffects {
       filter(resp => resp && resp.status === 200),
       map(resp => DataEntryActions.getDataEntryLogsSuccess({ dataEntryLogs: resp.body }))
     )),
-    // mergeMap(_ => EMPTY)
   ));
 
 

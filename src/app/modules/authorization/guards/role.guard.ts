@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 export const routerLinks = [
   { key: 'calendar', title: 'Calendar', icon: 'calendar-month', allowedRoles: [1, 2, 3, 4, 5] },
-  { key: 'configuration/plants', title: 'Plants', icon: 'factory', allowedRoles: [1, 2] },
+  { key: 'configuration/plants', title: 'Plant', icon: 'factory', allowedRoles: [1, 2] },
   { key: 'configuration/departments', title: 'Departments', icon: 'graph-outline', allowedRoles: [1, 2] },
   { key: 'configuration/shifts', title: 'Shifts', icon: 'calendar', allowedRoles: [1] },
   { key: 'configuration/schedules', title: 'Schedule', icon: 'calendar-clock', allowedRoles: [1, 2, 3] },

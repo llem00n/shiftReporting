@@ -28,6 +28,13 @@ export class DateService {
 
   constructor() { }
 
+  getLocalTime(time: string) {
+    const date = new Date('0001-01-01T' + time);
+    const dateStr = date.toLocaleTimeString()
+    const sp = dateStr.indexOf(':', 3);
+    return dateStr.slice(0, sp,) + dateStr.slice(sp + 3)
+  }
+
   get daysOfWeek(): Day[] {
     return this._daysOfWeek;
   }
@@ -70,12 +77,7 @@ export class DateService {
   getWeekString(year: number, week: number): string {
     const monday = this.getMonday(year, week).toDateString();
     const sunday = new Date(new Date(monday).valueOf() + 6 * this.day_ms).toDateString()
-    const result = `
-    ${monday.slice(4, 10)} 
-    ${monday.slice(11) !== sunday.slice(11) ? monday.slice(11) : ''} - 
-    ${monday.slice(4, 7) !== sunday.slice(4, 7) ? sunday.slice(4, 7) : ''}
-    ${sunday.slice(8, 10)}, 
-    ${sunday.slice(11)}`
+    const result = `${monday.slice(4, 10)}${monday.slice(11) !== sunday.slice(11) ? ' ' + monday.slice(11) + ' ' : ' '}-${monday.slice(4, 7) !== sunday.slice(4, 7) ? ' ' + sunday.slice(4, 7) : ''} ${sunday.slice(8, 10)}, ${sunday.slice(11)}`
     return result;
   }
 
@@ -86,8 +88,9 @@ export class DateService {
     return this.getWeek(new Date(this.getMonday(year, week).valueOf() - 1 * this.day_ms));
   }
 
-  dateLocalJSON(date: Date): string {
-    return new Date(date.valueOf() - date.getTimezoneOffset() * 60 * 1000).toJSON().slice(0, 23);
+  dateLocalJSON(date?: Date): string {
+    const d = date || new Date();
+    return new Date(d.valueOf() - d.getTimezoneOffset() * 60 * 1000).toJSON().slice(0, 23);
   }
 
   getWeekJSON(year: number, week: number): { from: string, to: string } {
@@ -115,4 +118,5 @@ export class DateService {
     const f = new Date(from);
     return Math.round((this.lastMonday(d).valueOf() - this.lastMonday(f).valueOf()) / (this.day_ms)) / 7
   }
+
 }

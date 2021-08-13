@@ -12,5 +12,6 @@ export class DynTextarea extends BaseControl {
     this.controlId = this.controlId || this.createControlId(this.type);
     this.placeholder = opt['placeholder'] || '';
     this.gridItem && Object.assign(this.gridItem, this.diffGridItem)
+    this.name = opt['name'] || this.type;
   }
 } 

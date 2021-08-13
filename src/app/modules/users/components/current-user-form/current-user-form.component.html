@@ -1,5 +1,5 @@
 <p mat-dialog-title>User settings</p>
-<div>
+<div mat-dialog-content>
   <app-form [flex]='true' [controls]='name' [values]="editingUser" (form)="getForm($event)"></app-form>
   <app-form [flex]='true' [controls]='login' [values]="editingUser" (form)="getForm($event)"></app-form>
   <app-form [flex]='true' [controls]='mail' [values]="editingUser" (form)="getForm($event)"></app-form>

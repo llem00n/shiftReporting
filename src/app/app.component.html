@@ -1,9 +1,3 @@
-<!-- <section class="main h-screen flex-col">   -->
-<!-- <app-header></app-header> -->
-<!-- <div class="flex-1"> -->
-<!-- <router-outlet></!-->
-<!-- </div> -->
-<!-- </section> -->
 <mat-sidenav-container class="h-full" autosize>
   <mat-sidenav #snav [fixedInViewport]="smallScreen" [mode]="smallScreen ? 'over' : 'side'" [opened]="isSnavOpen"
     class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
@@ -22,12 +16,6 @@
       </div>
     </div>
     <mat-nav-list>
-      <!-- <mat-list-item [routerLink]="['/calendar']">
-        <mat-icon mat-list-icon svgIcon="calendar-month" routerLinkActive="mat-primary"></mat-icon>
-        <p mat-line *ngIf="!isSmall" class="" routerLinkActive="text-primary">Calendar</p>
-      </mat-list-item>
-      <div *ngIf="!isSmall" class="text-xs font-bold mt-8 mx-4">CONFIGURATION</div> -->
-
       <div *ngFor="let item of config">
         <mat-list-item *ngIf="item.isShow" [routerLink]="'./' + item.key" (click)="smallScreen && snav.toggle()">
           <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
@@ -46,7 +34,7 @@
       <button mat-icon-button color="primary">
         <mat-icon svgIcon="menu" (click)="snav.toggle()">icon_name</mat-icon>
       </button>
-    </div>    
+    </div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

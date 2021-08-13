@@ -82,25 +82,28 @@ export class TemplatesListComponent implements OnInit, OnChanges {
 
   createData(data: { templates: Template[], dataEntries: DataEntry[] }) {
     const {startDate, endDate, deadLine} = this.shift.shiftDates;
-    const templates = data.templates.map((template: Template) => {
+    const templates = []; 
+    data.templates.map((template: Template) => {
       let dataEntry: DataEntry = null;
       data.dataEntries.map((item: DataEntry) => {
         if ((item.template.templateId === template.templateId) && this.dateService.isBetween(item.createDate, startDate, endDate)) dataEntry = item
       });
+      
+      if (!dataEntry && !this.dateService.isBetween(startDate, template.validFromDate, template.validToDate)) return;
       const getStyle = () => {
         if (new Date() < startDate) return this.style.lock;
         if (!dataEntry) return this.style.missed;
         if (dataEntry.submitDate) return this.style.submited;
         return this.style.open;
       }
-      return {
+      templates.push ({
         style: getStyle(),
         template,
         dataEntry,
         startDate,
         endDate,
         deadLine
-      };
+      });
     })
     this.templates = templates;
     this.calendarHight && this.templates && this.splitTemplates();
