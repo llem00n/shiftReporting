@@ -9,6 +9,8 @@ export class DynLabel extends BaseControl {
     { controlId: 'bold', label: 'Bold', type: 'checkbox' },
     { controlId: 'italic', label: 'Italic', type: 'checkbox' },
     { controlId: 'underline', label: 'Underline', type: 'checkbox' },
+    { controlId: 'fSize', label: 'Font Size', type: 'select' }, //xx-small;x-small;small;medium;large;x-large;xx-large;
+    { controlId: 'fFamily', label: 'Font Family', type: 'select' } //Arial,Calibri,...
     // { controlId: 'max', label: 'Maximum value', type: 'number' },
   ]
 
