@@ -43,7 +43,7 @@ export class DataEntryCookieSenderService {
   private add(dataEntry: DataEntry, result: BehaviorSubject<boolean>) {
     setTimeout(
       () => {
-        this.dataEntryHttpService.addDataEntry(dataEntry).pipe(
+        this.dataEntryHttpService.addDataEntry(dataEntry, true).pipe(
           tap(resp => {
             if (resp)
               result.next(true);
@@ -59,7 +59,7 @@ export class DataEntryCookieSenderService {
   private update(dataEntry: DataEntry, result: BehaviorSubject<boolean>) {
     setTimeout(
       () => {
-        this.dataEntryHttpService.updateDataEntry(dataEntry).pipe(
+        this.dataEntryHttpService.updateDataEntry(dataEntry, true).pipe(
           tap(resp => {
             if (resp)
               result.next(true);
@@ -75,7 +75,7 @@ export class DataEntryCookieSenderService {
   private submit(dataEntry: DataEntry, result: BehaviorSubject<boolean>) {
     setTimeout(
       () => {
-        this.dataEntryHttpService.submitDataEntry(dataEntry).pipe(
+        this.dataEntryHttpService.submitDataEntry(dataEntry, true).pipe(
           tap(resp => {
             if (resp)
               result.next(true);
