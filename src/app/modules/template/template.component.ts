@@ -4,7 +4,7 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
-import { State, editingTemplate, templateInterfaces, addedTemplate, configurations, allUsers, currentDepartment } from 'src/app/app-store';
+import { State, editingTemplate, templateInterfaces, addedTemplate, configurations, allUsers, currentDepartment, connectionStatus } from 'src/app/app-store';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Interface, User } from '@models/*';

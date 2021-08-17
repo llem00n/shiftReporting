@@ -14,6 +14,7 @@ import { FormControl } from '@angular/forms';
 })
 export class SelectUserDepartmentComponent implements OnInit {
   @Output() changeDepartment = new EventEmitter<Department>()
+  @Input() disabled?: boolean;
   department = new FormControl(null);
   departments: Department[]
   constructor(

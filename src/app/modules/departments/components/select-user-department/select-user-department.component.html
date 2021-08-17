@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" class="w-full">
   <mat-label>Department</mat-label>
-  <mat-select [formControl]="department">
+  <mat-select [formControl]="department" [disabled]="this.disabled">
     <mat-option *ngFor="let opt of departments" [value]="opt.departmentId">
       {{opt.name}}
     </mat-option>
