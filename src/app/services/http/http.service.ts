@@ -6,6 +6,9 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
 import { waitForAsync } from '@angular/core/testing';
 import { OidcClientService } from 'src/app/modules/authorization/oidc-client.service';
+import { Store } from '@ngrx/store';
+import { State } from '@models/*';
+import { ConnecitonActions } from '@actions/*';
 
 export interface AppHttpRequest {
   // method: string,
@@ -36,6 +39,7 @@ export class HttpService {
     private http: HttpClient,
     private message: MessageService,
     private oidcClientService: OidcClientService,
+    private store: Store<State>,
   ) { }
 
   post<T>(options: AppHttpRequest): Observable<AppHttpResponse> {
@@ -50,6 +54,8 @@ export class HttpService {
           this.message.alertMessage(options.successMsg)
         else
           this.message.close();
+
+        this.store.dispatch(ConnecitonActions.setConnectionStatus({isConnected: true}));
       }),
       map(resp => { return <AppHttpResponse>{ status: resp.status, body: resp.body } }),
       catchError((error: HttpErrorResponse) => {
@@ -57,6 +63,8 @@ export class HttpService {
           this.message.errorMessage(`${error.error.message || error.error.title || options.errorMsg}`);
         else
           this.message.close();
+        
+          this.store.dispatch(ConnecitonActions.setConnectionStatus({isConnected: false}));
         return of(null)
       })
     )
