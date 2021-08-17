@@ -14,7 +14,10 @@ import { FormControl } from '@angular/forms';
 })
 export class SelectUserDepartmentComponent implements OnInit {
   @Output() changeDepartment = new EventEmitter<Department>()
-  @Input() disabled?: boolean;
+  @Input() set disabled(is: boolean) {
+    if (is) this.department.disable();
+    else this.department.enable();
+  }
   department = new FormControl(null);
   departments: Department[]
   constructor(
