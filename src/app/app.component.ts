@@ -13,6 +13,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { CurrentUserFormComponent } from './modules/users/components/current-user-form/current-user-form.component';
 import { DataEntryCookieSenderService } from './app-store/data-entry/data-entry-cookie-sender.service';
+import { ConnectionCheckerService } from './app-store/connection/connection-checker.service';
 
 @Component({
   selector: 'app-root',
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
     private store: Store<State>,
     private dialog: MatDialog,
     private dataEntryCookieSender: DataEntryCookieSenderService,
+    private connectionCheckerService: ConnectionCheckerService,
   ) { }
 
 
@@ -64,6 +66,7 @@ export class AppComponent implements OnInit {
     ).subscribe();
 
     this.dataEntryCookieSender.send('data-entry-backup');
+    this.connectionCheckerService.start(5000);
   }
 
   editUserInfo() {

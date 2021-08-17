@@ -72,6 +72,12 @@ export class HttpService {
 
   get(options: AppHttpRequest): Observable<any> {
     const url = `${this.baseUrl}/${options.url}`
-    return this.http.get(url)
+    return this.http.get(url, {responseType: 'text'}).pipe(
+      tap(_ => this.store.dispatch(ConnecitonActions.setConnectionStatus({isConnected: true}))),
+      catchError(_ => {
+        this.store.dispatch(ConnecitonActions.setConnectionStatus({isConnected: false}));
+        return of (null)
+      })
+    )
   }
 }
