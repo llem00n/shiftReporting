@@ -15,14 +15,14 @@
           <p class="text-gray-800 font-bold mb-1">{{userName}}</p>
           <p class="text-gray-600 text-xs uppercase">{{userRole}}</p>
         </div>
-        <button mat-icon-button (click)="editUserInfo()">
+        <button mat-icon-button (click)="editUserInfo()" [disabled]="!isConnected">
           <mat-icon svgIcon="pencil" class="text-gray-600"></mat-icon>
         </button>
       </div>
     </div>
     <mat-nav-list>
       <div *ngFor="let item of config">
-        <mat-list-item *ngIf="item.isShow" [routerLink]="'./' + item.key" (click)="smallScreen && snav.toggle()">
+        <mat-list-item *ngIf="item.isShow" (click)="smallScreen && snav.toggle() || (isConnected && redirect('./' + item.key))">
           <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
           <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
         </mat-list-item>
