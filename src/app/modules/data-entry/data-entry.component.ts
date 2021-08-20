@@ -198,6 +198,7 @@ export class DataEntryComponent implements OnInit {
     if (!this.getSavePermission()) return;
     this.dataEntry.createDate = this.dataEntry.createDate || this.getCreateDate();
     this.dataEntry.submitDate = this.dateService.getLocalDate();
+    this.dataEntry.submitUserId = this.user.userId;
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
   }
 }

@@ -243,7 +243,7 @@ export class TemplateComponent implements OnInit {
 
   addUserToNotifyList(userId: string) {
     if (!~this.template.body.toNotifyUserIdList.indexOf(userId))
-      this.template.body.toNotifyUserIdList.push(userId);
+      this.template.body.toNotifyUserIdList = this.template.body.toNotifyUserIdList.concat([userId]);
   }
 
   removeUserFromToNotifyList(userId: string) {
