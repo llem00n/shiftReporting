@@ -26,4 +26,12 @@ export class NotificationsUsersListComponent implements OnInit {
       this.uncheckedUser.emit(user.userId);
   }
 
+  selectAll(event) {
+    if (!this.users) return;
+    if (event.checked)
+      this.users.map(user => this.checkedUser.emit(user.userId));
+    else
+      this.users.map(user => this.uncheckedUser.emit(user.userId));
+  }
+
 }
