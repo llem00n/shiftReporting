@@ -34,7 +34,8 @@ export class DataEntryHttpService {
       url: this.baseUrl + 'getDataEntriesOnDate',
       payload: { departmentId, fromDate, toDate },
       loadingMsg: 'Loading data entries...',
-      errorMsg: 'Failed to load data entries'
+      errorMsg: 'Failed to load data entries',
+      successMsg: 'Loaded data entries',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -74,6 +75,7 @@ export class DataEntryHttpService {
       payload: { dataEntryId },
       loadingMsg: 'Loading the data entry log...',
       errorMsg: 'Failed to load the data entry log',
+      successMsg: 'Loaded the data entry log',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
