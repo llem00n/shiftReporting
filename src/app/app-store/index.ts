@@ -16,6 +16,7 @@ import * as fromDataEntry from './data-entry/data-entry.reducer';
 import * as fromUser from './user/user.reducer';
 import * as fromConfiguration from './configuration/configuration.reducer';
 import * as fromConnection from './connection/connection.reducer';
+import * as fromScreen from './screen/screen.reducer';
 
 export interface State {
 
@@ -29,6 +30,8 @@ export interface State {
   [fromUser.usersFeatureKey]: fromUser.State;
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.State;
   [fromConnection.connectionFeatureKey]: fromConnection.State;
+  [fromScreen.screenFeatureKey]: fromScreen.State;
+
 
 }
 
@@ -44,6 +47,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromUser.usersFeatureKey]: fromUser.reducer,
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.reducer,
   [fromConnection.connectionFeatureKey]: fromConnection.reducer,
+  [fromScreen.screenFeatureKey]: fromScreen.reducer,
 };
 
 
@@ -98,3 +102,7 @@ export const configurations = createSelector(configurationState, (state) => stat
 // connection
 export const connectionState = createFeatureSelector<fromConnection.State>('connection');
 export const connectionStatus = createSelector(connectionState, (state) => state.isConnected);
+
+// screen
+export const screenState = createFeatureSelector<fromScreen.State>('screen');
+export const isSmallScreen = createSelector(screenState, (state) => state.isSmall);

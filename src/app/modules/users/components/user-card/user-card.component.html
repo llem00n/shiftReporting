@@ -1,8 +1,8 @@
 <mat-card *ngIf="user" class="h-full">
 
-  <div class="flex  items-center h-full">
+  <div class="items-center h-full" [class.flex]="!isSmallScreen">
     <!-- big letters name -->
-    <div class="flex w-64">
+    <div class="flex w-64" [class.mb-6]="isSmallScreen">
       <div class="w-16 h-16 bg-blue-400 rounded-full shadow flex items-center mr-2">
         <span class="w-16 text-center text-white text-3xl">{{initials}}</span>
       </div>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <!-- email -->
-    <div class="mr-4 w-40">
+    <div class="mr-4 w-40" [class.mb-6]="isSmallScreen">
       <div class="flex text-gray-600 mb-1">
         <div>
           <mat-icon class="mr-1 h-4" svgIcon="email-outline"></mat-icon>
@@ -32,7 +32,7 @@
     </div>
 
     <!-- departments -->
-    <div class="mr-4 text-gray-600 flex-1 flex items-center">
+    <div class="mr-4 text-gray-600 flex-1 flex items-center" [class.mb-6]="isSmallScreen">
       <div class="mr-1 w-6">
         <mat-icon class="mr-1 w-6" svgIcon="graph-outline"></mat-icon>
       </div>

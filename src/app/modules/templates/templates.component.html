@@ -1,16 +1,18 @@
-<div *ngIf="currentUser" class="p-4 flex items-center max-w-6xl">
+<div *ngIf="currentUser" class="p-4 flex items-start max-w-6xl">
   <div class="menu-button-place"></div>
 
-  <app-select-user-department class="flex-1" (changeDepartment)="selectDepartment($event)" [disabled]="!isConnected"></app-select-user-department>
-  <mat-form-field appearance="outline" class="flex-1 mx-4">
-    <mat-label>Search</mat-label>
-    <input matInput placeholder="Search" [formControl]="search">
-    <mat-icon matSuffix svgIcon="magnify"></mat-icon>
-  </mat-form-field>
-  <div class="pb-4">
-    <button mat-mini-fab color="primary" (click)="addTemplate()">
-      <mat-icon svgIcon="plus"></mat-icon>{{search.value}}
-    </button>
+  <div class="flex-1 flex flex-wrap">
+    <app-select-user-department class="flex-1" (changeDepartment)="selectDepartment($event)" [disabled]="!isConnected"></app-select-user-department>
+    <mat-form-field appearance="outline" class="flex-1 mx-4">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Search" [formControl]="search">
+      <mat-icon matSuffix svgIcon="magnify"></mat-icon>
+    </mat-form-field>
+    <div class="pb-4">
+      <button mat-mini-fab color="primary" (click)="addTemplate()" *ngIf="!isSmallScreen">
+        <mat-icon svgIcon="plus"></mat-icon>{{search.value}}
+      </button>
+    </div>
   </div>
 </div>
 

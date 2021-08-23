@@ -3,7 +3,7 @@ import { AuthorizationService } from '../authorization/authorization.service';
 import { Store, select } from '@ngrx/store';
 import { State, Template, User } from '@models/*';
 import { TemplateActions } from '@actions/*';
-import { allTemplates, connectionStatus } from 'src/app/app-store';
+import { allTemplates, connectionStatus, isSmallScreen } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -20,6 +20,7 @@ export class TemplatesComponent implements OnInit {
   templates$: Subscription;
   isConnected: boolean;
   search = new FormControl('');
+  isSmallScreen: boolean;
 
   constructor(
     private authSevice: AuthorizationService,
@@ -28,6 +29,8 @@ export class TemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.select(isSmallScreen)
+      .subscribe(small => this.isSmallScreen = small);
     this.store.select(connectionStatus)
       .subscribe(status => this.isConnected = status)
 
