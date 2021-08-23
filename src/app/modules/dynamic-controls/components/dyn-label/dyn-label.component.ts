@@ -16,6 +16,11 @@ export class DynLabelComponent implements OnInit {
   ngOnInit() {
     this.clService.getData().subscribe(options => {      
       this.options = options
-    })
+    });
+    
+  }
+
+  onclick(){
+    console.log(this.options.control.fSize);
   }
 }
