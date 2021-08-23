@@ -6,6 +6,7 @@ import { TemplateActions } from '@actions/*';
 import { allTemplates, connectionStatus } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-templates',
@@ -18,6 +19,7 @@ export class TemplatesComponent implements OnInit {
   templates: Template[] = [];
   templates$: Subscription;
   isConnected: boolean;
+  search = new FormControl('');
 
   constructor(
     private authSevice: AuthorizationService,
@@ -72,5 +74,9 @@ export class TemplatesComponent implements OnInit {
     const _departmentId = this.departmentId;
     this.store.dispatch(TemplateActions.setEditingTemplate({ template: <Template>{ _departmentId } }));
     this.router.navigate(['configuration/templates/' + 'new'])
+  }
+
+  alert(str) {
+    alert(str)
   }
 }
