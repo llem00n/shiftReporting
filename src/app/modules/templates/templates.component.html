@@ -8,7 +8,7 @@
       <input matInput placeholder="Search" [formControl]="search">
       <mat-icon matSuffix svgIcon="magnify"></mat-icon>
     </mat-form-field>
-    <div class="pb-4">
+    <div class="mb-6 flex items-center">
       <button mat-mini-fab color="primary" (click)="addTemplate()" *ngIf="!isSmallScreen">
         <mat-icon svgIcon="plus"></mat-icon>{{search.value}}
       </button>

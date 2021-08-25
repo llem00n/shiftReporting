@@ -10,7 +10,7 @@
         <div *ngIf="!day" class="ml-4 mb-6">
           <app-year-week-selector [week]='week' [year]='year' (changeWeek)="setWeek($event)" [disabled]="!isConnected"></app-year-week-selector>
         </div>
-        <div *ngIf="day" class="ml-4 mb-6">
+        <div *ngIf="day" class="mb-6" [class.ml-4]="!isSmallScreen">
           <app-day-selector [day]='day' (changeDay)="setDay($event)" [disabled]="!isConnected"></app-day-selector>
         </div>
       </div>
