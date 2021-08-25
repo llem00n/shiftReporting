@@ -46,13 +46,17 @@ export class UsersComponent implements OnInit {
       this.filterUsers = [...this.users];
       return;
     }
-    const str = string.toLowerCase()
-    this.filterUsers = this.users.filter(i => (
-      i.firstName?.toLowerCase().includes(str)
-      || i.secondName?.toLowerCase().includes(str)
-      || i.email?.toLowerCase().includes(str)
-      || i.login?.toLowerCase().includes(str)
-    ))
+    const query = string.split(' ');
+    this.filterUsers = this.users;
+    query.map(word => {
+      const str = word.toLowerCase()
+      this.filterUsers = this.filterUsers.filter(i => (
+        i.firstName?.toLowerCase().includes(str)
+        || i.secondName?.toLowerCase().includes(str)
+        || i.email?.toLowerCase().includes(str)
+        || i.login?.toLowerCase().includes(str)
+      ))
+    })
   }
 
   getUsers() {
