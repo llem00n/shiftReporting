@@ -3,7 +3,7 @@
 
   <div class="flex-1 flex flex-wrap">
     <app-select-user-department class="flex-1" (changeDepartment)="selectDepartment($event)" [disabled]="!isConnected"></app-select-user-department>
-    <mat-form-field appearance="outline" class="flex-1 mx-4">
+    <mat-form-field appearance="outline" class="flex-1" [class.mx-4]="!isSmallScreen">
       <mat-label>Search</mat-label>
       <input matInput placeholder="Search" [formControl]="search">
       <mat-icon matSuffix svgIcon="magnify"></mat-icon>

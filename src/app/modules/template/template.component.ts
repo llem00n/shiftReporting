@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 import { allInterfaces } from './components/interfaces-config/interfaces-config.component';
 import { filter, mergeMap, take, tap } from 'rxjs/operators';
+import { MessageService } from '../message/sevices/message.service';
 
 @Component({
   selector: 'app-template',
@@ -49,6 +50,7 @@ export class TemplateComponent implements OnInit {
     private dashboardService: DashboardService,
     private dateService: DateService,
     private dialog: MatDialog,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -185,6 +187,10 @@ export class TemplateComponent implements OnInit {
   }
 
   save() {
+    if (!this.template.name) {
+      this.messageService.errorMessage("Can't save template without name");
+      return;
+    }
     this.template.body.dashboard = this.dashboard;
     const template: Template = JSON.parse(JSON.stringify(this.template));
     template.body.dashboard.map(i => {

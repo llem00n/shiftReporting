@@ -3,7 +3,7 @@
   <mat-sidenav #snav [fixedInViewport]="smallScreen" [mode]="smallScreen ? 'over' : 'side'" [opened]="isSnavOpen"
     class="h-full" [ngStyle]="{'width.px': isSmall ? 72 : 256}">
     <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
-      <button mat-icon-button color="primary">
+      <button mat-mini-fab color="primary">
         <mat-icon svgIcon="menu" (click)="snav.toggle()"></mat-icon>
       </button>
     </div>   
@@ -38,7 +38,7 @@
 
   <mat-sidenav-content>
     <div *ngIf="smallScreen" class="fixed z-10 text-gray-600 mt-4 ml-4">
-      <button mat-icon-button color="primary">
+      <button mat-mini-fab color="primary">
         <mat-icon svgIcon="menu" (click)="snav.toggle()"></mat-icon>
       </button>
     </div>
