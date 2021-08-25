@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '@models/*';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-notifications-users-list',
@@ -9,6 +10,8 @@ import { User } from '@models/*';
 export class NotificationsUsersListComponent implements OnInit {
   @Input() users?: User[];
   @Input() checkedUsers?: string[];
+  filteredUsers: User[] = [];
+  search = new FormControl('');
 
   @Output() checkedUser = new EventEmitter<string>();
   @Output() uncheckedUser = new EventEmitter<string>();
@@ -17,6 +20,21 @@ export class NotificationsUsersListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.filteredUsers = this.users ? this.users : [];
+
+    this.search.valueChanges.subscribe(query => {
+      this.filteredUsers = this.users;
+      if (!query) return;
+      const words = String(query).split(' ');
+      words.map(word => {
+        const str = word.toLowerCase()
+        this.filteredUsers = this.filteredUsers.filter(user => (
+          user.firstName?.toLowerCase().includes(str)
+          || user.secondName?.toLowerCase().includes(str)
+          || user.email?.toLowerCase().includes(str)
+        ))
+      })
+    })
   }
 
   onChange(event, user) {
@@ -27,11 +45,11 @@ export class NotificationsUsersListComponent implements OnInit {
   }
 
   selectAll(event) {
-    if (!this.users) return;
+    if (!this.filteredUsers) return;
     if (event.checked)
-      this.users.map(user => this.checkedUser.emit(user.userId));
+      this.filteredUsers.map(user => this.checkedUser.emit(user.userId));
     else
-      this.users.map(user => this.uncheckedUser.emit(user.userId));
+      this.filteredUsers.map(user => this.uncheckedUser.emit(user.userId));
   }
 
 }

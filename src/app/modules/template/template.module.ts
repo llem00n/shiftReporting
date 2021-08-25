@@ -27,7 +27,7 @@ import { NotificationsUsersListComponent } from './components/notifications-user
     GridModule,
     UsedMaterialModule,
     ReactiveFormsModule,
-    PiafModule
+    PiafModule,
   ],
 })
 export class TemplateModule { }
