@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization/authorization.service';
 import { Store, select } from '@ngrx/store';
 import { State, Template, User } from '@models/*';
-import { TemplateActions } from '@actions/*';
+import { TemplateActions,FontActions } from '@actions/*';
 import { allTemplates, userDepartments } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TemplateCopyComponent } from './components/template-copy/template-copy.component';
 import { DateService } from 'src/app/services/date/date.service';
+import { FontFamily, FontSize } from 'src/app/app-store/font/font.model';
 
 @Component({
   selector: 'app-templates',
@@ -30,6 +31,10 @@ export class TemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.store.dispatch(FontActions.getFontFamilies());
+    this.store.dispatch(FontActions.getFontSizes());
+    
     this.templates$ = this.store.pipe(
       select(allTemplates)
     ).subscribe(templates => {
@@ -86,28 +91,20 @@ export class TemplatesComponent implements OnInit {
     }}).afterClosed().subscribe(
       result => { // result = {departmentId:number,name:string}
         if(result){
-          console.log('=============result================');
-          console.log(result);
           delete templateToCopy.notification;
           delete templateToCopy.templateId;
           templateToCopy.lastUpdated = this.dateService.getLocalDate();
           templateToCopy._departmentId = result.departmentId;
-          //templateToCopy.name = result.name;
-          if(result.departmentId!=this.departmentId){
-            this.store.dispatch(TemplateActions.copyTemplate({template:templateToCopy,departmentId:templateToCopy._departmentId}));
+          templateToCopy.name = result.name;
+            if(result.departmentId!=this.departmentId){
+              this.store.dispatch(TemplateActions.copyTemplate({template:templateToCopy,departmentId:templateToCopy._departmentId}));
+            }
+            else{
+              this.store.dispatch(TemplateActions.addTemplate({template:templateToCopy,departmentId:templateToCopy._departmentId}));
+            }
           }
-          else{
-            this.store.dispatch(TemplateActions.addTemplate({template:templateToCopy,departmentId:templateToCopy._departmentId}));
-          }
-          
-        
-          
-        }
       }
     )
   }
-
-
-
     
 }
