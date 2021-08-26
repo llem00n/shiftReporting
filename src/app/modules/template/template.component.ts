@@ -126,6 +126,11 @@ export class TemplateComponent implements OnInit {
   dropNewItem(gridItem): void {
     this.dashboardService.createNewControl(this.dashboard, gridItem, this.newControlType);
   }
+
+  copyItem(data): void {
+    this.dashboardService.copyControl(this.dashboard, data.gridItem, data.control);
+  }
+
   clickItem(controlId) {
     const control = this.dashboard.find(i => i.controlId === controlId);
     const dialogRef = this.dialog.open(SettingsControlComponent, {

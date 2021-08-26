@@ -17,6 +17,8 @@ export class BaseControl {
   underline: boolean;
   picture: string;
 
+  fSize?:string;
+  fFamily?:string;
 
   gridItem?: Partial<GridsterItem> = {
     cols: 5,
@@ -50,6 +52,8 @@ export class BaseControl {
     this.underline = opt['underline'] || false; 
     this.picture = opt.hasOwnProperty('picture') ? opt['picture'] : null;
   
+    this.fFamily = opt.hasOwnProperty('fFamily')?opt['fFamily'] || 'inherit':null;
+    this.fSize =opt.hasOwnProperty('fSize')? opt['fSize'] || 'inherit':null;
   }
 
   set isRequired(value: boolean) {

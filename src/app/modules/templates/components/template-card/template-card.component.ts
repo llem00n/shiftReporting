@@ -10,6 +10,7 @@ export class TemplateCardComponent implements OnInit {
   @Input() template: Template;
   @Output() clickDelete = new EventEmitter<number>();
   @Output() clickEdit = new EventEmitter<number>();
+  @Output() clickCopy = new EventEmitter<number>();
   constructor() { }
 
   ngOnInit(): void {
@@ -22,6 +23,10 @@ export class TemplateCardComponent implements OnInit {
   }
   edit() {
     this.clickEdit.emit(this.template.templateId);
+  }
+
+  copy(){
+    this.clickCopy.emit(this.template.templateId);
   }
 
 }
