@@ -7,6 +7,7 @@ import * as DataEntryActions from './data-entry/data-entry.actions';
 import * as UserActions from './user/user.actions';
 import * as InterfaseActions from './interface/interface.actions';
 import * as ConfigurationsActions from './configuration/configuration.actions';
+import * as FontActions from './font/font.actions';
 
 export {
   PlantActions,
@@ -17,5 +18,6 @@ export {
   DataEntryActions,
   UserActions,
   InterfaseActions,
-  ConfigurationsActions
+  ConfigurationsActions,
+  FontActions
 };

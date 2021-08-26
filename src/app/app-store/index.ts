@@ -15,6 +15,8 @@ import * as fromInterface from './interface/interface.reducer';
 import * as fromDataEntry from './data-entry/data-entry.reducer';
 import * as fromUser from './user/user.reducer';
 import * as fromConfiguration from './configuration/configuration.reducer';
+import * as fromFont from './font/font.reducer';
+
 
 export interface State {
 
@@ -27,6 +29,7 @@ export interface State {
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.State;
   [fromUser.usersFeatureKey]: fromUser.State;
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.State;
+  [fromFont.fontFeatureKey]: fromFont.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -40,6 +43,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromDataEntry.dataEntryFeatureKey]: fromDataEntry.reducer,
   [fromUser.usersFeatureKey]: fromUser.reducer,
   [fromConfiguration.configurationFeatureKey]: fromConfiguration.reducer,
+  [fromFont.fontFeatureKey]: fromFont.reducer
 };
 
 
@@ -47,6 +51,12 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 
 
 // ========= selectors ========
+
+// fonts
+
+export const fontState = createFeatureSelector<fromFont.State>('font');
+export const allFontSizes = createSelector(fontState, (state)=> state.FontSizes);
+export const allFontFamilies = createSelector(fontState, (state)=> state.FontFamilies);
 // plants
 export const plantState = createFeatureSelector<fromPlant.State>('plants');
 export const allPlants = createSelector(plantState, fromPlant.selectAll);

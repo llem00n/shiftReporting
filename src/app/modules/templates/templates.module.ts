@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { UsedMaterialModule } from '../used-material/used-material.module';
 import { DepartmentsModule } from '../departments/departments.module';
 import { TemplateCopyComponent } from './components/template-copy/template-copy.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,9 @@ import { TemplateCopyComponent } from './components/template-copy/template-copy.
     CommonModule,
     RouterModule,
     UsedMaterialModule,
-    DepartmentsModule
+    DepartmentsModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class TemplatesModule { }
