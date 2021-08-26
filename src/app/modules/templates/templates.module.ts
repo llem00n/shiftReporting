@@ -5,16 +5,20 @@ import { TemplateCardComponent } from './components/template-card/template-card.
 import { RouterModule } from '@angular/router';
 import { UsedMaterialModule } from '../used-material/used-material.module';
 import { DepartmentsModule } from '../departments/departments.module';
+import { TemplateCopyComponent } from './components/template-copy/template-copy.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [TemplatesComponent, TemplateCardComponent],
+  declarations: [TemplatesComponent, TemplateCardComponent, TemplateCopyComponent],
   imports: [
     CommonModule,
     RouterModule,
     UsedMaterialModule,
-    DepartmentsModule
+    DepartmentsModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class TemplatesModule { }
