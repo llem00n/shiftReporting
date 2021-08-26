@@ -15,6 +15,7 @@ export class BaseControl {
   bold: boolean;
   italic: boolean;
   underline: boolean;
+  picture: string;
 
 
   gridItem?: Partial<GridsterItem> = {
@@ -47,6 +48,7 @@ export class BaseControl {
     this.bold = opt['bold'] || false; 
     this.italic = opt['italic'] || false; 
     this.underline = opt['underline'] || false; 
+    this.picture = opt.hasOwnProperty('picture') ? opt['picture'] : null;
   
   }
 
