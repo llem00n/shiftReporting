@@ -15,8 +15,12 @@ export class BaseControl {
   bold: boolean;
   italic: boolean;
   underline: boolean;
+<<<<<<< HEAD
   fSize?:string;
   fFamily?:string;
+=======
+
+>>>>>>> f6a8b17aba5ad4eca376f3f8d2758d17c9da9cb0
 
   gridItem?: Partial<GridsterItem> = {
     cols: 5,
