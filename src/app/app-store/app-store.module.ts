@@ -15,8 +15,9 @@ import { DataEntryEffects } from './data-entry/data-entry.effects';
 import { UserEffects } from './user/user.effects';
 import { ConfigurationEffects } from './configuration/configuration.effects';
 import { ConnectionEffects } from './connection/connection.effects';
-import * as fromScreen from './screen/screen.reducer';
 import { ScreenEffects } from './screen/screen.effects';
+import { FontEffects } from './font/font.effects';
+
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ScreenEffects } from './screen/screen.effects';
       ConfigurationEffects,
       ConnectionEffects,
       ScreenEffects,
+      FontEffects,
     ]),
   ]
 })

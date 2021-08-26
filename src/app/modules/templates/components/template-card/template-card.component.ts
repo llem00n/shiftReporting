@@ -13,7 +13,9 @@ export class TemplateCardComponent implements OnInit {
   @Input() template: Template;
   @Output() clickDelete = new EventEmitter<number>();
   @Output() clickEdit = new EventEmitter<number>();
+  @Output() clickCopy = new EventEmitter<number>();
   isSmallScreen: boolean;
+  
   constructor(
     private store: Store<State>,
     private messageService: MessageService,
@@ -34,6 +36,10 @@ export class TemplateCardComponent implements OnInit {
       this.clickEdit.emit(this.template.templateId);
     else
       this.messageService.alertMessage("Template editing is unavialable on mobile");
+  }
+
+  copy(){
+    this.clickCopy.emit(this.template.templateId);
   }
 
 }

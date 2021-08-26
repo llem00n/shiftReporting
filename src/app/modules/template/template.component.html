@@ -89,7 +89,7 @@
 
     <div class="p-2 overflow-auto flex-1">
       <div>
-        <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)"
+        <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)" (copyItem)="copyItem($event)"
           (dashboardChange)="dashboardChange($event)" [options]="options" [dashboard]="dashboard"
           [appointment]="appointment" [selectedControlId]='selectedControl?.controlId' [blind]='true'></app-grid>
       </div>
