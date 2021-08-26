@@ -42,13 +42,10 @@ export class DynLabelComponent implements OnInit {
     options = [];
     fontSizes.forEach(
       (fS)=>{
-        console.log(fS);
         options.push({value:fS.value,viewValue:fS.name});
       }
     )
-    console.log(options);
     settings.push( { controlId: 'fSize', label: 'Font Size', type: 'select',options: options});
-    console.log(settings);
     return settings;
 
   }
