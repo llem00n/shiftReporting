@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization/authorization.service';
 import { Store, select } from '@ngrx/store';
 import { State, Template, User } from '@models/*';
-import { TemplateActions,FontActions } from '@actions/*';
-import { allTemplates, userDepartments } from 'src/app/app-store';
+import { TemplateActions, FontActions } from '@actions/*';
+import { allTemplates, connectionStatus, isSmallScreen, userDepartments } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TemplateCopyComponent } from './components/template-copy/template-copy.component';
 import { DateService } from 'src/app/services/date/date.service';
@@ -21,6 +22,9 @@ export class TemplatesComponent implements OnInit {
   departmentId: number;
   templates: Template[] = [];
   templates$: Subscription;
+  isConnected: boolean;
+  search = new FormControl('');
+  isSmallScreen: boolean;
 
   constructor(
     private authSevice: AuthorizationService,
@@ -31,6 +35,10 @@ export class TemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.store.select(isSmallScreen)
+      .subscribe(small => this.isSmallScreen = small);
+    this.store.select(connectionStatus)
+      .subscribe(status => this.isConnected = status)
 
     this.store.dispatch(FontActions.getFontFamilies());
     this.store.dispatch(FontActions.getFontSizes());
