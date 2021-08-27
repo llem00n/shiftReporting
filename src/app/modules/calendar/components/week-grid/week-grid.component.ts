@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef, OnDestroy, AfterViewChecked, HostListener } from '@angular/core';
 import { Schedule, State } from '@models/*';
 import { DateService } from 'src/app/services/date/date.service';
 import { Store, select } from '@ngrx/store';
 import { configurations } from 'src/app/app-store';
 import { tap } from 'rxjs/operators';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-week-grid',
   templateUrl: './week-grid.component.html',
-  styleUrls: ['./week-grid.component.scss']
+  styleUrls: ['./week-grid.component.scss'],
 })
 export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
   @Input() schedules: Schedule[];
@@ -44,6 +45,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
     private dateService: DateService,
     private store: Store<State>
   ) { }
+
   ngAfterViewChecked(): void {
     this.setTemplateNum()
   }
@@ -211,6 +213,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
   }
   shiftInfo = null;
   clickShowMore(e, shift) {
+    shift.expanded = true;
     this.shiftInfo = {};
     this.shiftInfo.position = { ...shift.position };
     this.shiftInfo.templNum = shift.templNum;
@@ -224,6 +227,7 @@ export class WeekGridComponent implements OnInit, OnChanges, OnDestroy, AfterVie
   }
   mouseOut(e: MouseEvent, shift) {
     if (e.target['id'] !== 'shift' || !this.shiftInfo) return;
+    shift.expanded = false;
     shift.position.top = this.shiftInfo.position.top;
     shift.position.height = this.shiftInfo.position.height;
     shift.templNum = this.shiftInfo.templNum;

@@ -12,10 +12,10 @@ import { ScheduleEffects } from './schedule/schedule.effects';
 import { TemplateEffects } from './template/template.effects';
 import { InterfaceEffects } from './interface/interface.effects';
 import { DataEntryEffects } from './data-entry/data-entry.effects';
-import * as fromUser from './user/user.reducer';
 import { UserEffects } from './user/user.effects';
-import * as fromConfiguration from './configuration/configuration.reducer';
 import { ConfigurationEffects } from './configuration/configuration.effects';
+import { ConnectionEffects } from './connection/connection.effects';
+import { ScreenEffects } from './screen/screen.effects';
 import { FontEffects } from './font/font.effects';
 
 
@@ -42,8 +42,10 @@ import { FontEffects } from './font/font.effects';
       DataEntryEffects,
       UserEffects,
       ConfigurationEffects,
-      FontEffects
-    ])
+      ConnectionEffects,
+      ScreenEffects,
+      FontEffects,
+    ]),
   ]
 })
 export class AppStoreModule { }

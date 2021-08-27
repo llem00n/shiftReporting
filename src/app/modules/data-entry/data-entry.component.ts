@@ -106,10 +106,10 @@ export class DataEntryComponent implements OnInit {
       switchMap(opt => {
         Object.assign(this.values, this.dataEntry.template.body?.templateDataKV || {});
         this.form = this.createForm(this.dashboard);
-        this.dataEntry.template.body['templateDataKV'] = this.form.value;
+        this.dataEntry.template.body.templateDataKV = this.form.value;
         return this.form.valueChanges;
       }),
-      tap(values => this.dataEntry.template.body['templateDataKV'] = values),
+      tap(values => this.dataEntry.template.body.templateDataKV = values),
     ).subscribe()
   }
 
@@ -198,8 +198,8 @@ export class DataEntryComponent implements OnInit {
     if (!this.getSavePermission()) return;
     this.dataEntry.createDate = this.dataEntry.createDate || this.getCreateDate();
     this.dataEntry.submitDate = this.dateService.getLocalDate();
+    this.dataEntry.submitUserId = this.user.userId;
     this.store.dispatch(DataEntryActions.submitDataEntry({ dataEntry: this.dataEntry }));
-    // this.router.navigate(['/calendar']);
   }
 }
 

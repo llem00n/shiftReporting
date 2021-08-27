@@ -122,7 +122,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
       deadline: item.deadLine,
     };
     if (!item.dataEntry && this.currentUser.roleId > 3 && new Date() > item.deadLine) {
-      this.messageService.alertMessage('data is missing')
+      this.messageService.alertMessage('Data is missing')
       return;
     }
     if (item.dataEntry) {

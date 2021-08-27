@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
-import { GridsterItem, GridsterConfig } from 'angular-gridster2';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, HostListener, ViewChild } from '@angular/core';
+import { GridsterItem, GridsterConfig, GridsterItemComponentInterface } from 'angular-gridster2';
 import { DynControl } from '../dynamic-controls/models';
 import { FormGroup } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -78,6 +78,7 @@ export class GridComponent implements OnChanges {
       delayStart: 0,
       enabled: true,
       dropOverItems: false,
+      start: (item: GridsterItem, itemComponent: GridsterItemComponentInterface, event: MouseEvent) => {this.dragStart(item, itemComponent, event)},
     },
     resizable: {
       enabled: true,
@@ -90,9 +91,21 @@ export class GridComponent implements OnChanges {
   elementErrors//: ElementError[];
   itemToCopy:DynControl=null;
 
+  mouseMoved: boolean = false;
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    this.mouseMoved = true;
+  }
+
   ngOnChanges(): void {
     this.processingOptions(this.appointment);
   }
+
+  dragStart(item: GridsterItem, itemComponent: GridsterItemComponentInterface, event: MouseEvent): void {
+    this.mouseMoved = false;
+  }
+
   processingOptions(appointment: string) {
     const optionsAppointment = appointment === 'build'
       ? this._optionsBuild : {};
@@ -130,7 +143,7 @@ export class GridComponent implements OnChanges {
   }
 
   itemClick(event, id): void {
-    !this.isItemChange && this.clickItem.emit(id);
+    !this.isItemChange && !this.mouseMoved && this.clickItem.emit(id);
     this.isItemChange = false;
   }
 
