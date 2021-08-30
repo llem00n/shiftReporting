@@ -3,11 +3,11 @@ import { User } from '@models/*';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-notifications-users-list',
-  templateUrl: './notifications-users-list.component.html',
-  styleUrls: ['./notifications-users-list.component.scss']
+  selector: 'app-checkboxes-users-list',
+  templateUrl: './checkboxes-users-list.component.html',
+  styleUrls: ['./checkboxes-users-list.component.scss']
 })
-export class NotificationsUsersListComponent implements OnInit {
+export class CheckboxesUsersListComponent implements OnInit {
   @Input() users?: User[];
   @Input() checkedUsers?: string[];
   filteredUsers: User[] = [];
@@ -50,6 +50,16 @@ export class NotificationsUsersListComponent implements OnInit {
       this.filteredUsers.map(user => this.checkedUser.emit(user.userId));
     else
       this.filteredUsers.map(user => this.uncheckedUser.emit(user.userId));
+  }
+
+  isChecked(): boolean {
+    let result = true;
+    this.filteredUsers.map(x => {
+      if (!~this.checkedUsers.indexOf(x.userId)) 
+        result = false;
+    });
+    if (!this.filteredUsers.length) result = false;
+    return result;
   }
 
 }
