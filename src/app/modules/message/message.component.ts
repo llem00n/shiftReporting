@@ -23,10 +23,10 @@ const messageComponent = {
     trigger('showHideBg', [
       transition(':enter', [
         style({opacity: 0}),
-        animate('50ms', style({opacity: 1}))
+        animate('50ms', style({opacity: .3}))
       ]),
       transition(':leave', [
-        style({opacity: 1}),
+        style({opacity: .3}),
         animate('50ms', style({opacity: 0}))
       ]),
     ]),
