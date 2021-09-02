@@ -9,7 +9,7 @@ export class DynTable extends BaseControl {
   }
 
   private _settings = [
-    { controlId: 'table', label: 'Table', type: 'gridster' },
+    // { controlId: 'table', label: 'Table', type: 'gridster' },
   ]
 
   constructor(opt: {} = {}) {

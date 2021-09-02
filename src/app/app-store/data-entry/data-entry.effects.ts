@@ -98,6 +98,23 @@ export class DataEntryEffects {
     )),
   ));
 
+  getDataEntryById$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getDataEntryById),
+    mergeMap(({ dataEntryId }) => this.dataEntryHttpService.getDataEntry(dataEntryId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => {
+        return DataEntryActions.setPendingDataEntry({ pendingDataEntry: resp.body })}))))
+    );
+
+    
+  getPendingDataEntries$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getPendingDataEntries),
+    mergeMap(({ userId }) => this.dataEntryHttpService.GetPendingDataEntries(userId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.setDataEntrieWaitingForApproval({ DataEntriesWaitingForApproval: resp.body }))
+    )),
+  ));
+
 
 
   constructor(

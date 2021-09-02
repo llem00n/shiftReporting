@@ -59,6 +59,7 @@ export class GridComponent implements OnChanges {
   @Input() showInvalid: boolean;
   @Input() controlsErrors //: TemplateDataItem[];
   @Input() blind: boolean;
+  @Input() rclickEnabled: boolean;
 
   @Output() clickItem: EventEmitter<string> = new EventEmitter<string>();
   @Output() dropNewItem: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
@@ -148,22 +149,22 @@ export class GridComponent implements OnChanges {
   }
 
   gridRightClick(event): void {
-    console.log('click on the grid');
-    event.preventDefault();
-    let x = event.clientX + 'px';
-    let y = event.clientY + 'px';
-    this.contextMenuPosition.x = x;
-    this.contextMenuPosition.y = y;
-    let c = Math.floor(event.offsetX/this.optionsResult.fixedColWidth);
-    let r = Math.floor(event.offsetY/this.optionsResult.fixedRowHeight);
-    this.contextMenu.menuData = {'c':c,'r':r};
-    this.contextMenu.menu.focusFirstItem('mouse');
-    this.contextMenu.openMenu();
+    if(this.rclickEnabled){event.preventDefault();
+      let x = event.clientX + 'px';
+      let y = event.clientY + 'px';
+      this.contextMenuPosition.x = x;
+      this.contextMenuPosition.y = y;
+      let c = Math.floor(event.offsetX/this.optionsResult.fixedColWidth);
+      let r = Math.floor(event.offsetY/this.optionsResult.fixedRowHeight);
+      this.contextMenu.menuData = {'c':c,'r':r};
+      this.contextMenu.menu.focusFirstItem('mouse');
+      this.contextMenu.openMenu();
+    }
+    
   }
 
   itemRightClick(event, id): void {
     event.preventDefault();
-    console.log('click on an item');
     
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
@@ -209,21 +210,16 @@ export class GridComponent implements OnChanges {
 
   onCopy(id:string){
     this.itemToCopy = this.dashboard.filter(d=>d.controlId==id)[0];
-    console.log('clipboard : ');
-    console.log(typeof(this.itemToCopy));
   }
 
   onPaste(c,r){
     let item:GridsterItem = {rows:this.itemToCopy.gridItem.rows,cols:this.itemToCopy.gridItem.cols,x:c,y:r};
-    console.log(item);
+
     this.copyItem.emit({gridItem:item,control:this.itemToCopy});
     this.isItemChange = true;
     this.changedOptions();
   }
 
-  onShow(){
-    console.log(this.gridSize);
-  }
 
 
 
