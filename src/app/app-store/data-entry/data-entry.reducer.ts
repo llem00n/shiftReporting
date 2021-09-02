@@ -9,6 +9,7 @@ export interface State {
   latestDataEntry: DataEntry,
   dataEntriesOnDate: DataEntry[],
   dataEntryLogs: DataEntryLog[],
+  dataEntriesWaitingForApproval: DataEntry[],
 }
 
 export const initialState: State = {
@@ -16,6 +17,7 @@ export const initialState: State = {
   latestDataEntry: null,
   dataEntriesOnDate: [],
   dataEntryLogs: [],
+  dataEntriesWaitingForApproval:[]
 };
 
 const dataEntryReducer = createReducer(
@@ -32,6 +34,9 @@ const dataEntryReducer = createReducer(
 
   on(DataEntryActions.getDataEntryLogsSuccess,
     (state, { dataEntryLogs }) => ({ ...state, dataEntryLogs })),
+
+  on(DataEntryActions.setDataEntrieWaitingForApproval,
+    (state, { DataEntriesWaitingForApproval }) => ({ ...state, dataEntriesWaitingForApproval:DataEntriesWaitingForApproval })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

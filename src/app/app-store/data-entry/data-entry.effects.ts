@@ -92,6 +92,16 @@ export class DataEntryEffects {
   ));
 
 
+    
+  getPendingDataEntries$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getPendingDataEntries),
+    mergeMap(({ userId }) => this.dataEntryHttpService.GetPendingDataEntries(userId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(resp => DataEntryActions.setDataEntrieWaitingForApproval({ DataEntriesWaitingForApproval: resp.body }))
+    )),
+  ));
+
+
 
   constructor(
     private actions$: Actions,
