@@ -67,7 +67,8 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
   
   approveDataEntry(dataEntryId:number){
-    alert(dataEntryId);
+    this.store.dispatch(DataEntryActions.getDataEntryById({dataEntryId: dataEntryId})); 
+    this.router.navigate(['configuration/approvals/dataentry']);
   }
   
     

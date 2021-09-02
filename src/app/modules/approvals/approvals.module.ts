@@ -7,13 +7,16 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
 import { DepartmentsModule } from '../departments/departments.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApprovalCardComponent } from './components/approval-card/approval-card.component';
-import { SearchPipePipe } from './pipes/search-pipe.pipe';
+import { ApprovalProcessComponent } from './components/approval-process/approval-process.component';
+import { GridModule } from '../grid';
+import { DataEntryModule } from '../data-entry/data-entry.module';
+
 
 
 
 @NgModule({
   declarations: [
-    ApprovalsComponent, ApprovalCardComponent,SearchPipePipe
+    ApprovalsComponent, ApprovalCardComponent,ApprovalProcessComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,8 @@ import { SearchPipePipe } from './pipes/search-pipe.pipe';
     DepartmentsModule,
     ReactiveFormsModule,
     FormsModule,
+    GridModule,
+    DataEntryModule
   ]
 })
 export class ApprovalsModule { }

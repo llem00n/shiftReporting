@@ -93,9 +93,11 @@ export class DataEntryEffects {
 
   getDataEntryById$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.getDataEntryById),
-    mergeMap(({ currentDataEntryId }) => this.dataEntryHttpService.getDataEntry(currentDataEntryId).pipe(
+    mergeMap(({ dataEntryId }) => this.dataEntryHttpService.getDataEntry(dataEntryId).pipe(
       filter(resp => resp && resp.status === 200),
-      map(_ => {return DataEntryActions.setCurrentDataEntry({ currentDataEntry: null })})))));
+      map(resp => {
+        return DataEntryActions.setPendingDataEntry({ pendingDataEntry: resp.body })}))))
+    );
 
     
   getPendingDataEntries$ = createEffect(() => this.actions$.pipe(

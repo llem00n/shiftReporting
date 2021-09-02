@@ -54,7 +54,12 @@ export const setCurrentDataEntry = createAction(
 
 export const getDataEntryById = createAction(
   '[DataEntry] Get DataEntryById',
-  props<{ currentDataEntryId: number }>()
+  props<{ dataEntryId: number }>()
+);
+
+export const setPendingDataEntry = createAction(
+  '[DataEntry] Set pending data entry',
+  props<{ pendingDataEntry: DataEntry }>()
 );
 
 export const getDataEntryLogs = createAction(

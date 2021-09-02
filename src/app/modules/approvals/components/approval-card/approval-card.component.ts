@@ -28,7 +28,7 @@ export class ApprovalCardComponent implements OnInit {
     return new Date(this.dataEntry.submitDate).toLocaleString()
   }
   check() {
-    this.clickCheck.emit(this.dataEntry.templateId);
+    this.clickCheck.emit(this.dataEntry.dataEntryId);
   }
  
   }

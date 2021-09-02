@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Location } from '@angular/common';
 import { DataEntry, State, CurrentDataEntry, User } from '@models/*';
-import { currentDataEntry } from 'src/app/app-store';
+import { currentDataEntry, pendingDataEntry } from 'src/app/app-store';
 import { switchMap, mergeMap, map, tap, take, filter } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -40,7 +41,8 @@ export class ApprovalProcessComponent implements OnInit {
     private dataSourceService: DataSourceService,
     private authService: AuthorizationService,
     private message: MessageService,
-    private dateService: DateService
+    private dateService: DateService,
+    private location: Location,
   ) { }
 
   ngOnInit(): void {
@@ -51,19 +53,16 @@ export class ApprovalProcessComponent implements OnInit {
     this.getData$.unsubscribe();
   }
 
+  goBack() {
+    this.location.back()
+  }
   getDataEntry() {
 
     const opt = <DataEntry>{};
-    this.store.dispatch(DataEntryActions.getDataEntryById({currentDataEntryId: this.DataEntryId})); 
     this.getData$ = this.store.pipe(
-    select(currentDataEntry),
-    take(1),
-    tap((cDataEntry: CurrentDataEntry) => {
-      Object.assign(opt, cDataEntry.dataEntry);
-      this.startDate = cDataEntry.startDate;
-      this.endDate = cDataEntry.endDate;
-      this.deadline = cDataEntry.deadline;
-      this.title = cDataEntry.dataEntry.template.name;
+    select(pendingDataEntry),
+    tap((pDataEntry: DataEntry) => {
+      Object.assign(opt, pDataEntry);
     }),
     mergeMap(_ => this.authService.getCurrentUser()),
     filter(data => !!data),
@@ -75,10 +74,8 @@ export class ApprovalProcessComponent implements OnInit {
     tap(opt => {
       this.dataEntry = new DataEntry(opt);
       this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
-      this.dataEntry.dataEntryId && this.store.dispatch(DataEntryActions.getDataEntryLogs({ dataEntryId: this.dataEntry.dataEntryId }));
       this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
       this.options = this.dataEntry.template.body?.gridsterOptions || {};
-      this.getSavePermission()
     }),
     switchMap(opt => {
       if (opt.dataEntryId) return of(opt);
@@ -97,15 +94,6 @@ export class ApprovalProcessComponent implements OnInit {
   ).subscribe()
 }
 
-getSavePermission(): boolean {
-  if ((this.dataEntry.submitDate) || (new Date() < this.startDate) || (this.user.roleId === 4) || (this.user.roleId === 5 && new Date() > this.deadline)) {
-    (this.user.roleId === 3 && new Date() > this.deadline) && this.message.errorMessage('Saving is not possible. Time is running out.');
-    this.isSaveEnabled = false;
-    return false;
-  }
-  this.isSaveEnabled = true;
-  return true;
-}
 
 createForm(controls: DynControl[]): FormGroup {
   const group = new FormGroup({});
