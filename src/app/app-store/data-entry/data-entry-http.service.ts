@@ -40,6 +40,29 @@ export class DataEntryHttpService {
     return this.httpService.post<AppHttpResponse>(options);
   }
 
+  GetPendingDataEntries(userId:string){
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getPendingDataEntries',
+      payload: { userId },
+
+      loadingMsg: 'Loading the data entries...',
+      successMsg: 'Loaded data entries',
+      errorMsg: 'Failed to load data entries',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+  GetDataEntry(DataEntryID:number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDataEntry',
+      payload: { DataEntryID },
+
+      loadingMsg: 'Loading the data entry...',
+      successMsg: `Data entry has been loaded`,
+      errorMsg: 'Failed to update the data entry',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
   updateDataEntry(dataEntry: DataEntry, inBackground?: boolean): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'updateDataEntry',
@@ -79,4 +102,17 @@ export class DataEntryHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
+
+  getDataEntry(DataEntryID:number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDataEntry',
+      payload: { DataEntryID },
+ 
+      loadingMsg: 'Loading the data entry...',
+      successMsg: `Data entry has been loaded`,
+      errorMsg: 'Failed to update the data entry',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
 }
