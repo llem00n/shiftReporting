@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthorizationService } from '../authorization/authorization.service';
 import { Store, select } from '@ngrx/store';
-import { State, Template, User } from '@models/*';
-import { TemplateActions, FontActions } from '@actions/*';
-import { allTemplates, connectionStatus, isSmallScreen, userDepartments } from 'src/app/app-store';
+import { DataEntry, State, Template, User } from '@models/*';
+import { DataEntryActions, TemplateActions, } from '@actions/*';
+import { allTemplates, connectionStatus, dataEntriesWaitingForApproval, isSmallScreen, userDepartments } from 'src/app/app-store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -16,66 +16,58 @@ import { FontFamily, FontSize } from 'src/app/app-store/font/font.model';
   templateUrl: './approvals.component.html',
   styleUrls: ['./approvals.component.scss']
 })
-export class ApprovalsComponent implements OnInit {
+export class ApprovalsComponent implements OnInit, OnDestroy {
 
   currentUser: User;
   departmentId: number;
-  templates: Template[] = [];
-  templates$: Subscription;
+  dataEntries: DataEntry[] = [];
+  dataEntries$: Subscription;
   isConnected: boolean;
   search = new FormControl('');
   isSmallScreen: boolean;
 
   constructor(
-    private authSevice: AuthorizationService,
     private store: Store<State>,
-    private dateService: DateService,
     private router: Router,
-    private dialog: MatDialog
+    private authService:AuthorizationService
   ) { }
 
   ngOnInit(): void {
+    this.authService.getCurrentUser()
+    .subscribe(user => {
+      if (!user) {
+        this.currentUser = null;
+        return;
+      }
+      this.currentUser = user;
+      // this.selectDepartment({ value: user.departments[0].departmentId })
+    });
+
+    this.store.dispatch(DataEntryActions.getPendingDataEntries({userId:this.currentUser.userId}))
     this.store.select(isSmallScreen)
       .subscribe(small => this.isSmallScreen = small);
     this.store.select(connectionStatus)
       .subscribe(status => this.isConnected = status)
-
-    this.store.dispatch(FontActions.getFontFamilies());
-    this.store.dispatch(FontActions.getFontSizes());
     
-    this.templates$ = this.store.pipe(
-      select(allTemplates)
-    ).subscribe(templates => {
-      this.templates = templates;
-      // autostart first template
-      // templates.length && this.editTemplate(templates[0].templateId)
-    }
-    );
+    this.dataEntries$ = this.store.pipe(
+      select(dataEntriesWaitingForApproval)
+    ).subscribe(dataEntries => {
+      this.dataEntries = dataEntries;
+     
 
-    this.authSevice.getCurrentUser()
-      .subscribe(user => {
-        if (!user) {
-          this.currentUser = null;
-          return;
-        }
-        this.currentUser = user;
-        // this.selectDepartment({ value: user.departments[0].departmentId })
-      });
+    }
+    
+    );
 
   }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.templates$.unsubscribe();
-  }
-
-  selectDepartment({ departmentId }) {
-    this.departmentId = departmentId;
-    this.store.dispatch(TemplateActions.getTemplates({ departmentId }));
+    this.dataEntries$.unsubscribe();
   }
   
-  approveTemplate(templateId:number){
-    alert(templateId);
+  approveDataEntry(dataEntryId:number){
+    alert(dataEntryId);
   }
   
     

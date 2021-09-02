@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { State, Template } from '@models/*';
+import { DataEntry, State, Template } from '@models/*';
 import { Store } from '@ngrx/store';
 import { isSmallScreen } from 'src/app/app-store';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
@@ -11,14 +11,7 @@ import { MessageService } from 'src/app/modules/message/sevices/message.service'
 })
 export class ApprovalCardComponent implements OnInit {
 
-
-
-
-
-
-
-
-  @Input() template: Template;
+  @Input() dataEntry: DataEntry;
   @Output() clickCheck = new EventEmitter<number>();
   isSmallScreen: boolean;
   
@@ -31,11 +24,11 @@ export class ApprovalCardComponent implements OnInit {
     this.store.select(isSmallScreen)
       .subscribe(small => this.isSmallScreen = small);
   }
-  get lastUpdated(){
-    return new Date(this.template.lastUpdated).toLocaleString()
+  get SubmitDate(){
+    return new Date(this.dataEntry.submitDate).toLocaleString()
   }
   check() {
-    this.clickCheck.emit(this.template.templateId);
+    this.clickCheck.emit(this.dataEntry.templateId);
   }
  
   }

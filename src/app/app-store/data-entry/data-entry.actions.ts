@@ -59,3 +59,14 @@ export const getDataEntryLogsSuccess = createAction(
   '[DataEntry] Get DataEntryLogs Success',
   props<{ dataEntryLogs: DataEntryLog[] }>()
 )
+
+export const getPendingDataEntries = createAction(
+  '[DataEntry] Get Pending DataEntries',
+  props<{ userId: string }>()
+)
+
+export const setDataEntrieWaitingForApproval = createAction(
+  '[DataEntry] Set DataEntrieWaitingForApproval',
+  props<{ DataEntriesWaitingForApproval: DataEntry[] }>()
+);
+
