@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
         .subscribe(status => this.isConnected = status);
 
     this.dataEntryCookieSender.send('data-entry-backup');
-    this.connectionCheckerService.start(5000);
+    // this.connectionCheckerService.start(5000);
     this.screenSizeUpdater.start();
 
   }

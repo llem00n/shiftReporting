@@ -31,7 +31,7 @@
         <!-- shifts -->
         <div (mouseleave)="mouseOut($event, shift)" id='shift' *ngFor="let shift of day.value.shifts"
           [ngStyle]="shift.position" [class.z-30]="shift.expanded" [class.shadow-2xl]="shift.expanded"
-          class="absolute w-full pb-1 pr-1 shift" @sheduleResize>
+          class="absolute w-full pb-1 pr-1 shift">
           <app-templates-list [calendarHight]="calendarContentHeight" [day]="day" [shift]="shift"
             (clickShowMore)="clickShowMore($event, shift)">
           </app-templates-list>

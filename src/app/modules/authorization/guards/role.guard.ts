@@ -13,6 +13,7 @@ export const routerLinks = [
   { key: 'configuration/templates', title: 'Templates', icon: 'file-table-box', allowedRoles: [1, 2, 3] },
   { key: 'configuration/users', title: 'Users', icon: 'account-group', allowedRoles: [1, 2, 3] },
   { key: 'configuration/config', title: 'Settings', icon: 'cog-outline', allowedRoles: [1] },
+  { key: 'configuration/approvalprocess/1037', title: 'Approve', icon: 'cog-outline', allowedRoles: [1] },
 ];
 
 

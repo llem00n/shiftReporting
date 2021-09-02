@@ -79,4 +79,17 @@ export class DataEntryHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
+
+  getDataEntry(DataEntryID:number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDataEntry',
+      payload: { DataEntryID },
+ 
+      loadingMsg: 'Loading the data entry...',
+      successMsg: `Data entry has been loaded`,
+      errorMsg: 'Failed to update the data entry',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
 }

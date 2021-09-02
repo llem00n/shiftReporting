@@ -91,6 +91,11 @@ export class DataEntryEffects {
     )),
   ));
 
+  getDataEntryById$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.getDataEntryById),
+    mergeMap(({ currentDataEntryId }) => this.dataEntryHttpService.getDataEntry(currentDataEntryId).pipe(
+      filter(resp => resp && resp.status === 200),
+      map(_ => {return DataEntryActions.setCurrentDataEntry({ currentDataEntry: null })})))));
 
 
   constructor(
