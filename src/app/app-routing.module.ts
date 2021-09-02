@@ -15,6 +15,7 @@ import { RoleGuard } from './modules/authorization/guards/role.guard';
 import { ConfigComponent } from './modules/config/config.component';
 import { environment } from 'src/environments/environment';
 import { ApprovalsComponent } from './modules/approvals/approvals.component';
+import { ApprovalProcessComponent } from './modules/calendar/components/approval-process/approval-process.component';
 
 const routes: Routes = [
   {
@@ -25,11 +26,20 @@ const routes: Routes = [
       { path: 'departments', component: DepartmentsComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'shifts', component: ShiftsComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'schedules', component: SchedulesComponent, canActivate: [AuthGuard, RoleGuard] },
-      { path: 'templates', component: TemplatesComponent, canActivate: [AuthGuard, RoleGuard] },
-      { path: 'templates/:id', component: TemplateComponent, canActivate: [AuthGuard] },
-      { path: 'users', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },
+      { path: 'templates', component: TemplatesComponent
+      , canActivate: [AuthGuard, RoleGuard] 
+    },
+      { path: 'templates/:id', component: TemplateComponent
+      , canActivate: [AuthGuard] 
+    },
+      { path: 'users', component: UsersComponent
+      , canActivate: [AuthGuard, RoleGuard] 
+    },
       { path: 'config', component: ConfigComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'approvals', component: ApprovalsComponent, canActivate: [AuthGuard, RoleGuard] },
+      { path: 'approvalprocess/:id', component: ApprovalProcessComponent, 
+      canActivate: [AuthGuard]
+    }
     ]
   },
   {

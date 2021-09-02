@@ -51,10 +51,16 @@ export const setCurrentDataEntry = createAction(
   '[DataEntry] Set CurrentDataEntry',
   props<{ currentDataEntry: CurrentDataEntry }>()
 );
+
+export const getDataEntryById = createAction(
+  '[DataEntry] Get DataEntryById',
+  props<{ currentDataEntryId: number }>()
+);
+
 export const getDataEntryLogs = createAction(
   '[DataEntry] Get DataEntryLogs',
   props<{ dataEntryId: number }>()
-)
+);
 export const getDataEntryLogsSuccess = createAction(
   '[DataEntry] Get DataEntryLogs Success',
   props<{ dataEntryLogs: DataEntryLog[] }>()

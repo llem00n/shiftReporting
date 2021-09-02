@@ -6,6 +6,10 @@ export const dataEntryFeatureKey = 'dataEntry';
 
 export interface State {
   currentDataEntry: CurrentDataEntry,
+
+  //me
+  // currentDataEntryId: string,
+
   latestDataEntry: DataEntry,
   dataEntriesOnDate: DataEntry[],
   dataEntryLogs: DataEntryLog[],
@@ -14,6 +18,10 @@ export interface State {
 
 export const initialState: State = {
   currentDataEntry: null,
+
+  //me
+  // currentDataEntryId: null,
+
   latestDataEntry: null,
   dataEntriesOnDate: [],
   dataEntryLogs: [],
