@@ -90,6 +90,13 @@ export class DataEntryEffects {
     ))
   ));
 
+  rejectDataEntry$ = createEffect(() => this.actions$.pipe(
+    ofType(DataEntryActions.rejectDataEntry),
+    mergeMap(({dataEntryId, approverId}) => this.dataEntryHttpService.rejectDataEntry(dataEntryId, approverId).pipe(
+      map(resp => DataEntryActions.setCurrentDataEntry({currentDataEntry: null}))
+    ))
+  ));
+
   getDataEntryLogs$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.getDataEntryLogs),
     mergeMap(({ dataEntryId }) => this.dataEntryHttpService.getDataEntryLogs(dataEntryId).pipe(

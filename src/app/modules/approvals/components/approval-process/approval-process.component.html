@@ -36,10 +36,10 @@
           <button (click)="goBack()" mat-stroked-button color="primary">CANCEL</button>
         </div>
         <div class="m-2">
-          <button mat-flat-button color="primary" >REJECT</button>
+          <button mat-flat-button color="primary" (click)="reject()">REJECT</button>
         </div>
         <div  class="m-2">
-          <button  mat-flat-button color="primary" >APPROVED</button>
+          <button  mat-flat-button color="primary" (click)="approve()" >APPROVE</button>
         </div>
       </div>
       <div class="p-2 overflow-auto">

@@ -105,6 +105,19 @@ export class DataEntryHttpService {
     return this.httpService.post<AppHttpResponse>(options);
   }
 
+  rejectDataEntry(dataEntryId: number, approverId: string): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + "rejectDataEntry",
+      payload: { dataEntryId, approverId },
+
+      loadingMsg: 'Rejecting the data entry...',
+      successMsg: 'The data entry has been rejected',
+      errorMsg: 'Failed to reject the data entry',
+    }
+
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
   getDataEntryLogs(dataEntryId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getDataEntryLogs',

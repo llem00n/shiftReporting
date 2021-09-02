@@ -53,6 +53,16 @@ export const approveDataEntrySuccess = createAction(
   props<{dataEntryId: number, approverId: string}>()
 )
 
+export const rejectDataEntry = createAction(
+  '[DataEntry] Reject DataEntry',
+  props<{dataEntryId: number, approverId: string}>()
+)
+
+export const rejectDataEntrySuccess = createAction(
+  '[DataEntry] Reject DataEntry Success',
+  props<{dataEntryId: number, approverId: string}>()
+)
+
 export const submitDataEntrySuccess = createAction(
   '[DataEntry] Submit DataEntry Success',
   props<{ dataEntry: DataEntry }>()

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { DataEntry, State, CurrentDataEntry, User } from '@models/*';
 import { currentDataEntry, pendingDataEntry } from 'src/app/app-store';
-import { switchMap, mergeMap, map, tap, take, filter } from 'rxjs/operators';
+import { switchMap, mergeMap, map, tap, take, filter, skip } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { DataSourceService } from 'src/app/modules/data-entry/data-source.service';
@@ -56,6 +56,30 @@ export class ApprovalProcessComponent implements OnInit {
   goBack() {
     this.location.back()
   }
+
+  approve() {
+    this.store.pipe(
+      select(currentDataEntry),
+      skip(1),
+      take(1)
+    ).subscribe(d => {
+      this.goBack();
+    })
+    this.store.dispatch(DataEntryActions.approveDataEntry({dataEntryId: this.dataEntry.dataEntryId, approverId: this.user.userId}));
+  }
+
+  reject() {
+    this.store.pipe(
+      select(currentDataEntry),
+      skip(1),
+      take(1)
+    ).subscribe(d => {
+      this.goBack();
+    })
+    this.store.dispatch(DataEntryActions.rejectDataEntry({dataEntryId: this.dataEntry.dataEntryId, approverId: this.user.userId}));
+  }
+
+
   getDataEntry() {
 
     const opt = <DataEntry>{};
