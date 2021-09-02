@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵresetJitOptions } from '@angular/core';
 import { DataEntry } from '@models/';
 import { Observable, of } from 'rxjs';
 import { AppHttpResponse, AppHttpRequest, HttpService } from '../../services/http/http.service';
@@ -69,6 +69,19 @@ export class DataEntryHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
+
+  approveDataEntry(dataEntryId: number, approverId: string): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'approveDataEntry',
+      payload: {dataEntryId, approverId},
+
+      loadingMsg: 'Approving the data entry...',
+      successMsg: 'The data entry has been approved',
+      errorMsg: 'Failed to approve the data entry',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
   getDataEntryLogs(dataEntryId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getDataEntryLogs',

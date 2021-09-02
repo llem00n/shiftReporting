@@ -42,6 +42,17 @@ export const submitDataEntry = createAction(
   '[DataEntry] Submit DataEntry',
   props<{ dataEntry: DataEntry }>()
 );
+
+export const approveDataEntry = createAction(
+  '[DataEntry] Approve DataEntry',
+  props<{dataEntryId: number, approverId: string}>()
+)
+
+export const approveDataEntrySuccess = createAction(
+  '[DataEntry] Approve DataEntry Success',
+  props<{dataEntryId: number, approverId: string}>()
+)
+
 export const submitDataEntrySuccess = createAction(
   '[DataEntry] Submit DataEntry Success',
   props<{ dataEntry: DataEntry }>()
