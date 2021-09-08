@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { DataEntry, State, CurrentDataEntry, User } from '@models/*';
-import { currentDataEntry, pendingDataEntry } from 'src/app/app-store';
+import { DataEntry, State, User } from '@models/*';
+import { pendingDataEntry } from 'src/app/app-store';
 import { switchMap, mergeMap, map, tap, take, filter, skip } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -59,7 +59,7 @@ export class ApprovalProcessComponent implements OnInit {
 
   approve() {
     this.store.pipe(
-      select(currentDataEntry),
+      select(pendingDataEntry),
       skip(1),
       take(1)
     ).subscribe(d => {
@@ -70,7 +70,7 @@ export class ApprovalProcessComponent implements OnInit {
 
   reject() {
     this.store.pipe(
-      select(currentDataEntry),
+      select(pendingDataEntry),
       skip(1),
       take(1)
     ).subscribe(d => {

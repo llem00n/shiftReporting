@@ -86,14 +86,14 @@ export class DataEntryEffects {
   approveDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.approveDataEntry),
     mergeMap(({dataEntryId, approverId}) => this.dataEntryHttpService.approveDataEntry(dataEntryId, approverId).pipe(
-      map(resp =>  DataEntryActions.setCurrentDataEntry({currentDataEntry: null}))
+      map(resp =>  DataEntryActions.setPendingDataEntry({pendingDataEntry: null}))
     ))
   ));
 
   rejectDataEntry$ = createEffect(() => this.actions$.pipe(
     ofType(DataEntryActions.rejectDataEntry),
     mergeMap(({dataEntryId, approverId}) => this.dataEntryHttpService.rejectDataEntry(dataEntryId, approverId).pipe(
-      map(resp => DataEntryActions.setCurrentDataEntry({currentDataEntry: null}))
+      map(resp => DataEntryActions.setPendingDataEntry({pendingDataEntry: null}))
     ))
   ));
 
