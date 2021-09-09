@@ -45,8 +45,8 @@ export class DataEntryHttpService {
       url: this.baseUrl + 'getPendingDataEntries',
       payload: { userId },
 
-      loadingMsg: 'Loading the data entries...',
-      successMsg: 'Loaded data entries',
+      // loadingMsg: 'Loading the data entries...',
+      // successMsg: 'Loaded data entries',
       errorMsg: 'Failed to load data entries',
     }
     return this.httpService.post<AppHttpResponse>(options);
