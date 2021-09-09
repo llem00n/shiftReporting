@@ -94,7 +94,7 @@ export const getDataEntryLogsSuccess = createAction(
 
 export const getPendingDataEntries = createAction(
   '[DataEntry] Get Pending DataEntries',
-  props<{ userId: string }>()
+  props<{ userId: string,inBackground?: boolean }>()
 )
 
 export const setDataEntrieWaitingForApproval = createAction(

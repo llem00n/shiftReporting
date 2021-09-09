@@ -24,8 +24,17 @@
     <mat-nav-list>
       <div *ngFor="let item of config">
         <mat-list-item *ngIf="item.isShow" (click)="(smallScreen && snav.toggle()); (isConnected && redirect('./' + item.key))">
-          <mat-icon mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
-          <p *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
+          <div *ngIf="item.title === 'Pending approvals' && PaCount>0; then notif else default"> </div>
+          <ng-template #notif>
+              <mat-icon [matBadge]="PaCount" class="justify-self-start" matBadgeColor="warn"
+            mat-list-icon [svgIcon]="item.icon" routerLinkActive="mat-primary"></mat-icon>
+            <p class="pl-6" *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
+          </ng-template>
+          <ng-template #default>
+            <mat-icon mat-list-icon [svgIcon]="item.icon" class="justify-self-start" routerLinkActive="mat-primary"></mat-icon>
+            <p class="pl-6" *ngIf="!isSmall" mat-line routerLinkActive="text-primary"> {{item.title}} </p>
+          </ng-template>  
+          
         </mat-list-item>
       </div>
       <div class="flex-1"></div>

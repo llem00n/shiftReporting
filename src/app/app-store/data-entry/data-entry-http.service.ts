@@ -40,7 +40,7 @@ export class DataEntryHttpService {
     return this.httpService.post<AppHttpResponse>(options);
   }
 
-  GetPendingDataEntries(userId:string){
+  GetPendingDataEntries(userId:string, inBackground?: boolean){
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getPendingDataEntries',
       payload: { userId },
@@ -48,6 +48,8 @@ export class DataEntryHttpService {
       loadingMsg: 'Loading the data entries...',
       successMsg: 'Loaded data entries',
       errorMsg: 'Failed to load data entries',
+      disableLoadingMsg: inBackground,
+      disableErrorMsg: inBackground,
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
