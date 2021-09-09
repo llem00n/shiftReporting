@@ -3,7 +3,7 @@
 	<input matInput type="text" [formControl]="search" />
 	<mat-icon matSuffix svgIcon="magnify"></mat-icon>
 </mat-form-field>
-<mat-checkbox color="primary" (change)="selectAll($event)" [checked]="this.filteredUsers.length <= this.checkedUsers.length" class="mb-3">Select all</mat-checkbox>
+<mat-checkbox color="primary" (change)="selectAll($event)" [checked]="isChecked()" class="mb-3">Select all</mat-checkbox>
 <div *ngFor="let user of filteredUsers" class="mb-3">
 	<mat-checkbox color="primary" (change)="onChange($event, user)" [checked]="checkedUsers.indexOf(user.userId) != -1">
 		<p>{{ user.firstName }} {{ user.secondName }}</p>

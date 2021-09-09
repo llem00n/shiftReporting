@@ -261,6 +261,16 @@ export class TemplateComponent implements OnInit {
     if (~this.template.body.toNotifyUserIdList.indexOf(userId))
       this.template.body.toNotifyUserIdList = this.template.body.toNotifyUserIdList.filter(id => id != userId);
   }
+
+  addSubmissionApprover(userId: string) {
+    if (!~this.template.body.submissionApprovers.indexOf(userId))
+      this.template.body.submissionApprovers = this.template.body.submissionApprovers.concat([userId]);
+  }
+
+  removeSubmissionApprover(userId: string) {
+    if (~this.template.body.submissionApprovers.indexOf(userId))
+      this.template.body.submissionApprovers = this.template.body.submissionApprovers.filter(id => id != userId);
+  }
 }
 
 // PIAFEventFrames

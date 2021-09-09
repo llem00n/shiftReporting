@@ -1,5 +1,5 @@
 {
-  "authority": "http://localhost:5000",
+  "authority": "https://10.34.201.101:60001",
   "client_id": "spa",
   "redirect_uri": "https://10.34.40.14:4200/callback.html",
   "response_type": "code",
