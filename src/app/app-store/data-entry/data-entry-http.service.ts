@@ -16,7 +16,7 @@ export class DataEntryHttpService {
       url: this.baseUrl + 'addDataEntry',
       payload: { dataEntry },
       loadingMsg: 'Adding the data entry...',
-      successMsg: `DataEntry has been added`,
+      successMsg: `Data entry has been added`,
       errorMsg: 'Failed to add the data entry',
 
       disableLoadingMsg: inBackground,
@@ -48,6 +48,8 @@ export class DataEntryHttpService {
       loadingMsg: 'Loading the data entries...',
       successMsg: 'Loaded data entries',
       errorMsg: 'Failed to load data entries',
+
+      disableSuccessMsg: inBackground,
       disableLoadingMsg: inBackground,
       disableErrorMsg: inBackground,
     }
