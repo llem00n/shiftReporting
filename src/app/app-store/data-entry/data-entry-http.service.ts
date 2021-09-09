@@ -85,7 +85,7 @@ export class DataEntryHttpService {
       url: this.baseUrl + 'submitDataEntry',
       payload: { dataEntry },
 
-      loadingMsg: 'Submitting the dataEntry...',
+      loadingMsg: 'Submitting the data entry...',
       successMsg: `Data entry has been submitted`,
       errorMsg: 'Failed to submit the data entry',
 
