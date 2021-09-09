@@ -16,7 +16,7 @@ export class DataEntryCheckerService {
 
 
   private check(timeout: number) {
-    this.store.dispatch(getPendingDataEntries({userId:this.userId}));
+    this.store.dispatch(getPendingDataEntries({userId:this.userId,inBackground:true}));
     setTimeout(_ => this.check(timeout),timeout);
   }
 
