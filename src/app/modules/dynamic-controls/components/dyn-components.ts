@@ -45,6 +45,6 @@ export const dynComponents = {
   date: { component: DynDateComponent, /* title: 'Date', */ model: DynDate },
   image: { component: DynImageComponent,  title: 'Image',  model: DynImage },
   inputF: { component: InputFComponent,  model: DynInputF },
-  table: { component: DynTableComponent, title:"Table", model: DynTable}
+  // table: { component: DynTableComponent, title:"Table", model: DynTable}
 }
 
