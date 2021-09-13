@@ -98,7 +98,8 @@ export class ApprovalProcessComponent implements OnInit {
     tap(opt => {
       this.dataEntry = new DataEntry(opt);
       this.dataEntry.dataEntryId ?? delete this.dataEntry.dataEntryId;
-      this.dashboard = <DynControl[]>this.dataEntry.template.body?.dashboard || [];
+      this.dashboard = JSON.parse(JSON.stringify(<DynControl[]>this.dataEntry.template.body?.dashboard)) || [];
+      this.dashboard.forEach(control => control.readonly = true);
       this.options = this.dataEntry.template.body?.gridsterOptions || {};
     }),
     switchMap(opt => {
