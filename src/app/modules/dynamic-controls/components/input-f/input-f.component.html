@@ -1,15 +1,10 @@
  <div class="w-full h-full flex items-center">
-  
-      <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}" [formGroup]="options.form">
+  <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}" [formGroup]="options.form">
+      <button mat-stroked-button (click)="imageSelector.click()">UPLOAD</button>
+      <span class="text-red-600 ml-2" *ngIf="error">PNG, JPG only</span>
+      <p *ngIf="fileName" class="truncate whitespace-nowrap w-64 ml-1 mt-1">Selected file: {{ fileName }}</p>
 
-        <input type='file' (change)="onSelectFile($event)" accept=".png, .jpg, .jpeg" >
-        <input type="text" hidden [formControlName]="options.control.controlId" [(ngModel)]="imageuploaded">
-       
-        <div  
-        class="errorupload"
-        *ngIf="error">
-        <p>Accepted Formats : JPG, PNG</p>
-      </div>
-      </div>
-
+    <input type='file' hidden #imageSelector [readonly]="options.control.readonly" (change)="onSelectFile($event)" accept=".png, .jpg, .jpeg" >
+    <input type="text" hidden [formControlName]="options.control.controlId" [(ngModel)]="imageuploaded">
   </div>
+</div>

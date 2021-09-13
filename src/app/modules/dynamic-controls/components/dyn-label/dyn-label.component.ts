@@ -54,7 +54,6 @@ export class DynLabelComponent implements OnInit {
     this.clService.getData().subscribe(options => {      
       this.options = options;
       this.options.control.settings = this.options.control.settings.concat(this.initFont());
-      
     });
    
     

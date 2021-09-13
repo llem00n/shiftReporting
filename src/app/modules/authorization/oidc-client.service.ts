@@ -15,7 +15,7 @@ export class OidcClientService {
     expired: false,
     token_type: 'Bearer',
     access_token: 'token',
-    profile: { sub: '38368134-ed58-4073-8eae-5619e5e136c7' }
+    profile: { sub: 'e8d13b04-dbda-4c2b-8c5c-66988098d84a' }
   }
   // private user = this.FAKE_USER
   private user = null;

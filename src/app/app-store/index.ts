@@ -59,27 +59,29 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 // ========= selectors ========
 
 // fonts
-
 export const fontState = createFeatureSelector<fromFont.State>('font');
 export const allFontSizes = createSelector(fontState, (state)=> state.FontSizes);
 export const allFontFamilies = createSelector(fontState, (state)=> state.FontFamilies);
+
 // plants
 export const plantState = createFeatureSelector<fromPlant.State>('plants');
 export const allPlants = createSelector(plantState, fromPlant.selectAll);
+
 //departments
 export const departmentsState = createFeatureSelector<fromDepartment.State>('departments');
 export const allDepartments = createSelector(departmentsState, fromDepartment.selectAll);
 export const userDepartments = createSelector(departmentsState, (state) => state.userDepartments);
 export const currentDepartment = createSelector(departmentsState, (state) => state.currentDepartment);
 
-
 //shifts
 export const shiftsState = createFeatureSelector<fromShift.State>('shifts');
 export const allShifts = createSelector(shiftsState, fromShift.selectAll);
+
 //schedule
 export const scheduleState = createFeatureSelector<fromSchedule.State>('schedules');
 export const allSchedules = createSelector(scheduleState, fromSchedule.selectAll);
 export const editingSchedule = createSelector(scheduleState, (state) => state.editingSchedule);
+
 //templates
 export const templateState = createFeatureSelector<fromTemplate.State>('templates');
 export const allTemplates = createSelector(templateState, fromTemplate.selectAll);

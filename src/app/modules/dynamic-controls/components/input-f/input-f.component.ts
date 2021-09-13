@@ -15,6 +15,7 @@ export class InputFComponent implements OnInit {
   validFileTypes = ['PNG', 'JPG', 'JPEG'];
   error: boolean = false;
   imageuploaded!: string;
+  fileName: string;
 
   options: ControlOptions;
 
@@ -35,11 +36,11 @@ export class InputFComponent implements OnInit {
   onSelectFile(event: Event) {
     this.file = (event.target as HTMLInputElement).files![0];
     // console.log(event);
-    let fileName = this.file.name;
-    const fileEntension = fileName.split('.')!.pop().toUpperCase();
-    if (this.validFileTypes.indexOf(fileEntension) <= -1) {
+    this.fileName = this.file.name;
+    const fileExtension = this.fileName.split('.')!.pop().toUpperCase();
+    if (this.validFileTypes.indexOf(fileExtension) <= -1) {
       this.error = true
-      fileName = "";
+      this.fileName = "";
     }
     else {
     this.error = false
