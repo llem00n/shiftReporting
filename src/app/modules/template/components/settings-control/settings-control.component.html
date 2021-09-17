@@ -9,29 +9,31 @@
   </div>
 </div>
 <div mat-dialog-content>
-  <div class="flex relative">
+  <div class="relative" [ngClass]="isSmallScreen ? '' : 'flex'">
     <div class="mr-2 w-64">
       <app-form [controls]='data.control.settings' [values]='data.control' (form)="getControlForm($event)"></app-form>
     </div>
-    <mat-divider *ngIf="isInterfacesEnabled" [vertical]="true"> </mat-divider>
-    <div *ngIf="isInterfacesEnabled && data.control.type !== 'label'" class="pl-2 w-64">
-      <div class="relative">
-        <app-form class="cursor-default" (click)="setDataSource()" [controls]='datasourceControls'
-          [values]=datasourceValues></app-form>
-        <div *ngIf="datasourceValues.datasource" class="absolute top-0 right-0">
-          <p (click)="datasourceClear()" class="text-xs bg-white px-1 mr-1 cursor-default">Clear</p>
+    <mat-divider *ngIf="isInterfacesEnabled && data.control.type !== 'label' && !isSmallScreen" [vertical]="true"> </mat-divider>
+    <div>
+      <div *ngIf="isInterfacesEnabled && data.control.type !== 'label'" class="pl-2 w-64">
+        <div class="relative">
+          <app-form class="cursor-default" (click)="setDataSource()" [controls]='datasourceControls'
+            [values]=datasourceValues></app-form>
+          <div *ngIf="datasourceValues.datasource" class="absolute top-0 right-0">
+            <p (click)="datasourceClear()" class="text-xs bg-white px-1 mr-1 cursor-default">Clear</p>
+          </div>
         </div>
+        <mat-form-field *ngIf="interfacesList.length" appearance="outline" class="w-full">
+          <mat-label>Interface setting</mat-label>
+          <input matInput value="value" style="display: none">
+          <div *ngFor="let i of interfacesList; last as last" class="mb-2 relative">
+            <div *ngIf="!i.disabled" (click)="changeInterface(i)" class="absolute w-full h-full top-0 left-0 z-10"></div>
+            <mat-checkbox color='primary' [checked]='i.checked' [disabled]="i.disabled">{{i.label}}</mat-checkbox>
+            <p *ngIf="i.name === 'PIAFAttributes'" class="text-xs text-gray-700">{{attributeString}}</p>
+            <mat-divider *ngIf="!last"> </mat-divider>
+          </div>
+        </mat-form-field>
       </div>
-      <mat-form-field *ngIf="interfacesList.length" appearance="outline" class="w-full">
-        <mat-label>Interface setting</mat-label>
-        <input matInput value="value" style="display: none">
-        <div *ngFor="let i of interfacesList; last as last" class="mb-2 relative">
-          <div *ngIf="!i.disabled" (click)="changeInterface(i)" class="absolute w-full h-full top-0 left-0 z-10"></div>
-          <mat-checkbox color='primary' [checked]='i.checked' [disabled]="i.disabled">{{i.label}}</mat-checkbox>
-          <p *ngIf="i.name === 'PIAFAttributes'" class="text-xs text-gray-700">{{attributeString}}</p>
-          <mat-divider *ngIf="!last"> </mat-divider>
-        </div>
-      </mat-form-field>
     </div>
   </div>
 </div>

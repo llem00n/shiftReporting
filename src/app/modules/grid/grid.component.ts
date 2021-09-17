@@ -62,10 +62,14 @@ export class GridComponent implements OnChanges {
   @Input() rclickEnabled: boolean;
 
   @Output() clickItem: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteItem: EventEmitter<string> = new EventEmitter<string>();
   @Output() dropNewItem: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
   @Output() copyItem: EventEmitter<dataCopy> = new EventEmitter<dataCopy>();
   @Output() dashboardChange: EventEmitter<DynControl[]> = new EventEmitter<DynControl[]>();
   // @Output() optionsChange: EventEmitter<GridsterOptions> = new EventEmitter<GridsterOptions>()
+
+  @ViewChild(MatMenuTrigger)
+  contextMenu: MatMenuTrigger;
 
   constructor(){}
 
@@ -181,7 +185,6 @@ export class GridComponent implements OnChanges {
   }
 
   emptyCellDrop(event: MouseEvent, item: GridsterItem) {
-    console.log(item);
     this.dropNewItem.emit(item);
   }
 
@@ -202,25 +205,26 @@ export class GridComponent implements OnChanges {
   // return `[slot="${item.key}"]`
   // }
 
-  @ViewChild(MatMenuTrigger)
-  contextMenu: MatMenuTrigger;
-
   contextMenuPosition = { x: '0px', y: '0px' };
 
 
-  onCopy(id:string){
-    this.itemToCopy = this.dashboard.filter(d=>d.controlId==id)[0];
+  onCopy(id: string){
+    this.itemToCopy = this.dashboard.find(d => d.controlId == id);
   }
 
-  onPaste(c,r){
-    let item:GridsterItem = {rows:this.itemToCopy.gridItem.rows,cols:this.itemToCopy.gridItem.cols,x:c,y:r};
+  onPaste(c, r){
+    let item:GridsterItem = {rows: this.itemToCopy.gridItem.rows, cols: this.itemToCopy.gridItem.cols, x: c, y: r};
 
-    this.copyItem.emit({gridItem:item,control:this.itemToCopy});
+    this.copyItem.emit({ gridItem: item, control: this.itemToCopy });
     this.isItemChange = true;
     this.changedOptions();
   }
 
+  onDelete(id) {
+    this.deleteItem.emit(id);
+  }
 
-
-
+  onEdit(id) {
+    this.clickItem.emit(id);
+  }
 }

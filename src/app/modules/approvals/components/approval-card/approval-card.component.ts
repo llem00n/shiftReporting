@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataEntry, Department, State, Template } from '@models/*';
 import { ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
+import { BehaviorSubject } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { userDepartments, isSmallScreen, allTemplates } from 'src/app/app-store';
 import { OidcClientService } from 'src/app/modules/authorization/oidc-client.service';
@@ -27,9 +28,7 @@ export class ApprovalCardComponent implements OnInit {
     private authService: OidcClientService,
   ) { }
 
-  ngOnInit(): void {
-    this.store.dispatch(DepartmentActions
-      .getUserDepartments({userId: this.authService.getUser().profile.sub}));
+  ngOnInit(): void {   
 
     this.store.select(isSmallScreen)
       .subscribe(small => this.isSmallScreen = small);
