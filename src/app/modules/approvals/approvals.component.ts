@@ -43,23 +43,19 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       // this.selectDepartment({ value: user.departments[0].departmentId })
     });
 
-    this.store.dispatch(DataEntryActions.getPendingDataEntries({userId:this.currentUser.userId}))
+    this.store.dispatch(DataEntryActions.getPendingDataEntries({userId: this.currentUser.userId}))
     this.store.select(isSmallScreen)
       .subscribe(small => this.isSmallScreen = small);
     this.store.select(connectionStatus)
       .subscribe(status => this.isConnected = status)
     
-    this.dataEntries$ = this.store.pipe(
-      select(dataEntriesWaitingForApproval)
-    ).subscribe(dataEntries => {
-      this.dataEntries = dataEntries;
-     
-
-    }
-    
-    );
-
+    this.dataEntries$ = this.store
+      .select(dataEntriesWaitingForApproval)
+      .subscribe(dataEntries => {
+        this.dataEntries = dataEntries;
+      });
   }
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.

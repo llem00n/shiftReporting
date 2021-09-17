@@ -18,9 +18,10 @@
 <mat-menu #contextMenu="matMenu">
 
 	<ng-template matMenuContent  let-itemId = "itemId" let-c = "c" let-r = "r">
-		<button mat-menu-item (click)="onCopy(itemId)" [disabled] = "!itemId">Copy</button>
-    <button mat-menu-item (click)="onPaste(c,r)" [disabled] = "!itemToCopy">Paste</button>
-    <button mat-menu-item (click)="itemToCopy=null">Cancel</button>
+		<button mat-menu-item (click)="onCopy(itemId)" [disabled]="!itemId">Copy</button>
+    <button mat-menu-item (click)="onPaste(c, r)" [disabled]="!itemToCopy">Paste</button>
+    <button mat-menu-item (click)="onEdit(itemId)" [disabled]="!itemId">Edit</button>
+    <button mat-menu-item (click)="onDelete(itemId)" [disabled]="!itemId">Delete</button>
 	</ng-template>
 
 </mat-menu>

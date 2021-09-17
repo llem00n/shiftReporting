@@ -165,6 +165,10 @@ export class TemplateComponent implements OnInit {
     })
   }
 
+  deleteItem(controlId) {
+    this.deleteControl(controlId);
+  }
+
   dashboardChange(event) {
     this.dashboardService.setOptionsMaxDimention(this.dashboard);
   }
