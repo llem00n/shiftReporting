@@ -83,11 +83,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
       const from = new Date(day);
       const to = new Date(day);
 
-      from.setDate(day.getDate() - 1)
-      to.setDate(day.getDate() + 1)
+      from.setDate(from.getDate() - 1)
+      to.setDate(to.getDate() + 1)
       date = {
-        from: this.dateService.getLocalDate(from.setDate(day.getDate() - 1)),
-        to: this.dateService.getLocalDate(to.setDate(day.getDate() + 1)),
+        from: this.dateService.getLocalDate(from),
+        to: this.dateService.getLocalDate(to),
       }
     } else {
       date = this.dateService.getWeekJSON(this.year, this.week);
