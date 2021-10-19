@@ -1,0 +1,3 @@
+<mat-checkbox *ngFor="let schedule of schedules" color="primary" (change)="onChange($event, schedule.scheduleId)" [checked]="checkedSchedules && checkedSchedules.includes(schedule.scheduleId)">
+	{{ schedule.shiftName }} schedule
+</mat-checkbox>

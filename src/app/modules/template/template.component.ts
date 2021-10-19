@@ -4,14 +4,14 @@ import { Template } from 'src/app/app-store/template/template.model';
 import { FormGroup } from '@angular/forms';
 import { DynControl } from '../dynamic-controls/models';
 import { Store, select } from '@ngrx/store';
-import { State, editingTemplate, templateInterfaces, addedTemplate, configurations, allUsers, currentDepartment, connectionStatus } from 'src/app/app-store';
+import { State, editingTemplate, templateInterfaces, addedTemplate, configurations, allUsers, currentDepartment, connectionStatus, allSchedules } from 'src/app/app-store';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Interface, User } from '@models/*';
+import { Interface, Schedule, User } from '@models/*';
 import { DashboardService } from './services/dashboard.service';
 import { DateService } from 'src/app/services/date/date.service';
 import { GridsterOptions } from '../grid';
-import { TemplateActions, InterfaseActions, UserActions } from '@actions/*';
+import { TemplateActions, InterfaseActions, UserActions, ScheduleActions } from '@actions/*';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 import { allInterfaces } from './components/interfaces-config/interfaces-config.component';
@@ -39,6 +39,7 @@ export class TemplateComponent implements OnInit {
   storeInterfaces: Interface[];
   isInterfacesEnabled: boolean = false;
   departmentUsers: User[];
+  schedules: Schedule[];
   // interfacesUpdating: Interface[]
 
   options$: Subscription;
@@ -112,6 +113,11 @@ export class TemplateComponent implements OnInit {
           this.departmentUsers = users.filter(user => user.departments.find(dep => dep.departmentId == department.departmentId));
         })
       ))).subscribe()
+
+    this.store.select(currentDepartment)
+      .subscribe(department => this.store.dispatch(ScheduleActions.getSchedules({ departmentId: department.departmentId })));
+
+    this.store.select(allSchedules).subscribe(schedules => this.schedules = schedules);
   }
 
   ngOnDestroy(): void {
@@ -274,6 +280,17 @@ export class TemplateComponent implements OnInit {
   removeSubmissionApprover(userId: string) {
     if (~this.template.body.submissionApprovers.indexOf(userId))
       this.template.body.submissionApprovers = this.template.body.submissionApprovers.filter(id => id != userId);
+  }
+
+  addAppliedSchedule(id: number) {
+    if (this.template.body.selectedSchedules)
+      this.template.body.selectedSchedules = this.template.body.selectedSchedules.concat([id]);
+    else
+      this.template.body.selectedSchedules = [id];
+  }
+
+  removeAppliedSchedule(id: number) {
+    this.template.body.selectedSchedules = this.template.body.selectedSchedules.filter(x => x != id);
   }
 }
 

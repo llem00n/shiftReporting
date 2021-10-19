@@ -16,9 +16,10 @@ import { SettingsDBComponent } from './components/settings-db/settings-db.compon
 import { PiafModule } from '../piaf/piaf.module';
 import { SettingsControlComponent } from './components/settings-control/settings-control.component';
 import { CheckboxesUsersListComponent } from './components/checkboxes-users-list/checkboxes-users-list.component';
+import { SchedulesListComponent } from './components/schedules-list/schedules-list.component';
 
 @NgModule({
-  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent, SettingsDBComponent, SettingsControlComponent, CheckboxesUsersListComponent],
+  declarations: [TemplateComponent, GeneralConfigComponent, GridsterConfigComponent, InterfacesConfigComponent, ControlsListComponent, ControlConfigComponent, SettingsFileComponent, SettingsPiafComponent, SettingsDBComponent, SettingsControlComponent, CheckboxesUsersListComponent, SchedulesListComponent],
   imports: [
     CommonModule,
     FormModule,
