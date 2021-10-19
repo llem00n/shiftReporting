@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Directive, ElementRef, Output, EventEmitter, AfterViewChecked, OnChanges } from '@angular/core';
-import { State, DataEntry, CurrentDataEntry, User } from '@models/*';
+import { State, DataEntry, CurrentDataEntry, User, Schedule, TemplateBody } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { Template } from '@models/';
 import { allTemplates, dataEntriesOnDate, configurations } from 'src/app/app-store';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { tap, mergeMap, map } from 'rxjs/operators';
 import { Subscription, config } from 'rxjs';
 import { DateService } from 'src/app/services/date/date.service';
-import { DataEntryActions } from '@actions/*';
+import { ChecklistActions, DataEntryActions } from '@actions/*';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
 import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 
@@ -20,6 +20,7 @@ import { AuthorizationService } from 'src/app/modules/authorization/authorizatio
 export class TemplatesListComponent implements OnInit, OnChanges {
   @Input() day;
   @Input() shift;
+  @Input() schedules: Schedule[];
   @Input() calendarHight: number;
   @Output() clickShowMore = new EventEmitter();
 
@@ -118,7 +119,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     this.hiddenTemplates = this.showedTemplates.splice(index);
   }
   clickTemplate(item) {
-    const currentDataEntry = <CurrentDataEntry>{
+    const currentDataEntry = <CurrentDataEntry> {
       endDate: item.endDate,
       startDate: item.startDate,
       deadline: item.deadLine,
@@ -143,6 +144,28 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     // const shiftHeight = this.shiftHeight;
     const templLength = this.templates.length;
     this.clickShowMore.emit({ templLength })
+  }
+
+  clickChecklist() {
+    const scheduleId =  this.schedules.find(x => x.scheduleId == this.shift.schedule.scheduleId).scheduleId;
+
+    this.store.dispatch(
+      ChecklistActions.getDataEntry({
+        scheduleId, 
+        userId: this.currentUser.userId, 
+        date: this.shift.shiftDates.startDate
+      })
+    );
+
+    this.store.dispatch(ChecklistActions.setProperties({
+      properties: {
+        deadline: this.shift.shiftDates.deadLine,
+        shiftStartTime: this.shift.shiftDates.startDate,
+        shiftEndTime: this.shift.shiftDates.endDate
+      }
+    }));
+
+    this.router.navigate(['checklist-data-entry']);
   }
 }
 

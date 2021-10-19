@@ -8,6 +8,8 @@ import { tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 import { DateService } from 'src/app/services/date/date.service';
+import { Router } from '@angular/router';
+import { ChecklistActions } from '@actions/*';
 
 @Component({
   selector: 'app-schedules',
@@ -27,6 +29,7 @@ export class SchedulesComponent implements OnInit {
     private store: Store<State>,
     private dialog: MatDialog,
     private dateService: DateService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -102,4 +105,9 @@ export class SchedulesComponent implements OnInit {
     this.store.dispatch(ScheduleActions.deleteSchedule({ id }))
   }
 
+  editChecklist(scheduleId) {
+    this.store.dispatch(ChecklistActions.getChecklist({ scheduleId }));
+    this.store.dispatch(ChecklistActions.setCurrentScheduleId({ scheduleId }));
+    this.router.navigate(['checklist-editor/']);
+  }
 }

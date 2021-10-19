@@ -17,6 +17,8 @@ import { ConfigurationEffects } from './configuration/configuration.effects';
 import { ConnectionEffects } from './connection/connection.effects';
 import { ScreenEffects } from './screen/screen.effects';
 import { FontEffects } from './font/font.effects';
+import * as fromChecklist from './checklist/checklist.reducer';
+import { ChecklistEffects } from './checklist/checklist.effects';
 
 
 
@@ -45,7 +47,9 @@ import { FontEffects } from './font/font.effects';
       ConnectionEffects,
       ScreenEffects,
       FontEffects,
+      ChecklistEffects,
     ]),
+    StoreModule.forFeature(fromChecklist.checklistFeatureKey, fromChecklist.reducer),
   ]
 })
 export class AppStoreModule { }
