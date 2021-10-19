@@ -1,0 +1,41 @@
+<div class="p-2">
+	<div class="flex justify-center">
+		<div class="m-2">
+			<button mat-button color="primary" class="m-2" (click)="cancel()">CANCEL</button>
+		</div>
+		<div class="m-2">
+			<button mat-flat-button color="primary" class="m-2" (click)="save()">SAVE</button>
+		</div>
+	</div>
+	<div>
+		<button mat-button (click)="addItem()">
+			<mat-icon svgIcon="plus"></mat-icon>
+		</button>
+		<div class="drag-list" cdkDropList (cdkDropListDropped)="drop($event)" [ngClass]="isSmallScreen ? 'w-full' : 'w-1/2'">
+			<div *ngFor="let x of checklistItems" cdkDrag class="drag-item">
+				<mat-card class="mb-2 relative">
+					<div class="absolute top-1 right-1 flex" >
+						<button mat-icon-button (click)="removeItem(x)" color="warn">
+							<mat-icon svgIcon="delete-outline"></mat-icon>
+						</button>
+					</div>
+					<div class="w-full flex">
+						<mat-icon svgIcon="drag" cdkDragHandle class="cursor-move"></mat-icon>
+						<div class="w-full ml-2">
+							<div class="mb-1">
+								<input [(ngModel)]="x.name" class="text-xl w-9/12" placeholder="Task name..." />
+							</div>
+							<div class="w-full">
+								<textarea [(ngModel)]="x.description"
+									class="text-gray-500 w-full box-border outline-none"
+									placeholder="Task description..." cdkTextareaAutosize
+									cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5">
+								</textarea>
+							</div>
+						</div>
+					</div>
+				</mat-card>
+			</div>
+		</div>
+	</div>
+</div>

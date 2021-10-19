@@ -18,6 +18,7 @@ import * as fromConfiguration from './configuration/configuration.reducer';
 import * as fromConnection from './connection/connection.reducer';
 import * as fromScreen from './screen/screen.reducer';
 import * as fromFont from './font/font.reducer';
+import * as fromChecklist from './checklist/checklist.reducer';
 
 
 export interface State {
@@ -34,6 +35,8 @@ export interface State {
   [fromConnection.connectionFeatureKey]: fromConnection.State;
   [fromScreen.screenFeatureKey]: fromScreen.State;
   [fromFont.fontFeatureKey]: fromFont.State;
+  [fromChecklist.checklistFeatureKey]: fromChecklist.State;
+
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -50,6 +53,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromConnection.connectionFeatureKey]: fromConnection.reducer,
   [fromScreen.screenFeatureKey]: fromScreen.reducer,
   [fromFont.fontFeatureKey]: fromFont.reducer,
+  [fromChecklist.checklistFeatureKey]: fromChecklist.reducer,
 };
 
 
@@ -118,3 +122,10 @@ export const connectionStatus = createSelector(connectionState, (state) => state
 // screen
 export const screenState = createFeatureSelector<fromScreen.State>('screen');
 export const isSmallScreen = createSelector(screenState, (state) => state.isSmall);
+
+// checklist
+export const checklistState = createFeatureSelector<fromChecklist.State>('checklist');
+export const currentChecklistItems = createSelector(checklistState, (state) => state.currentChecklistItems);
+export const currentScheduleForChecklist = createSelector(checklistState, (state) => state.scheduleId);
+export const currentChecklistDataEntry = createSelector(checklistState, (state) => state.dataEntry);
+export const currentChecklistDataEntryProperties = createSelector(checklistState, (state) => state.properties);

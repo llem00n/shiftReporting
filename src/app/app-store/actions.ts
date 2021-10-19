@@ -10,6 +10,7 @@ import * as ConfigurationsActions from './configuration/configuration.actions';
 import * as ConnecitonActions from './connection/connection.actions'
 import * as ScreenActions from './screen/screen.actions'
 import * as FontActions from './font/font.actions';
+import * as ChecklistActions from './checklist/checklist.actions';
 
 export {
   PlantActions,
@@ -23,5 +24,6 @@ export {
   ConfigurationsActions,
   ConnecitonActions,
   ScreenActions,
-  FontActions
+  FontActions,
+  ChecklistActions,
 };

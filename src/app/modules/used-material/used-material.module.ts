@@ -26,6 +26,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 
@@ -55,7 +56,8 @@ const modules = [
   MatStepperModule,
   MatTreeModule,
   MatProgressBarModule,
-  MatChipsModule
+  MatChipsModule,
+  DragDropModule,
 ]
 
 

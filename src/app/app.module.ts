@@ -28,6 +28,7 @@ import { SchedulesModule } from './modules/schedules/schedules.module';
 import { MenuButtonComponent } from './components/menu-button/menu-button.component';
 import { ConfigModule } from './modules/config/config.module';
 import { ApprovalsModule } from './modules/approvals/approvals.module';
+import { ChecklistModule } from './modules/checklist/checklist.module';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ApprovalsModule } from './modules/approvals/approvals.module';
     PiafModule,
     SchedulesModule,
     ConfigModule,
+    ChecklistModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
