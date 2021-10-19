@@ -87,6 +87,17 @@
           </div>
         </mat-expansion-panel>
 
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Applied schedules
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="-mx-2">
+            <app-schedules-list [schedules]="schedules" (onCheck)="addAppliedSchedule($event)" (onUncheck)="removeAppliedSchedule($event)" [checkedSchedules]="template.body.selectedSchedules"></app-schedules-list>
+          </div>
+        </mat-expansion-panel>
+
 
       </mat-accordion>
     </div>

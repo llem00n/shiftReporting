@@ -86,6 +86,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     const {startDate, endDate, deadLine} = this.shift.shiftDates;
     const templates = []; 
     data.templates.map((template: Template) => {
+      if (template.body.selectedSchedules != null && !template.body.selectedSchedules.includes(this.shift.schedule.scheduleId)) return;
       let dataEntry: DataEntry = null;
       data.dataEntries.map((item: DataEntry) => {
         if ((item.template.templateId === template.templateId) && this.dateService.isBetween(item.createDate, startDate, endDate)) dataEntry = item
