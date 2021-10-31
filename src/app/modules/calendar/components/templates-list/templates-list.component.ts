@@ -22,6 +22,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   @Input() shift;
   @Input() schedules: Schedule[];
   @Input() calendarHight: number;
+  @Input() isDayView: boolean;
   @Output() clickShowMore = new EventEmitter();
 
   // @ViewChild('shiftEl') shiftEl: ElementRef;
@@ -44,6 +45,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   showedTemplates = [];
   hiddenTemplates = [];
   currentUser: User;
+  console = console;
   // submitReportOffset: number = 0;
 
   constructor(
@@ -115,7 +117,8 @@ export class TemplatesListComponent implements OnInit, OnChanges {
 
   splitTemplates() {
     let index = this.shift.templNum;
-    if (index < this.templates.length) index = index ? this.shift.templNum - 1 : 0;
+    if (index < this.templates.length) 
+      index = index ? this.shift.templNum - 1 - (this.isDayView ? 0 : 1) : 0;
     this.showedTemplates = [...this.templates];
     this.hiddenTemplates = this.showedTemplates.splice(index);
   }

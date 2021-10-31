@@ -11,11 +11,23 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
 import { Properties } from 'src/app/app-store/checklist/properties';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-checklist-data-entry',
   templateUrl: './checklist-data-entry.component.html',
-  styleUrls: ['./checklist-data-entry.component.scss']
+  styleUrls: ['./checklist-data-entry.component.scss'],
+  animations: [
+    trigger('listMessageAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('100ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('100ms', style({ opacity: 0 }))
+      ])
+    ]),
+  ]
 })
 export class ChecklistDataEntryComponent implements OnInit {
   dataEntry: ChecklistDataEntry;

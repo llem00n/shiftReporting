@@ -30,7 +30,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
     this.store.dispatch(FontActions.getFontFamilies());
     this.store.dispatch(FontActions.getFontSizes());
 
