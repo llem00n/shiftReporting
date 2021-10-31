@@ -2,9 +2,12 @@
   <div #templateListEl class="p-1">
     <div class="flex relative">
       <span class="truncate text-sm font-bold m-auto">{{shift.schedule.shiftName}}</span>
-      <div class="flex absolute 2-4 h-4 right-2 text-black">
+      <div class="flex absolute 2-4 h-4 right-2 text-black" *ngIf="isDayView">
         <span class="text-sm font-bold ml-2 cursor-pointer" (click)="clickChecklist()">Checklist</span>
       </div>
+    </div>
+    <div class="min-w-full mt-2 p-1 cursor-pointer" *ngIf="!isDayView" (click)="clickChecklist()">
+      <span class="font-bold text-black">Checklsit</span>
     </div>
     <div *ngFor="let template of showedTemplates" (click)="clickTemplate(template)"
       class="min-w-full mt-2 p-1 cursor-pointer flex rounded shadow" [ngClass]="template.style.styleClass">
