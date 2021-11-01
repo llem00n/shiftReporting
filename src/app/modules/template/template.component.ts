@@ -212,6 +212,7 @@ export class TemplateComponent implements OnInit {
       this.removeExcessProps(i, ['diffGridItem', 'settings', '_settings']);
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
     })
+    template.body.selectedSchedules = this.template['schedules'] || null;
     template.body.TemplateData = [];
     template.lastUpdated = this.dateService.getLocalDate();
     if (this.departmentId) {

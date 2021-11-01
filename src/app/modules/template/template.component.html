@@ -16,7 +16,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="-mx-2">
-            <app-general-config (form)="getFormGeneral($event)" [template]='template'></app-general-config>
+            <app-general-config (form)="getFormGeneral($event)" [template]='template' [schedules]="schedules" [checkedSchedules]="template.body.selectedSchedules"></app-general-config>
           </div>
         </mat-expansion-panel>
 
@@ -87,16 +87,16 @@
           </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel>
+        <!-- <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Applied schedules
+              Schedules
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="-mx-2">
             <app-schedules-list [schedules]="schedules" (onCheck)="addAppliedSchedule($event)" (onUncheck)="removeAppliedSchedule($event)" [checkedSchedules]="template.body.selectedSchedules"></app-schedules-list>
           </div>
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
 
 
       </mat-accordion>

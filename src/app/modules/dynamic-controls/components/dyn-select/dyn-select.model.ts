@@ -4,6 +4,7 @@ export class DynSelect extends BaseControl {
   type = 'select';
   placeholder?: string;
   options: { value: string | number, viewValue: string }[];
+  multiple: boolean;
   private _settings = [
     // { controlId: 'placeholder', label: 'Placeholder', type: 'text' },
     { controlId: 'optionsString', label: 'Options', type: 'textarea' },
@@ -15,6 +16,8 @@ export class DynSelect extends BaseControl {
     this.placeholder = opt['placeholder'] || '';
     this.options = opt['options'] || [];
     this.name = opt['name'] || this.type;
+    this.multiple = opt['multiple'] || false;
+    this.value = opt['selectValue'] || null;
   }
   
   get optionsString() { return this.options.map(i => i.value).join('\n') }
