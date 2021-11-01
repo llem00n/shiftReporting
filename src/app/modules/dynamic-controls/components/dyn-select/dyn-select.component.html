@@ -3,8 +3,8 @@
   <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
     <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
     <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
-      <mat-select [disabled]="options.control.readonly"  [formControlName]="options.control.controlId" [placeholder]="options.control.label">
-        <mat-option *ngFor="let option of options.control.options " [value]="option.value">{{option.viewValue}}
+      <mat-select [(value)]="options.control.value" [disabled]="options.control.readonly"  [formControlName]="options.control.controlId" [placeholder]="options.control.label" [multiple]="options.control.multiple">
+        <mat-option *ngFor="let option of options.control.options " [value]="option.value" >{{option.viewValue}}
         </mat-option>
       </mat-select>
     </div>
