@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline">
 	<mat-label>Search</mat-label>
 	<input matInput type="text" [formControl]="search" />
-	<mat-icon matSuffix svgIcon="magnify"></mat-icon>
+	<!-- <mat-icon matSuffix svgIcon="magnify"></mat-icon> -->
 </mat-form-field>
 <mat-checkbox color="primary" (change)="selectAll($event)" [checked]="isChecked()" class="mb-3">Select all</mat-checkbox>
 <div *ngFor="let user of filteredUsers" class="mb-3">

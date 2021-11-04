@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { FormGroup } from '@angular/forms';
 import { TemplateBody, DynControl, State, Interface } from '@models/*';
 import { Store, select } from '@ngrx/store';
-import { templateInterfaces } from 'src/app/app-store';
+import { isSmallScreen, templateInterfaces } from 'src/app/app-store';
 import { allInterfaces } from '../interfaces-config/interfaces-config.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { PiafComponent, PIAFSelector } from 'src/app/modules/piaf/piaf.component';
@@ -27,6 +27,7 @@ export class SettingsControlComponent implements OnInit {
   isDisableDelete: boolean = true;
   isInterfacesEnabled: boolean = false;
   datasourceControls = [{ controlId: 'datasource', label: 'Data source', type: 'textarea', readonly: true }];
+  isSmallScreen: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -38,12 +39,16 @@ export class SettingsControlComponent implements OnInit {
       interfaces: Interface[],
       isInterfacesEnabled: boolean,
     },
+    private store: Store<State>
   ) { }
 
 
 
   ngOnInit(): void {
     this.initialData();
+
+    this.store.select(isSmallScreen)
+      .subscribe(x => this.isSmallScreen = x);
   }
 
   get attributeString() {

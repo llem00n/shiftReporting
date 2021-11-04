@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Directive, ElementRef, Output, EventEmitter, AfterViewChecked, OnChanges } from '@angular/core';
-import { State, DataEntry, CurrentDataEntry, User } from '@models/*';
+import { State, DataEntry, CurrentDataEntry, User, Schedule, TemplateBody } from '@models/*';
 import { Store, select } from '@ngrx/store';
 import { Template } from '@models/';
 import { allTemplates, dataEntriesOnDate, configurations } from 'src/app/app-store';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { tap, mergeMap, map } from 'rxjs/operators';
 import { Subscription, config } from 'rxjs';
 import { DateService } from 'src/app/services/date/date.service';
-import { DataEntryActions } from '@actions/*';
+import { ChecklistActions, DataEntryActions } from '@actions/*';
 import { MessageService } from 'src/app/modules/message/sevices/message.service';
 import { AuthorizationService } from 'src/app/modules/authorization/authorization.service';
 
@@ -20,7 +20,9 @@ import { AuthorizationService } from 'src/app/modules/authorization/authorizatio
 export class TemplatesListComponent implements OnInit, OnChanges {
   @Input() day;
   @Input() shift;
+  @Input() schedules: Schedule[];
   @Input() calendarHight: number;
+  @Input() isDayView: boolean;
   @Output() clickShowMore = new EventEmitter();
 
   // @ViewChild('shiftEl') shiftEl: ElementRef;
@@ -43,6 +45,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
   showedTemplates = [];
   hiddenTemplates = [];
   currentUser: User;
+  console = console;
   // submitReportOffset: number = 0;
 
   constructor(
@@ -85,6 +88,7 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     const {startDate, endDate, deadLine} = this.shift.shiftDates;
     const templates = []; 
     data.templates.map((template: Template) => {
+      if (template.body.selectedSchedules != null && !template.body.selectedSchedules.includes(this.shift.schedule.scheduleId)) return;
       let dataEntry: DataEntry = null;
       data.dataEntries.map((item: DataEntry) => {
         if ((item.template.templateId === template.templateId) && this.dateService.isBetween(item.createDate, startDate, endDate)) dataEntry = item
@@ -113,18 +117,19 @@ export class TemplatesListComponent implements OnInit, OnChanges {
 
   splitTemplates() {
     let index = this.shift.templNum;
-    if (index < this.templates.length) index = index ? this.shift.templNum - 1 : 0;
+    if (index < this.templates.length) 
+      index = index ? this.shift.templNum - 1 - (this.isDayView ? 0 : 1) : 0;
     this.showedTemplates = [...this.templates];
     this.hiddenTemplates = this.showedTemplates.splice(index);
   }
   clickTemplate(item) {
-    const currentDataEntry = <CurrentDataEntry>{
+    const currentDataEntry = <CurrentDataEntry> {
       endDate: item.endDate,
       startDate: item.startDate,
       deadline: item.deadLine,
     };
     if (!item.dataEntry && this.currentUser.roleId > 3 && new Date() > item.deadLine) {
-      this.messageService.alertMessage('Data is missing')
+      this.messageService.alertMessage('The report can no longer be filled out')
       return;
     }
     if (item.dataEntry) {
@@ -143,6 +148,28 @@ export class TemplatesListComponent implements OnInit, OnChanges {
     // const shiftHeight = this.shiftHeight;
     const templLength = this.templates.length;
     this.clickShowMore.emit({ templLength })
+  }
+
+  clickChecklist() {
+    const scheduleId =  this.schedules.find(x => x.scheduleId == this.shift.schedule.scheduleId).scheduleId;
+
+    this.store.dispatch(
+      ChecklistActions.getDataEntry({
+        scheduleId, 
+        userId: this.currentUser.userId, 
+        date: this.shift.shiftDates.startDate
+      })
+    );
+
+    this.store.dispatch(ChecklistActions.setProperties({
+      properties: {
+        deadline: this.shift.shiftDates.deadLine,
+        shiftStartTime: this.shift.shiftDates.startDate,
+        shiftEndTime: this.shift.shiftDates.endDate
+      }
+    }));
+
+    this.router.navigate(['checklist-data-entry']);
   }
 }
 

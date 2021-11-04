@@ -18,6 +18,7 @@ import * as fromConfiguration from './configuration/configuration.reducer';
 import * as fromConnection from './connection/connection.reducer';
 import * as fromScreen from './screen/screen.reducer';
 import * as fromFont from './font/font.reducer';
+import * as fromChecklist from './checklist/checklist.reducer';
 
 
 export interface State {
@@ -34,6 +35,8 @@ export interface State {
   [fromConnection.connectionFeatureKey]: fromConnection.State;
   [fromScreen.screenFeatureKey]: fromScreen.State;
   [fromFont.fontFeatureKey]: fromFont.State;
+  [fromChecklist.checklistFeatureKey]: fromChecklist.State;
+
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -50,6 +53,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromConnection.connectionFeatureKey]: fromConnection.reducer,
   [fromScreen.screenFeatureKey]: fromScreen.reducer,
   [fromFont.fontFeatureKey]: fromFont.reducer,
+  [fromChecklist.checklistFeatureKey]: fromChecklist.reducer,
 };
 
 
@@ -59,27 +63,29 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 // ========= selectors ========
 
 // fonts
-
 export const fontState = createFeatureSelector<fromFont.State>('font');
 export const allFontSizes = createSelector(fontState, (state)=> state.FontSizes);
 export const allFontFamilies = createSelector(fontState, (state)=> state.FontFamilies);
+
 // plants
 export const plantState = createFeatureSelector<fromPlant.State>('plants');
 export const allPlants = createSelector(plantState, fromPlant.selectAll);
+
 //departments
 export const departmentsState = createFeatureSelector<fromDepartment.State>('departments');
 export const allDepartments = createSelector(departmentsState, fromDepartment.selectAll);
 export const userDepartments = createSelector(departmentsState, (state) => state.userDepartments);
 export const currentDepartment = createSelector(departmentsState, (state) => state.currentDepartment);
 
-
 //shifts
 export const shiftsState = createFeatureSelector<fromShift.State>('shifts');
 export const allShifts = createSelector(shiftsState, fromShift.selectAll);
+
 //schedule
 export const scheduleState = createFeatureSelector<fromSchedule.State>('schedules');
 export const allSchedules = createSelector(scheduleState, fromSchedule.selectAll);
 export const editingSchedule = createSelector(scheduleState, (state) => state.editingSchedule);
+
 //templates
 export const templateState = createFeatureSelector<fromTemplate.State>('templates');
 export const allTemplates = createSelector(templateState, fromTemplate.selectAll);
@@ -116,3 +122,10 @@ export const connectionStatus = createSelector(connectionState, (state) => state
 // screen
 export const screenState = createFeatureSelector<fromScreen.State>('screen');
 export const isSmallScreen = createSelector(screenState, (state) => state.isSmall);
+
+// checklist
+export const checklistState = createFeatureSelector<fromChecklist.State>('checklist');
+export const currentChecklistItems = createSelector(checklistState, (state) => state.currentChecklistItems);
+export const currentScheduleForChecklist = createSelector(checklistState, (state) => state.scheduleId);
+export const currentChecklistDataEntry = createSelector(checklistState, (state) => state.dataEntry);
+export const currentChecklistDataEntryProperties = createSelector(checklistState, (state) => state.properties);

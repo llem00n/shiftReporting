@@ -47,32 +47,15 @@ const templateReducer = createReducer(
   on(TemplateActions.getTemplateTypesSuccess,
     (state, { templateTypes }) => ({ ...state, templateTypes })
   ),
-
   on(TemplateActions.setEditingTemplate,
     (state, { template }) => ({ ...state, editingTemplate: template })
   ),
   on(TemplateActions.setAddedTemplate,
     (state, { template }) => ({ ...state, addedTemplate: template })
   ),
-
-  // on(TemplateActions.upsertTemplate,
-  //   (state, action) => adapter.upsertOne(action.template, state)
-  // ),
   on(TemplateActions.deleteTemplateSuccess,
     (state, action) => adapter.removeOne(action.id, state)
   ),
-  // on(TemplateActions.addTemplates,
-  //   (state, action) => adapter.addMany(action.templates, state)
-  // ),
-  // on(TemplateActions.upsertTemplates,
-  //   (state, action) => adapter.upsertMany(action.templates, state)
-  // ),
-  // on(TemplateActions.updateTemplates,
-  //   (state, action) => adapter.updateMany(action.templates, state)
-  // ),
-  // on(TemplateActions.deleteTemplates,
-  //   (state, action) => adapter.removeMany(action.ids, state)
-  // ),
 );
 
 export function reducer(state: State | undefined, action: Action) {

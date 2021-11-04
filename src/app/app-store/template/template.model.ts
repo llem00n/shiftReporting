@@ -42,6 +42,7 @@ export class TemplateBody {
   gridsterOptions: {};
   toNotifyUserIdList: string[];
   submissionApprovers: string[];
+  selectedSchedules: number[];
 
   constructor(opt: { [key: string]: any } = {}) {
     this.TemplateData = opt['TemplateData'] || [];
@@ -55,6 +56,7 @@ export class TemplateBody {
     this.Datasource = opt['Datasource'] || [];
     this.dashboard = opt['dashboard'] || [];
     this.gridsterOptions = opt['gridsterOptions'] || {};
+    this.selectedSchedules = opt['selectedSchedules'] || null;
   }
   get templateDataKV() {
     // return []

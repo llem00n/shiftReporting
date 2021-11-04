@@ -8,7 +8,7 @@
   <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
     <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
     <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
-      <input type='datetime-local' [min]='min' [max]='max' matInput [placeholder]="options.control.label" [formControlName]="options.control.controlId">
+      <input type='datetime-local' [readonly]="options.control.readonly" [min]='min' [max]='max' matInput [placeholder]="options.control.label" [formControlName]="options.control.controlId">
     </div>
   </mat-form-field>
 </div>

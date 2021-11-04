@@ -16,7 +16,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="-mx-2">
-            <app-general-config (form)="getFormGeneral($event)" [template]='template'></app-general-config>
+            <app-general-config (form)="getFormGeneral($event)" [template]='template' [schedules]="schedules" [checkedSchedules]="template.body.selectedSchedules"></app-general-config>
           </div>
         </mat-expansion-panel>
 
@@ -87,6 +87,17 @@
           </div>
         </mat-expansion-panel>
 
+        <!-- <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Schedules
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="-mx-2">
+            <app-schedules-list [schedules]="schedules" (onCheck)="addAppliedSchedule($event)" (onUncheck)="removeAppliedSchedule($event)" [checkedSchedules]="template.body.selectedSchedules"></app-schedules-list>
+          </div>
+        </mat-expansion-panel> -->
+
 
       </mat-accordion>
     </div>
@@ -105,7 +116,7 @@
 
     <div class="p-2 overflow-auto flex-1">
       <div>
-        <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)" (copyItem)="copyItem($event)"
+        <app-grid (clickItem)="clickItem($event)" (dropNewItem)="dropNewItem($event)" (copyItem)="copyItem($event)" (deleteItem)="deleteItem($event)"
           (dashboardChange)="dashboardChange($event)" [options]="options" [dashboard]="dashboard"
           [appointment]="appointment" [selectedControlId]='selectedControl?.controlId' [blind]='true' [rclickEnabled]='true'></app-grid>
       </div>

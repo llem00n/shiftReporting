@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Template } from 'src/app/app-store/template/template.model';
 import { Store } from '@ngrx/store';
 import { State, templateTypes } from 'src/app/app-store';
 import { TemplateActions } from '@actions/*';
-import { DynText, DynSelect, DynTextarea, DynDate } from '@models/*';
+import { DynText, DynSelect, DynTextarea, DynDate, Schedule, BaseControl } from '@models/*';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-general-config',
@@ -15,7 +16,29 @@ export class GeneralConfigComponent implements OnInit {
   @Input() template: Template;
   @Output() form = new EventEmitter<FormGroup>()
 
+  @Input()
+  set checkedSchedules(schedules: number[]) {
+    if (!schedules) schedules = this._schedules.map(x => x.scheduleId);
+    const schedulesSelect = this.generalConfig.find(x => x.controlId == 'schedules');
+    schedulesSelect['selectValue'] = schedules;
+    this.schedulesControl.subscribe(control => control && control.setValue(schedules));
+  }
+  @Output() onCheck = new EventEmitter<number>();
+  @Output() onUncheck = new EventEmitter<number>();
+
+  _schedules: Schedule[] = [];
+  @Input() 
+  set schedules(schedules: Schedule[]) {
+    const schedulesSelect = this.generalConfig.find(x => x.controlId == 'schedules');
+    schedulesSelect['options'] = schedules.map(x => ({value: x.scheduleId, viewValue: x.shiftName + ' schedule'}));
+    this._schedules = schedules;
+  }
+  get schedules() {
+    return this._schedules;
+  }
+
   show = false;
+  schedulesControl = new BehaviorSubject<AbstractControl>(null);
 
   // generalConfig = new Map([
   //   ['name', { key: 'name', type: 'text', placeholder: "Name", label: 'Name', validators: { required: true } }],
@@ -28,12 +51,15 @@ export class GeneralConfigComponent implements OnInit {
     new DynDate({ controlId: 'validFromDate', label: "Valid from date", validators: { required: true } }),
     new DynDate({ controlId: 'validToDate', label: "Valid to date", validators: { required: true } }),
     new DynTextarea({ controlId: 'description', type: 'textarea', placeholder: "Description", label: "Description" }),
+    new DynSelect({ controlId: 'schedules', label: 'Schedules', options: [], multiple: true, selectValue: []}),
   ];
+
   constructor(
     private store: Store<State>
   ) { }
   ngOnInit(): void {
-    this.getTemplateTypes()
+    this.getTemplateTypes();
+    console.log(this.checkedSchedules)
   }
   getTemplateTypes() {
     this.store.dispatch(TemplateActions.getTemplateTypes());
@@ -49,6 +75,7 @@ export class GeneralConfigComponent implements OnInit {
     e.get('templateTypeId').valueChanges.subscribe(id =>
       (id === 0 || id) && e.get('templateTypeName').setValue(this.getTemplateTypeName(id))
     )
+    this.schedulesControl.next(e.get('schedules'));
     this.form.emit(e);
   }
   getTemplateTypeName(templateTypeId): string {

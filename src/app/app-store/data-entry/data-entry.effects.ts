@@ -25,7 +25,6 @@ export class DataEntryEffects {
           dataEntry
         }));
         this.dataEntryCookieSenderService.send('data-entry-backup');
-
         return DataEntryActions.setCurrentDataEntry({ currentDataEntry: null });
       })
     )),

@@ -11,6 +11,7 @@ export class ScheduleCardComponent {
   @Input() schedule: Schedule
   @Output() clickEdit = new EventEmitter<number>()
   @Output() clickDelete = new EventEmitter<number>()
+  @Output() clickChecklist = new EventEmitter<number>()
 
 
   constructor(
@@ -36,5 +37,8 @@ export class ScheduleCardComponent {
   }
   edit() {
     this.clickEdit.emit(this.schedule.scheduleId)
+  }
+  editChecklist() {
+    this.clickChecklist.emit(this.schedule.scheduleId);
   }
 }
