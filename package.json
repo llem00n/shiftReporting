@@ -28,6 +28,7 @@
     "@ngrx/schematics": "^12.3.0",
     "@ngrx/store": "^12.3.0",
     "@ngrx/store-devtools": "^12.3.0",
+    "ajv": "^8.6.3",
     "ajv-keywords": "^5.0.0",
     "angular-gridster2": "^9.1.0",
     "caniuse-lite": "^1.0.30001252",
