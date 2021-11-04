@@ -19,17 +19,17 @@
 				<div class="drag-list h-full w-4/5 pb-10" cdkDropList #undoneList="cdkDropList"
 					[cdkDropListConnectedTo]="doneList" [cdkDropListData]="undoneItems"
 					(cdkDropListDropped)="drop($event)">
-					<div *ngFor="let x of undoneItems" class="drag-item" cdkDrag cdkDragLockAxis="x">
+					<div *ngFor="let x of undoneItems" class="drag-item" cdkDrag cdkDragLockAxis="xl">
 						<mat-card class="mb-2 cursor-move">
 							<div class="w-full flex">
 								<div class="w-full ml-2">
 									<div class="mb-1">
-										<span class="text-xl">
+										<span class="text-xl break-words">
 											{{ x.name }}
 										</span>
 									</div>
 									<div class="w-full">
-										<span class="text-gray-500">
+										<span class="text-gray-500 break-words">
 											{{ x.description }}
 										</span>
 									</div>
@@ -50,17 +50,17 @@
 				<div class="drag-list h-full w-4/5 pb-10" cdkDropList #doneList="cdkDropList"
 					[cdkDropListConnectedTo]="undoneList" [cdkDropListData]="doneItems"
 					(cdkDropListDropped)="drop($event)">
-					<div *ngFor="let x of doneItems" class="drag-item" cdkDrag cdkDragLockAxis="x">
+					<div *ngFor="let x of doneItems" class="drag-item" cdkDrag cdkDragLockAxis="xl">
 						<mat-card class="mb-2 cursor-move">
 							<div class="w-full flex">
 								<div class="w-full ml-2">
 									<div class="mb-1">
-										<span class="text-xl line-through text-gray-700">
+										<span class="text-xl line-through text-gray-700 break-words">
 											{{ x.name }}
 										</span>
 									</div>
 									<div class="w-full">
-										<span class="text-gray-500">
+										<span class="text-gray-500 break-words">
 											{{ x.description }}
 										</span>
 									</div>

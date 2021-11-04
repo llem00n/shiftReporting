@@ -11,6 +11,6 @@
 	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.drag-list .drag-item {
-	transition: transform 2500ms cubic-bezier(0, 0, 0.2, 1);
+.drag-list.cdk-drop-list-dragging .drag-item:not(.cdk-drag-placeholder) {
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

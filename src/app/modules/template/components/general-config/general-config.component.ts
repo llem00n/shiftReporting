@@ -18,6 +18,7 @@ export class GeneralConfigComponent implements OnInit {
 
   @Input()
   set checkedSchedules(schedules: number[]) {
+    if (!schedules) schedules = this._schedules.map(x => x.scheduleId);
     const schedulesSelect = this.generalConfig.find(x => x.controlId == 'schedules');
     schedulesSelect['selectValue'] = schedules;
     this.schedulesControl.subscribe(control => control && control.setValue(schedules));
@@ -25,10 +26,15 @@ export class GeneralConfigComponent implements OnInit {
   @Output() onCheck = new EventEmitter<number>();
   @Output() onUncheck = new EventEmitter<number>();
 
+  _schedules: Schedule[] = [];
   @Input() 
   set schedules(schedules: Schedule[]) {
     const schedulesSelect = this.generalConfig.find(x => x.controlId == 'schedules');
     schedulesSelect['options'] = schedules.map(x => ({value: x.scheduleId, viewValue: x.shiftName + ' schedule'}));
+    this._schedules = schedules;
+  }
+  get schedules() {
+    return this._schedules;
   }
 
   show = false;
@@ -53,6 +59,7 @@ export class GeneralConfigComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.getTemplateTypes();
+    console.log(this.checkedSchedules)
   }
   getTemplateTypes() {
     this.store.dispatch(TemplateActions.getTemplateTypes());
