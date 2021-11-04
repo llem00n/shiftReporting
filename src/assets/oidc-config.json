@@ -1,5 +1,6 @@
 {
   "authority": "http://localhost:5000",
+  "client_id": "spa",
   "redirect_uri": "http://localhost:5002/callback.html",
   "response_type": "code",
   "scope": "openid profile api1",
