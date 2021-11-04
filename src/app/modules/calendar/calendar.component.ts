@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Schedule, State, DataEntry } from '@models/*';
-import { ScheduleActions, TemplateActions, DataEntryActions } from '@actions/*';
+import { ScheduleActions, TemplateActions, DataEntryActions, FontActions } from '@actions/*';
 import { Store, select } from '@ngrx/store';
 import { allSchedules, connectionStatus, isSmallScreen } from 'src/app/app-store';
 import { DateService } from 'src/app/services/date/date.service';
@@ -30,6 +30,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
+    this.store.dispatch(FontActions.getFontFamilies());
+    this.store.dispatch(FontActions.getFontSizes());
+
     this.calendarService.getCalendarState()
       .subscribe(state => {
         const { day, week, year } = state;

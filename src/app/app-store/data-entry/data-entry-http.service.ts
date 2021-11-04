@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵresetJitOptions } from '@angular/core';
 import { DataEntry } from '@models/';
 import { Observable, of } from 'rxjs';
 import { AppHttpResponse, AppHttpRequest, HttpService } from '../../services/http/http.service';
@@ -16,7 +16,7 @@ export class DataEntryHttpService {
       url: this.baseUrl + 'addDataEntry',
       payload: { dataEntry },
       loadingMsg: 'Adding the data entry...',
-      successMsg: `DataEntry has been added`,
+      successMsg: `Data entry has been added`,
       errorMsg: 'Failed to add the data entry',
 
       disableLoadingMsg: inBackground,
@@ -36,6 +36,33 @@ export class DataEntryHttpService {
       loadingMsg: 'Loading data entries...',
       errorMsg: 'Failed to load data entries',
       successMsg: 'Loaded data entries',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
+  GetPendingDataEntries(userId:string, inBackground?: boolean){
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getPendingDataEntries',
+      payload: { userId },
+
+      loadingMsg: 'Loading the data entries...',
+      successMsg: 'Loaded data entries',
+      errorMsg: 'Failed to load data entries',
+
+      disableSuccessMsg: inBackground,
+      disableLoadingMsg: inBackground,
+      disableErrorMsg: inBackground,
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+  GetDataEntry(DataEntryID:number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDataEntry',
+      payload: { DataEntryID },
+
+      loadingMsg: 'Loading the data entry...',
+      successMsg: `Data entry has been loaded`,
+      errorMsg: 'Failed to update the data entry',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -60,7 +87,7 @@ export class DataEntryHttpService {
       url: this.baseUrl + 'submitDataEntry',
       payload: { dataEntry },
 
-      loadingMsg: 'Submitting the dataEntry...',
+      loadingMsg: 'Submitting the data entry...',
       successMsg: `Data entry has been submitted`,
       errorMsg: 'Failed to submit the data entry',
 
@@ -69,6 +96,32 @@ export class DataEntryHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
+
+  approveDataEntry(dataEntryId: number, approverId: string): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'approveDataEntry',
+      payload: {dataEntryId, approverId},
+
+      loadingMsg: 'Approving the data entry...',
+      successMsg: 'The data entry has been approved',
+      errorMsg: 'Failed to approve the data entry',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
+  rejectDataEntry(dataEntryId: number, approverId: string): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + "rejectDataEntry",
+      payload: { dataEntryId, approverId },
+
+      loadingMsg: 'Rejecting the data entry...',
+      successMsg: 'The data entry has been rejected',
+      errorMsg: 'Failed to reject the data entry',
+    }
+
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
   getDataEntryLogs(dataEntryId: number): Observable<AppHttpResponse> {
     const options: AppHttpRequest = {
       url: this.baseUrl + 'getDataEntryLogs',
@@ -79,4 +132,17 @@ export class DataEntryHttpService {
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
+
+  getDataEntry(DataEntryID:number): Observable<AppHttpResponse> {
+    const options: AppHttpRequest = {
+      url: this.baseUrl + 'getDataEntry',
+      payload: { DataEntryID },
+ 
+      loadingMsg: 'Loading the data entry...',
+      successMsg: `Data entry has been loaded`,
+      errorMsg: 'Failed to update the data entry',
+    }
+    return this.httpService.post<AppHttpResponse>(options);
+  }
+
 }

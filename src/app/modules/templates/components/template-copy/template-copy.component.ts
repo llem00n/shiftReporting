@@ -34,7 +34,7 @@ export class TemplateCopyComponent{
 
   
  ngOnInit(){
-  
+  this.departmentId = this.data.currentDepartmentId;
   // this.onChangeId();
   
  }

@@ -12,7 +12,7 @@ export class InputFComponent implements OnInit {
 
   url: string = "";
   file!: File | undefined; // Variable to store file
-  validFileTypes = ['png', 'jpg', "jpeg"];
+  validFileTypes = ['PNG', 'JPG', 'JPEG'];
   error: boolean = false;
   imageuploaded!: string;
 
@@ -36,7 +36,7 @@ export class InputFComponent implements OnInit {
     this.file = (event.target as HTMLInputElement).files![0];
     // console.log(event);
     let fileName = this.file.name;
-    const fileEntension = fileName.split('.')!.pop()!;
+    const fileEntension = fileName.split('.')!.pop().toUpperCase();
     if (this.validFileTypes.indexOf(fileEntension) <= -1) {
       this.error = true
       fileName = "";

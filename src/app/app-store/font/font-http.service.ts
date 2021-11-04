@@ -23,7 +23,9 @@ export class FontHttpService {
     const options: AppHttpRequest = {
       payload: {},
       url: 'fontSize/' + 'getFontSizes',
-      loadingMsg: 'Loading Font sizes...',
+      loadingMsg: 'Loading font sizes...',
+      successMsg: 'Loaded font sizes',
+      errorMsg: 'Failed to load font sizes',
     }
     return this.httpService.post<AppHttpResponse>(options);
   }
@@ -42,7 +44,9 @@ export class FontHttpService {
     const options: AppHttpRequest = {
       payload: {},
       url: 'fontFamily/' + 'getFontFamilies',
-      loadingMsg: 'Loading Font families...',
+      loadingMsg: 'Loading font families...',
+      successMsg: 'Loaded font families',
+      errorMsg: 'Failed to load font families'
     }
     return this.httpService.post<AppHttpResponse>(options);
   }

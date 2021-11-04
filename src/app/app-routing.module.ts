@@ -15,6 +15,7 @@ import { RoleGuard } from './modules/authorization/guards/role.guard';
 import { ConfigComponent } from './modules/config/config.component';
 import { environment } from 'src/environments/environment';
 import { ApprovalsComponent } from './modules/approvals/approvals.component';
+import { ApprovalProcessComponent } from './modules/approvals/components/approval-process/approval-process.component';
 
 const routes: Routes = [
   {
@@ -30,11 +31,11 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'config', component: ConfigComponent, canActivate: [AuthGuard, RoleGuard] },
       { path: 'approvals', component: ApprovalsComponent, canActivate: [AuthGuard, RoleGuard] },
+      { path: 'approvals/dataentry', component: ApprovalProcessComponent, canActivate: [AuthGuard]}
     ]
   },
   {
-    path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]
-  },
+    path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
   { path: 'dataentry', component: DataEntryComponent, canActivate: [AuthGuard] },
   { path: 'callback.html', component: LoginComponent },
   { path: '**', redirectTo: 'calendar', pathMatch: 'full' },

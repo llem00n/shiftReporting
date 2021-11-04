@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   // baseUrl: 'http://localhost:3001',
-  baseUrl: 'http://localhost:5001'
+  //baseUrl: 'http://localhost:5001'
+  baseUrl: 'https://10.34.201.101:999'
 };
 
 /*
@@ -15,4 +16,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
- import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+ //import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
