@@ -18,9 +18,11 @@ import { UsedMaterialModule } from '../used-material/used-material.module';
 import { DynImageComponent } from './components/dyn-image/dyn-image.component';
 import { DynTableComponent } from './components/dyn-table/dyn-table.component';
 import { InputFComponent } from './components/input-f/input-f.component';
+import { DynUrlComponent } from './components/dyn-url/dyn-url.component';
+import { InputUrlComponent } from './components/input-url/input-url.component';
 
 @NgModule({
-  declarations: [DynImageComponent, DynTableComponent, InputFComponent, DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent, DynNumberComponent, DynTimeComponent, DynTextComponent, DynSelectComponent, DynTextareaComponent, DynColorComponent, DynLabelComponent, DynDateComponent],
+  declarations: [DynUrlComponent,InputUrlComponent,DynImageComponent, DynTableComponent, InputFComponent, DynamicControlsComponent, InputComponent, SelectComponent, DynDatetimeComponent, DynCheckboxComponent, DynNumberComponent, DynTimeComponent, DynTextComponent, DynSelectComponent, DynTextareaComponent, DynColorComponent, DynLabelComponent, DynDateComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
