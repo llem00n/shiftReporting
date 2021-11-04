@@ -16,7 +16,7 @@ export class BaseControl {
   italic: boolean;
   underline: boolean;
   picture: string;
-
+  url:string;
   fSize?:string;
   fFamily?:string;
 
@@ -51,7 +51,7 @@ export class BaseControl {
     this.italic = opt['italic'] || false; 
     this.underline = opt['underline'] || false; 
     this.picture = opt.hasOwnProperty('picture') ? opt['picture'] : null;
-  
+    this.url = opt.hasOwnProperty('url') ? opt['url'] : null;
     this.fFamily = opt.hasOwnProperty('fFamily')?opt['fFamily'] || 'inherit':null;
     this.fSize =opt.hasOwnProperty('fSize')? opt['fSize'] || 'inherit':null;
   }

@@ -25,6 +25,11 @@ import { InputFComponent } from './input-f/input-f.component';
 import { DynTableComponent } from './dyn-table/dyn-table.component';
 import { DynTable } from './dyn-table/dyn-table.model';
 
+import { DynUrlComponent } from './dyn-url/dyn-url.component';
+import { DynUrl } from './dyn-url/dyn-url.model';
+import { InputUrlComponent } from './input-url/input-url.component';
+import { DynInputUrl } from './input-url/inputUrl.model';
+
 export const dynComponents = {
   get: function (type) { return this[type].component },
   getList: function () {
@@ -45,6 +50,8 @@ export const dynComponents = {
   date: { component: DynDateComponent, /* title: 'Date', */ model: DynDate },
   image: { component: DynImageComponent,  title: 'Image',  model: DynImage },
   inputF: { component: InputFComponent,  model: DynInputF },
-  // table: { component: DynTableComponent, title:"Table", model: DynTable}
+  table: { component: DynTableComponent, title:"Table", model: DynTable},
+  inputUrl: { component: InputUrlComponent, model: DynInputUrl},
+  url: { component: DynUrlComponent,title: 'Url', model: DynUrl}
 }
 

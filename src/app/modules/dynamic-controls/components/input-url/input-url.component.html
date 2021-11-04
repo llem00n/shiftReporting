@@ -1,0 +1,9 @@
+<div class="w-full h-full flex items-center">
+  <mat-form-field [formGroup]="options.form" [appearance]='options.appearance' class="w-full">
+    <mat-label *ngIf="options.appearance === 'outline'">{{options.control.label}}</mat-label>
+    <div [ngClass]="{'px-2 pt-3': options.appearance === 'standard1'}">
+      <input type='url' matInput [placeholder]="options.control.label" [readonly]="options.control.readonly" 
+      [formControlName]="options.control.controlId" [(value)]="options.control.url" [required]="options?.control?.validators?.required">
+    </div>
+  </mat-form-field>
+</div>
