@@ -211,7 +211,8 @@ export class TemplateComponent implements OnInit {
     template.body.dashboard.map(i => {
       this.removeExcessProps(i, ['diffGridItem', 'settings', '_settings']);
       this.removeExcessProps(i.gridItem, ['maxItemCols', 'maxItemRows', 'resizeEnabled']);
-    })
+    });
+    template.body.Datasource = template.body.Datasource.filter(x => !!template.body.dashboard.find(c => c.controlId == x.key))
     template.body.selectedSchedules = this.template['schedules'] || null;
     template.body.TemplateData = [];
     template.lastUpdated = this.dateService.getLocalDate();

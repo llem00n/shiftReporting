@@ -10,6 +10,6 @@ export class ErrorComponent {
     private messageService: MessageService
   ) { }
   close() {
-    this.messageService.close()
+    this.messageService.forceClose()
   }
 }

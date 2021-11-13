@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 // import { MatSnackBar } from '@angular/material/snack-bar';
 // import { LoadingComponent } from '../components/loading/loading.component'
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ObservableLike } from 'rxjs';
 
 
 export interface AppMessage {
@@ -14,86 +14,68 @@ export interface AppMessage {
 })
 export class MessageService {
 
-  private messageSourse = new BehaviorSubject<AppMessage>(null);
-  private message = this.messageSourse.asObservable();
-
-  private isShowMessageSourse = new BehaviorSubject<boolean>(null);
-  private isShowMessage = this.isShowMessageSourse.asObservable();
-
-  private messages: AppMessage[] = [];
+  private message = new BehaviorSubject<AppMessage>(null);
+  private isShowMessage = new BehaviorSubject<boolean>(false);
+  private queue: AppMessage[] = [];
 
   getMessage(): Observable<AppMessage> {
-    return this.message;
+    return this.message.asObservable();
   }
-  setMessage(message: AppMessage): void {
-    this.messageSourse.next(message);
-    this.isShowMessageSourse.next(!!message)
-  }
-
 
   getIsShowMessage(): Observable<boolean> {
-    return this.isShowMessage;
+    return this.isShowMessage.asObservable();
   }
 
-  private setIsShowMessage(isShow: boolean): void {
-    this.isShowMessageSourse.next(isShow);
-  }
-
-
-  loadingMessage(message: string) {
-    if (!message) return;
-    this.pushMessage({
+  loadingMessage(message: string): void {
+    this.queue.push({
       message,
       type: 'loading'
     })
+
+    this.update();
   }
 
-  errorMessage(message: string) {
-    if (!message) return;
-    this.pushMessage({
-      message,
-      type: 'error'
-    })
-  }
-  alertMessage(message: string) {
-    // this.close();
-    if (!message) return;
-    this.pushMessage({
+  alertMessage(message: string): void {
+    this.queue.push({
       message,
       type: 'alert'
     })
+
+    this.update();
   }
 
-  close() {
-    // this.setMessage(null);
-    // this.setIsShowMessage(false)
+  errorMessage(message: string): void {
+    this.queue.push({
+      message,
+      type: 'error'
+    })
 
-    if (this.messages.length)
-      this.messages.shift();
-
-    this.updateCurrentMessage();
+    this.update();
   }
 
-  pushMessage(message: AppMessage) {
-    this.messages.push(message);
+  close(): void {
+    if (this.message.value?.type != 'error')
+      this.message.next(null);
 
-    this.updateCurrentMessage();
+    this.update();
   }
 
-  updateCurrentMessage() {
-    if (!this.messages.length) {
-      this.setMessage(null);
-      this.setIsShowMessage(false);
+  forceClose(): void {
+    this.message.next(null);
+
+    this.update();
+  }
+
+  private update() {
+    if (this.message.value?.type === 'error')
       return;
+
+    while (this.queue.length) {
+      this.message.next(this.queue[0]);
+      this.queue.shift();
+      if (this.queue[0]?.type === 'error') break;
     }
 
-    if ((this.messages[0].type == 'loading' || this.messages[0].type == 'alert') && this.messages.length > 1) {
-      this.messages.shift();
-      this.updateCurrentMessage();
-      return;
-    }
-
-    this.setMessage(this.messages[0]);
-    this.setIsShowMessage(true);
+    this.isShowMessage.next(!!this.message.value);
   }
 } 

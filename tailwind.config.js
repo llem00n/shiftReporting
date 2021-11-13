@@ -1,4 +1,5 @@
 const colors = require('tailwindcss/colors')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   prefix: '',
@@ -19,5 +20,15 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addUtilities }) {
+      const zIndex = {
+        '.z-1000000': {
+          'z-index': '1000000'
+        },
+      }
+
+      addUtilities(zIndex, ['responsive', 'hover'])
+    })
+  ],
 };
